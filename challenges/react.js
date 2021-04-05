@@ -111,7 +111,7 @@ const reactServer = [
   "ReactServerStreamConfigNode",
 ];
 
-export default [
+module.exports = [
   {
     name: "createThunkMiddleware",
     project: "Redux Thunk",

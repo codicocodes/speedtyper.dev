@@ -8,7 +8,7 @@ const contexts = [
 
 const editorNav = ["ColorPickerPopper", "InlineStyleButton"];
 
-export default [
+module.exports = [
   {
     name: "contextUtils",
     project: "Jotling",

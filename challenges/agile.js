@@ -25,7 +25,7 @@ const state = [
 
 const storages = ["index", "persistent", "storage"];
 
-export default [
+module.exports = [
   ...collection.map((name) => ({
     name,
     project: "Agile TS",

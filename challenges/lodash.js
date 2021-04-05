@@ -245,7 +245,7 @@ const lodash = [
   "zipWith",
 ];
 
-export default lodash.map((name) => ({
+module.exports = lodash.map((name) => ({
   name,
   project: "Lodash",
   projectUrl: "https://github.com/lodash/lodash",

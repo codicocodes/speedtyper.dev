@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: "main",
     project: "Simple FileSharing Service",
