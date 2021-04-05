@@ -3,6 +3,6 @@ on:
   push:
     branches:
       - main
-jobs:
-  build:
-    - run: npm run build
+  jobs:
+    build:
+      - run: npm run build
