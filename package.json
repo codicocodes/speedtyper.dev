@@ -4,7 +4,7 @@
   "description": "",
   "main": "buildFile.js",
   "scripts": {
-    "build": "node buildFile.js"
+    "build": "mkdir build && node buildFile.js"
   },
   "repository": {
     "type": "git",
