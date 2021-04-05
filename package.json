@@ -4,7 +4,8 @@
   "description": "",
   "main": "buildFile.js",
   "scripts": {
-    "build": "mkdir build && node buildFile.js"
+    "build": "mkdir build && node buildFile.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/codicocodes/speedtyper-community/issues"
   },
-  "homepage": "https://github.com/codicocodes/speedtyper-community#readme"
+  "homepage": "https://github.com/codicocodes/speedtyper-community#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
 }
