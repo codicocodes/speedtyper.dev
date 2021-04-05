@@ -56,23 +56,13 @@ describe("All codesources provided are accurate", () => {
       });
 
       test("properties to be formatted correctly", () => {
-        // projectUrl
-        expect(codeSource.projectUrl.startsWith(GITHUB_URL));
+        expect(codeSource.projectUrl.startsWith(GITHUB_URL)).toBe(true);
         expect(
-          codeSource.projectUrl.includes(codeSource.project.toLowerCase())
-        );
-
-        // license
-        // expect(ACCEPTED_LICENSES.includes(codeSource.license)).toBe(true);
-
-        // licenseUrl
-        expect(codeSource.licenseUrl.startsWith(GITHUB_RAW_URL));
-        expect(codeSource.licenseUrl.includes("LICENSE"));
-
-        // source
-        expect(codeSource.source.startsWith(GITHUB_RAW_URL));
-        expect(codeSource.source.includes(codeSource.name.toLowerCase()));
-        expect(codeSource.source.includes(codeSource.project.toLowerCase()));
+          codeSource.licenseUrl.startsWith(GITHUB_RAW_URL) ||
+            codeSource.licenseUrl.startsWith(GITHUB_URL)
+        ).toBe(true);
+        expect(codeSource.licenseUrl.includes("LICENSE")).toBe(true);
+        expect(codeSource.source.startsWith(GITHUB_RAW_URL)).toBe(true);
       });
     });
   });
