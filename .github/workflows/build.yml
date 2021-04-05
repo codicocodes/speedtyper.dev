@@ -1,0 +1,8 @@
+name: Build Json File
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    - run: npm run build

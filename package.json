@@ -1,0 +1,19 @@
+{
+  "name": "speedtyper-community",
+  "version": "1.0.0",
+  "description": "",
+  "main": "buildFile.js",
+  "scripts": {
+    "build": "node buildFile.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codicocodes/speedtyper-community.git"
+  },
+  "author": "codico",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codicocodes/speedtyper-community/issues"
+  },
+  "homepage": "https://github.com/codicocodes/speedtyper-community#readme"
+}
