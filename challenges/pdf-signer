@@ -11,7 +11,7 @@ module.exports = [
     license: "MIT",
     licenseUrl:
       "https://github.com/bennodev19/pdf-signer/blob/master/LICENSE",
-    source: `https://github.com/bennodev19/pdf-signer/blob/master/src/${name}.ts`,
+    source: `https://raw.githubusercontent.com/bennodev19/pdf-signer/master/src/${name}.ts`,
     language: "TypeScript",
   })),
 ];
