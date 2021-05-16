@@ -5,6 +5,7 @@ const lodash = require("./lodash");
 const narutoql = require("./narutoql");
 const sfss = require("./sfss");
 const pdfSigner = require("./pdf-signer");
+const calc = require("./calc");
 
 module.exports = [
   ...lodash,
@@ -14,4 +15,5 @@ module.exports = [
   ...narutoql,
   ...sfss,
   ...pdfSigner,
+  ...calc,
 ];
