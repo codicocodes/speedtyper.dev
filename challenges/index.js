@@ -7,6 +7,7 @@ const sfss = require("./sfss");
 const pdfSigner = require("./pdf-signer");
 const theAlgorithms = require("./the-algorithms");
 const unirestJava = require("./unirest-java");
+const mixin = require("./mixin");
 
 module.exports = [
   ...lodash,
@@ -18,4 +19,5 @@ module.exports = [
   ...pdfSigner,
   ...theAlgorithms,
   ...unirestJava,
+  ...mixin,
 ];
