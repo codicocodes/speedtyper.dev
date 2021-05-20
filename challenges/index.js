@@ -21,5 +21,5 @@ module.exports = [
   ...theAlgorithms,
   ...unirestJava,
   ...mixin,
-  ...calc,
+  // ...calc,
 ];
