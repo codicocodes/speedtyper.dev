@@ -61,7 +61,10 @@ describe("All codesources provided are accurate", () => {
           codeSource.licenseUrl.startsWith(GITHUB_RAW_URL) ||
             codeSource.licenseUrl.startsWith(GITHUB_URL)
         ).toBe(true);
-        expect(codeSource.licenseUrl.includes("LICENSE")).toBe(true);
+        expect(
+          codeSource.licenseUrl.includes("LICENSE") ||
+            codeSource.licenseUrl.includes("COPYING-LGPL")
+        ).toBe(true);
         expect(codeSource.source.startsWith(GITHUB_RAW_URL)).toBe(true);
       });
     });
