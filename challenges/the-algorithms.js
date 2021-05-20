@@ -49,7 +49,7 @@ module.exports = [
     },
     {
         name: "LongestValidParentheses.java",
-        source: "https://raw.githubusercontent.com/TheAlgorithms/Java/master/DynamicProgramming/LongestValidParentheses.java,",
+        source: "https://raw.githubusercontent.com/TheAlgorithms/Java/master/DynamicProgramming/LongestValidParentheses.java",
     },
     {
         name: "FordFulkerson.java",
