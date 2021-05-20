@@ -5,6 +5,9 @@ const lodash = require("./lodash");
 const narutoql = require("./narutoql");
 const sfss = require("./sfss");
 const pdfSigner = require("./pdf-signer");
+const theAlgorithms = require("./the-algorithms");
+const unirestJava = require("./unirest-java");
+const mixin = require("./mixin");
 const calc = require("./calc");
 
 module.exports = [
@@ -15,5 +18,8 @@ module.exports = [
   ...narutoql,
   ...sfss,
   ...pdfSigner,
+  ...theAlgorithms,
+  ...unirestJava,
+  ...mixin,
   ...calc,
 ];
