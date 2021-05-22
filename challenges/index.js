@@ -8,7 +8,8 @@ const pdfSigner = require("./pdf-signer");
 const theAlgorithms = require("./the-algorithms");
 const unirestJava = require("./unirest-java");
 const mixin = require("./mixin");
-const calc = require("./calc");
+// const calc = require("./calc");
+const configr = require("./configr");
 
 module.exports = [
   ...lodash,
@@ -21,5 +22,6 @@ module.exports = [
   ...theAlgorithms,
   ...unirestJava,
   ...mixin,
+  ...configr,
   // ...calc,
 ];

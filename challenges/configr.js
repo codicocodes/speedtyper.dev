@@ -5,7 +5,8 @@ module.exports = [
     projectUrl: "https://github.com/nyxiative/configr",
     license: "Unlicense",
     licenseUrl: "https://github.com/nyxiative/configr/blob/main/LICENSE",
-    source: "https://github.com/nyxiative/configr/blob/main/src/lib.rs",
+    source:
+      "https://raw.githubusercontent.com/nyxiative/configr/main/src/lib.rs",
     language: "Rust",
   },
 ];
