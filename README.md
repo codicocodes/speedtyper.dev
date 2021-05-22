@@ -21,3 +21,5 @@ Confirm that your additions are formatted correctly by running `npm run test`
 Please keep in mind that this project is a Work in Progress!
 
 Thank you for contributing!
+
+Only projects licensed under MIT, Public Domain, Apache License or another permissive/non-copyleft license are accepted
