@@ -10,6 +10,7 @@ const unirestJava = require("./unirest-java");
 const mixin = require("./mixin");
 // const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
+const libdeflate = require("./libdeflate");
 
 module.exports = [
   ...lodash,
@@ -24,4 +25,5 @@ module.exports = [
   ...mixin,
   ...configr,
   // ...wordokuCsp
+  ...libdeflate,
 ];
