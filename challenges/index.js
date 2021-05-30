@@ -8,7 +8,6 @@ const pdfSigner = require("./pdf-signer");
 const theAlgorithms = require("./the-algorithms");
 const unirestJava = require("./unirest-java");
 const mixin = require("./mixin");
-// const calc = require("./calc");
 // const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
 
@@ -24,6 +23,5 @@ module.exports = [
   ...unirestJava,
   ...mixin,
   ...configr,
-  // ...calc,
   // ...wordokuCsp
 ];
