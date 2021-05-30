@@ -63,7 +63,7 @@ describe("All codesources provided are accurate", () => {
         ).toBe(true);
         expect(
           codeSource.licenseUrl.includes("LICENSE") ||
-            codeSource.licenseUrl.includes("COPYING-LGPL")
+            codeSource.licenseUrl.includes("COPYING")
         ).toBe(true);
         expect(codeSource.source.startsWith(GITHUB_RAW_URL)).toBe(true);
       });
