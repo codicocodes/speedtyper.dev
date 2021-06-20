@@ -8,7 +8,7 @@ const pdfSigner = require("./pdf-signer");
 const theAlgorithms = require("./the-algorithms");
 const unirestJava = require("./unirest-java");
 const mixin = require("./mixin");
-// const wordokuCsp = require("./wordoku_csp.js");
+const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
 const libdeflate = require("./libdeflate");
 
@@ -24,6 +24,6 @@ module.exports = [
   ...unirestJava,
   ...mixin,
   ...configr,
-  // ...wordokuCsp
   ...libdeflate,
+  ...wordokuCsp,
 ];
