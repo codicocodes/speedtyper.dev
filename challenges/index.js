@@ -11,6 +11,7 @@ const mixin = require("./mixin");
 const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
 const libdeflate = require("./libdeflate");
+const fastapi = require("./fastapi");
 
 module.exports = [
   ...lodash,
@@ -26,4 +27,5 @@ module.exports = [
   ...configr,
   ...libdeflate,
   ...wordokuCsp,
+  ...fastapi,
 ];
