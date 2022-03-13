@@ -11,6 +11,7 @@ const mixin = require("./mixin");
 const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
 const libdeflate = require("./libdeflate");
+const pathfinder = require("./pathfinder");
 const fastapi = require("./fastapi");
 
 module.exports = [
@@ -27,5 +28,6 @@ module.exports = [
   ...configr,
   ...libdeflate,
   ...wordokuCsp,
+  ...pathfinder,
   ...fastapi,
 ];
