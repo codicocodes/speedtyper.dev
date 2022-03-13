@@ -13,7 +13,7 @@ const configr = require("./configr");
 const libdeflate = require("./libdeflate");
 const pathfinder = require("./pathfinder");
 const fastapi = require("./fastapi");
-
+const the_algorithms_C = require("./the_algorithms_C");
 module.exports = [
   ...lodash,
   ...jotling,
@@ -30,4 +30,5 @@ module.exports = [
   ...wordokuCsp,
   ...pathfinder,
   ...fastapi,
+  ...the_algorithms_C,
 ];

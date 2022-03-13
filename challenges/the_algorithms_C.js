@@ -1,4 +1,4 @@
-const the_algo_c = {
+const the_algo_c = [
 	"twoSum",
 	"addTwoNumbers",
 	"longestSubStr",
@@ -85,7 +85,7 @@ const the_algo_c = {
 	"distBetweenStops",
 	"maxNbOfBaloons",
 	"uniqNbOfOccurences",
-}
+]
 
 const ids = {
 	"twoSum": 1,
@@ -181,6 +181,6 @@ module.exports = the_algo_c.map((name) => ({
   projectUrl: "https://github.com/TheAlgorithms/C",
   license: "GPL-3.0",
   licenseUrl: "https://github.com/TheAlgorithms/C/blob/master/LICENSE",
-  source: `https://raw.githubusercontent.com/TheAlgorithms/C/master/leetcode/src/${ids[${name}]}.c`,
+  source: `https://raw.githubusercontent.com/TheAlgorithms/C/master/leetcode/src/${ids[name]}.c`,
   language: "C",
 }));
