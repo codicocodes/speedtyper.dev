@@ -5,7 +5,7 @@ module.exports = [
         projectUrl: "https://github.com/servo/pathfinder",
         license: "MIT",
         licenseUrl: "https://github.com/servo/pathfinder/blob/master/LICENSE-MIT",
-        source: "https://github.com/servo/pathfinder/blob/master/geometry/src/rect.rs",
+        source: "https://raw.githubusercontent.com/servo/pathfinder/master/geometry/src/rect.rs",
         language: "Rust",
     },
     {
@@ -15,7 +15,7 @@ module.exports = [
         license: "MIT",
         licenseUrl: "https://github.com/servo/pathfinder/blob/master/LICENSE-MIT",
         source:
-            "https://github.com/servo/pathfinder/blob/master/geometry/src/vector.rs",
+            "https://raw.githubusercontent.com/servo/pathfinder/master/geometry/src/vector.rs",
         language: "Rust",
     },
     {
@@ -25,7 +25,7 @@ module.exports = [
         license: "MIT",
         licenseUrl: "https://github.com/servo/pathfinder/blob/master/LICENSE-MIT",
         source:
-            "https://github.com/servo/pathfinder/blob/master/gl/src/lib.rs",
+            "https://raw.githubusercontent.com/servo/pathfinder/master/gl/src/lib.rs",
         language: "Rust",
     },
 ];
