@@ -74,6 +74,82 @@ module.exports = [
     {
         name: "websockets.py",
         source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/websockets.py",
+    },
+    {
+        name: "models.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/dependencies/models.py",
+    },
+    {
+        name: "dependencies/utils.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/dependencies/utils.py",
+    },
+    {
+        name: "asyncexitstack.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/asyncexitstack.py",
+    },
+    {
+        name: "cors.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/cors.py",
+    },
+    {
+        name: "gzip.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/gzip.py",
+    },
+    {
+        name: "httpsredirect.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/httpsredirect.py",
+    },
+    {
+        name: "trustedhost.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/trustedhost.py",
+    },
+    {
+        name: "wsgi.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/middleware/wsgi.py",
+    },
+    {
+        name: "constants.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/openapi/constants.py",
+    },
+    {
+        name: "docs.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/openapi/docs.py",
+    },
+    {
+        name: "openapi/models.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/openapi/models.py",
+    },
+    {
+        name: "openapi/utils.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/openapi/utils.py",
+    },
+    {
+        name: "api_key.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/api_key.py",
+    },
+    {
+        name: "base.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/base.py",
+    },
+    {
+        name: "http.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/http.py",
+    },
+    {
+        name: "oauth2.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/oauth2.py",
+    },
+    {
+        name: "open_id_connect_url.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/open_id_connect_url.py",
+    },
+    {
+        name: "security/utils.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/fastapi/security/utils.py",
+    },
+    {
+        name: "scripts/docs.py",
+        source: "https://raw.githubusercontent.com/tiangolo/fastapi/master/scripts/security/utils.py",
     }
   ].map((file) => ({
     ...file,
