@@ -12,6 +12,7 @@ const wordokuCsp = require("./wordoku_csp.js");
 const configr = require("./configr");
 const libdeflate = require("./libdeflate");
 const fastapi = require("./fastapi");
+const pytest = require("./pytest");
 
 module.exports = [
   ...lodash,
@@ -28,4 +29,5 @@ module.exports = [
   ...libdeflate,
   ...wordokuCsp,
   ...fastapi,
+  ...pytest,
 ];
