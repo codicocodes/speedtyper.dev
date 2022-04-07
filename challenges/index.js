@@ -13,6 +13,7 @@ const configr = require("./configr");
 const libdeflate = require("./libdeflate");
 const pathfinder = require("./pathfinder");
 const fastapi = require("./fastapi");
+const pytest = require("./pytest");
 
 module.exports = [
   ...lodash,
@@ -30,4 +31,5 @@ module.exports = [
   ...wordokuCsp,
   ...pathfinder,
   ...fastapi,
+  ...pytest,
 ];
