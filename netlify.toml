@@ -1,0 +1,4 @@
+[build]
+  base = "packages/speedtyper-webapp"
+  publish = "/dist"
+  command = "yarn build:css && yarn build"
