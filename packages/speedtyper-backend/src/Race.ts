@@ -63,7 +63,7 @@ export default class Race {
   removeUser(userId: string): void {
     const user = this.users[userId];
     if (!user) {
-      return
+      return;
     }
     user.leaveRace();
     delete this.users[userId];

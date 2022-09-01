@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import RaceManager from "RaceManager";
 
-export default (raceManager: RaceManager) => (
+const pingDiscord = (raceManager: RaceManager) => (
   req: Request,
   res: Response
 ) => {
@@ -20,7 +20,9 @@ export default (raceManager: RaceManager) => (
       .send({ message: "What are you doing giving a race id with no race" });
   }
 
-  race.pingDiscord(user)
+  race.pingDiscord(user);
 
   return res.send({ message: "So successful probably" });
 };
+
+export default pingDiscord;

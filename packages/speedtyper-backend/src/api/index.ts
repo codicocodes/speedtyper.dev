@@ -10,7 +10,7 @@ import getLanguages from "./getLanguages";
 import getGameCountUserBadge from "./getGameCountUserBadge";
 import getAverageWpmUserBadge from "./getAverageWpmUserBadge";
 import getTopWpmUserBadge from "./getTopWpmUserBadge";
-import getTopResultsByChallengeId from "./getTopResultsByChallengeId"
+import getTopResultsByChallengeId from "./getTopResultsByChallengeId";
 
 // git commit -m "WIP in progress"
 // git stash <- trying to learn it, but im not using it that much yet

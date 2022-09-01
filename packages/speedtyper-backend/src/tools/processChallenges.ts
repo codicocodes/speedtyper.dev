@@ -16,7 +16,7 @@ const processChallenges = async () => {
 
     const challengeDocs = [];
 
-    console.log(`${ allCodeSources.length } code sources to seed...`)
+    console.log(`${allCodeSources.length} code sources to seed...`);
 
     for (const codeSource of allCodeSources) {
       const parsedChallengeDocs = parseCodeSource(
@@ -36,20 +36,19 @@ const processChallenges = async () => {
         challengeDocs.push(challenge);
       }
     }
-    console.log("Everything is processed...")
+    console.log("Everything is processed...");
 
-    console.log(`${challengeDocs.length} challenges to insert...` )
+    console.log(`${challengeDocs.length} challenges to insert...`);
 
     await Challenge.insertMany(challengeDocs as ChallengeDoc[]);
 
     console.log(`${challengeDocs.length} challenges created`);
 
     await CodeSource.updateMany({ parsed: false }, { $set: { parsed: true } });
-
   } catch (error) {
     console.log("error is here", error);
   }
-  process.exit(0)
+  process.exit(0);
 };
 
-processChallenges()
+processChallenges();

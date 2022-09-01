@@ -29,8 +29,6 @@ import ruby from "tree-sitter-ruby";
 // @ts-ignore
 import rust from "tree-sitter-rust";
 // @ts-ignore
-import sexp from "tree-sitter-sexp";
-// @ts-ignore
 import csharp from "tree-sitter-c-sharp";
 
 import strip from "strip-comments";
@@ -131,16 +129,16 @@ export default (
   fullCodeString: string,
   language: string
 ): { snippet: string; type: string }[] => {
-  const tabsInSpaces = "  "
+  const tabsInSpaces = "  ";
   const strippedFullCodeString = strip(fullCodeString)
     // thank you indiemonkey
     .replace(/^\s*$(?:\r\n?|\n)/gm, "") // deleting empty lines
     .trim()
     // replace(/^(?<\s*)\t/g, two_spaces)
-    .replace(/\t/g ,tabsInSpaces)
+    .replace(/\t/g, tabsInSpaces);
 
-  // the best thing might be ("\t", " " * tabLength) 
-  // so it will replace each tab individually with required number of spaces. 
+  // the best thing might be ("\t", " " * tabLength)
+  // so it will replace each tab individually with required number of spaces.
   // so get rid of the "^" and the "+"
 
   const languageParser = getLanguageParser(language);

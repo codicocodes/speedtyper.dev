@@ -49,7 +49,7 @@ const processCode = (fullCodeString: string): IProcessedCode => {
   for (let lineCode of splitCodeStrings) {
     let foundNonSkippedChar = false;
     lineCode = lineCode.concat("\n");
-    for (let char of lineCode.split("")) {
+    for (const char of lineCode.split("")) {
       let skipped = false;
       if (!foundNonSkippedChar) {
         skipped = skippableChar(updatedChars, i);

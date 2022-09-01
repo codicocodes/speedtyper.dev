@@ -20,6 +20,7 @@ const seedCodeSources = async () => {
 
   await CodeSource.insertMany(codeSourceDocs, {
     ordered: false,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
   }).catch(() => {});
 
   const unscrapedCodeSources: CodeSourceDoc[] = await CodeSource.find({
@@ -46,7 +47,7 @@ const seedCodeSources = async () => {
         });
     })
   );
-  process.exit(0)
+  process.exit(0);
 };
 
-seedCodeSources()
+seedCodeSources();

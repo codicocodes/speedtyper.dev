@@ -4,7 +4,7 @@ const { Schema } = db;
 
 const schema = new Schema({
   username: String,
-  githubUrl:{type:  String, unique: true },
+  githubUrl: { type: String, unique: true },
   avatarUrl: String,
   githubId: Number,
   email: { required: false, type: String },
@@ -22,6 +22,6 @@ export interface UserDoc extends db.Document {
 
 const model = db.model<UserDoc>("user", schema);
 
-model.syncIndexes()
+model.syncIndexes();
 
-export default model
+export default model;
