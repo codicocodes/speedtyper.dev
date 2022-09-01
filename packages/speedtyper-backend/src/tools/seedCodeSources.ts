@@ -1,6 +1,10 @@
+import ky from "ky-universal";
+import dotenv from "dotenv";
+import path from "path";
+
 import CodeSource, { CodeSourceDoc } from "../models/CodeSource";
 
-import ky from "ky-universal";
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const fetchCodeSources = (): Promise<any> => {
   const url = "https://codicocodes.github.io/speedtyper-community/index.json";
@@ -23,11 +27,8 @@ const seedCodeSources = async () => {
   });
 
   if (unscrapedCodeSources.length === 0) {
-    console.log("No codesources to scrape");
     return;
   }
-
-  console.log(`Scraping ${unscrapedCodeSources.length} new codesources`);
 
   await Promise.all(
     unscrapedCodeSources.map(async (codeSource) => {
@@ -45,6 +46,7 @@ const seedCodeSources = async () => {
         });
     })
   );
+  process.exit(0)
 };
 
-export default seedCodeSources;
+seedCodeSources()

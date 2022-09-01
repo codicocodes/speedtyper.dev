@@ -9,8 +9,13 @@ run-backend-dev:
 run-dev-db:
 	docker compose -f ./packages/speedtyper-backend/docker-compose.yml up -d
 
-run-seed-db:
-	yarn --cwd ./packages/speedtyper-backend seed-db
+run-seed-codesources:
+	yarn --cwd ./packages/speedtyper-backend tsc
+	yarn --cwd ./packages/speedtyper-backend seed-codesources
+
+run-process-challenges:
+	yarn --cwd ./packages/speedtyper-backend tsc
+	yarn --cwd ./packages/speedtyper-backend process-challenges
 
 
 # webapp

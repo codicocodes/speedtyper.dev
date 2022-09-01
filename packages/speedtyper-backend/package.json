@@ -8,6 +8,8 @@
   },
   "scripts": {
     "start": "node dist/src/index.js",
+    "seed-codesources": "node dist/src/tools/seedCodeSources.js",
+    "process-challenges": "node dist/src/tools/processChallenges.js",
     "build:dev": "cp .env ./dist/.env && tsc",
     "dev": "yarn build:dev && ./node_modules/.bin/nodemon dist/src/index.js",
     "tsc": "tsc --build tsconfig.json",

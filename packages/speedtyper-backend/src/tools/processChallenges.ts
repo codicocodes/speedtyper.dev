@@ -1,3 +1,8 @@
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
 import Challenge, { ChallengeDoc } from "../models/challenge";
 import CodeSource, { CodeSourceDoc } from "../models/CodeSource";
 import { ICodeSource } from "../models/CodeSource";
@@ -28,24 +33,23 @@ const processChallenges = async () => {
           ...parsedChallengeDoc,
         });
 
-        // console.log({challenge})
         challengeDocs.push(challenge);
       }
     }
     console.log("Everything is processed...")
 
-    console.log(`${challengeDocs.length} challenge dogs to insert...` )
+    console.log(`${challengeDocs.length} challenges to insert...` )
 
     await Challenge.insertMany(challengeDocs as ChallengeDoc[]);
 
     console.log(`${challengeDocs.length} challenges created`);
 
-    // set parsed to true on all code Sources
     await CodeSource.updateMany({ parsed: false }, { $set: { parsed: true } });
 
   } catch (error) {
     console.log("error is here", error);
   }
+  process.exit(0)
 };
 
-export default processChallenges;
+processChallenges()
