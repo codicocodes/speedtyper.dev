@@ -47,4 +47,4 @@
 
 ## License 📜
 
-speedtyper.dev is open source software licensed as [TBD](https://github.com/codicocodes/tmp-speedtyper-monorepo/blob/main/LICENSE).
+speedtyper.dev is open source software licensed as [MIT](https://github.com/codicocodes/tmp-speedtyper-monorepo/blob/main/LICENSE).
