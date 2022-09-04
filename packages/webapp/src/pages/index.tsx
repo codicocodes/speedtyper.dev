@@ -98,7 +98,7 @@ export default () => {
             <div className="flex justify-start items-center mt-4 mx-12 mb-0 text-xl">
               Join a small but growing community of typers and developers to
               keep up to date with tournaments, live streams and updates to the
-              game. Contribute by adding challenges to the game on GitHub.
+              game.
             </div>
             <a
               href="https://discord.gg/AMbnnN5eep"
@@ -119,7 +119,7 @@ export default () => {
               </div>
             </a>
             <a
-              href="https://github.com/codicocodes/speedtyper-community"
+              href="https://github.com/codicocodes/speedtyper.dev"
               target="_blank"
               className="font-light inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean  hover:bg-gray-100 bg-off-white shadow lg:rounded items-center flex-grow-0"
             >
