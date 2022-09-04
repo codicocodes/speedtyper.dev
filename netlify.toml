@@ -1,4 +1,0 @@
-[build]
-  base = "packages/webapp"
-  publish = "/dist"
-  command = "yarn build:css && yarn build"
