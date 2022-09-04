@@ -1,6 +1,5 @@
 import React from "react";
 import Switch from "react-switch";
-import { useSiteData } from "react-static";
 import { navigate } from "@reach/router";
 import { IUser } from "../../types/";
 
@@ -8,7 +7,7 @@ import ky from "ky-universal";
 import { useAppContext } from "../AppContext";
 
 const AvatarModal = ({ user, logout }: { user: IUser; logout: () => void }) => {
-  const { serverUrl, siteRoot } = useSiteData();
+  const { siteRoot, serverUrl } = process.env
 
   const { smoothCaret, toggleSmoothCaret } = useAppContext();
 

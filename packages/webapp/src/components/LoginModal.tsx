@@ -1,10 +1,9 @@
 import React from "react";
-import { useSiteData } from "react-static";
 import { navigate } from "@reach/router";
 
 export default () => {
   const [showModal, setShowModal] = React.useState(false);
-  const { siteRoot, serverUrl } = useSiteData();
+  const { serverUrl, siteRoot } = process.env
 
   return (
     <>

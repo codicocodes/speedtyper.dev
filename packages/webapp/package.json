@@ -2,13 +2,11 @@
   "name": "speedtyper-client",
   "private": true,
   "scripts": {
-    "start": "react-static start",
-    "stage": "react-static build --staging",
-    "build": "yarn build:css && react-static build",
+    "start": "next start",
+    "dev": "next dev",
     "build:css": "postcss src/tailwind.css -o src/tailwind.min.css",
-    "bundle": "react-static bundle",
-    "export": "react-static export",
-    "serve": "serve dist -p 3000 -s"
+    "build": "build:css && next build",
+    "lint": "next lint"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
@@ -17,6 +15,7 @@
     "highlight.js": "^10.5.0",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
+    "next": "^12.2.5",
     "postcss": "^8.2.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

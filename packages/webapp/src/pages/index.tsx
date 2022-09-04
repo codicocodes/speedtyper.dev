@@ -1,5 +1,4 @@
 import React from "react";
-import { useSiteData } from "react-static";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "@reach/router";
 import Toplist from "../components/Leaderboard";
@@ -9,7 +8,7 @@ import { useAppContext } from "../AppContext";
 import MarketingBar from "../components/MarketingBar";
 
 export default () => {
-  const { serverUrl } = useSiteData();
+  const serverUrl = process.env.serverUrl
   const dailyResults = useResults();
   const { user } = useAppContext();
   return (

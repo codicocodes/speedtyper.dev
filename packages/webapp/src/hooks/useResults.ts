@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSiteData } from "react-static";
 import ky from "ky-universal";
 import { IToplistResult } from "../../types/";
 
 export default () => {
-  const { serverUrl } = useSiteData();
+  const serverUrl = process.env.serverUrl
   const [dailyResults, setDailyResults] = useState([] as IToplistResult[]);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
-import { useSiteData } from "react-static";
 import Socket from "../Socket";
 
 import { IQueryParams, IAction, IGameState, IUserGameState } from "../../types";
@@ -12,7 +11,7 @@ export default (
   setCountdown: React.Dispatch<number>
 ): Socket => {
   const [socket, setSocket] = useState(null);
-  const { serverUrl } = useSiteData();
+  const serverUrl = process.env.serverUrl
   const { id: gameId, mode } = queryParams;
 
   useEffect(() => {
