@@ -47,6 +47,6 @@
 
 ## License 📜
 
-speedtyper.dev is open source software licensed as [MIT](https://github.com/codicocodes/tmp-speedtyper-monorepo/blob/main/LICENSE).
+speedtyper.dev is open source software licensed as [MIT](https://github.com/codicocodes/speedtyper.dev/blob/main/LICENSE).
 
-The [logo](https://github.com/codicocodes/tmp-speedtyper-monorepo/blob/main/packages/webapp/public/images/logo.png) is made by [astrocanyounaut](https://www.twitch.tv/astrocanyounaut) 🧑‍🚀 and is not licensed under MIT.
+The [logo](https://github.com/codicocodes/speedtyper.dev/blob/main/packages/webapp/public/images/logo.png) is made by [astrocanyounaut](https://www.twitch.tv/astrocanyounaut) 🧑‍🚀 and is not licensed under MIT.
