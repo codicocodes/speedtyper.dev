@@ -23,7 +23,8 @@ mkdir ./packages/backend/dist
 make install-backend-dependencies
 cp ./packages/backend/.env.development ./packages/backend/.env
 make run-dev-db
-make run-seed-db
+make run-seed-codesources
+make run-process-challenges
 make run-dev
 ```
 
