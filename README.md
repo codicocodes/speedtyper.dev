@@ -13,7 +13,7 @@
   </b>
 </p>
 <p align="center">
-  <a href="https://github.com/codicocodes/speedtyper-community" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/codicocodes/speedtyper-community?style=social"></a>
+  <a href="https://github.com/codicocodes/speedtyper.dev" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/codicocodes/speedtyper.dev?style=social"></a>
 </p>
 
 
@@ -26,9 +26,9 @@
 
 ## Contribute 👷
 - 🦄 **Pull requests are very appreciated!**
-- 📚 Read the [contributor introduction (wip)](https://github.com/codicocodes/tmp-speedtyper-monorepo/blob/main/CONTRIBUTING.md)
-- 🐛 If you encounter a bug, please [open an issue](https://github.com/codicocodes/speedtyper-community/issues/new)
-- 🗨️ If you want to make a large change, please [open an issue](https://github.com/codicocodes/speedtyper-community/issues/new) so we can discuss it!
+- 📚 Read the [contributor introduction (wip)](https://github.com/codicocodes/speedtyper.dev/blob/main/CONTRIBUTING.md)
+- 🐛 If you encounter a bug, please [open an issue](https://github.com/codicocodes/speedtyper.dev/issues/new)
+- 🗨️ If you want to make a large change, please [open an issue](https://github.com/codicocodes/speedtyper.dev/issues/new) so we can discuss it!
 
 ## Community ☕
 <a href="https://discord.gg/AMbnnN5eep" target="__blank">
