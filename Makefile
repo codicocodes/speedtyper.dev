@@ -21,7 +21,7 @@ run-process-challenges:
 # webapp
 
 install-webapp-dependencies:
-	yarn --cwd ./packages/backend
+	yarn --cwd ./packages/webapp
 
 run-build-css:
 	yarn --cwd ./packages/webapp build:css
