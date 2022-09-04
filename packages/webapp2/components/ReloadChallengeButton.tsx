@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Socket from "../Socket";
-import { IAction } from "../../types";
+import { IAction } from "../types";
 
 const renderSvg = (isCompleted: boolean) => {
   return isCompleted ? (

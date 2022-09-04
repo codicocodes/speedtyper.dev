@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import ky from "ky-universal";
-import { IToplistResult } from "../../types/";
+import { IToplistResult } from "../types/";
+import getConfig from "next/config";
 
-export default () => {
-  const serverUrl = process.env.serverUrl
+const useResults =() => {
+  const {publicRuntimeConfig: { serverUrl } } = getConfig()
   const [dailyResults, setDailyResults] = useState([] as IToplistResult[]);
-
-  console.log({serverUrl})
 
   useEffect(() => {
     ky.get(`${serverUrl}/leaderboards/daily`)
@@ -18,3 +17,4 @@ export default () => {
 
   return dailyResults;
 };
+export default useResults;

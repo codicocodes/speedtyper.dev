@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import ky from "ky-universal";
-import type { IUser } from "../../types";
-
-export default (user: IUser) => {
-  const serverUrl = process.env.serverUrl
+import type { IUser } from "../types";
+import getConfig from "next/config";
+const useGithubBadges = (user: IUser) => {
+  const {publicRuntimeConfig:{ serverUrl }} = getConfig()
   const username = user?.username;
   const [badges, setBadges] = useState([]);
 
@@ -23,3 +23,5 @@ export default (user: IUser) => {
 
   return badges;
 };
+
+export default useGithubBadges

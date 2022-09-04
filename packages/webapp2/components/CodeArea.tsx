@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import  highlightBlock  from "highlight.js";
+import  highlightjs  from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // import your preferred style
 import explode from "../utils/explode/";
 import SmoothCaret from "./SmoothCaret";
@@ -23,7 +23,7 @@ const buildWrongChars = (chars: string) => {
   return replaced;
 };
 
-export default ({
+const CodeArea = ({
   skippedMessage,
   correctChars,
   wrongChars,
@@ -65,7 +65,7 @@ export default ({
 
   useEffect(() => {
     if (correctRef && correctChars) {
-      highlightBlock(correctRef.current);
+      highlightjs.highlightBlock(correctRef.current);
     }
   }, [correctChars]);
 
@@ -174,3 +174,6 @@ export default ({
     </div>
   );
 };
+
+export default CodeArea;
+

@@ -1,13 +1,14 @@
 import React from "react";
 import Switch from "react-switch";
-import { IUser } from "../../types/";
+import { IUser } from "../types/";
 
 import ky from "ky-universal";
 import { useAppContext } from "../AppContext";
 import { useRouter } from "next/router";
+import getConfig from "next/config";
 
 const AvatarModal = ({ user, logout }: { user: IUser; logout: () => void }) => {
-  const { siteRoot, serverUrl } = process.env
+  const { publicRuntimeConfig: { siteRoot, serverUrl } } = getConfig()
   const router = useRouter()
 
   const { smoothCaret, toggleSmoothCaret } = useAppContext();

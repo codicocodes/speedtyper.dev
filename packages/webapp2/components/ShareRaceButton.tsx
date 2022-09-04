@@ -1,9 +1,10 @@
+import getConfig from "next/config";
 import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default ({ gameId }: { gameId: string }) => {
-  const { siteRoot } = process.env
+const ShareRaceButton = ({ gameId }: { gameId: string }) => {
+  const { publicRuntimeConfig: { siteRoot } } = getConfig()
   const privateurl = `${siteRoot}/play/?mode=private&id=${gameId}`;
 
   function copyToClipboard() {
@@ -31,3 +32,5 @@ export default ({ gameId }: { gameId: string }) => {
     </>
   );
 };
+
+export default ShareRaceButton

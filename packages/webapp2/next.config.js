@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  env: {
+  publicRuntimeConfig: {
     title:
     "speedtyper.dev | Typing Practice For Programmers | Typing races",
     description:

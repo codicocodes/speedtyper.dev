@@ -1,7 +1,6 @@
 import React from "react";
 import { Root, Routes } from "react-static";
 import { Router } from "@reach/router";
-import "./tailwind.min.css";
 import "./spinner.css";
 import Navbar from "components/Navbar";
 import { AppProvider } from "./AppContext";

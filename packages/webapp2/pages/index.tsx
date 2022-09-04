@@ -6,19 +6,19 @@ import Stream from "../components/Stream";
 import { useAppContext } from "../AppContext";
 import MarketingBar from "../components/MarketingBar";
 import Link from "next/link";
+import getConfig from "next/config";
 
-export default () => {
-  const serverUrl = process.env.serverUrl
+const IndexPage = () => {
+  const {
+    publicRuntimeConfig: { serverUrl },
+  } = getConfig();
   const dailyResults = useResults();
   const { user } = useAppContext();
   return (
     <>
       <div className="text-off-white justify-center align-center h-full w-full tracking-wider">
         <div className="flex justify-center items-center mt-4">
-          <img
-            style={{ width: "125px", height: "auto" }}
-            src="../images/logo.png"
-          />
+          <img style={{ width: "125px", height: "auto" }} src="/logo.png" />
         </div>
         <h1 className="flex justify-center text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl mb-4 text-center mt-4">
           Typing competitions for programmers
@@ -36,17 +36,19 @@ export default () => {
                 open source projects as fast as possible.
               </span>
               <div className="flex flex-row items-center">
-                <Link
-                  href="/play"
-                  className="hidden lg:inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean hover:bg-gray-100 bg-off-white shadow rounded items-center flex-grow-0"
-                >
-                  <a className="flex justify-center items-center">
-                    Enter a typing race
-                    <svg viewBox="0 0 24 24" className="h-5 fill-current ml-2">
-                      <path d="M7.96 21.15l-.65-.76 9.555-8.16L7.31 4.07l.65-.76 10.445 8.92"></path>
-                    </svg>
-                  </a>
-                </Link>
+                <div className="hidden lg:inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean hover:bg-gray-100 bg-off-white shadow rounded items-center flex-grow-0">
+                  <Link href="/play">
+                    <a className="flex justify-center items-center">
+                      Enter a typing race
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-5 fill-current ml-2"
+                      >
+                        <path d="M7.96 21.15l-.65-.76 9.555-8.16L7.31 4.07l.65-.76 10.445 8.92"></path>
+                      </svg>
+                    </a>
+                  </Link>
+                </div>
                 <div className="inline-block md:hidden lg:hidden justify-center text-xl px-12 py-2 mt-8 mx-12 mb-6 text-dark-ocean hover:bg-gray-100 bg-off-white shadow lg:rounded items-center flex-grow-0">
                   <div className="flex justify-center items-center">
                     Not available on mobile.
@@ -66,17 +68,16 @@ export default () => {
                 or battle it out with your friends in a private typing game.
               </span>
 
-              <Link
-                href="/play?mode=private"
-                className="hidden lg:inline-block font-light inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean  hover:bg-gray-100 bg-off-white shadow rounded items-center flex-grow-0"
-              >
-                <a className="flex justify-center items-center">
-                  Private game
-                  <svg viewBox="0 0 24 24" className="h-5 fill-current ml-2">
-                    <path d="M7.96 21.15l-.65-.76 9.555-8.16L7.31 4.07l.65-.76 10.445 8.92"></path>
-                  </svg>
-                </a>
-              </Link>
+              <div className="hidden lg:inline-block font-light inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean  hover:bg-gray-100 bg-off-white shadow rounded items-center flex-grow-0">
+                <Link href="/play?mode=private">
+                  <a className="flex justify-center items-center">
+                    Private game
+                    <svg viewBox="0 0 24 24" className="h-5 fill-current ml-2">
+                      <path d="M7.96 21.15l-.65-.76 9.555-8.16L7.31 4.07l.65-.76 10.445 8.92"></path>
+                    </svg>
+                  </a>
+                </Link>
+              </div>
               <div className="inline-block md:hidden lg:hidden justify-center text-xl px-12 py-2 mt-8 mx-12 mb-6 text-dark-ocean hover:bg-gray-100 bg-off-white shadow lg:rounded items-center flex-grow-0">
                 <div className="flex justify-center items-center">
                   Not available on mobile.
@@ -103,6 +104,7 @@ export default () => {
               href="https://discord.gg/AMbnnN5eep"
               target="_blank"
               className="font-light inline-block justify-center text-xl px-12 py-2 mt-4 ml-12 mb-6 text-dark-ocean  hover:bg-gray-100 bg-off-white shadow lg:rounded items-center flex-grow-0"
+              rel="noreferrer"
             >
               <div className="flex items-center w-full">
                 <svg
@@ -121,6 +123,7 @@ export default () => {
               href="https://github.com/codicocodes/speedtyper.dev"
               target="_blank"
               className="font-light inline-block justify-center text-xl px-12 py-2 mt-4 mx-12 mb-6 text-dark-ocean  hover:bg-gray-100 bg-off-white shadow lg:rounded items-center flex-grow-0"
+              rel="noreferrer"
             >
               <div className="flex items-center w-full">
                 <svg
@@ -154,7 +157,7 @@ export default () => {
                     <img
                       key={i}
                       className="pr-4 h-6 my-2 lg:my-0"
-                      style={{width: "240px"}}
+                      style={{ width: "240px" }}
                       src={`${serverUrl}/users/${user?.username}/badges/${badge}`}
                     />
                   );
@@ -205,11 +208,9 @@ export default () => {
             <MarketingBar />
           </div>
         </div>
-
-        // <div className="hidden lg:block">
-        //   <Stream />
-        // </div>
       </div>
     </>
   );
 };
+
+export default IndexPage;

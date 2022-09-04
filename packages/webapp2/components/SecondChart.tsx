@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Chart from "chart.js";
+import { Chart } from "chart.js";
 import cpmToWpm from "../utils/cpmToWpm";
 
 const renderChart = (

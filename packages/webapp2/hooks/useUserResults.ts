@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ky from "ky-universal";
+import getConfig from "next/config";
 
-export default (userName: string): any => {
-  const serverUrl = process.env.serverUrl
+const useUserResult = (userName: string): any => {
+  const { publicRuntimeConfig: { serverUrl } } = getConfig()
   const [userResults, setUserResults] = useState(null);
 
   useEffect(() => {
@@ -15,3 +16,5 @@ export default (userName: string): any => {
 
   return userResults;
 };
+
+export default useUserResult

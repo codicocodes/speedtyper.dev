@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ky from "ky-universal";
+import getConfig from "next/config";
 
 export default () => {
-  const serverUrl = process.env.serverUrl
+  const { publicRuntimeConfig: { serverUrl } } = getConfig()
   const [languages, setLanguages] = useState([]);
 
   useEffect(() => {

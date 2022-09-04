@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ky from "ky-universal";
 import { toast } from "react-toastify";
+import getConfig from "next/config";
 
-export default ({ gameId }: { gameId: string }) => {
-  const { serverUrl } = process.env
+const PingDiscordButton =({ gameId }: { gameId: string }) => {
+  const { publicRuntimeConfig: { serverUrl }} = getConfig()
   const [pinged, setPinged] = useState(false);
 
   const onClickHandler = () => {
@@ -33,4 +34,6 @@ export default ({ gameId }: { gameId: string }) => {
       <p className="pl-1">Ping</p>
     </button>
   );
-};
+}
+
+export default PingDiscordButton;

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ky from "ky-universal";
+import getConfig from "next/config";
 
-export default () => {
-  const serverUrl = process.env.serverUrl
+const usePlayers =() => {
+  const {publicRuntimeConfig: { serverUrl } } = getConfig()
   const [players, setPlayers] = useState({ connected: 0, loading: true });
 
   useEffect(() => {
@@ -15,3 +16,5 @@ export default () => {
 
   return players;
 };
+
+export default usePlayers;

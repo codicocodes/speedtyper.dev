@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import Chart from "chart.js";
+import { Chart, LineController, CategoryScale, LinearScale, PointElement, LineElement } from "chart.js";
 import cpmToWpm from "../utils/cpmToWpm";
+
+
+Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement)
 
 const renderChart = (
   ref: React.MutableRefObject<any>,

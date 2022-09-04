@@ -1,9 +1,10 @@
 import ky from "ky-universal";
+import getConfig from "next/config";
 import { useEffect, useState } from "react";
-import { IToplistResult } from "../../types/";
+import { IToplistResult } from "../types/";
 
-export default (challengeId:  string | null):  IToplistResult[] => {
-  const { serverUrl } = process.env
+const useTopResult = (challengeId:  string | null):  IToplistResult[] => {
+  const {publicRuntimeConfig: { serverUrl } } = getConfig()
 
   const [topChallengeResults, setTopChallengeResults] = useState([]);
 
@@ -18,4 +19,5 @@ export default (challengeId:  string | null):  IToplistResult[] => {
   }, [challengeId]);
 
   return topChallengeResults;
-};
+}
+export default useTopResult;

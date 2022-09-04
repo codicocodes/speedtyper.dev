@@ -14,7 +14,7 @@ import WaitingForPlayers from "../components/WaitingForPlayers";
 import gameStateReducer, {
   defaultGameState,
 } from "../reducers/gameStateReducer";
-import { IGameState } from "../../types";
+import { IGameState } from "../types";
 import useSocket from "../hooks/useSocket";
 import MarketingBar from "../components/MarketingBar";
 import RetryChallengeButton from "../components/ReloadChallengeButton";

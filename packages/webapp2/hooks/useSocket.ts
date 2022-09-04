@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Socket from "../Socket";
 
-import { IQueryParams, IAction, IGameState, IUserGameState } from "../../types";
+import { IQueryParams, IAction, IGameState, IUserGameState } from "../types";
 import { useRouter } from "next/router";
+import getConfig from "next/config";
 
-export default (
+const useSocket = (
   dispatch: React.Dispatch<IAction>,
   queryParams: IQueryParams,
   language: string,
   setCountdown: React.Dispatch<number>
 ): Socket => {
   const [socket, setSocket] = useState(null);
-  const serverUrl = process.env.serverUrl
+  const {publicRuntimeConfig: { serverUrl } } = getConfig()
   const { id: gameId, mode } = queryParams;
   const router = useRouter()
-
-  useEffect(() => {
+useEffect(() => {
     if (window && !queryParams.loading) {
       setSocket(new Socket(serverUrl));
     }
@@ -124,3 +124,6 @@ export default (
 
   return socket;
 };
+
+export default useSocket
+
