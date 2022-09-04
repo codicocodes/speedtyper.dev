@@ -19,9 +19,9 @@
 ### Backend
 
 ```
-mkdir ./packages/speedtyper-backend/dist
+mkdir ./packages/backend/dist
 make install-backend-dependencies
-cp ./packages/speedtyper-backend/.env.development ./packages/speedtyper-backend/.env
+cp ./packages/backend/.env.development ./packages/backend/.env
 make run-dev-db
 make run-seed-db
 make run-dev
