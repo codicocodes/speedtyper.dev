@@ -17,14 +17,10 @@ run-process-challenges:
 	yarn --cwd ./packages/backend tsc
 	yarn --cwd ./packages/backend process-challenges
 
-
 # webapp
 
 install-webapp-dependencies:
-	yarn --cwd ./packages/webapp
+	yarn --cwd ./packages/webapp-next
 
-run-build-css:
-	yarn --cwd ./packages/webapp build:css
-
-run-webapp:
-	yarn --cwd ./packages/webapp start
+run-webapp-dev:
+	yarn --cwd ./packages/webapp-next dev

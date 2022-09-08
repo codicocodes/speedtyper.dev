@@ -32,6 +32,5 @@ make run-backend-dev
 
 ```
 make install-webapp-dependencies
-make run-build-css
-make run-webapp
+make run-webapp-dev
 ```
