@@ -12,6 +12,7 @@
 - Node 16
 - Yarn
 - MongoDB
+- build-essential (or equivalent for your OS)
 - Docker (Optional)
 
 ## Running Speedtyper.dev
