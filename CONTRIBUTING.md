@@ -25,7 +25,7 @@ cp ./packages/backend/.env.development ./packages/backend/.env
 make run-dev-db
 make run-seed-codesources
 make run-process-challenges
-make run-dev
+make run-backend-dev
 ```
 
 ### Frontend
