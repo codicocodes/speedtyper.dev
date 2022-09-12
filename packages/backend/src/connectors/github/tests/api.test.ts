@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+jest.mock("node-fetch");
 
 import GithubAPI from "../api";
 import {
@@ -11,24 +12,21 @@ import { parseGithubRepository } from "../schema/repository";
 import repository from "./mock-responses/repository";
 import user from "./mock-responses/user";
 
-jest.mock("node-fetch");
-
-// @ts-ignore next-line
-const mockFetch = fetch as MockedFunction<typeof fetch>;
-const mockToken = "asdf";
-
 describe("GithubAPI", () => {
+  const mockToken = "asdf";
   let api = new GithubAPI(mockToken);
+
+  const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
+  const text = jest.fn() as jest.MockedFunction<any>;
 
   beforeEach(() => {
     api = new GithubAPI(mockToken);
   });
 
   describe("fetchRepository", () => {
-    // @ts-ignore next-line
-    const text = jest.fn() as MockedFunction<any>;
     beforeEach(() => {
       text.mockResolvedValue(JSON.stringify(repository));
+      // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: true, text } as Response);
     });
 
@@ -49,6 +47,7 @@ describe("GithubAPI", () => {
 
     it("throws an error when the api call fails", async () => {
       const status = 404;
+      // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: false, status });
       const err = await api.fetchRepository(repository.full_name).catch((e) => {
         return e;
@@ -75,10 +74,9 @@ describe("GithubAPI", () => {
   });
 
   describe("fetchUser", () => {
-    // @ts-ignore next-line
-    const text = jest.fn() as MockedFunction<any>;
     beforeEach(() => {
       text.mockResolvedValue(JSON.stringify(user));
+      // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: true, text } as Response);
     });
 
@@ -101,6 +99,7 @@ describe("GithubAPI", () => {
 
     it("throws an error when the api call fails", async () => {
       const status = 404;
+      // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: false, status });
       const err = await api.fetchUser().catch((e) => {
         return e;

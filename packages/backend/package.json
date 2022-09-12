@@ -7,6 +7,7 @@
     "node": ">=16.17.0"
   },
   "scripts": {
+    "test": "jest",
     "start": "node dist/src/index.js",
     "seed-codesources": "node dist/src/tools/seedCodeSources.js",
     "process-challenges": "node dist/src/tools/processChallenges.js",
