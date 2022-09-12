@@ -15,46 +15,6 @@ export const getAccessToken = async (requestToken: string): Promise<string> => {
   return accessToken;
 };
 
-interface IGithubUser {
-  username: string;
-  githubUrl?: string;
-  email?: string;
-  avatarUrl: string;
-  githubId: number;
-}
-
-export const getUser = async (accessToken: string): Promise<IGithubUser> => {
-  const {
-    login: username,
-    html_url: githubUrl,
-    email,
-    avatar_url: avatarUrl,
-    id: githubId,
-  } = await fetch(`https://api.github.com/user`, {
-    headers: {
-      accept: "application/json",
-      Authorization: `token ${accessToken}`,
-    },
-  }).then((res) => {
-    return res.json() as Promise<{
-      login: string;
-      html_url: string;
-      email: string;
-      avatar_url: string;
-      id: number;
-    }>;
-  });
-
-  return {
-    username,
-    email,
-    githubUrl,
-    avatarUrl,
-    githubId,
-  };
-};
-
 export default {
-  getUser,
   getAccessToken,
 };

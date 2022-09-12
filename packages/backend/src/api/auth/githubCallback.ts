@@ -1,60 +1,86 @@
 import { Request, Response } from "express";
-import User from "../../models/user";
+import User, { UserDoc } from "../../models/user";
 import github from "../../connectors/github";
+import GithubAPI from "../../connectors/github/api";
+import { GithubUser } from "../../connectors/github/schema/user";
 
-const validateLoginReferrer = (url: string | undefined): string => {
+const getBaseURL = (loginReferrer?: string): string => {
   return (
-    url ??
+    loginReferrer ??
     (process.env.NODE_ENV === "production"
       ? "https://speedtyper.dev"
       : "http://localhost:3001")
   );
 };
 
-export default async (req: Request, res: Response) => {
-  const error = req.query.error?.toString();
-
-  console.log({ error });
-
-  const requestToken = req.query.code?.toString() || "";
-
-  const accessToken = await github.getAccessToken(requestToken);
-
-  const githubUserData = await github.getUser(accessToken);
-
-  if (!githubUserData?.githubId) {
-    return req.session?.loginReferrer
-      ? res.redirect(req.session?.loginReferrer)
-      : res.send({ success: true });
+function getRedirectURL(req: Request, error?: string): string {
+  const loginReferrer = req.session?.loginReferrer;
+  const baseUrl = getBaseURL(loginReferrer);
+  const url = new URL(baseUrl);
+  if (error) {
+    url.searchParams.set("login-error", error);
   }
+  return url.toString();
+}
 
-  let userDoc = await User.findOne({ githubId: githubUserData.githubId });
+async function upsertGithubUser(githubUser: GithubUser) {
+  let userDoc = await User.findOne({ githubId: githubUser.id });
 
   if (!userDoc) {
     userDoc = new User({
-      githubId: githubUserData.githubId,
+      githubId: githubUser.id,
     });
   }
 
   userDoc.set({
-    username: githubUserData.username,
-    avatarUrl: githubUserData.avatarUrl,
-    githubUrl: githubUserData.githubUrl,
+    username: githubUser.login,
+    avatarUrl: githubUser.avatar_url,
+    githubUrl: githubUser.html_url,
   });
 
   const user = await userDoc.save();
 
+  return user;
+}
+
+function saveUserToSession(req: Request, user: UserDoc) {
   if (req.session) {
     req.session.user = {
-      username: user.username,
       id: user._id.toString(),
+      username: user.username,
       avatarUrl: user.avatarUrl,
-      guest: false,
       banned: user.banned,
+      guest: false,
     };
+    return true;
+  }
+  return false;
+}
+
+export default async function GithubCallback(req: Request, res: Response) {
+  const error = req.query.error?.toString();
+
+  if (error) {
+    res.redirect(getRedirectURL(req, error));
+    return;
   }
 
-  const validLoginReferrer = validateLoginReferrer(req.session?.loginReferrer);
+  const code = req.query.code?.toString() || "";
 
-  res.redirect(validLoginReferrer);
-};
+  if (!code) {
+    res.redirect(getRedirectURL(req, "failed login"));
+    return;
+  }
+
+  try {
+    const accessToken = await github.getAccessToken(code);
+    const api = new GithubAPI(accessToken);
+    const githubUser = await api.fetchUser();
+    const user = await upsertGithubUser(githubUser);
+    saveUserToSession(req, user);
+    res.redirect(getRedirectURL(req));
+  } catch (err) {
+    console.log("Failed GithubCallback", err);
+    res.redirect(getRedirectURL(req, "failed login"));
+  }
+}
