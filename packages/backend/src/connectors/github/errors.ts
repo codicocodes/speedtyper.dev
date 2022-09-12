@@ -13,3 +13,10 @@ export class InvalidGithubRepository extends Error {
     Object.setPrototypeOf(this, InvalidGithubRepository.prototype);
   }
 }
+
+export class InvalidGithubUser extends Error {
+  constructor(msg?: string) {
+    super(`Invalid Github User: ${msg}`);
+    Object.setPrototypeOf(this, InvalidGithubUser.prototype);
+  }
+}

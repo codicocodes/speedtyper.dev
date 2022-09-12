@@ -1,10 +1,15 @@
 import fetch from "node-fetch";
 
 import GithubAPI from "../api";
-import { FailedGithubRequest, InvalidGithubRepository } from "../errors";
+import {
+  FailedGithubRequest,
+  InvalidGithubRepository,
+  InvalidGithubUser,
+} from "../errors";
 import { parseGithubRepository } from "../schema/repository";
 
 import repository from "./mock-responses/repository";
+import user from "./mock-responses/user";
 
 jest.mock("node-fetch");
 
@@ -66,6 +71,58 @@ describe("GithubAPI", () => {
         return e;
       });
       expect(err instanceof InvalidGithubRepository).toBe(true);
+    });
+  });
+
+  describe("fetchUser", () => {
+    // @ts-ignore next-line
+    const text = jest.fn() as MockedFunction<any>;
+    beforeEach(() => {
+      text.mockResolvedValue(JSON.stringify(user));
+      mockFetch.mockResolvedValue({ ok: true, text } as Response);
+    });
+
+    it("calls node-fetch with the expected arguments", async () => {
+      await api.fetchUser();
+      expect(mockFetch).toHaveBeenCalledWith("https://api.github.com/user", {
+        headers: { Authorization: `token ${mockToken}` },
+      });
+    });
+
+    it("returns a valid github user when the api call succeeds", async () => {
+      const user = await api.fetchUser();
+      expect(user).not.toBeUndefined();
+      expect(user.id).toBe(user.id);
+      expect(user.login).toBe(user.login);
+      expect(user.html_url).toBe(user.html_url);
+      expect(user.email).toBe(user.email);
+      expect(user.avatar_url).toBe(user.avatar_url);
+    });
+
+    it("throws an error when the api call fails", async () => {
+      const status = 404;
+      mockFetch.mockResolvedValue({ ok: false, status });
+      const err = await api.fetchUser().catch((e) => {
+        return e;
+      });
+      expect(err instanceof FailedGithubRequest).toBe(true);
+      expect(err.status).toBe(status);
+    });
+
+    it("throws an InvalidGithubUser error when the response is empty", async () => {
+      text.mockResolvedValue("");
+      const err = await api.fetchUser().catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubUser).toBe(true);
+    });
+
+    it("throws an InvalidGithubUser error when the response is missing required properties", async () => {
+      text.mockResolvedValue(cloneWithoutProps(repository, ["id", "login"]));
+      const err = await api.fetchUser().catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubUser).toBe(true);
     });
   });
 });

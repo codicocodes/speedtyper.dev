@@ -1,10 +1,16 @@
 import fetch from "node-fetch";
-import { FailedGithubRequest, InvalidGithubRepository } from "./errors";
+import {
+  FailedGithubRequest,
+  InvalidGithubRepository,
+  InvalidGithubUser,
+} from "./errors";
 import { GithubRepository, parseGithubRepository } from "./schema/repository";
+import { GithubUser, parseGithubUser } from "./schema/user";
 
 class GithubAPI {
   BASE_URL = "https://api.github.com";
   REPOSITORY_URL = `${this.BASE_URL}/repos`;
+  USER_URL = `${this.BASE_URL}/user`;
 
   constructor(private _token: string) {}
 
@@ -13,6 +19,13 @@ class GithubAPI {
     const repository = parseGithubRepository(data);
     if (repository) return repository;
     throw new InvalidGithubRepository(parseGithubRepository.message);
+  }
+
+  async fetchUser(): Promise<GithubUser> {
+    const data = await this.fetch(this.USER_URL);
+    const user = parseGithubUser(data);
+    if (user) return user;
+    throw new InvalidGithubUser(parseGithubRepository.message);
   }
 
   private async fetch(url: string): Promise<string> {
