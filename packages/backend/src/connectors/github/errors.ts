@@ -20,3 +20,10 @@ export class InvalidGithubUser extends Error {
     Object.setPrototypeOf(this, InvalidGithubUser.prototype);
   }
 }
+
+export class InvalidGithubToken extends Error {
+  constructor(msg?: string) {
+    super(`Invalid Github Token: ${msg}`);
+    Object.setPrototypeOf(this, InvalidGithubToken.prototype);
+  }
+}

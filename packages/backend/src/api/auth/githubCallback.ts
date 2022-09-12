@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User, { UserDoc } from "../../models/user";
-import github from "../../connectors/github";
-import GithubAPI from "../../connectors/github/api";
+import GithubAPI, { GithubAuthAPI } from "../../connectors/github/api";
 import { GithubUser } from "../../connectors/github/schema/user";
 
 const getBaseURL = (loginReferrer?: string): string => {
@@ -73,8 +72,9 @@ export default async function GithubCallback(req: Request, res: Response) {
   }
 
   try {
-    const accessToken = await github.getAccessToken(code);
-    const api = new GithubAPI(accessToken);
+    const auth = new GithubAuthAPI();
+    const token = await auth.fetchAccessToken(code);
+    const api = new GithubAPI(token);
     const githubUser = await api.fetchUser();
     const user = await upsertGithubUser(githubUser);
     saveUserToSession(req, user);

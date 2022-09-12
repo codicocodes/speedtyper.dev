@@ -2,9 +2,11 @@ import fetch from "node-fetch";
 import {
   FailedGithubRequest,
   InvalidGithubRepository,
+  InvalidGithubToken,
   InvalidGithubUser,
 } from "./errors";
 import { GithubRepository, parseGithubRepository } from "./schema/repository";
+import { parseGithubToken } from "./schema/token";
 import { GithubUser, parseGithubUser } from "./schema/user";
 
 class GithubAPI {
@@ -47,5 +49,26 @@ const handleFetchResponse = async (
   }
   return response.text();
 };
+
+export class GithubAuthAPI {
+  async fetchAccessToken(code: string) {
+    const data = await this._fetchAccessToken(code).then(handleFetchResponse);
+    const githubToken = parseGithubToken(data);
+    if (githubToken) return githubToken.access_token;
+    throw new InvalidGithubToken(parseGithubToken.message);
+  }
+  private async _fetchAccessToken(code: string) {
+    const { GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID } = process.env;
+    return fetch(
+      `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${code}`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+      }
+    );
+  }
+}
 
 export default GithubAPI;
