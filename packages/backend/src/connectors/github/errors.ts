@@ -27,3 +27,10 @@ export class InvalidGithubToken extends Error {
     Object.setPrototypeOf(this, InvalidGithubToken.prototype);
   }
 }
+
+export class InvalidGithubTree extends Error {
+  constructor(msg?: string) {
+    super(`Invalid Github Tree: ${msg}`);
+    Object.setPrototypeOf(this, InvalidGithubTree.prototype);
+  }
+}

@@ -6,9 +6,14 @@ import {
   FailedGithubRequest,
   InvalidGithubRepository,
   InvalidGithubToken,
+  InvalidGithubTree,
   InvalidGithubUser,
 } from "../errors";
 import { parseGithubRepository } from "../schema/repository";
+import { parseGithubToken } from "../schema/token";
+import { parseGithubTree } from "../schema/tree";
+import { parseGithubUser } from "../schema/user";
+import gitTree from "./mock-responses/git-tree";
 
 import repository from "./mock-responses/repository";
 import user from "./mock-responses/user";
@@ -66,7 +71,9 @@ describe("GithubAPI", () => {
     });
 
     it("throws an InvalidGithubRepository error when the response is missing required properties", async () => {
-      text.mockResolvedValue(cloneWithoutProps(repository, ["id", "node_id"]));
+      text.mockResolvedValue(
+        cloneWithoutProps(repository, ["id", "node_id"], parseGithubRepository)
+      );
       const err = await api.fetchRepository(repository.full_name).catch((e) => {
         return e;
       });
@@ -118,11 +125,68 @@ describe("GithubAPI", () => {
     });
 
     it("throws an InvalidGithubUser error when the response is missing required properties", async () => {
-      text.mockResolvedValue(cloneWithoutProps(repository, ["id", "login"]));
+      text.mockResolvedValue(
+        cloneWithoutProps(user, ["id", "login"], parseGithubUser)
+      );
       const err = await api.fetchUser().catch((e) => {
         return e;
       });
       expect(err instanceof InvalidGithubUser).toBe(true);
+    });
+  });
+
+  describe("fetchTree", () => {
+    const slug = "codicocodes/check-stream";
+    const sha = "main";
+    beforeEach(() => {
+      text.mockResolvedValue(JSON.stringify(gitTree));
+      // @ts-ignore next-line
+      mockFetch.mockResolvedValue({ ok: true, text } as Response);
+    });
+
+    it("calls node-fetch with the expected arguments", async () => {
+      const treeUrl = `${api.REPOSITORY_URL}/${slug}/git/trees/${sha}?recursive=true`;
+      await api.fetchGitTree(slug, sha);
+      expect(mockFetch).toHaveBeenCalledWith(treeUrl, {
+        headers: { Authorization: `token ${mockToken}` },
+      });
+    });
+
+    it("returns a valid git tree when the api call succeeds", async () => {
+      const root = await api.fetchGitTree(slug, sha);
+      expect(root).not.toBeUndefined();
+      expect(root.url).toBe(gitTree.url);
+      expect(root.sha).toBe(gitTree.sha);
+      expect(root.tree).toEqual(gitTree.tree);
+    });
+
+    it("throws an error when the api call fails", async () => {
+      const status = 404;
+      // @ts-ignore next-line
+      mockFetch.mockResolvedValue({ ok: false, status });
+      const err = await api.fetchGitTree(slug, sha).catch((e) => {
+        return e;
+      });
+      expect(err instanceof FailedGithubRequest).toBe(true);
+      expect(err.status).toBe(status);
+    });
+
+    it("throws an InvalidGithubTree error when the response is empty", async () => {
+      text.mockResolvedValue("");
+      const err = await api.fetchGitTree(slug, sha).catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubTree).toBe(true);
+    });
+
+    it("throws an InvalidGithubTree error when the response is missing required properties", async () => {
+      text.mockResolvedValue(
+        cloneWithoutProps(gitTree, ["sha"], parseGithubTree)
+      );
+      const err = await api.fetchGitTree(slug, sha).catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubTree).toBe(true);
     });
   });
 });
@@ -136,13 +200,15 @@ describe("GithubAuthAPI", () => {
 
   describe("fetchAccessToken", () => {
     const expectedToken = "asdf";
+    const expectedResponse = { access_token: expectedToken };
     const GITHUB_CLIENT_ID = "123";
     const GITHUB_CLIENT_SECRET = "234";
     const code = "135";
     process.env.GITHUB_CLIENT_ID = GITHUB_CLIENT_ID;
     process.env.GITHUB_CLIENT_SECRET = GITHUB_CLIENT_SECRET;
+
     beforeEach(() => {
-      text.mockResolvedValue(JSON.stringify({ access_token: expectedToken }));
+      text.mockResolvedValue(JSON.stringify(expectedResponse));
       // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: true, text } as Response);
     });
@@ -189,8 +255,10 @@ describe("GithubAuthAPI", () => {
       expect(err instanceof InvalidGithubToken).toBe(true);
     });
 
-    it("throws an InvalidGithubRepository error when the response is missing required properties", async () => {
-      text.mockResolvedValue(cloneWithoutProps(repository, ["id", "node_id"]));
+    it("throws an InvalidGithubToken error when the response is missing required properties", async () => {
+      text.mockResolvedValue(
+        cloneWithoutProps(expectedResponse, ["access_token"], parseGithubToken)
+      );
       const err = await api.fetchAccessToken(code).catch((e) => {
         return e;
       });
@@ -199,10 +267,13 @@ describe("GithubAuthAPI", () => {
   });
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function cloneWithoutProps(obj: any, props: string[]): string {
+function cloneWithoutProps<T>(
+  obj: T,
+  props: string[],
+  parser: (_: string) => T
+): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const clone: any = parseGithubRepository(JSON.stringify(obj));
+  const clone: any = parser(JSON.stringify(obj));
   for (const prop of props) {
     delete clone[prop];
   }

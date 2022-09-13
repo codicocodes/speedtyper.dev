@@ -3,10 +3,12 @@ import {
   FailedGithubRequest,
   InvalidGithubRepository,
   InvalidGithubToken,
+  InvalidGithubTree,
   InvalidGithubUser,
 } from "./errors";
 import { GithubRepository, parseGithubRepository } from "./schema/repository";
 import { parseGithubToken } from "./schema/token";
+import { GithubTree as GithubTree, parseGithubTree } from "./schema/tree";
 import { GithubUser, parseGithubUser } from "./schema/user";
 
 class GithubAPI {
@@ -28,6 +30,14 @@ class GithubAPI {
     const user = parseGithubUser(data);
     if (user) return user;
     throw new InvalidGithubUser(parseGithubRepository.message);
+  }
+
+  async fetchGitTree(repo: string, sha: string): Promise<GithubTree> {
+    const treeUrl = `${this.REPOSITORY_URL}/${repo}/git/trees/${sha}?recursive=true`;
+    const data = await this.fetch(treeUrl);
+    const tree = parseGithubTree(data);
+    if (tree) return tree;
+    throw new InvalidGithubTree(parseGithubRepository.message);
   }
 
   private async fetch(url: string): Promise<string> {
