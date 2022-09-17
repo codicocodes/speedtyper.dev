@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Chart, LineController, CategoryScale, LinearScale, PointElement, LineElement } from "chart.js";
 import cpmToWpm from "../utils/cpmToWpm";
 
@@ -23,7 +23,7 @@ const renderChart = (
     seconds++;
   }
 
-  new Chart(ctx, {
+  return new Chart(ctx, {
     type: "line",
     data: {
       labels,
@@ -49,8 +49,12 @@ export default function ChartContainer({ cpmTimeSeries }: { cpmTimeSeries: any[]
   const chartRef = React.createRef<HTMLCanvasElement>();
 
   useEffect(() => {
+    let chart: Chart<any> | undefined;
     if (chartRef.current) {
-      renderChart(chartRef, cpmTimeSeries);
+      chart = renderChart(chartRef, cpmTimeSeries);
+    }
+    return () => {
+      chart?.destroy()
     }
   }, [cpmTimeSeries, chartRef]);
 
