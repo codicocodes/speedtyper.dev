@@ -56,13 +56,9 @@ export default () => {
           }
           if (
             [
-              "https://api.speedtyper.dev/analytics",
               "https://speedtyper.dev",
               "https://www.speedtyper.dev",
-              "https://speedtyper.dev/play",
-              "https://www.speedtyper.dev/play",
               `${process.env.CLIENT_URL}`,
-              `${process.env.CLIENT_URL}/play`,
             ].indexOf(origin) >= 0
           ) {
             return cb(null, true);
