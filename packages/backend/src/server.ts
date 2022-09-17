@@ -80,20 +80,10 @@ export default () => {
 
   const server = http.createServer(app);
 
-  const io = socketIO(server, {
-    origins: [
-      `${process.env.CLIENT_URL}`,
-      `${process.env.CLIENT_URL}/play`,
-      "https://speedtyper.dev",
-      "https://www.speedtyper.dev",
-      "https://speedtyper.dev/play",
-      "https://www.speedtyper.dev/play",
-      ...(process.env.NODE_ENV !== "production"
-        ? ["http://localhost:3000", "http://localhost:3001"]
-        : []),
-    ],
-  });
-
+  // TODO: Cleanup cors logic
+  // TODO: Add tests for cors logic
+  // TODO: Upgrade to newest Socket.io v.4
+  const io = socketIO(server);
   io.use(
     createSharedSession(session, {
       autoSave: true,
