@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import  highlightjs  from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // import your preferred style
@@ -46,9 +46,9 @@ const CodeArea = ({
 }) => {
   const { smoothCaret } = useAppContext();
 
-  const nextCharRef = React.createRef<HTMLSpanElement>();
+  const nextCharRef = useRef<HTMLSpanElement>();
 
-  const correctRef = React.createRef<HTMLSpanElement>();
+  const correctRef = useRef<HTMLSpanElement>();
 
   useEffect(() => {
     if (correctRef.current && correctChars) {
