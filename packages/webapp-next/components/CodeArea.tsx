@@ -52,7 +52,7 @@ const CodeArea = ({
 
   useEffect(() => {
     if (correctRef.current && correctChars) {
-      highlightjs.highlightBlock(correctRef.current);
+      highlightjs.highlightElement(correctRef.current);
     }
   }, [correctChars, correctRef]);
 
