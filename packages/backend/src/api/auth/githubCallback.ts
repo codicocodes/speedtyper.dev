@@ -7,7 +7,7 @@ const getBaseURL = (loginReferrer?: string): string => {
   return (
     loginReferrer ??
     (process.env.NODE_ENV === "production"
-      ? "https://speedtyper.dev"
+      ? process.env.CLIENT_URL || "https://speedtyper.dev"
       : "http://localhost:3001")
   );
 };
