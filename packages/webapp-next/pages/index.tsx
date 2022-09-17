@@ -6,7 +6,6 @@ import Toplist from "../components/Leaderboard";
 import useResults from "../hooks/useResults";
 import Stream from "../components/Stream";
 import { useAppContext } from "../AppContext";
-import MarketingBar from "../components/MarketingBar";
 import Link from "next/link";
 import getConfig from "next/config";
 
@@ -174,9 +173,9 @@ const IndexPage = () => {
                   }
 
                   const markdown = `
-[<img src="https://api.speedtyper.dev/users/${user?.username}/badges/averagewpm" alt="SpeedTyper.dev avg wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
-[<img src="https://api.speedtyper.dev/users/${user?.username}/badges/topwpm" alt="SpeedTyper.dev top wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
-[<img src="https://api.speedtyper.dev/users/${user?.username}/badges/gamecount" alt="SpeedTyper.dev games" height="25">](https://www.speedtyper.dev/profile/${user?.username})
+[<img src="${serverUrl}/users/${user?.username}/badges/averagewpm" alt="SpeedTyper.dev avg wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
+[<img src="${serverUrl}/users/${user?.username}/badges/topwpm" alt="SpeedTyper.dev top wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
+[<img src="${serverUrl}/users/${user?.username}/badges/gamecount" alt="SpeedTyper.dev games" height="25">](https://www.speedtyper.dev/profile/${user?.username})
 `;
                   copyToClipboard(markdown);
                 }}
