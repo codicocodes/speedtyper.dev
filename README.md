@@ -2,7 +2,7 @@
 <br>
 <div align="center">
   <a href="https://speedtyper.dev" target="_blank">
-    <img src="https://speedtyper.dev/images/logo.png" alt="Speedtyper" height="100" width="auto"/>
+    <img src="https://www.speedtyper.dev/logo.png" alt="Speedtyper" height="100" width="auto"/>
   </a>
   <h1><i>speedtyper.dev</i></h1>
 </div>
