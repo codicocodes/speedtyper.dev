@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "jest",
+    "lint": "eslint .",
     "start": "node dist/src/index.js",
     "seed-codesources": "node dist/src/tools/seedCodeSources.js",
     "process-challenges": "node dist/src/tools/processChallenges.js",
