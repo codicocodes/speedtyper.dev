@@ -1,0 +1,35 @@
+name: Frontent linting and unit tests
+ 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+ 
+env:
+  NODE_VERSION: 16
+ 
+jobs:
+  linting-and-tests:
+    name: Webapp linting and unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+ 
+      - name: Code Checkout
+        uses: actions/checkout@v2
+ 
+      - name: Install webapp dependencies
+        run: yarn --cwd ./packages/webapp-next install --frozen-lockfile
+
+      - name: Build webapp
+        run: yarn --cwd ./packages/webapp-next build
+ 
+      - name: Webapp code linting
+        run: yarn --cwd ./packages/webapp-next lint --quiet
+
+      - name: Webapp unit test
+        run: echo "no tests to run"
