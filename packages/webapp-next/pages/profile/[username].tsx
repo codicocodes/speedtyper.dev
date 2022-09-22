@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import useUserResults from "../../hooks/useUserResults";
 import { humanizeRelative, humanizeAbsolute } from "../../utils/humanize";
 import SecondChart from "../../components/SecondChart";
-import { useRouter } from "next/router";
 
 interface ProfileProps {
-  userName?: string;
+  username?: string;
 }
 
 const ProfileItem = ({
@@ -20,13 +19,24 @@ const ProfileItem = ({
 
 export type ResultSelectorType = "monthly" | "annual";
 
-const ProfilePage = (props: ProfileProps) => {
-  const router = useRouter()
-  const { username } = router.query
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
 
+export async function getStaticProps({ params }: { params: ProfileProps }) {
+  return {
+    props: {
+      username: params?.username,
+    },
+  };
+}
+
+const ProfilePage = ({ username }: ProfileProps) => {
   // TODO: handle Nextjs query being of type string | string[] | undefined
   const userResults = useUserResults(username);
-
   const [resultSelector, setResulSelector] = useState(
     "monthly" as ResultSelectorType
   );
