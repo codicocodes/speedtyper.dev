@@ -10,10 +10,7 @@ interface ProfileProps {
 
 const ProfileItem = ({
   children,
-}: {
-  children: React.ReactChild;
-  customWidth?: string;
-}) => {
+}: React.PropsWithChildren) => {
   return (
     <div className="flex items-center justify-between bg-dark-lake text-off-white p-2 mr-6 mb-4 w-56 rounded-xl shadow-lg">
       {children}
