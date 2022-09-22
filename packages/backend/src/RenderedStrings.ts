@@ -78,11 +78,11 @@ export default class RenderedStrings {
     const indexDiff = userRace.index - nextNextIndex;
 
     this.correctChars = !userRace.hasMistake
-      ? this.correctChars.substr(0, correctCharsEnd)
+      ? this.correctChars.substring(0, correctCharsEnd)
       : this.correctChars;
 
     this.wrongChars = userRace.hasMistake
-      ? this.wrongChars.substr(0, this.wrongChars.length - indexDiff)
+      ? this.wrongChars.substring(0, this.wrongChars.length - indexDiff)
       : this.wrongChars;
 
     this.nextChar = challenge.chars[userRace.index].value;

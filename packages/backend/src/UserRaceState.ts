@@ -150,7 +150,12 @@ export default class UserRaceState {
   findPreviousIndex(challenge: IChallenge): number {
     let nextIndex = this.index - 1;
     for (nextIndex; nextIndex >= 0; nextIndex--) {
-      if (!challenge.chars[nextIndex].skipped) {
+      // FIXME: gh-47: there is an exception happening in production
+      // challenge.chars[nextIndex] can be undefined, this should not be the case
+      // It would lead to an exception before adding optional chaining
+      // the state logic should be refactored with unit tests
+      // to make sure we cannot get into invalid states
+      if (!challenge.chars[nextIndex]?.skipped) {
         break;
       }
     }
@@ -182,7 +187,7 @@ export default class UserRaceState {
 
   updateInput(pressedKey: string): UserRaceState {
     if (pressedKey === "backspace") {
-      this.input = this.input.substr(0, this.input.length - 1);
+      this.input = this.input.substring(0, this.input.length - 1);
     } else {
       this.input = this.input.concat(this.getTypedChar(pressedKey));
     }
@@ -192,7 +197,7 @@ export default class UserRaceState {
   updateHasMistake(challenge: IChallenge): UserRaceState {
     const hadMistake = this.hasMistake;
     this.hasMistake =
-      this.input !== challenge.strippedCode.substr(0, this.input.length);
+      this.input !== challenge.strippedCode.substring(0, this.input.length);
     if (!hadMistake && !this.hasMistake) {
       this.correctInput = this.input;
     }
