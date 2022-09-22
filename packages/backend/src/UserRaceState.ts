@@ -150,7 +150,12 @@ export default class UserRaceState {
   findPreviousIndex(challenge: IChallenge): number {
     let nextIndex = this.index - 1;
     for (nextIndex; nextIndex >= 0; nextIndex--) {
-      if (!challenge.chars[nextIndex].skipped) {
+      // FIXME: gh-47: there is an exception happening in production
+      // challenge.chars[nextIndex] can be undefined, this should not be the case
+      // It would lead to an exception before adding optional chaining
+      // the state logic should be refactored with unit tests
+      // to make sure we cannot get into invalid states
+      if (!challenge.chars[nextIndex]?.skipped) {
         break;
       }
     }
