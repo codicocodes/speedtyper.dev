@@ -4,7 +4,7 @@ const SmoothCaret = ({
   nextCharRef,
   inputIsSelected,
 }: {
-  nextCharRef: React.RefObject<HTMLSpanElement> | undefined;
+  nextCharRef: React.RefObject<HTMLSpanElement | null>
   inputIsSelected: boolean;
 }) => {
   const left = (nextCharRef?.current?.offsetLeft ?? 0) - 2 + "px";
@@ -28,7 +28,6 @@ const SmoothCaret = ({
   }, [left, top]);
 
   return (
-    nextCharRef?.current && (
       <div
         id="caret"
         className={`${
@@ -39,7 +38,6 @@ const SmoothCaret = ({
           width: "2.5px",
         }}
       ></div>
-    )
   );
 };
 

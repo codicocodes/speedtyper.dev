@@ -46,9 +46,9 @@ const CodeArea = ({
 }) => {
   const { smoothCaret } = useAppContext();
 
-  const nextCharRef = useRef<HTMLSpanElement>();
+  const nextCharRef = useRef<HTMLSpanElement | null>(null);
 
-  const correctRef = useRef<HTMLSpanElement>();
+  const correctRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
     if (correctRef.current && correctChars) {
@@ -66,9 +66,9 @@ const CodeArea = ({
       }}
     >
       <div className="flex w-full relative rounded mb-0">
-        {smoothCaret && (
+        {smoothCaret &&  (
           <SmoothCaret
-            nextCharRef={nextCharRef}
+            nextCharRef={nextCharRef ?? null}
             inputIsSelected={inputIsSelected}
           />
         )}
