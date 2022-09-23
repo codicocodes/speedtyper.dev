@@ -7,6 +7,13 @@ export class FailedGithubRequest extends Error {
   }
 }
 
+export class InvalidGithubBlob extends Error {
+  constructor(msg?: string) {
+    super(`Invalid Github Blob: ${msg}`);
+    Object.setPrototypeOf(this, InvalidGithubBlob.prototype);
+  }
+}
+
 export class InvalidGithubRepository extends Error {
   constructor(msg?: string) {
     super(`Invalid Github Repository: ${msg}`);

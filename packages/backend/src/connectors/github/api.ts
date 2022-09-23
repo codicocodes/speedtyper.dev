@@ -1,14 +1,16 @@
 import fetch from "node-fetch";
 import {
   FailedGithubRequest,
+  InvalidGithubBlob,
   InvalidGithubRepository,
   InvalidGithubToken,
   InvalidGithubTree,
   InvalidGithubUser,
 } from "./errors";
+import { GithubBlob, parseGithubBlob } from "./schema/blob";
 import { GithubRepository, parseGithubRepository } from "./schema/repository";
 import { parseGithubToken } from "./schema/token";
-import { GithubTree as GithubTree, parseGithubTree } from "./schema/tree";
+import { GithubNode, GithubTree, parseGithubTree } from "./schema/tree";
 import { GithubUser, parseGithubUser } from "./schema/user";
 
 class GithubAPI {
@@ -17,6 +19,13 @@ class GithubAPI {
   USER_URL = `${this.BASE_URL}/user`;
 
   constructor(private _token: string) {}
+
+  async fetchBlob(node: GithubNode): Promise<GithubBlob> {
+    const data = await this.fetch(node.url);
+    const blob = parseGithubBlob(data);
+    if (blob) return blob;
+    throw new InvalidGithubBlob(parseGithubRepository.message);
+  }
 
   async fetchRepository(slug: string): Promise<GithubRepository> {
     const data = await this.fetch(`${this.REPOSITORY_URL}/${slug}`);

@@ -4,15 +4,18 @@ jest.mock("node-fetch");
 import GithubAPI, { GithubAuthAPI } from "../api";
 import {
   FailedGithubRequest,
+  InvalidGithubBlob,
   InvalidGithubRepository,
   InvalidGithubToken,
   InvalidGithubTree,
   InvalidGithubUser,
 } from "../errors";
+import { parseGithubBlob } from "../schema/blob";
 import { parseGithubRepository } from "../schema/repository";
 import { parseGithubToken } from "../schema/token";
 import { parseGithubTree } from "../schema/tree";
 import { parseGithubUser } from "../schema/user";
+import blob from "./mock-responses/blob";
 import gitTree from "./mock-responses/git-tree";
 
 import repository from "./mock-responses/repository";
@@ -27,6 +30,59 @@ describe("GithubAPI", () => {
 
   beforeEach(() => {
     api = new GithubAPI(mockToken);
+  });
+
+  describe("fetchBlob", () => {
+    const node = gitTree.tree[0];
+    beforeEach(() => {
+      text.mockResolvedValue(JSON.stringify(blob));
+      // @ts-ignore next-line
+      mockFetch.mockResolvedValue({ ok: true, text } as Response);
+    });
+
+    it("calls node-fetch with the expected arguments", async () => {
+      await api.fetchBlob(node);
+      expect(mockFetch).toHaveBeenCalledWith(node.url, {
+        headers: { Authorization: `token ${mockToken}` },
+      });
+    });
+
+    it("returns a valid github blob when the api call succeeds", async () => {
+      const fetchedBlob = await api.fetchBlob(node);
+      expect(fetchedBlob).not.toBeUndefined();
+      expect(fetchedBlob.content).toBe(blob.content);
+      expect(fetchedBlob.node_id).toBe(blob.node_id);
+      expect(fetchedBlob.encoding).toBe("base64");
+    });
+
+    it("throws an error when the api call fails", async () => {
+      const status = 404;
+      // @ts-ignore next-line
+      mockFetch.mockResolvedValue({ ok: false, status });
+      const err = await api.fetchBlob(node).catch((e) => {
+        return e;
+      });
+      expect(err instanceof FailedGithubRequest).toBe(true);
+      expect(err.status).toBe(status);
+    });
+
+    it("throws an InvalidGithubBlob error when the response is empty", async () => {
+      text.mockResolvedValue("");
+      const err = await api.fetchBlob(node).catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubBlob).toBe(true);
+    });
+
+    it("throws an InvalidGithubBlob error when the response is missing required properties", async () => {
+      text.mockResolvedValue(
+        cloneWithoutProps(blob, ["encoding", "node_id"], parseGithubBlob)
+      );
+      const err = await api.fetchBlob(node).catch((e) => {
+        return e;
+      });
+      expect(err instanceof InvalidGithubBlob).toBe(true);
+    });
   });
 
   describe("fetchRepository", () => {
@@ -270,7 +326,7 @@ describe("GithubAuthAPI", () => {
 function cloneWithoutProps<T>(
   obj: T,
   props: string[],
-  parser: (_: string) => T
+  parser: (_: string) => T | undefined
 ): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const clone: any = parser(JSON.stringify(obj));
