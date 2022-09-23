@@ -23,4 +23,4 @@ const schema: JTDSchemaType<GithubBlob> = {
   additionalProperties: true,
 };
 
-export const parseGithubRepository = ajv.compileParser<GithubBlob>(schema);
+export const parseGithubBlob = ajv.compileParser<GithubBlob>(schema);

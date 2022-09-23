@@ -1,7 +1,17 @@
+import { GithubTree } from "connectors/github/schema/tree";
+
 export default {
   sha: "075617e99de0b9188f01f9bab8202410a93d21ad",
   url: "https://api.github.com/repos/codicocodes/check-stream/git/trees/075617e99de0b9188f01f9bab8202410a93d21ad",
   tree: [
+    {
+      path: "src/handlers/callback.rs",
+      mode: "100644",
+      type: "blob",
+      sha: "ff641c47ac0842ea4a3ce3ec03179ecf9b247137",
+      size: 4663,
+      url: "https://api.github.com/repos/codicocodes/check-stream/git/blobs/ff641c47ac0842ea4a3ce3ec03179ecf9b247137",
+    },
     {
       path: ".gitignore",
       mode: "100644",
@@ -39,14 +49,6 @@ export default {
       type: "tree",
       sha: "8f4d120719e56e239cebfd371ed6f70b66fb1ade",
       url: "https://api.github.com/repos/codicocodes/check-stream/git/trees/8f4d120719e56e239cebfd371ed6f70b66fb1ade",
-    },
-    {
-      path: "src/handlers/callback.rs",
-      mode: "100644",
-      type: "blob",
-      sha: "ff641c47ac0842ea4a3ce3ec03179ecf9b247137",
-      size: 4663,
-      url: "https://api.github.com/repos/codicocodes/check-stream/git/blobs/ff641c47ac0842ea4a3ce3ec03179ecf9b247137",
     },
     {
       path: "src/handlers/get_stream.rs",
@@ -106,4 +108,4 @@ export default {
     },
   ],
   truncated: false,
-};
+} as GithubTree;

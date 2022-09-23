@@ -2,11 +2,15 @@ import Ajv, { JTDSchemaType } from "ajv/dist/jtd";
 
 const ajv = new Ajv();
 
+export enum GithubNodeType {
+  blob = "blob",
+  tree = "tree",
+}
+
 export interface GithubNode {
   path: string;
   mode: string;
-  // FIXME: type should be enum ["blob", "tree"]
-  type: string;
+  type: "blob" | "tree";
   sha: string;
   size?: number;
   url: string;
@@ -27,7 +31,7 @@ const treeSchema: JTDSchemaType<GithubTree> = {
         properties: {
           path: { type: "string" },
           mode: { type: "string" },
-          type: { type: "string" },
+          type: { enum: ["blob", "tree"] },
           sha: { type: "string" },
           url: { type: "string" },
         },
