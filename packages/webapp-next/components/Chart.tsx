@@ -49,14 +49,11 @@ export default function ChartContainer({ cpmTimeSeries }: { cpmTimeSeries: any[]
   const chartRef = React.createRef<HTMLCanvasElement>();
 
   useEffect(() => {
-    let chart: Chart<any> | undefined;
-    if (chartRef.current) {
-      chart = renderChart(chartRef, cpmTimeSeries);
-    }
+    const chart = renderChart(chartRef, cpmTimeSeries);
     return () => {
-      chart?.destroy()
+      chart.destroy()
     }
-  }, [cpmTimeSeries, chartRef]);
+  }, [cpmTimeSeries]);
 
   return (
     <div
