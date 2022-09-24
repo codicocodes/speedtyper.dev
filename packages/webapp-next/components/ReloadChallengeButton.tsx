@@ -21,7 +21,6 @@ const renderSvg = (isCompleted: boolean) => {
  const ReloadChallengeButton = ({
   socket,
   isCompleted,
-  focusCodeArea,
   language,
   mode,
   gameId,
@@ -29,7 +28,6 @@ const renderSvg = (isCompleted: boolean) => {
 }: {
   socket: Socket | null;
   isCompleted: boolean;
-  focusCodeArea: boolean;
   language: string | null;
   mode: string | null;
   gameId: string | null;
@@ -44,19 +42,10 @@ const renderSvg = (isCompleted: boolean) => {
     }
   };
 
-  const ref = React.createRef<HTMLButtonElement>();
-
-  useEffect(() => {
-    if (!focusCodeArea) {
-      ref.current?.focus();
-    }
-  }, [focusCodeArea, ref]);
-
   return (
     <button
       className="flex items-center py-2 px-4 hover:bg-purple-300 cursor-pointer bg-purple-400 my-4 rounded shadow-2xl border-gray-200 border"
       onClick={handleOnClick}
-      ref={ref}
     >
       {renderSvg(isCompleted)}
       Next
