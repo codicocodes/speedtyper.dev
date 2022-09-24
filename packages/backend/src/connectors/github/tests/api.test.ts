@@ -16,7 +16,7 @@ import { parseGithubToken } from "../schema/token";
 import { parseGithubTree } from "../schema/tree";
 import { parseGithubUser } from "../schema/user";
 import blob from "./mock-responses/blob";
-import gitTree from "./mock-responses/git-tree";
+import gitTree, { gitTreeRepoSlug } from "./mock-responses/git-tree";
 
 import repository from "./mock-responses/repository";
 import user from "./mock-responses/user";
@@ -41,14 +41,14 @@ describe("GithubAPI", () => {
     });
 
     it("calls node-fetch with the expected arguments", async () => {
-      await api.fetchBlob(node);
+      await api.fetchBlob(gitTreeRepoSlug, node.sha);
       expect(mockFetch).toHaveBeenCalledWith(node.url, {
         headers: { Authorization: `token ${mockToken}` },
       });
     });
 
     it("returns a valid github blob when the api call succeeds", async () => {
-      const fetchedBlob = await api.fetchBlob(node);
+      const fetchedBlob = await api.fetchBlob(gitTreeRepoSlug, node.sha);
       expect(fetchedBlob).not.toBeUndefined();
       expect(fetchedBlob.content).toBe(blob.content);
       expect(fetchedBlob.node_id).toBe(blob.node_id);
@@ -59,7 +59,7 @@ describe("GithubAPI", () => {
       const status = 404;
       // @ts-ignore next-line
       mockFetch.mockResolvedValue({ ok: false, status });
-      const err = await api.fetchBlob(node).catch((e) => {
+      const err = await api.fetchBlob(gitTreeRepoSlug, node.sha).catch((e) => {
         return e;
       });
       expect(err instanceof FailedGithubRequest).toBe(true);
@@ -68,7 +68,7 @@ describe("GithubAPI", () => {
 
     it("throws an InvalidGithubBlob error when the response is empty", async () => {
       text.mockResolvedValue("");
-      const err = await api.fetchBlob(node).catch((e) => {
+      const err = await api.fetchBlob(gitTreeRepoSlug, node.sha).catch((e) => {
         return e;
       });
       expect(err instanceof InvalidGithubBlob).toBe(true);
@@ -78,7 +78,7 @@ describe("GithubAPI", () => {
       text.mockResolvedValue(
         cloneWithoutProps(blob, ["encoding", "node_id"], parseGithubBlob)
       );
-      const err = await api.fetchBlob(node).catch((e) => {
+      const err = await api.fetchBlob(gitTreeRepoSlug, node.sha).catch((e) => {
         return e;
       });
       expect(err instanceof InvalidGithubBlob).toBe(true);

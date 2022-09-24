@@ -1,5 +1,6 @@
 import { GithubTree } from "connectors/github/schema/tree";
 
+export const gitTreeRepoSlug = "codicocodes/check-stream";
 export default {
   sha: "075617e99de0b9188f01f9bab8202410a93d21ad",
   url: "https://api.github.com/repos/codicocodes/check-stream/git/trees/075617e99de0b9188f01f9bab8202410a93d21ad",

@@ -1,8 +1,10 @@
 export class FailedGithubRequest extends Error {
   status: number;
-  constructor(status: number) {
-    super(`Request failed with status: ${status}`);
+  url: string;
+  constructor(url: string, status: number) {
+    super(`Request to failed with status: ${status}`);
     this.status = status;
+    this.url = url;
     Object.setPrototypeOf(this, FailedGithubRequest.prototype);
   }
 }

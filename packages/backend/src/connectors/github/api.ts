@@ -10,18 +10,20 @@ import {
 import { GithubBlob, parseGithubBlob } from "./schema/blob";
 import { GithubRepository, parseGithubRepository } from "./schema/repository";
 import { parseGithubToken } from "./schema/token";
-import { GithubNode, GithubTree, parseGithubTree } from "./schema/tree";
+import { GithubTree, parseGithubTree } from "./schema/tree";
 import { GithubUser, parseGithubUser } from "./schema/user";
 
 class GithubAPI {
   BASE_URL = "https://api.github.com";
   REPOSITORY_URL = `${this.BASE_URL}/repos`;
   USER_URL = `${this.BASE_URL}/user`;
+  BLOB_URL = `${this.BASE_URL}/repos/{slug}/git/blobs/{sha}`;
 
   constructor(private _token: string) {}
 
-  async fetchBlob(node: GithubNode): Promise<GithubBlob> {
-    const data = await this.fetch(node.url);
+  async fetchBlob(fullName: string, sha: string): Promise<GithubBlob> {
+    const url = this.BLOB_URL.replace("{slug}", fullName).replace("{sha}", sha);
+    const data = await this.fetch(url);
     const blob = parseGithubBlob(data);
     if (blob) return blob;
     throw new InvalidGithubBlob(parseGithubRepository.message);
@@ -64,7 +66,7 @@ const handleFetchResponse = async (
 ): Promise<string> => {
   if (!response.ok) {
     const status = response.status;
-    throw new FailedGithubRequest(status);
+    throw new FailedGithubRequest(response.url, status);
   }
   return response.text();
 };
@@ -89,5 +91,7 @@ export class GithubAuthAPI {
     );
   }
 }
+
+export const githubAPI = new GithubAPI(process.env.GITHUB_ACCESS_TOKEN ?? "");
 
 export default GithubAPI;

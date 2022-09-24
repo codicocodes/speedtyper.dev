@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import db from "../db";
+import db from "mongoose";
 
 const { Schema } = db;
 

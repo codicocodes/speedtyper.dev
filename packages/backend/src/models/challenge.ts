@@ -1,4 +1,4 @@
-import db from "../db";
+import db from "mongoose";
 import { IChar } from "../types";
 
 const { Schema } = db;
