@@ -10,8 +10,13 @@
     "test": "jest",
     "lint": "eslint .",
     "start": "node dist/src/index.js",
-    "seed-codesources": "node dist/src/tools/seedCodeSources.js",
-    "process-challenges": "node dist/src/tools/processChallenges.js",
+    "import-trackedrepos": "tsc && node dist/src/tools/import/runImportTrackedRepos.js",
+    "sync-trackedrepos": "tsc && node dist/src/tools/import/runSyncTrackedRepos.js",
+    "import-trackedfiles": "tsc && node dist/src/tools/import/runImportTrackedFiles.js",
+    "sync-trackedfiles": "tsc && node dist/src/tools/import/runSyncTrackedFiles.js",
+    "test-parser": "tsc && node dist/src/tools/parser/runParserTest.js",
+    "seed-codesources": "tsc && node dist/src/tools/seedCodeSources.js",
+    "process-challenges": "tsc && node dist/src/tools/processChallenges.js",
     "build:dev": "cp .env ./dist/.env && tsc",
     "dev": "yarn build:dev && ./node_modules/.bin/nodemon dist/src/index.js",
     "tsc": "tsc --build tsconfig.json",
@@ -80,8 +85,9 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^29.0.2",
+    "mongodb-memory-server": "^8.9.2",
     "nodemon": "^2.0.4",
-    "typescript": "^4.8.2",
-    "ts-jest": "^28.0.8"
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.2"
   }
 }

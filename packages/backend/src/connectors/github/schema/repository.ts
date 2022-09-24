@@ -16,6 +16,15 @@ export interface GithubRepository {
   // FIXME: language should be enum
   language: string;
   default_branch: string;
+  license: {
+    name: string;
+  };
+  owner: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+  };
 }
 
 const schema: JTDSchemaType<GithubRepository> = {
@@ -33,6 +42,21 @@ const schema: JTDSchemaType<GithubRepository> = {
     // FIXME: language should be enum
     language: { type: "string" },
     default_branch: { type: "string" },
+    license: {
+      properties: {
+        name: { type: "string" },
+      },
+      additionalProperties: true,
+    },
+    owner: {
+      properties: {
+        login: { type: "string" },
+        id: { type: "int32" },
+        avatar_url: { type: "string" },
+        html_url: { type: "string" },
+      },
+      additionalProperties: true,
+    },
   },
   additionalProperties: true,
 };
