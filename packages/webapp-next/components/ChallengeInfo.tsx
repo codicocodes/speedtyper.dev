@@ -1,23 +1,6 @@
 import React from "react";
 import { IChallenge } from "../types";
-
-const Button = ({ url, children }: { url: string; children: any }) => {
-  return (
-    <button
-      style={{
-        minWidth: "100px",
-        outline: "none",
-      }}
-      className="flex my-4 items-center hover:bg-purple-300 cursor-pointer bg-purple-400 py-2 px-4 ml-4 rounded shadow-2xl border-gray-200 border"
-      onClick={() => {
-        window.open(url, "_blank");
-      }}
-    >
-      <GithubLogo />
-      {children}
-    </button>
-  );
-};
+import Button from "./Button";
 
 const GithubLogo = () => (
   <svg height="16" width="16" className="fill-current mr-2">
@@ -28,16 +11,38 @@ const GithubLogo = () => (
 const ChallengeInfo = ({
   challenge,
 }:
-{
-  challenge: IChallenge;
-}) => {
+  {
+    challenge: IChallenge;
+  }) => {
   return (
     <div className="flex flex-wrap flex-row text-dark-ocean text-sm">
-      <Button url={challenge?.source}>{challenge?.name}</Button>
-
-      <Button url={challenge?.projectUrl}>{challenge?.project}</Button>
-
-      <Button url={challenge?.licenseUrl}>{challenge?.license}</Button>
+      <Button
+        color="secondary"
+        leftIcon={<GithubLogo />}
+        onClick={() => {
+          window.open(challenge?.source, "_blank");
+        }}
+        title="See Code"
+        text={challenge?.name}
+      />
+      <Button
+        color="secondary"
+        leftIcon={<GithubLogo />}
+        onClick={() => {
+          window.open(challenge?.project, "_blank");
+        }}
+        title="See Project"
+        text={challenge?.project}
+      />
+      <Button
+        color="secondary"
+        leftIcon={<GithubLogo />}
+        onClick={() => {
+          window.open(challenge?.license, "_blank");
+        }}
+        title="See License"
+        text={challenge?.license}
+      />
     </div>
   );
 };
