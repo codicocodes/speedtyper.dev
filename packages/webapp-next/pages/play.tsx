@@ -24,7 +24,6 @@ import useAnalytics from "../hooks/useAnalytics";
 import Chart from "../components/Chart";
 import Countdown from "../components/Countdown";
 import useRaceCompleted from "../hooks/useRaceCompleted";
-import useToggleFocus from "../hooks/useToggleFocus";
 import useQueryParams from "../hooks/useQueryParams";
 import ShareRaceButton from "../components/ShareRaceButton";
 import useTotalSeconds from "../hooks/useTotalSeconds";
@@ -87,7 +86,6 @@ const Play = () => {
   const raceResults = useRaceCompleted(socket, challenge?._id ?? "");
   const topResults = useTopResults(challenge?._id ?? null);
   const isOwner = state.owner === state.currentUserId;
-  const focusCodeArea = useToggleFocus();
   const countdownIsOver = !!startTime;
 
   useAnalytics(
@@ -135,7 +133,6 @@ const Play = () => {
                 <ReloadChallengeButton
                   socket={socket}
                   isCompleted={!!endTime}
-                  focusCodeArea={focusCodeArea}
                   language={selectedLanguage}
                   mode={mode}
                   gameId={gameId}
@@ -146,7 +143,6 @@ const Play = () => {
                 <ReloadChallengeButton
                   socket={socket}
                   isCompleted={!!endTime}
-                  focusCodeArea={focusCodeArea}
                   language={selectedLanguage}
                   gameId={gameId}
                   mode={mode}
@@ -160,7 +156,6 @@ const Play = () => {
                     gameId={state.id}
                     countdown={countdown}
                     startTime={startTime}
-                    focused={focusCodeArea}
                     loaded={state.loaded}
                   />
                   <div className="flex items-center">

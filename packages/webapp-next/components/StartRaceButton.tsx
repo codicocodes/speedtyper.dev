@@ -6,14 +6,12 @@ const StartRaceButton = ({
   gameId,
   countdown,
   startTime,
-  focused,
   loaded,
 }: {
   socket: Socket | null;
   gameId: string;
   countdown: number;
   startTime?: number;
-  focused: boolean;
   loaded: boolean;
 }) => {
   const disabled = !loaded || !!countdown || !!startTime;
@@ -22,17 +20,8 @@ const StartRaceButton = ({
     socket?.emit("start_race_command", { gameId });
   };
 
-  const ref = React.createRef<HTMLButtonElement>();
-
-  useEffect(() => {
-    if (focused) {
-      ref.current?.focus();
-    }
-  }, [focused, ref]);
-
   return (
     <button
-      ref={ref}
       disabled={disabled}
       className={`flex my-4 items-center ${
         disabled ? "" : "hover:bg-purple-300"
