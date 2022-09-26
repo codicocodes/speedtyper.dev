@@ -110,7 +110,7 @@ const Play = () => {
       selectedUserState &&
         selectedUserState.input &&
         selectedUserState.input !==
-        challenge?.strippedCode.substring(0, selectedUserState.input.length)
+        challenge?.strippedCode.substr(0, selectedUserState.input.length)
     )
 
   const codeInputRef = useRef(null);
