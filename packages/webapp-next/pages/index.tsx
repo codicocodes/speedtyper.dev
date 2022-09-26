@@ -109,7 +109,7 @@ const IndexPage = () => {
               keep up to date with tournaments, live streams and updates to the
               game.
             </div>
-            <div className="flex items-center mx-12 mb-6 mt-4 gap-12">
+              <div className="flex flex-col lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
               <a
                 href="https://discord.gg/AMbnnN5eep"
                 target="_blank"
