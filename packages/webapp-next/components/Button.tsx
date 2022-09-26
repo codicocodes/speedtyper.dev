@@ -26,7 +26,7 @@ const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, si
     const buttonSize = size == "lg" ?
         "text-xl px-12 py-2"
         :
-        "text-base py-1.5 px-2"
+        "text-base py-2 px-4"
 
     return (
         <button

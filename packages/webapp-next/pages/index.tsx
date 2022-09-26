@@ -9,7 +9,7 @@ import { useAppContext } from "../AppContext";
 import Link from "next/link";
 import getConfig from "next/config";
 import Button from "../components/Button";
-import { DiscordLogo, TwitchLogo, RightArrowIcon, CopyIcon } from "../assets/icons";
+import { DiscordLogo, RightArrowIcon, CopyIcon, GithubLogo } from "../assets/icons";
 
 const IndexPage = () => {
   const {
@@ -109,34 +109,36 @@ const IndexPage = () => {
               keep up to date with tournaments, live streams and updates to the
               game.
             </div>
-            <a
-              href="https://discord.gg/AMbnnN5eep"
-              target="_blank"
-              className="inline-block justify-center mx-12 mb-6 mt-4"
-              rel="noreferrer"
-            >
-              <Button
-                color="primary"
-                leftIcon={<DiscordLogo />}
-                title="Join the discord"
-                text="Join Discord"
-                size="lg"
-              />
-            </a>
-            <a
-              href="https://github.com/codicocodes/speedtyper.dev"
-              target="_blank"
-              className="inline-block justify-center mx-12 mb-6 mt-4"
-              rel="noreferrer"
-            >
-              <Button
-                color="primary"
-                leftIcon={<TwitchLogo />}
-                title="Contribute to code"
-                text="Contribute"
-                size="lg"
-              />
-            </a>
+            <div className="flex items-center mx-12 mb-6 mt-4 gap-12">
+              <a
+                href="https://discord.gg/AMbnnN5eep"
+                target="_blank"
+                className="inline-block justify-center"
+                rel="noreferrer"
+              >
+                <Button
+                  color="primary"
+                  leftIcon={<DiscordLogo />}
+                  title="Join the discord"
+                  text="Join Discord"
+                  size="lg"
+                />
+              </a>
+              <a
+                href="https://github.com/codicocodes/speedtyper.dev"
+                target="_blank"
+                className="inline-block justify-center"
+                rel="noreferrer"
+              >
+                <Button
+                  color="primary"
+                  leftIcon={<GithubLogo />}
+                  title="Contribute to code"
+                  text="Contribute"
+                  size="lg"
+                />
+              </a>
+            </div>
           </div>
         </div>
 
