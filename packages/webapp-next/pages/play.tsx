@@ -33,6 +33,7 @@ import useTopResults from "../hooks/useTopResults";
 import Leaderboard from "../components/Leaderboard";
 import PingDiscordButton from "../components/PingDiscordButton";
 import LanguageDropdown from "../components/LanguageDropdown";
+import { useKeyMap } from "../hooks/useKeyMap";
 
 const PlacementContainer = ({ gameState }: { gameState: IGameState }) => {
   return (
