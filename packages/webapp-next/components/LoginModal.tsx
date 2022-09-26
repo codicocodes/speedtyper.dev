@@ -6,26 +6,31 @@ import { GithubLogo } from "../assets/icons";
 
 const LoginModal = () => {
   const [showModal, setShowModal] = React.useState(false);
-  const { publicRuntimeConfig: { serverUrl, siteRoot } } = getConfig()
-  const router = useRouter()
-  
+  const {
+    publicRuntimeConfig: { serverUrl, siteRoot },
+  } = getConfig();
+  const router = useRouter();
+
   return (
     <>
-      <Button
-        color="primary"
-        size="sm"
-        leftIcon={<GithubLogo />}
-        onClick={() => setShowModal(true)}
-        title="Login"
-        text="Sign up | Login"
-      />
-
+      <div className="hidden sm:block">
+        <Button
+          color="primary"
+          size="sm"
+          leftIcon={<GithubLogo />}
+          onClick={() => setShowModal(true)}
+          title="Login"
+          text="Sign up | Login"
+        />
+      </div>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             onClick={() => setShowModal(false)}
           >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl"
+            <div
+              className="relative w-auto my-6 mx-auto max-w-3xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="border-0 lg:rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -57,12 +62,12 @@ const LoginModal = () => {
                       if (document !== undefined) {
                         currentUrl = window.location.href;
                       }
-                      if (serverUrl){
+                      if (serverUrl) {
                         router.push(
                           `${serverUrl}/auth/github?currentUrl=${currentUrl}`
                         );
                       } else {
-                        throw new Error("Server URL is not defined.")
+                        throw new Error("Server URL is not defined.");
                       }
                     }}
                   >
