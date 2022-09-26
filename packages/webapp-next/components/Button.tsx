@@ -15,7 +15,7 @@ const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, si
         ?
         `bg-off-white`
         :
-        `bg-purple-400`
+        `bg-purple-400 hover:bg-purple-300`
 
     const disabledStyle = disabled
         ?
