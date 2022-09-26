@@ -1,8 +1,9 @@
-FROM node:16
+FROM node:16-alpine
 
 RUN apk update
 RUN apk add --no-cache python3 make g++
 
+RUN apt-get update || : && apt-get install python -y
 
 # Create app directory
 RUN mkdir -p /app
