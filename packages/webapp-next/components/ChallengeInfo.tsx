@@ -24,7 +24,7 @@ const ChallengeInfo = ({
         color="secondary"
         leftIcon={<GithubLogo />}
         onClick={() => {
-          window.open(challenge?.project, "_blank");
+          window.open(challenge?.projectUrl, "_blank");
         }}
         title="See Project"
         text={challenge?.project}
@@ -33,7 +33,7 @@ const ChallengeInfo = ({
         color="secondary"
         leftIcon={<GithubLogo />}
         onClick={() => {
-          window.open(challenge?.license, "_blank");
+          window.open(challenge?.licenseUrl, "_blank");
         }}
         title="See License"
         text={challenge?.license}

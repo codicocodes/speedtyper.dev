@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     leftIcon?: React.ReactElement,
     rightIcon?: React.ReactElement,
     text: string,
-    size?: "md" | "lg",
+    size?: "sm" | "md" | "lg",
 }
 
 const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, size = "md" }: ButtonProps) => {
@@ -23,10 +23,16 @@ const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, si
         :
         "cursor-pointer"
 
-    const buttonSize = size == "lg" ?
-        "text-xl px-12 py-2"
-        :
-        "text-base py-2 px-4"
+    const buttonSize = () => {
+        switch(size) {
+            case "lg":
+            return "text-xl px-12 py-2";
+            case "md":
+            return "text-base py-2 px-4";
+            case "sm":
+            return "text-base py-1 px-2"
+        }
+    }
 
     return (
         <button
@@ -34,7 +40,7 @@ const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, si
             title={title}
             style={{ transition: "all .15s ease" }}
             onClick={onClick}
-            className={`${sharedStyle} ${style} ${disabledStyle} ${buttonSize}`}
+            className={`${sharedStyle} ${style} ${disabledStyle} ${buttonSize()}`}
             disabled={disabled}
             aria-expanded="true"
             aria-haspopup="true"

@@ -13,6 +13,7 @@ const LoginModal = () => {
     <>
       <Button
         color="primary"
+        size="sm"
         leftIcon={<GithubLogo />}
         onClick={() => setShowModal(true)}
         title="Login"

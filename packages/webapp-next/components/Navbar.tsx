@@ -56,6 +56,7 @@ const Navbar = () => {
           <Button
             color="primary"
             leftIcon={<DiscordLogo />}
+            size="sm"
             title="Join the discord"
             text="Join"
           />
@@ -66,6 +67,7 @@ const Navbar = () => {
             >
           <Button
             color="primary"
+            size="sm"
             leftIcon={<TwitchLogo />}
             title="Follow codico on twitch"
             text="Follow"
