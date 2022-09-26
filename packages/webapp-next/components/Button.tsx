@@ -1,17 +1,14 @@
-import React, { FC } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
-type props = {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     color: "primary" | "secondary",
-    disabled?: boolean,
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
     leftIcon?: React.ReactElement,
     rightIcon?: React.ReactElement,
     text: string,
-    title: string,
     size?: "md" | "lg",
 }
 
-const Button: FC<props> = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, size = "md" }) => {
+const Button = ({ color, disabled, onClick, leftIcon, rightIcon, text, title, size = "md" }: ButtonProps) => {
     const sharedStyle = "flex items-center text-gray-900 border-gray-200 border rounded"
 
     const style = color === "primary"
