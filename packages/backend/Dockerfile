@@ -1,5 +1,8 @@
 FROM node:16
 
+RUN apk update
+RUN apk add --no-cache python3 make g++
+
 # Create app directory
 RUN mkdir -p /app
 WORKDIR /app
