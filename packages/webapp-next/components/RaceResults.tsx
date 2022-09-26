@@ -3,6 +3,7 @@ import React from "react";
 import { IToplistResult } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
 import { toHHMMSS } from "./Timer";
+import Image from "next/image"
 
 const RaceResults = ({
   results,
@@ -50,22 +51,25 @@ const RaceResults = ({
           return (
             <tr key={i}>
               <td
-                className={`border-l-8  ${
-                  result.isCurrentResult
-                    ? "border-purple-400"
-                    : "border-transparent"
-                } p-2 pl-4`}
+                className={`border-l-8  ${result.isCurrentResult
+                  ? "border-purple-400"
+                  : "border-transparent"
+                  } p-2 pl-4`}
                 style={{ width: "25px" }}
               >
                 {i + 1}
               </td>
 
-              <td className="">
-                <img
-                  className="rounded-full"
-                  style={{ width: "25px" }}
-                  src={result.avatarUrl}
-                />
+              <td>
+                {result.avatarUrl &&
+                  <Image
+                    className="rounded-full"
+                    width="25px"
+                    height="25px"
+                    quality={100}
+                    src={result.avatarUrl}
+                  />
+                }
               </td>
               <td
                 style={{
