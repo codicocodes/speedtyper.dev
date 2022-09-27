@@ -13,6 +13,7 @@
   "dependencies": {
     "chart.js": "^3.9.1",
     "date-fns": "^2.29.2",
+    "eslint-plugin-prettier": "^4.2.1",
     "highlight.js": "^11.6.0",
     "ky": "^0.31.3",
     "ky-universal": "^0.10.1",
