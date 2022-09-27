@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import Socket from "../Socket";
+import Button from "./Button";
 
 const StartRaceButton = ({
   socket,
@@ -21,17 +22,13 @@ const StartRaceButton = ({
   };
 
   return (
-    <button
+    <Button
+      color="secondary"
       disabled={disabled}
-      className={`flex my-4 items-center ${
-        disabled ? "" : "hover:bg-purple-300"
-      } bg-purple-400 ${
-        disabled ? "cursor-not-allowed" : "cursor-pointer"
-      } py-2 px-4 ml-4 rounded shadow-2xl border-gray-200 border`}
       onClick={handleOnClick}
-    >
-      Start
-    </button>
+      title="Start the match"
+      text="Start"
+    />
   );
 }
 export default StartRaceButton;

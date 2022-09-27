@@ -11,7 +11,7 @@ export default class RenderedStrings {
   untypedChars: string;
   constructor(challenge?: IChallenge) {
     this.skippedChars =
-      challenge?.fullCodeString?.substring(0, challenge.startIndex) ?? "";
+      challenge?.fullCodeString?.substr(0, challenge.startIndex) ?? "";
     this.correctChars = "";
     this.wrongChars = "";
     this.indentation = "";
@@ -78,11 +78,11 @@ export default class RenderedStrings {
     const indexDiff = userRace.index - nextNextIndex;
 
     this.correctChars = !userRace.hasMistake
-      ? this.correctChars.substring(0, correctCharsEnd)
+      ? this.correctChars.substr(0, correctCharsEnd)
       : this.correctChars;
 
     this.wrongChars = userRace.hasMistake
-      ? this.wrongChars.substring(0, this.wrongChars.length - indexDiff)
+      ? this.wrongChars.substr(0, this.wrongChars.length - indexDiff)
       : this.wrongChars;
 
     this.nextChar = challenge.chars[userRace.index].value;

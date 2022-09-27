@@ -187,7 +187,7 @@ export default class UserRaceState {
 
   updateInput(pressedKey: string): UserRaceState {
     if (pressedKey === "backspace") {
-      this.input = this.input.substring(0, this.input.length - 1);
+      this.input = this.input.substr(0, this.input.length - 1);
     } else {
       this.input = this.input.concat(this.getTypedChar(pressedKey));
     }
@@ -197,7 +197,7 @@ export default class UserRaceState {
   updateHasMistake(challenge: IChallenge): UserRaceState {
     const hadMistake = this.hasMistake;
     this.hasMistake =
-      this.input !== challenge.strippedCode.substring(0, this.input.length);
+      this.input !== challenge.strippedCode.substr(0, this.input.length);
     if (!hadMistake && !this.hasMistake) {
       this.correctInput = this.input;
     }

@@ -132,10 +132,10 @@ const handleBackspaceRenderedStrings = (
   const correctCharsEnd = indentation ? nextNextIndex + 1 : index;
   const indexDiff = index - nextNextIndex;
   const correctChars = !hasMistake
-    ? state.renderedStrings.correctChars.substring(0, correctCharsEnd)
+    ? state.renderedStrings.correctChars.substr(0, correctCharsEnd)
     : state.renderedStrings.correctChars;
     const wrongChars = state.hasMistake
-      ? state.renderedStrings.wrongChars.substring(
+      ? state.renderedStrings.wrongChars.substr(
         0,
         state.renderedStrings.wrongChars.length - indexDiff
       )
@@ -173,7 +173,7 @@ const handleBackspace = (
 ): IUserGameState => {
   const index = findPreviousIndex(challenge.chars ?? [], state.index);
 
-  const input = state.input.substring(0, state.input.length - 1);
+  const input = state.input.substr(0, state.input.length - 1);
 
   const hasMistake = input !== challenge.strippedCode.substring(0, input.length);
 
@@ -207,7 +207,7 @@ const handleInputChange = (
   const index = findNextIndex(state, challenge);
 
   const input = state.input.concat(typedChar);
-  const hasMistake = input !== challenge.strippedCode.substring(0, input.length);
+  const hasMistake = input !== challenge.strippedCode.substr(0, input.length);
 
   const renderedStrings = handleKeyPressRenderedStrings(
     state,

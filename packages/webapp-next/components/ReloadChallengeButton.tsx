@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Socket from "../Socket";
 import { IAction } from "../types";
+import Button from "./Button";
 
 const renderSvg = (isCompleted: boolean) => {
   return isCompleted ? (
@@ -43,13 +44,13 @@ const renderSvg = (isCompleted: boolean) => {
   };
 
   return (
-    <button
-      className="flex items-center py-2 px-4 hover:bg-purple-300 cursor-pointer bg-purple-400 my-4 rounded shadow-2xl border-gray-200 border"
+    <Button
+      color="secondary"
+      leftIcon={renderSvg(isCompleted)}
       onClick={handleOnClick}
-    >
-      {renderSvg(isCompleted)}
-      Next
-    </button>
+      title="Next Challenge"
+      text="Next"
+    />
   );
 };
 
