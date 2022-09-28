@@ -104,7 +104,6 @@ const SmallContent = ({ results }: { results: any }) => {
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",
               }}
-            // className="p-2 pl-4"
             >
               <Link
                 className="hover:text-purple-300"
