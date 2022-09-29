@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ["avatars.githubusercontent.com"],
   },
   publicRuntimeConfig: {
     title: "speedtyper.dev | Typing Practice For Programmers | Typing races",
