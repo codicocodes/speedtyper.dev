@@ -10,7 +10,13 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
   return (
-    <div>
+    <div
+      style={{
+        height: "100vh",
+        display: "grid",
+        gridTemplateRows: "auto 1fr",
+      }}
+    >
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={title} />

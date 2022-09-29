@@ -4,11 +4,11 @@ const SmoothCaret = ({
   nextCharRef,
   inputIsSelected,
 }: {
-  nextCharRef: React.RefObject<HTMLSpanElement | null>;
+  nextCharRef: React.RefObject<HTMLSpanElement>;
   inputIsSelected: boolean;
 }) => {
-  const left = (nextCharRef?.current?.offsetLeft ?? 0) - 2 + "px";
-  const top = (nextCharRef?.current?.offsetTop ?? 0) - 5 + "px";
+  const left = (nextCharRef.current?.offsetLeft ?? 0) - 2 + "px";
+  const top = (nextCharRef.current?.offsetTop ?? 0) - 2 + "px";
 
   useEffect(() => {
     const element = document.getElementById("caret");
@@ -34,8 +34,8 @@ const SmoothCaret = ({
         inputIsSelected ? "" : "hidden"
       } absolute bg-purple-400 rounded-lg`}
       style={{
-        height: "32px",
-        width: "2.5px",
+        height: "28px",
+        width: "2px",
       }}
     ></div>
   );
