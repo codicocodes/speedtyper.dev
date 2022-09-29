@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image:height" content="1024" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://speedtyper.dev" />
-        <link rel="icon" href="../images/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <script
           defer
           data-domain="speedtyper.dev"

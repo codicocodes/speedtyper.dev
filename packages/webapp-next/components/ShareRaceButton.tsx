@@ -36,7 +36,7 @@ const ShareRaceButton = ({ gameId }: { gameId: string }) => {
         leftIcon={<CopyIcon />}
         onClick={copyToClipboard}
         title="Copy to clipboard"
-        text="Copy"
+        text="Invite Friends"
       />
     </>
   );

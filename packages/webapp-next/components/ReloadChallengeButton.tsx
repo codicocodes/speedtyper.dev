@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useKeyMap } from "../hooks/useKeyMap";
 import Socket from "../Socket";
 import { IAction } from "../types";
 import Button from "./Button";
@@ -42,6 +43,8 @@ const ReloadChallengeButton = ({
       socket?.emit("refresh_challenge", language);
     }
   };
+
+  useKeyMap(true, "Tab", handleOnClick);
 
   return (
     <Button
