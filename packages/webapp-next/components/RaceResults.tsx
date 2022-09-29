@@ -4,7 +4,11 @@ import { IToplistResult } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
 import { toHHMMSS } from "./Timer";
 
-const RaceResults = ({ results }: { results: IToplistResult[] }): JSX.Element => {
+const RaceResults = ({
+  results,
+}: {
+  results: IToplistResult[];
+}): JSX.Element => {
   return (
     <table
       className="m-2 font-mono"
@@ -98,4 +102,4 @@ const RaceResults = ({ results }: { results: IToplistResult[] }): JSX.Element =>
   );
 };
 
-export default RaceResults
+export default RaceResults;

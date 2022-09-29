@@ -20,7 +20,7 @@ const renderSvg = (isCompleted: boolean) => {
   );
 };
 
- const ReloadChallengeButton = ({
+const ReloadChallengeButton = ({
   socket,
   isCompleted,
   language,

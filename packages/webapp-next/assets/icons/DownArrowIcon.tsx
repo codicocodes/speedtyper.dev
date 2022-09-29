@@ -13,5 +13,5 @@ export const DownArrowIcon = () => {
         clipRule="evenodd"
       />
     </svg>
-  )
-}
+  );
+};

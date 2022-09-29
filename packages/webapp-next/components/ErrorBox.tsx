@@ -29,10 +29,7 @@ const ErrorBox = ({
       </span>
 
       <Link href="/" className="font-gray-800">
-
-      <a>
-      Navigate to home page
-      </a>
+        <a>Navigate to home page</a>
       </Link>
     </div>
   ) : null;

@@ -54,7 +54,7 @@ export default (chars: string): IProcessedCode => {
 
   let strippedCode = "";
 
-  let updatedChars: IChar[] = chars.split("").map(value => ({
+  let updatedChars: IChar[] = chars.split("").map((value) => ({
     isTyped: false,
     isCorrect: false,
     isNextChar: false,

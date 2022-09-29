@@ -7,9 +7,17 @@ import { useAppContext } from "../AppContext";
 import { useRouter } from "next/router";
 import getConfig from "next/config";
 
-const AvatarModal = ({ user, logout }: { user: IUser | null | undefined; logout: () => void }) => {
-  const { publicRuntimeConfig: { siteRoot, serverUrl } } = getConfig()
-  const router = useRouter()
+const AvatarModal = ({
+  user,
+  logout,
+}: {
+  user: IUser | null | undefined;
+  logout: () => void;
+}) => {
+  const {
+    publicRuntimeConfig: { siteRoot, serverUrl },
+  } = getConfig();
+  const router = useRouter();
 
   const { smoothCaret, toggleSmoothCaret } = useAppContext();
 

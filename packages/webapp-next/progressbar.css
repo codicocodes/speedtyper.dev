@@ -1,24 +1,24 @@
 progress {
-  display: block; 
+  display: block;
   width: 100%;
-  border-radius: 1rem ;
+  border-radius: 1rem;
   -webkit-appearance: none;
   transition: 0.2s all linear;
 }
 
 progress::-ms-fill {
-  background:#b794f4;
+  background: #b794f4;
 }
 
 progress::-webkit-progress-inner-element {
-  background:#b794f4;
+  background: #b794f4;
 }
 
 progress::-moz-progress-bar {
-  background:#b794f4;
+  background: #b794f4;
 }
 
 progress::-webkit-progress-value {
-  background:#b794f4;
+  background: #b794f4;
   -webkit-appearance: none;
 }

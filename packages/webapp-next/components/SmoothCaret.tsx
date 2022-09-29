@@ -4,7 +4,7 @@ const SmoothCaret = ({
   nextCharRef,
   inputIsSelected,
 }: {
-  nextCharRef: React.RefObject<HTMLSpanElement | null>
+  nextCharRef: React.RefObject<HTMLSpanElement | null>;
   inputIsSelected: boolean;
 }) => {
   const left = (nextCharRef?.current?.offsetLeft ?? 0) - 2 + "px";
@@ -28,16 +28,16 @@ const SmoothCaret = ({
   }, [left, top]);
 
   return (
-      <div
-        id="caret"
-        className={`${
-          inputIsSelected ? "" : "hidden"
-        } absolute bg-purple-400 rounded-lg`}
-        style={{
-          height: "32px",
-          width: "2.5px",
-        }}
-      ></div>
+    <div
+      id="caret"
+      className={`${
+        inputIsSelected ? "" : "hidden"
+      } absolute bg-purple-400 rounded-lg`}
+      style={{
+        height: "32px",
+        width: "2.5px",
+      }}
+    ></div>
   );
 };
 

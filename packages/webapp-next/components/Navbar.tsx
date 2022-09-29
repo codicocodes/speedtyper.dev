@@ -49,29 +49,23 @@ const Navbar = () => {
           {userIsGuest === false && logout && (
             <AvatarModal user={user} logout={logout} />
           )}
-          <a
-            href="https://discord.gg/AMbnnN5eep"
-            target="blank"
-            >
-          <Button
-            color="primary"
-            leftIcon={<DiscordLogo />}
-            size="sm"
-            title="Join the discord"
-            text="Join"
-          />
+          <a href="https://discord.gg/AMbnnN5eep" target="blank">
+            <Button
+              color="primary"
+              leftIcon={<DiscordLogo />}
+              size="sm"
+              title="Join the discord"
+              text="Join"
+            />
           </a>
-          <a
-            href="https://twitch.tv/codico"
-            target="blank"
-            >
-          <Button
-            color="primary"
-            size="sm"
-            leftIcon={<TwitchLogo />}
-            title="Follow codico on twitch"
-            text="Follow"
-          />
+          <a href="https://twitch.tv/codico" target="blank">
+            <Button
+              color="primary"
+              size="sm"
+              leftIcon={<TwitchLogo />}
+              title="Follow codico on twitch"
+              text="Follow"
+            />
           </a>
         </div>
       </div>

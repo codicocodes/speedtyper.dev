@@ -106,19 +106,18 @@ const Play = () => {
 
   const [inputIsSelected, setInputIsSelected] = useState(true);
 
-  const hasMistake =
-    Boolean(
-      selectedUserState &&
-        selectedUserState.input &&
-        selectedUserState.input !==
+  const hasMistake = Boolean(
+    selectedUserState &&
+      selectedUserState.input &&
+      selectedUserState.input !==
         challenge?.strippedCode.substr(0, selectedUserState.input.length)
-    )
+  );
 
   const codeInputRef = useRef(null);
 
   const progress = Math.floor(
     ((selectedUserState?.renderedStrings?.correctChars?.length ?? 0) * 100) /
-    (challenge?.fullCodeString?.length ?? 1)
+      (challenge?.fullCodeString?.length ?? 1)
   );
 
   const participantCount = Object.keys(state.users).length;
@@ -206,8 +205,9 @@ const Play = () => {
             )}
             {!endTime && (
               <div
-                className={`mt-2 pt-2 rounded bg-dark-lake ${!inputIsSelected ? "outline-white" : ""
-                  }
+                className={`mt-2 pt-2 rounded bg-dark-lake ${
+                  !inputIsSelected ? "outline-white" : ""
+                }
                 `}
               >
                 {warnTyping && <TypingBlocker />}
@@ -279,10 +279,30 @@ const Play = () => {
           {challenge ? (
             <div className="flex w-full">
               <div className="flex flex-grow items-center">
-                <h1 style={{color:"rgb(184, 184, 184, 0.3)"}} className="bg-dark-lake py-1 px-2 rounded text-sm font-bold">Tab</h1>
-                <span style={{color:"rgb(184, 184, 184, 0.8)"}} className="mx-1 text-sm">- Next Challenge</span>
-                <h1 style={{color:"rgb(184, 184, 184, 0.3)"}} className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2">Enter</h1>
-                <span style={{color:"rgb(184, 184, 184, 0.8)"}} className="mx-1 text-sm">- Start Challenge</span>
+                <h1
+                  style={{ color: "rgb(184, 184, 184, 0.3)" }}
+                  className="bg-dark-lake py-1 px-2 rounded text-sm font-bold"
+                >
+                  Tab
+                </h1>
+                <span
+                  style={{ color: "rgb(184, 184, 184, 0.8)" }}
+                  className="mx-1 text-sm"
+                >
+                  - Next Challenge
+                </span>
+                <h1
+                  style={{ color: "rgb(184, 184, 184, 0.3)" }}
+                  className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2"
+                >
+                  Enter
+                </h1>
+                <span
+                  style={{ color: "rgb(184, 184, 184, 0.8)" }}
+                  className="mx-1 text-sm"
+                >
+                  - Start Challenge
+                </span>
               </div>
               <ChallengeInfo challenge={challenge} />
             </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import  highlightjs  from "highlight.js";
+import highlightjs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css"; // import your preferred style
 import SmoothCaret from "./SmoothCaret";
 import { useAppContext } from "../AppContext";
@@ -66,7 +66,7 @@ const CodeArea = ({
       }}
     >
       <div className="flex w-full relative rounded mb-0">
-        {smoothCaret &&  (
+        {smoothCaret && (
           <SmoothCaret
             nextCharRef={nextCharRef ?? null}
             inputIsSelected={inputIsSelected}
@@ -163,4 +163,3 @@ const CodeArea = ({
 };
 
 export default CodeArea;
-

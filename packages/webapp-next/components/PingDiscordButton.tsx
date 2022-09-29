@@ -5,8 +5,10 @@ import getConfig from "next/config";
 import Button from "./Button";
 import { DiscordLogo } from "../assets/icons";
 
-const PingDiscordButton =({ gameId }: { gameId: string }) => {
-  const { publicRuntimeConfig: { serverUrl }} = getConfig()
+const PingDiscordButton = ({ gameId }: { gameId: string }) => {
+  const {
+    publicRuntimeConfig: { serverUrl },
+  } = getConfig();
   const [pinged, setPinged] = useState(false);
 
   const onClickHandler = () => {
@@ -27,6 +29,6 @@ const PingDiscordButton =({ gameId }: { gameId: string }) => {
       text="Ping"
     />
   );
-}
+};
 
 export default PingDiscordButton;

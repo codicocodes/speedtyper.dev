@@ -24,8 +24,8 @@ const ProfileItem = ({
 export type ResultSelectorType = "monthly" | "annual";
 
 const ProfilePage = (props: ProfileProps) => {
-  const router = useRouter()
-  const { username } = router.query
+  const router = useRouter();
+  const { username } = router.query;
 
   // TODO: handle Nextjs query being of type string | string[] | undefined
   const userResults = useUserResults(username);

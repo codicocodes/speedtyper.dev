@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useKeyMap } from "../hooks/useKeyMap";
 import Socket from "../Socket";
 import Button from "./Button";
@@ -22,7 +22,7 @@ const StartRaceButton = ({
     socket?.emit("start_race_command", { gameId });
   };
 
-  useKeyMap(!disabled,"Enter", handleOnClick);
+  useKeyMap(!disabled, "Enter", handleOnClick);
 
   return (
     <Button
@@ -33,5 +33,5 @@ const StartRaceButton = ({
       text="Start"
     />
   );
-}
+};
 export default StartRaceButton;

@@ -11,4 +11,3 @@ const TypingErrorMessage = (): JSX.Element => {
 };
 
 export default TypingErrorMessage;
-

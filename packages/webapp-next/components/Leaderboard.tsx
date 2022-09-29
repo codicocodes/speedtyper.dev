@@ -119,7 +119,11 @@ const SmallContent = ({ results }: { results: any }) => {
   );
 };
 
-const Leaderboard = ({ results }: { results: IToplistResult[] }): JSX.Element => {
+const Leaderboard = ({
+  results,
+}: {
+  results: IToplistResult[];
+}): JSX.Element => {
   return (
     <table
       className="m-2"
