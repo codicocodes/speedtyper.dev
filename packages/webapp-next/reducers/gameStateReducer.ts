@@ -37,17 +37,22 @@ const handleKeyPressRenderedStrings = (
 
   const correctChars = `${renderedStrings.correctChars}${
     !hasMistake
-      ? renderedStrings.indentation.concat(challenge.chars?.[oldIndex]?.value ?? "")
+      ? renderedStrings.indentation.concat(
+          challenge.chars?.[oldIndex]?.value ?? ""
+        )
       : ""
   }`;
 
   const wrongChars = `${renderedStrings.wrongChars}${
     hasMistake
-      ? renderedStrings.indentation.concat(challenge.chars?.[oldIndex]?.value??"")
+      ? renderedStrings.indentation.concat(
+          challenge.chars?.[oldIndex]?.value ?? ""
+        )
       : ""
   }`;
 
-  const indentation = challenge.fullCodeString?.slice(oldIndex + 1, index) ?? "";
+  const indentation =
+    challenge.fullCodeString?.slice(oldIndex + 1, index) ?? "";
 
   const nextChar = challenge.chars?.[index]?.value ?? "";
 
@@ -103,7 +108,7 @@ const findNextIndex = (
 ): number => {
   let nextIndex = state.index + 1;
 
-  const charLength = challenge.chars?.length ?? nextIndex
+  const charLength = challenge.chars?.length ?? nextIndex;
 
   for (nextIndex; nextIndex < charLength; nextIndex++) {
     if (!challenge.chars?.[nextIndex]) {
@@ -128,30 +133,31 @@ const handleBackspaceRenderedStrings = (
   index: number
 ): IRenderedStrings => {
   const nextNextIndex = findPreviousIndex(challenge.chars ?? [], index);
-  const indentation = challenge.fullCodeString?.slice(nextNextIndex + 1, index) ?? "";
+  const indentation =
+    challenge.fullCodeString?.slice(nextNextIndex + 1, index) ?? "";
   const correctCharsEnd = indentation ? nextNextIndex + 1 : index;
   const indexDiff = index - nextNextIndex;
   const correctChars = !hasMistake
     ? state.renderedStrings.correctChars.substr(0, correctCharsEnd)
     : state.renderedStrings.correctChars;
-    const wrongChars = state.hasMistake
-      ? state.renderedStrings.wrongChars.substr(
+  const wrongChars = state.hasMistake
+    ? state.renderedStrings.wrongChars.substr(
         0,
         state.renderedStrings.wrongChars.length - indexDiff
       )
-        : state.renderedStrings.wrongChars;
-        const nextChar = challenge.chars?.[index].value ?? "";
+    : state.renderedStrings.wrongChars;
+  const nextChar = challenge.chars?.[index].value ?? "";
 
-        const untypedChars = challenge.fullCodeString?.slice(index + 1) ?? "";
+  const untypedChars = challenge.fullCodeString?.slice(index + 1) ?? "";
 
-        return {
-          ...state.renderedStrings,
-          indentation,
-          correctChars,
-          wrongChars,
-          nextChar,
-          untypedChars,
-        };
+  return {
+    ...state.renderedStrings,
+    indentation,
+    correctChars,
+    wrongChars,
+    nextChar,
+    untypedChars,
+  };
 };
 
 const handleKeyUp = (
@@ -175,7 +181,8 @@ const handleBackspace = (
 
   const input = state.input.substr(0, state.input.length - 1);
 
-  const hasMistake = input !== challenge.strippedCode.substring(0, input.length);
+  const hasMistake =
+    input !== challenge.strippedCode.substring(0, input.length);
 
   // Do not allow users to delete correctly typed characters
   if (!state.hasMistake) {
@@ -253,29 +260,29 @@ export default (state: IGameState, action: IAction): IGameState => {
 
     case "timer_started":
       return {
-      ...state,
-      users: {
-        ...state.users,
-        [state.currentUserId ?? ""]: {
-          ...state.users[state.currentUserId??""],
+        ...state,
+        users: {
+          ...state.users,
+          [state.currentUserId ?? ""]: {
+            ...state.users[state.currentUserId ?? ""],
+          },
         },
-      },
-    };
+      };
 
     case "race_queued":
       const { ms } = payload;
 
-    return {
-      ...state,
-      queueTimeMs: ms,
-    };
+      return {
+        ...state,
+        queueTimeMs: ms,
+      };
 
     case "race_started":
       return {
-      ...state,
-      startTime: payload.startTime,
-      waiting: false,
-    };
+        ...state,
+        startTime: payload.startTime,
+        waiting: false,
+      };
 
     case "user_disconnected": {
       const id = payload;
@@ -292,12 +299,12 @@ export default (state: IGameState, action: IAction): IGameState => {
 
     case "user_joined":
       return {
-      ...state,
-      users: {
-        ...state.users,
-        [payload.id]: payload,
-      },
-    };
+        ...state,
+        users: {
+          ...state.users,
+          [payload.id]: payload,
+        },
+      };
 
     case "race_completed": {
       const { userId, cpmTimeSeries } = payload;
@@ -376,15 +383,15 @@ export default (state: IGameState, action: IAction): IGameState => {
 
     case "key_up":
       return {
-      ...state,
-      users: {
-        ...state.users,
-        [state.currentUserId??""]: handleKeyUp(
-          state.users[state.currentUserId??""],
-          payload
-        ),
-      },
-    };
+        ...state,
+        users: {
+          ...state.users,
+          [state.currentUserId ?? ""]: handleKeyUp(
+            state.users[state.currentUserId ?? ""],
+            payload
+          ),
+        },
+      };
 
     case "input_change": {
       const startTime = state.startTime;
@@ -392,9 +399,9 @@ export default (state: IGameState, action: IAction): IGameState => {
         ...state,
         users: {
           ...state.users,
-          [state.currentUserId??""]: handleInputChange(
-            startTime??0,
-            state.users[state.currentUserId??""],
+          [state.currentUserId ?? ""]: handleInputChange(
+            startTime ?? 0,
+            state.users[state.currentUserId ?? ""],
             // @ts-ignore
             state.challenge,
             payload
@@ -405,29 +412,29 @@ export default (state: IGameState, action: IAction): IGameState => {
 
     case "backspace_press":
       return {
-      ...state,
-      users: {
-        ...state.users,
-        // @ts-ignore
-        [state.currentUserId]: handleBackspace(
+        ...state,
+        users: {
+          ...state.users,
           // @ts-ignore
-          state.users[state.currentUserId],
-          // @ts-ignore
-          state.challenge
-        ),
-      },
-    };
+          [state.currentUserId]: handleBackspace(
+            // @ts-ignore
+            state.users[state.currentUserId],
+            // @ts-ignore
+            state.challenge
+          ),
+        },
+      };
 
     case "reset_state":
       return {
-      ...defaultGameState,
-      id: state.id,
-      owner: state.owner,
-      currentUserId: state.currentUserId,
-      selectedUserId: state.selectedUserId,
-      users: state.users,
-      challenge: state.challenge,
-    };
+        ...defaultGameState,
+        id: state.id,
+        owner: state.owner,
+        currentUserId: state.currentUserId,
+        selectedUserId: state.selectedUserId,
+        users: state.users,
+        challenge: state.challenge,
+      };
     default:
       return state;
   }

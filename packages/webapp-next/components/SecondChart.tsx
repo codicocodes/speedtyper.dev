@@ -1,8 +1,21 @@
 import React, { useEffect } from "react";
-import { CategoryScale, Chart, LinearScale, LineController, LineElement, PointElement } from "chart.js";
+import {
+  CategoryScale,
+  Chart,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+} from "chart.js";
 import cpmToWpm from "../utils/cpmToWpm";
 
-Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement)
+Chart.register(
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
 const renderChart = (
   ref: React.MutableRefObject<any>,
@@ -68,21 +81,24 @@ const renderChart = (
 };
 
 interface SecondChartProps {
-  resultSelector: 'monthly' | 'annual';
+  resultSelector: "monthly" | "annual";
   challengeResults: any[];
 }
 
 // TODO: we should not have Chart and SecondChart
 // We should refactor these 2 components to be compatible
-const SecondChart = ({ challengeResults, resultSelector }: SecondChartProps) => {
+const SecondChart = ({
+  challengeResults,
+  resultSelector,
+}: SecondChartProps) => {
   const monthlyRef = React.createRef<HTMLCanvasElement>();
   const annual = React.createRef<HTMLCanvasElement>();
 
   useEffect(() => {
-    if (resultSelector === 'monthly' && monthlyRef.current) {
+    if (resultSelector === "monthly" && monthlyRef.current) {
       renderChart(monthlyRef, challengeResults);
     }
-    if (resultSelector === 'annual' && annual.current) {
+    if (resultSelector === "annual" && annual.current) {
       renderChart(annual, challengeResults);
     }
   }, [monthlyRef, annual, resultSelector, challengeResults]);
@@ -92,14 +108,14 @@ const SecondChart = ({ challengeResults, resultSelector }: SecondChartProps) => 
       className="max-w-5 xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-2 pl-4 py-2 text-lg text-off-white font-light rounded"
       style={{ height: "350px" }}
     >
-    {
-      resultSelector === 'monthly' ? <canvas ref={monthlyRef} width="400" height="400" /> : null
-    }
-    {
-      resultSelector === 'annual' ? <canvas ref={annual} width="400" height="400" /> : null
-    }
+      {resultSelector === "monthly" ? (
+        <canvas ref={monthlyRef} width="400" height="400" />
+      ) : null}
+      {resultSelector === "annual" ? (
+        <canvas ref={annual} width="400" height="400" />
+      ) : null}
     </div>
   );
 };
 
-export default SecondChart
+export default SecondChart;

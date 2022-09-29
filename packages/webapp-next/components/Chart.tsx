@@ -1,14 +1,26 @@
 import React, { useEffect } from "react";
-import { Chart, LineController, CategoryScale, LinearScale, PointElement, LineElement } from "chart.js";
+import {
+  Chart,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from "chart.js";
 import cpmToWpm from "../utils/cpmToWpm";
 
-Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement)
+Chart.register(
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
 const renderChart = (
   ref: React.MutableRefObject<any>,
   cpmTimeSeries: { cpm: number }[]
 ) => {
-
   const ctx = ref?.current.getContext("2d");
 
   const labels = [];
@@ -45,14 +57,18 @@ const renderChart = (
   });
 };
 
-export default function ChartContainer({ cpmTimeSeries }: { cpmTimeSeries: any[] }) {
+export default function ChartContainer({
+  cpmTimeSeries,
+}: {
+  cpmTimeSeries: any[];
+}) {
   const chartRef = React.createRef<HTMLCanvasElement>();
 
   useEffect(() => {
     const chart = renderChart(chartRef, cpmTimeSeries);
     return () => {
-      chart.destroy()
-    }
+      chart.destroy();
+    };
   }, [cpmTimeSeries]);
 
   return (
@@ -63,4 +79,4 @@ export default function ChartContainer({ cpmTimeSeries }: { cpmTimeSeries: any[]
       <canvas ref={chartRef} />
     </div>
   );
-};
+}

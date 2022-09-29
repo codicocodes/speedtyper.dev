@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Socket from "../Socket";
 import Button from "./Button";
 
@@ -30,5 +30,5 @@ const StartRaceButton = ({
       text="Start"
     />
   );
-}
+};
 export default StartRaceButton;

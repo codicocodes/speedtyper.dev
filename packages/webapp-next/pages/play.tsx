@@ -105,13 +105,12 @@ const Play = () => {
 
   const [inputIsSelected, setInputIsSelected] = useState(true);
 
-  const hasMistake =
-    Boolean(
-      selectedUserState &&
-        selectedUserState.input &&
-        selectedUserState.input !==
+  const hasMistake = Boolean(
+    selectedUserState &&
+      selectedUserState.input &&
+      selectedUserState.input !==
         challenge?.strippedCode.substr(0, selectedUserState.input.length)
-    )
+  );
 
   const codeInputRef = useRef(null);
 

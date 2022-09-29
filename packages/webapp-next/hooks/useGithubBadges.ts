@@ -3,7 +3,9 @@ import ky from "ky-universal";
 import type { IUser } from "../types";
 import getConfig from "next/config";
 const useGithubBadges = (user: IUser) => {
-  const {publicRuntimeConfig:{ serverUrl }} = getConfig()
+  const {
+    publicRuntimeConfig: { serverUrl },
+  } = getConfig();
   const username = user?.username;
   const [badges, setBadges] = useState<string[]>([]);
 
@@ -23,4 +25,4 @@ const useGithubBadges = (user: IUser) => {
   return badges;
 };
 
-export default useGithubBadges
+export default useGithubBadges;

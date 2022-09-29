@@ -3,12 +3,7 @@ import { IChallenge } from "../types";
 import Button from "./Button";
 import { GithubLogo } from "../assets/icons";
 
-const ChallengeInfo = ({
-  challenge,
-}:
-  {
-    challenge: IChallenge;
-  }) => {
+const ChallengeInfo = ({ challenge }: { challenge: IChallenge }) => {
   return (
     <div className="flex flex-wrap flex-row text-dark-ocean text-sm my-4 gap-4">
       <Button

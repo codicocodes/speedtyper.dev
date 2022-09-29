@@ -3,8 +3,10 @@ import ky from "ky-universal";
 import { IToplistResult } from "../types/";
 import getConfig from "next/config";
 
-const useResults =() => {
-  const {publicRuntimeConfig: { serverUrl } } = getConfig()
+const useResults = () => {
+  const {
+    publicRuntimeConfig: { serverUrl },
+  } = getConfig();
   const [dailyResults, setDailyResults] = useState([] as IToplistResult[]);
 
   useEffect(() => {

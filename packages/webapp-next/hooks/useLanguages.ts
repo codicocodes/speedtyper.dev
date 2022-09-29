@@ -3,7 +3,9 @@ import ky from "ky-universal";
 import getConfig from "next/config";
 
 export default () => {
-  const { publicRuntimeConfig: { serverUrl } } = getConfig()
+  const {
+    publicRuntimeConfig: { serverUrl },
+  } = getConfig();
   const [languages, setLanguages] = useState<string[]>([]);
 
   useEffect(() => {
