@@ -15,6 +15,7 @@ import {
   CopyIcon,
   GithubLogo,
 } from "../assets/icons";
+import Image from "next/image";
 
 const IndexPage = () => {
   const {
@@ -27,7 +28,9 @@ const IndexPage = () => {
     <>
       <div className="text-off-white justify-center align-center h-full w-full tracking-wider bg-dark-ocean">
         <div className="flex justify-center items-center mt-4">
-          <img style={{ width: "125px", height: "auto" }} src="/logo.png" />
+          <div className="relative" style={{ width: "125px", height: "66px" }}>
+            <Image layout="fill" src="/logo.png" quality={100} />
+          </div>
         </div>
         <h1 className="flex justify-center text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl mb-4 text-center mt-4">
           Typing competitions for programmers

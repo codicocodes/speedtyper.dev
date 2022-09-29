@@ -3,6 +3,7 @@ import React from "react";
 import { IToplistResult } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
 import { humanizeAbsolute } from "../utils/humanize";
+import Image from "next/image";
 
 const LargeHeader = () => {
   return (
@@ -48,10 +49,12 @@ const LargeContent = ({ results }: { results: any }) => {
             >
               {i + 1}
             </td>
-            <td className="">
-              <img
+            <td>
+              <Image
                 className="rounded-full"
-                style={{ width: "25px" }}
+                width="25px"
+                height="25px"
+                quality={100}
                 src={result.avatarUrl}
               />
             </td>
@@ -102,7 +105,6 @@ const SmallContent = ({ results }: { results: any }) => {
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",
               }}
-              // className="p-2 pl-4"
             >
               <Link
                 className="hover:text-purple-300"

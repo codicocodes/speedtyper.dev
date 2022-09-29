@@ -6,14 +6,9 @@ import ky from "ky-universal";
 import { useAppContext } from "../AppContext";
 import { useRouter } from "next/router";
 import getConfig from "next/config";
+import Image from "next/image";
 
-const AvatarModal = ({
-  user,
-  logout,
-}: {
-  user: IUser | null | undefined;
-  logout: () => void;
-}) => {
+const AvatarModal = ({ user, logout }: { user: IUser; logout: () => void }) => {
   const {
     publicRuntimeConfig: { siteRoot, serverUrl },
   } = getConfig();
@@ -22,15 +17,18 @@ const AvatarModal = ({
   const { smoothCaret, toggleSmoothCaret } = useAppContext();
 
   const [showModal, setShowModal] = React.useState(false);
+
   return (
     <>
       <span className="hidden sm:block mr-2 text-off-white text-lg">
-        {user?.username}
+        {user.username}
       </span>
-      <img
-        className="mx-2 order-0 hover:border-2 border-off-white cursor-pointer h-10 w-10 rounded-full"
-        src={user?.avatarUrl}
-        alt=""
+      <Image
+        className="mx-2 order-0 hover:border-2 border-off-white cursor-pointer rounded-full"
+        width="40px"
+        height="40px"
+        quality={100}
+        src={user.avatarUrl || ""}
         onClick={() => setShowModal(true)}
       />
       {showModal ? (
