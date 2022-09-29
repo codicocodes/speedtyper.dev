@@ -6,15 +6,9 @@ import ky from "ky-universal";
 import { useAppContext } from "../AppContext";
 import { useRouter } from "next/router";
 import getConfig from "next/config";
-import Image from "next/image"
+import Image from "next/image";
 
-const AvatarModal = ({
-  user,
-  logout,
-}: {
-  user: IUser | null | undefined;
-  logout: () => void;
-}) => {
+const AvatarModal = ({ user, logout }: { user: IUser; logout: () => void }) => {
   const {
     publicRuntimeConfig: { siteRoot, serverUrl },
   } = getConfig();
@@ -23,10 +17,6 @@ const AvatarModal = ({
   const { smoothCaret, toggleSmoothCaret } = useAppContext();
 
   const [showModal, setShowModal] = React.useState(false);
-
-  if (!user) {
-    return null
-  }
 
   return (
     <>

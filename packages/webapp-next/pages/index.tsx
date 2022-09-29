@@ -9,7 +9,12 @@ import { useAppContext } from "../AppContext";
 import Link from "next/link";
 import getConfig from "next/config";
 import Button from "../components/Button";
-import { DiscordLogo, RightArrowIcon, CopyIcon, GithubLogo } from "../assets/icons";
+import {
+  DiscordLogo,
+  RightArrowIcon,
+  CopyIcon,
+  GithubLogo,
+} from "../assets/icons";
 import Image from "next/image";
 
 const IndexPage = () => {

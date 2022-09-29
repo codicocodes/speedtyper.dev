@@ -3,7 +3,7 @@ import React from "react";
 import { IToplistResult } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
 import { humanizeAbsolute } from "../utils/humanize";
-import Image from "next/image"
+import Image from "next/image";
 
 const LargeHeader = () => {
   return (
@@ -40,10 +40,11 @@ const LargeContent = ({ results }: { results: any }) => {
         return (
           <tr className="font-mono" key={i}>
             <td
-              className={`border-l-8  ${result.isCurrentResult
-                ? "border-purple-400"
-                : "border-transparent"
-                } p-2 pl-4`}
+              className={`border-l-8  ${
+                result.isCurrentResult
+                  ? "border-purple-400"
+                  : "border-transparent"
+              } p-2 pl-4`}
               style={{ width: "25px" }}
             >
               {i + 1}
