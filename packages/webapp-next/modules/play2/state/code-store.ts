@@ -112,16 +112,16 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   },
 }));
 
-// function isSpace(key: string) {
-//   return key === " ";
-// }
+export enum TrackedKeys {
+  Backspace = "Backspace",
+}
 
 function isLineBreak(key: string) {
   return key === "\n";
 }
 
 function isBackspace(key: string) {
-  return key === "Backspace";
+  return key === TrackedKeys.Backspace;
 }
 
 function parseKey(key: string) {

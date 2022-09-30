@@ -19,7 +19,7 @@ export function CodeTypingContainer({ code }: CodeTypingContainerProps) {
   useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
-  const [inputRef, triggerFocus] = useFocusRef();
+  const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
   return (
     <div className="relative" onClick={triggerFocus}>
