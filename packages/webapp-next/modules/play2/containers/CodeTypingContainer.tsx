@@ -8,6 +8,7 @@ import { TypedChars } from "../components/TypedChars";
 import { NextChar } from "../components/NextChar";
 import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
+import { useEffect } from "react";
 
 interface CodeTypingContainerProps {
   code: string;
@@ -20,13 +21,18 @@ export function CodeTypingContainer({
   filePath,
   language,
 }: CodeTypingContainerProps) {
-  useCodeStore((state) => state.initialize)(code);
+  const initialize = useCodeStore((state) => state.initialize);
   useCodeStore((state) => state.code);
+  useCodeStore((state) => state.index);
   useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
+
+  useEffect(() => {
+    initialize(code);
+  }, [initialize, code]);
   return (
     <div className="relative" onClick={triggerFocus}>
       <div className="flex flex-col">

@@ -24,7 +24,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   index: 0,
   correctIndex: 0,
   initialize: (code: string) => {
-    set((state) => ({ ...state, code }));
+    set((state) => ({ ...state, code, index: 0, correctIndex: 0 }));
   },
   handleKeyPress: (unparsedKey: string) => {
     set((state) => {
