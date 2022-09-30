@@ -2,10 +2,11 @@ import { ReactNode } from "react";
 
 interface CodeAreaProps {
   language: string;
+  filePath: string;
   children: ReactNode;
 }
 
-export function CodeArea({ language, children }: CodeAreaProps) {
+export function CodeArea({ language, filePath, children }: CodeAreaProps) {
   return (
     <div
       className={`tracking-wider rounded-xl p-4 text-xl`}
@@ -16,7 +17,7 @@ export function CodeArea({ language, children }: CodeAreaProps) {
         fontFamily: "Fira Code",
       }}
     >
-      <CodeAreaHeader />
+      <CodeAreaHeader filePath={filePath} />
       <pre>
         <code className={`${language}`}>{children}</code>
       </pre>
@@ -24,7 +25,7 @@ export function CodeArea({ language, children }: CodeAreaProps) {
   );
 }
 
-function CodeAreaHeader() {
+function CodeAreaHeader({ filePath }: { filePath: string }) {
   return (
     <div className="flex items-center flex-row mb-4">
       <div className="flex flex-row gap-2 absolute">
@@ -33,7 +34,7 @@ function CodeAreaHeader() {
         <div className="w-2.5 h-2.5 bg-slate-600 rounded-full" />
       </div>
       <div className="flex items-start justify-center flex-row w-full h-6">
-        <span className="italic text-base opacity-80">filename.rs</span>
+        <span className="italic text-base opacity-80">{filePath}</span>
       </div>
     </div>
   );

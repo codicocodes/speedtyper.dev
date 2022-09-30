@@ -27,6 +27,12 @@ code = `fn to_tokens(&self, tokens: &mut TokenStream) {
   });
 }`;
 
+const challenge = {
+  code,
+  filePath: "packages/backend/src/GameStats.ts",
+  language: "rust",
+};
+
 function Play2Page() {
   return (
     <div className="flex flex-col items-center justify-center">
@@ -37,7 +43,11 @@ function Play2Page() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <CodeTypingContainer code={code} />
+          <CodeTypingContainer
+            code={challenge.code}
+            filePath={challenge.filePath}
+            language={challenge.language}
+          />
         </motion.div>
       </AnimatePresence>
     </div>

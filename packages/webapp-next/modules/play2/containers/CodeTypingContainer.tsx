@@ -11,9 +11,15 @@ import { UntypedChars } from "../components/UntypedChars";
 
 interface CodeTypingContainerProps {
   code: string;
+  filePath: string;
+  language: string;
 }
 
-export function CodeTypingContainer({ code }: CodeTypingContainerProps) {
+export function CodeTypingContainer({
+  code,
+  filePath,
+  language,
+}: CodeTypingContainerProps) {
   useCodeStore((state) => state.initialize)(code);
   useCodeStore((state) => state.code);
   useCodeStore((state) => state.index);
@@ -31,7 +37,7 @@ export function CodeTypingContainer({ code }: CodeTypingContainerProps) {
           handleOnKeyUp={handleKeyPress}
         />
         <SmoothCaret top={rect.top} left={rect.left} />
-        <CodeArea language="go">
+        <CodeArea language={language} filePath={filePath}>
           <TypedChars />
           <IncorrectChars />
           <NextChar nextCharRef={currentNodeRef} />
