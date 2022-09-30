@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 
 let code = `func (r EtcdManualResolver) updateState() {
@@ -30,7 +31,15 @@ function Play2Page() {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-row justify-start text-white w-full">hi</div>
-      <CodeTypingContainer code={code} />
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <CodeTypingContainer code={code} />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
