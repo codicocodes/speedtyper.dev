@@ -67,7 +67,7 @@ function getColorStyles(color: ButtonColor) {
   const style =
     color === "primary" ? `bg-off-white` : `bg-purple-400 hover:bg-purple-300`;
 
-  return sharedStyle + style;
+  return `${sharedStyle} ${style}`;
 }
 
 export default Button;
