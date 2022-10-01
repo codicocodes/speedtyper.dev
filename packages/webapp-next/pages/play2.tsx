@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { ReloadIcon } from "../assets/icons/ReloadIcon";
 import { useSocket } from "../common/hooks/useSocket";
+import Button from "../components/Button";
 import { useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 
@@ -48,21 +50,34 @@ function Play2Page() {
   }, [socket]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-row justify-start text-white w-full">hi</div>
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+    <div className="flex items-center justify-center h-full w-full">
+      <div className="flex flex-col max-w-5xl items-center justify-center">
+        <div
+          className="flex flex-row justify-start w-full"
+          style={{ color: "rgb(184, 184, 184, 0.8)" }}
         >
-          <CodeTypingContainer
-            code={challenge.code}
-            filePath={challenge.filePath}
-            language={challenge.language}
+          <Button
+            color="invisible"
+            title="Reload the challenge"
+            size="sm"
+            onClick={nextChallenge}
+            leftIcon={<ReloadIcon />}
           />
-        </motion.div>
-      </AnimatePresence>
+        </div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <CodeTypingContainer
+              code={challenge.code}
+              filePath={challenge.filePath}
+              language={challenge.language}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
