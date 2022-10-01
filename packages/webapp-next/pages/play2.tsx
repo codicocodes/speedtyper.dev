@@ -36,6 +36,14 @@ function Play2Page() {
     socket.subscribe("race_joined", (_, data) => {
       // TODO: all the data we want is: roomID, members[]
       setRoomID(data.id);
+      Router.push(
+        {
+          pathname: "/play2",
+          query: { id: data.id },
+        },
+        undefined,
+        { shallow: true }
+      );
     });
     socket.subscribe("challenge_selected", (_, data) => {
       setChallenge({
