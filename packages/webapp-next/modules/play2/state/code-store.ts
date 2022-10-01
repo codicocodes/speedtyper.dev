@@ -17,6 +17,7 @@ interface CodeState {
   _getBackspaceOffset: () => number;
   _getForwardOffset: () => number;
   _allCharsTyped: () => boolean;
+  isCompleted: () => boolean;
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
@@ -68,6 +69,9 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       return "";
     }
     return get().code.slice(get().index + 1);
+  },
+  isCompleted: () => {
+    return get().correctIndex === get().code.length;
   },
   _allCharsTyped: () => {
     return get().index === get().code.length;

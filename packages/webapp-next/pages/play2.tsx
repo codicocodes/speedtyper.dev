@@ -10,17 +10,25 @@ import { useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
 import { copyToClipboard } from "../common/utils/clipboard";
+import { useGameStore } from "../modules/play2/state/game-store";
+import { useCodeStore } from "../modules/play2/state/code-store";
+import useTotalSeconds from "../hooks/useTotalSeconds";
 
 function Play2Page() {
   // TODO: Refactor this page
+  useGameStore((state) => state.startTime);
+  useCodeStore((state) => state.correctIndex);
+  const isCompleted = useCodeStore((state) => state.isCompleted)();
+  const isPlaying = useGameStore((state) => state.isPlaying)();
+  const endGame = useGameStore((state) => state.end);
+  const initialize = useCodeStore((state) => state.initialize);
+  const reset = useGameStore((state) => state.reset);
   const socket = useSocket();
-  const gameControls = useGame(socket);
+  const game = useGame(socket);
 
   // TODO: Move isTyping to a React Context so it can be accessed anywhere in the app...
-  const [isTyping, setIsTyping] = useState(false);
-
   // FIXME: Tab should be not a string literal
-  useKeyMap(true, "Tab", () => gameControls.next());
+  useKeyMap(true, "Tab", () => game.next());
 
   const [challenge, setChallenge] = useState({
     code: "",
@@ -29,8 +37,7 @@ function Play2Page() {
   });
 
   useEffect(() => {
-    gameControls.play();
-
+    game.play();
     // TODO: handle joining other rooms
     socket.subscribe("challenge_selected", (_, data) => {
       setChallenge({
@@ -38,8 +45,23 @@ function Play2Page() {
         language: data.language,
         filePath: "",
       });
+      reset();
+      initialize(data.fullCodeString);
     });
-  }, [socket, gameControls]);
+  }, [socket, game, reset, initialize]);
+  const startTime = useGameStore((state) => state.startTime);
+  const endTime = useGameStore((state) => state.endTime);
+
+  const totalSeconds = useTotalSeconds(
+    startTime?.getTime(),
+    endTime?.getTime()
+  );
+
+  useEffect(() => {
+    if (isCompleted && isPlaying) {
+      endGame();
+    }
+  }, [endGame, isPlaying, isCompleted]);
 
   return (
     <>
@@ -53,12 +75,12 @@ function Play2Page() {
                 exit={{ opacity: 0 }}
                 className="m-2"
               >
-                <CodeTypingContainer
-                  code={challenge.code}
-                  filePath={challenge.filePath}
-                  language={challenge.language}
-                  setIsTyping={setIsTyping}
-                />
+                {!isCompleted && (
+                  <CodeTypingContainer
+                    filePath={challenge.filePath}
+                    language={challenge.language}
+                  />
+                )}
               </motion.div>
             </AnimatePresence>
             <AnimatePresence>
@@ -68,7 +90,17 @@ function Play2Page() {
                 exit={{ opacity: 0 }}
                 className="w-full"
               >
-                {!isTyping && RenderActionButtons(() => gameControls.next())}
+                {!isPlaying && RenderActionButtons(() => game.next())}
+              </motion.div>
+            </AnimatePresence>
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="w-full"
+              >
+                {isPlaying && RenderTimer(totalSeconds)}
               </motion.div>
             </AnimatePresence>
           </>
@@ -76,6 +108,16 @@ function Play2Page() {
       </div>
       <ToastContainer />
     </>
+  );
+}
+
+function RenderTimer(seconds: number) {
+  return (
+    <div className="relative">
+      <div className="absolute text-3xl ml-4 font-bold text-purple-400">
+        {seconds}
+      </div>
+    </div>
   );
 }
 
