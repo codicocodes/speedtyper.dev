@@ -35,8 +35,8 @@ export function CodeTypingContainer({
   }, [index, isPlaying, start]);
 
   return (
-    <div className="relative" onClick={triggerFocus}>
-      <div className="flex flex-col">
+    <div className="w-full relative" onClick={triggerFocus}>
+      <div className="flex flex-col w-full">
         <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
         {/* TODO: hide caret when input is not focused */}
         <SmoothCaret top={rect.top} left={rect.left} />
