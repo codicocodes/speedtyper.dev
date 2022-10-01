@@ -373,6 +373,7 @@ export default (state: IGameState, action: IAction): IGameState => {
       return {
         ...state,
         waiting: true,
+        startTime: undefined,
         challenge: payload,
       };
     }
