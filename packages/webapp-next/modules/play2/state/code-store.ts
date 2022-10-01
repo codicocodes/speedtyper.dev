@@ -1,19 +1,25 @@
 import create from "zustand";
+import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 
-interface TypedChar {
-  char: string;
-  timestamp: Date;
+interface KeyStroke {
+  key: string;
+  timestamp: number;
+  index: number;
 }
 
 interface CodeState {
   // Match state
   startTime?: Date;
   endTime?: Date;
-  chars: TypedChar[];
-  _saveKeyStroke: (key: string) => void;
+  keyStrokes: KeyStroke[];
+  incorrectKeyStrokes: KeyStroke[];
   start: () => void;
   end: () => void;
   isPlaying: () => boolean;
+  getCPM: () => number;
+  getChartWPM: () => number[];
+  _getValidKeyStrokes: () => KeyStroke[];
+  _saveKeyStroke: (key: string, index: number, correct: boolean) => void;
 
   // Code rendering state
   code: string;
@@ -25,19 +31,101 @@ interface CodeState {
   untypedChars: () => string;
   initialize: (code: string) => void;
   handleKeyPress: (key: string) => void;
+  isCompleted: () => boolean;
 
   // private helper methods
   _getBackspaceOffset: () => number;
   _getForwardOffset: () => number;
   _allCharsTyped: () => boolean;
-  isCompleted: () => boolean;
 }
 
+// There are 3 separate parts of logic in this store
+// 1. Code rendering logic which is necessary to render the code strings
+// 2. Match logic which conerns itself with maintaining the match
+// 3. Results logic which shows data after the race
+// Match logic depends on code rendering logic.
+// Results logic depends on Match logic.
+// Perhaps Match and results logic could be split into a separate store
+// But this was a bit simpler as we can call _saveKeyStroke from the handleKeyPress method
+// The other option would be to pass in the saveKeyStroke method into the handleKeyPress method
+
 export const useCodeStore = create<CodeState>((set, get) => ({
+  // RESULTS logic
+  getChartWPM: () => {
+    const startTime = get().startTime?.getTime();
+    if (!startTime) {
+      return [];
+    }
+    const wpm = [];
+    let count = 0;
+    let seconds = 1;
+    const validKeyStrokes = get()._getValidKeyStrokes();
+
+    for (let i = 0; i < validKeyStrokes.length; i++) {
+      const keyStroke = validKeyStrokes[i];
+      const breaktime = startTime + seconds * 1000;
+      const isLastKeyStroke = i === validKeyStrokes.length - 1;
+      const diffMS = keyStroke.timestamp - breaktime;
+      const diffSeconds = diffMS / 1000;
+      if (keyStroke.timestamp > breaktime) {
+        // If more than a second has passed since the last WPM calculation
+        // we push another WPM calculation to the array
+        const cpm = Math.floor((60 * count) / (seconds + diffSeconds));
+        wpm.push(cpmToWPM(cpm));
+        seconds++;
+      } else if (isLastKeyStroke) {
+        // if this is the last keystroke in the valid keystrokes array
+        // we push the last uncounted characters as CPM to the array
+        // even if we have not passed a full second
+        const cpm = Math.floor((60 * count) / (seconds + diffSeconds));
+        wpm.push(cpmToWPM(cpm));
+        seconds++;
+      }
+      count++;
+    }
+    return wpm;
+  },
+  _getValidKeyStrokes: () => {
+    const keyStrokes = get().keyStrokes;
+    const validKeyStrokes = Object.values(
+      Object.fromEntries(
+        keyStrokes.map((keyStroke) => [keyStroke.index, keyStroke])
+      )
+    );
+    return validKeyStrokes;
+  },
+  getCPM: () => {
+    const validKeyStrokesCount = new Set(
+      get().keyStrokes.map((keyStroke) => keyStroke.index)
+    ).size;
+    const now = new Date();
+    const start = get().startTime ?? now;
+    const end = get().endTime ?? now;
+    const ms = end.getTime() - start.getTime();
+    if (ms === 0) {
+      return 0;
+    }
+    const seconds = ms / 1000;
+    return Math.floor((60 * validKeyStrokesCount) / seconds);
+  },
   // MATCH logic
-  chars: [],
-  _saveKeyStroke: (key: string) => {
+  keyStrokes: [],
+  incorrectKeyStrokes: [],
+  _saveKeyStroke: (key: string, index: number, correct: boolean) => {
     set((state) => {
+      if (correct) {
+        state.keyStrokes.push({
+          key,
+          index,
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        state.incorrectKeyStrokes.push({
+          key,
+          index,
+          timestamp: new Date().getTime(),
+        });
+      }
       return state;
     });
   },
@@ -68,6 +156,8 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       startTime: undefined,
       endTime: undefined,
       chars: [],
+      keyStrokes: [],
+      incorrectKeyStrokes: [],
     }));
   },
   handleKeyPress: (unparsedKey: string) => {
@@ -89,6 +179,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       const correct =
         state.index === state.correctIndex && key === state.code[state.index];
       const correctIndex = !correct ? state.correctIndex : index;
+      get()._saveKeyStroke(key, correctIndex, correct);
       return { ...state, index, correctIndex };
     });
   },
