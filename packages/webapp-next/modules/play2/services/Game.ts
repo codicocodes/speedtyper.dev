@@ -8,11 +8,12 @@ export class Game {
       addIDtoQueryParams(data.id);
     });
   }
-  next = () => {
+  next() {
+    // this is undefined
     this.socket.emit("refresh_challenge");
-  };
+  }
 
-  play = () => {
+  play() {
     this.socket.emit("play", { mode: "private" });
-  };
+  }
 }

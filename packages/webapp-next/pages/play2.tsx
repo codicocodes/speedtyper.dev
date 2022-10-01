@@ -20,7 +20,7 @@ function Play2Page() {
   const [isTyping, setIsTyping] = useState(false);
 
   // FIXME: Tab should be not a string literal
-  useKeyMap(true, "Tab", gameControls.next);
+  useKeyMap(true, "Tab", () => gameControls.next());
 
   const [challenge, setChallenge] = useState({
     code: "",
@@ -68,7 +68,7 @@ function Play2Page() {
                 exit={{ opacity: 0 }}
                 className="w-full"
               >
-                {!isTyping && RenderActionButtons(gameControls.next)}
+                {!isTyping && RenderActionButtons(() => gameControls.next())}
               </motion.div>
             </AnimatePresence>
           </>
