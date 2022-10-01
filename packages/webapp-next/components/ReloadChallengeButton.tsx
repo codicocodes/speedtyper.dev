@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useKeyMap } from "../hooks/useKeyMap";
 import Socket from "../Socket";
 import { IAction } from "../types";
-import Button from "./Button";
+import Button from "../common/components/Button";
 
 const renderSvg = (isCompleted: boolean) => {
   return isCompleted ? (

@@ -1,7 +1,7 @@
 import getConfig from "next/config";
 import { useRouter } from "next/router";
 import React from "react";
-import Button from "./Button";
+import Button from "../common/components/Button";
 import { GithubLogo } from "../assets/icons";
 
 const LoginModal = () => {

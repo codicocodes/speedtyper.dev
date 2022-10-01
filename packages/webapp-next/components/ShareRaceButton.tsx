@@ -2,7 +2,7 @@ import getConfig from "next/config";
 import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "./Button";
+import Button from "../common/components/Button";
 
 const ShareRaceButton = ({ gameId }: { gameId: string }) => {
   const {

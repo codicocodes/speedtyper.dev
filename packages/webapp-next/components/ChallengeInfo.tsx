@@ -1,6 +1,6 @@
 import React from "react";
 import { IChallenge } from "../types";
-import Button from "./Button";
+import Button from "../common/components/Button";
 import { GithubLogo } from "../assets/icons";
 
 const ChallengeInfo = ({ challenge }: { challenge: IChallenge }) => {

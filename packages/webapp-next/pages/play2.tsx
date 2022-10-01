@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { LinkIcon } from "../assets/icons/LinkIcon";
 import { ReloadIcon } from "../assets/icons/ReloadIcon";
 import { useSocket } from "../common/hooks/useSocket";
-import Button from "../components/Button";
+import Button from "../common/components/Button";
 import { useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
