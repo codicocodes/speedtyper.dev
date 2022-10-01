@@ -44,13 +44,14 @@ function Play2Page() {
   return (
     <>
       <div className="flex items-center justify-center h-full w-full">
-        <div className="flex flex-col max-w-5xl m-1 items-center justify-center">
+        <div className="flex flex-col max-w-5xl items-center justify-center">
           <>
             <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                className="m-2"
               >
                 <CodeTypingContainer
                   code={challenge.code}
