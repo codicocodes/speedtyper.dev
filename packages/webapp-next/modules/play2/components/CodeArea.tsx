@@ -7,6 +7,7 @@ interface CodeAreaProps {
 }
 
 export function CodeArea({ language, filePath, children }: CodeAreaProps) {
+  // TODO: css when unfocused: blur-sm opacity-40
   return (
     <div
       className={`tracking-wider rounded-xl p-4 text-2xl max-w-5xl`}
