@@ -9,12 +9,15 @@ interface CodeAreaProps {
 export function CodeArea({ language, filePath, children }: CodeAreaProps) {
   return (
     <div
-      className={`tracking-wider rounded-xl p-4 text-xl`}
+      className={`tracking-wider rounded-xl p-4 text-2xl`}
       style={{
         backgroundColor: "black",
         color: "rgb(184, 184, 184, 0.8)",
         maxHeight: "600px",
+        height: "420px",
+        width: "960px",
         fontFamily: "Fira Code",
+        fontWeight: "normal",
       }}
     >
       <CodeAreaHeader filePath={filePath} />

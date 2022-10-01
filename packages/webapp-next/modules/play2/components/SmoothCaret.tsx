@@ -19,8 +19,8 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
       id={`${SMOOTH_CARET_ELEMENT_ID}`}
       className={`absolute bg-purple-400 rounded-lg`}
       style={{
-        height: "28px",
-        width: "2px",
+        height: "34px",
+        width: "3px",
       }}
     />
   );
@@ -59,7 +59,7 @@ class Animator {
   animate(rect: { left: number; top: number }) {
     const element = this.getElement();
     if (!element) return;
-    const left = rect.left - 2 + "px";
+    const left = rect.left - 4 + "px";
     const top = rect.top - 5 + "px";
     const duration = this.elementInStarterPosition(element) ? 0 : 100;
     const caretAnimation = element.animate([{ left, top }], {
