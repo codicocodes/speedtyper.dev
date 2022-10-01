@@ -1,16 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
-import { getServerUrl } from "../common/utils/getServerUrl";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { useSocket } from "../common/hooks/useSocket";
 import { useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
-import Socket from "../Socket";
-
-function useSocket() {
-  return useMemo(() => {
-    const serverUrl = getServerUrl();
-    return new Socket(serverUrl);
-  }, []);
-}
 
 function Play2Page() {
   // TODO: Refactor this page
