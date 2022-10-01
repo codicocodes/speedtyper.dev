@@ -1,4 +1,4 @@
-import React, { MutableRefObject, RefObject, useEffect, useRef } from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import {
   Chart,
   LineController,
@@ -54,6 +54,11 @@ const renderChart = (
           beginAtZero: true,
         },
       },
+      plugins: {
+        tooltip: {
+          enabled: true,
+        },
+      },
     },
   });
 };
@@ -70,7 +75,7 @@ export default function ResultsChart() {
 
   return (
     <div
-      className="w-full flex-grow bg-dark-lake shadow-2xl items-center mt-2 py-2 text-lg text-off-white font-light rounded"
+      className="bg-dark-lake rounded-xl mt-2 p-2"
       style={{ height: "250px" }}
     >
       <canvas ref={chartRef} />

@@ -14,7 +14,6 @@ import { useCodeStore } from "../modules/play2/state/code-store";
 import useTotalSeconds from "../hooks/useTotalSeconds";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
-import { cpmToWPM } from "../common/utils/cpmToWPM";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 
 function Play2Page() {
@@ -23,15 +22,6 @@ function Play2Page() {
   const isCompleted = useIsCompleted();
   const endGame = useCodeStore((state) => state.end);
   const initialize = useCodeStore((state) => state.initialize);
-  // const keyStrokes = useCodeStore((state) => state.keyStrokes);
-  const getCPM = useCodeStore((state) => state.getCPM);
-  const wpm = cpmToWPM(getCPM());
-  const chartsData = useCodeStore((state) => state.getChartWPM)();
-  console.log(chartsData, wpm);
-  // const totalKeyStrokes = keyStrokes.length;
-
-  // console.log({ totalKeyStrokes, wpm });
-
   const socket = useSocket();
   const game = useGame(socket);
 
@@ -142,7 +132,7 @@ function Play2Page() {
 function RenderTimer(seconds: number) {
   return (
     <div className="relative">
-      <div className="absolute text-3xl ml-4 font-bold text-purple-400">
+      <div className="absolute text-3xl ml-4 font-bold text-purple-300">
         {seconds}
       </div>
     </div>

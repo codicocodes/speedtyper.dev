@@ -16,7 +16,10 @@ interface CodeState {
   start: () => void;
   end: () => void;
   isPlaying: () => boolean;
+  getTimeMS: () => number;
   getCPM: () => number;
+  getMistakesCount: () => number;
+  getAccuracy: () => number;
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
   _saveKeyStroke: (key: string, index: number, correct: boolean) => void;
@@ -51,6 +54,18 @@ interface CodeState {
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   // RESULTS logic
+  getAccuracy: () => {
+    // const allKeyStrokes = get().keyStrokes.length;
+    const validKeyStrokes = get()._getValidKeyStrokes().length;
+    // const invalidKeyStrokes = allKeyStrokes - validKeyStrokes;
+    const mistakes = get().incorrectKeyStrokes.length;
+    const accuracy = (validKeyStrokes - mistakes) / validKeyStrokes;
+    return Math.floor(accuracy * 100);
+  },
+  getMistakesCount: () => {
+    const mistakes = get().incorrectKeyStrokes;
+    return mistakes.length;
+  },
   getChartWPM: () => {
     const startTime = get().startTime?.getTime();
     if (!startTime) {
@@ -93,6 +108,12 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       )
     );
     return validKeyStrokes;
+  },
+  getTimeMS: () => {
+    const end = get().endTime?.getTime();
+    const start = get().startTime?.getTime();
+    if (!start || !end) return 0;
+    return end - start;
   },
   getCPM: () => {
     const validKeyStrokesCount = new Set(
