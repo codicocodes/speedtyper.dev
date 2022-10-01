@@ -168,7 +168,7 @@ const Play = () => {
               )}
               {participantCount > 1 ? (
                 <div
-                  className={`flex text-off-white my-4 items-center py-2 px-4 ml-4 rounded shadow-2xl`}
+                  className={`flex text-off-white items-center py-2 px-4 ml-4 rounded shadow-2xl`}
                 >
                   {participantCount} participants
                 </div>
