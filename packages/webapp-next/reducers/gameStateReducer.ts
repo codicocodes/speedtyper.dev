@@ -245,7 +245,7 @@ export const defaultGameState: IGameState = {
   users: {},
 };
 
-export default (state: IGameState, action: IAction): IGameState => {
+const gameStateReducer = (state: IGameState, action: IAction): IGameState => {
   const { type, payload } = action;
 
   switch (type) {
@@ -373,6 +373,7 @@ export default (state: IGameState, action: IAction): IGameState => {
       return {
         ...state,
         waiting: true,
+        startTime: undefined,
         challenge: payload,
       };
     }
@@ -439,3 +440,5 @@ export default (state: IGameState, action: IAction): IGameState => {
       return state;
   }
 };
+
+export default gameStateReducer;
