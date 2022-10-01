@@ -10,6 +10,7 @@ import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
 import { useEffect } from "react";
 import { useGameStore } from "../state/game-store";
+import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 
 interface CodeTypingContainerProps {
   filePath: string;
@@ -20,29 +21,24 @@ export function CodeTypingContainer({
   filePath,
   language,
 }: CodeTypingContainerProps) {
-  const isPlaying = useGameStore((state) => state.isPlaying)();
-  const start = useGameStore((state) => state.start);
   useCodeStore((state) => state.code);
+  const isPlaying = useIsPlaying();
+  const start = useGameStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
-  const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
 
   useEffect(() => {
     if (!isPlaying && index > 0) {
       start();
     }
   }, [index, isPlaying, start]);
+
   return (
     <div className="relative" onClick={triggerFocus}>
       <div className="flex flex-col">
-        <HiddenCodeInput
-          hide={true}
-          disabled={false}
-          inputRef={inputRef}
-          handleOnKeyUp={handleKeyPress}
-        />
+        <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
         {/* TODO: hide caret when input is not focused */}
         <SmoothCaret top={rect.top} left={rect.left} />
         <CodeArea language={language} filePath={filePath}>

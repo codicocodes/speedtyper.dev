@@ -13,20 +13,20 @@ import { copyToClipboard } from "../common/utils/clipboard";
 import { useGameStore } from "../modules/play2/state/game-store";
 import { useCodeStore } from "../modules/play2/state/code-store";
 import useTotalSeconds from "../hooks/useTotalSeconds";
+import { useIsPlaying } from "../common/hooks/useIsPlaying";
+import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 
 function Play2Page() {
   // TODO: Refactor this page
-  useGameStore((state) => state.startTime);
-  useCodeStore((state) => state.correctIndex);
-  const isCompleted = useCodeStore((state) => state.isCompleted)();
-  const isPlaying = useGameStore((state) => state.isPlaying)();
+  const isPlaying = useIsPlaying();
+  const isCompleted = useIsCompleted();
   const endGame = useGameStore((state) => state.end);
   const initialize = useCodeStore((state) => state.initialize);
   const reset = useGameStore((state) => state.reset);
   const socket = useSocket();
   const game = useGame(socket);
 
-  // TODO: Move isTyping to a React Context so it can be accessed anywhere in the app...
+  // TODO: Move isPlaying to a React Context so it can be accessed anywhere in the app...
   // FIXME: Tab should be not a string literal
   useKeyMap(true, "Tab", () => game.next());
 
