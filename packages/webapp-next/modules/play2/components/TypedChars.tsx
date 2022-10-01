@@ -14,7 +14,7 @@ export function TypedChars() {
     }
   }, [index]);
   return (
-    <span ref={typedRef} className="rust" style={{ background: "none" }}>
+    <span ref={typedRef} style={{ background: "none" }}>
       {typedChars()}
     </span>
   );
