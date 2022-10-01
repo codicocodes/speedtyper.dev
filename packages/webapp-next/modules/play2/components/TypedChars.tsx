@@ -1,5 +1,5 @@
 import highlightjs from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/github-dark.css";
 import { useEffect, useRef } from "react";
 import { useCodeStore } from "../state/code-store";
 
