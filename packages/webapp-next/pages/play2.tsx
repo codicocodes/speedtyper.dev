@@ -10,7 +10,6 @@ import { useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
 import { copyToClipboard } from "../common/utils/clipboard";
-import { useGameStore } from "../modules/play2/state/game-store";
 import { useCodeStore } from "../modules/play2/state/code-store";
 import useTotalSeconds from "../hooks/useTotalSeconds";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
@@ -20,9 +19,8 @@ function Play2Page() {
   // TODO: Refactor this page
   const isPlaying = useIsPlaying();
   const isCompleted = useIsCompleted();
-  const endGame = useGameStore((state) => state.end);
+  const endGame = useCodeStore((state) => state.end);
   const initialize = useCodeStore((state) => state.initialize);
-  const reset = useGameStore((state) => state.reset);
   const socket = useSocket();
   const game = useGame(socket);
 
@@ -45,13 +43,13 @@ function Play2Page() {
         language: data.language,
         filePath: "",
       });
-      reset();
       initialize(data.fullCodeString);
     });
-  }, [socket, game, reset, initialize]);
-  const startTime = useGameStore((state) => state.startTime);
-  const endTime = useGameStore((state) => state.endTime);
+  }, [socket, game, initialize]);
+  const startTime = useCodeStore((state) => state.startTime);
+  const endTime = useCodeStore((state) => state.endTime);
 
+  // TODO: move useTotalSeconds to modules folder
   const totalSeconds = useTotalSeconds(
     startTime?.getTime(),
     endTime?.getTime()
@@ -73,6 +71,7 @@ function Play2Page() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
                 className="m-2"
               >
                 {!isCompleted && (
@@ -88,6 +87,7 @@ function Play2Page() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
                 className="w-full"
               >
                 {!isPlaying && RenderActionButtons(() => game.next())}
@@ -98,6 +98,7 @@ function Play2Page() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
                 className="w-full"
               >
                 {isPlaying && RenderTimer(totalSeconds)}

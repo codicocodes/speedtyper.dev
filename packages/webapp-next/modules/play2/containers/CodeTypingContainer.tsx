@@ -9,7 +9,6 @@ import { NextChar } from "../components/NextChar";
 import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
 import { useEffect } from "react";
-import { useGameStore } from "../state/game-store";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 
 interface CodeTypingContainerProps {
@@ -23,7 +22,7 @@ export function CodeTypingContainer({
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
-  const start = useGameStore((state) => state.start);
+  const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);

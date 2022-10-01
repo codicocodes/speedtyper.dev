@@ -1,8 +1,8 @@
-import { useGameStore } from "../../modules/play2/state/game-store";
+import { useCodeStore } from "../../modules/play2/state/code-store";
 
 export const useIsPlaying = () => {
-  useGameStore((state) => state.startTime);
-  useGameStore((state) => state.endTime);
-  const isPlaying = useGameStore((state) => state.isPlaying)();
+  useCodeStore((state) => state.startTime);
+  useCodeStore((state) => state.endTime);
+  const isPlaying = useCodeStore((state) => state.isPlaying)();
   return isPlaying;
 };

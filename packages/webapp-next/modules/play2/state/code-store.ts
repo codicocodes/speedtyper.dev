@@ -1,14 +1,27 @@
 import create from "zustand";
 
+interface TypedChar {
+  char: string;
+  timestamp: Date;
+}
+
 interface CodeState {
+  // Match state
+  startTime?: Date;
+  endTime?: Date;
+  chars: TypedChar[];
+  _saveKeyStroke: (key: string) => void;
+  start: () => void;
+  end: () => void;
+  isPlaying: () => boolean;
+
+  // Code rendering state
   code: string;
   index: number;
   correctIndex: number;
   correctChars: () => string;
   incorrectChars: () => string;
   currentChar: () => string;
-  // nextChar: () => string;
-  // nextNextChar: () => string;
   untypedChars: () => string;
   initialize: (code: string) => void;
   handleKeyPress: (key: string) => void;
@@ -21,11 +34,41 @@ interface CodeState {
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
+  // MATCH logic
+  chars: [],
+  _saveKeyStroke: (key: string) => {
+    set((state) => {
+      return state;
+    });
+  },
+  start: () => {
+    set((state) => {
+      return { ...state, startTime: new Date() };
+    });
+  },
+  end: () => {
+    set((state) => {
+      return { ...state, endTime: new Date() };
+    });
+  },
+  isPlaying: () => {
+    return !!get().startTime && !get().endTime;
+  },
+
+  // CODE rendering logic
   code: "",
   index: 0,
   correctIndex: 0,
   initialize: (code: string) => {
-    set((state) => ({ ...state, code, index: 0, correctIndex: 0 }));
+    set((state) => ({
+      ...state,
+      code,
+      index: 0,
+      correctIndex: 0,
+      startTime: undefined,
+      endTime: undefined,
+      chars: [],
+    }));
   },
   handleKeyPress: (unparsedKey: string) => {
     set((state) => {
