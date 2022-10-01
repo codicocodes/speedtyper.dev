@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { LinkIcon } from "../assets/icons/LinkIcon";
 import { ReloadIcon } from "../assets/icons/ReloadIcon";
 import { useSocket } from "../common/hooks/useSocket";
 import Button from "../components/Button";
@@ -52,18 +53,6 @@ function Play2Page() {
   return (
     <div className="flex items-center justify-center h-full w-full">
       <div className="flex flex-col max-w-5xl items-center justify-center">
-        <div
-          className="flex flex-row justify-start w-full"
-          style={{ color: "rgb(184, 184, 184, 0.8)" }}
-        >
-          <Button
-            color="invisible"
-            title="Reload the challenge"
-            size="sm"
-            onClick={nextChallenge}
-            leftIcon={<ReloadIcon />}
-          />
-        </div>
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
@@ -75,6 +64,24 @@ function Play2Page() {
               filePath={challenge.filePath}
               language={challenge.language}
             />
+            <div
+              className="flex flex-row justify-start w-full mt-1"
+              style={{ color: "rgb(184, 184, 184, 0.8)" }}
+            >
+              <Button
+                color="invisible"
+                title="Reload the challenge"
+                size="sm"
+                onClick={nextChallenge}
+                leftIcon={<ReloadIcon />}
+              />
+              <Button
+                color="invisible"
+                title="Invite your friends to race"
+                size="sm"
+                leftIcon={<LinkIcon />}
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
