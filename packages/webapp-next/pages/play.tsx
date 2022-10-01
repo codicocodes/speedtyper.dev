@@ -95,12 +95,14 @@ const Play = () => {
     selectedUserState?.renderedStrings?.correctChars ?? ""
   );
 
-  const blockTyping = useBlockTyping(
+  const blockTypingBasedOnTimes = useBlockTyping(
     selectedUserState?.renderedStrings?.nextChar ?? "",
     selectedUserState?.renderedStrings?.wrongChars ?? "",
     endTime,
     startTime
   );
+
+  const blockTyping = state.waiting || blockTypingBasedOnTimes;
 
   const warnTyping = useWarnTyping(state.waiting, selectedUserState);
 
