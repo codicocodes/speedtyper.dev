@@ -23,6 +23,7 @@ export const HiddenCodeInput = ({
 }: HiddenCodeInputProps) => {
   const [input, setInput] = useState("");
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
+    // TODO: use e.isTrusted
     const backspaces = input.length - e.target.value.length;
     // send backspaces
     if (backspaces > 0) {
