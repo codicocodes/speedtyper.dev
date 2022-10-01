@@ -49,7 +49,7 @@ const Button = ({
     >
       <>
         {leftIcon && leftIcon}
-        <p className="pl-1">{text}</p>
+        {text && <p className="pl-1">{text}</p>}
         {rightIcon && rightIcon}
       </>
     </button>
