@@ -14,17 +14,18 @@ interface CodeTypingContainerProps {
   code: string;
   filePath: string;
   language: string;
+  setIsTyping: (isTyping: boolean) => void;
 }
 
 export function CodeTypingContainer({
   code,
   filePath,
   language,
+  setIsTyping,
 }: CodeTypingContainerProps) {
   const initialize = useCodeStore((state) => state.initialize);
   useCodeStore((state) => state.code);
-  useCodeStore((state) => state.index);
-  useCodeStore((state) => state.index);
+  const index = useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
@@ -32,7 +33,10 @@ export function CodeTypingContainer({
 
   useEffect(() => {
     initialize(code);
-  }, [initialize, code]);
+  }, [initialize, code, setIsTyping]);
+  useEffect(() => {
+    setIsTyping(index > 0);
+  }, [index, setIsTyping]);
   return (
     <div className="relative" onClick={triggerFocus}>
       <div className="flex flex-col">
@@ -42,6 +46,7 @@ export function CodeTypingContainer({
           inputRef={inputRef}
           handleOnKeyUp={handleKeyPress}
         />
+        {/* TODO: hide caret when input is not focused */}
         <SmoothCaret top={rect.top} left={rect.left} />
         <CodeArea language={language} filePath={filePath}>
           <TypedChars />
