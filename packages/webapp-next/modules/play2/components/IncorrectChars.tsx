@@ -22,16 +22,22 @@ export function IncorrectChars() {
   );
 }
 
+// TODO: figure out where these constants should go and if we can reuse them in other places
+const LineBreak = "\n";
+const LineBreakChar = "↵";
+const LineBreakWithChar = `${LineBreakChar}${LineBreak}`;
+
 function parseIncorrectCharGroups(incorrectChars: string) {
-  const incorrectLines = incorrectChars.split("\n").filter(Boolean);
+  const incorrectLines = incorrectChars
+    .replaceAll(LineBreak, LineBreakWithChar)
+    .split("\n")
+    .filter(Boolean);
+
   const charGroups = incorrectLines
-    .map((line, lineIndex) => {
-      const prefixLineBreak = lineIndex !== 0;
-      const lineWithPrefix = prefixLineBreak ? "\n".concat(line) : line;
-      // TODO: make ↵\n a constant somewhere which can be reused
-      const subline = lineWithPrefix.replace(/\n/g, "↵\n").split(/(\s+)/);
+    .map((line) => {
+      const subline = line.split(/(\s+)/);
       return subline.map((chars) => {
-        return chars;
+        return chars.replaceAll(LineBreakChar, LineBreakWithChar);
       });
     })
     .flat();
