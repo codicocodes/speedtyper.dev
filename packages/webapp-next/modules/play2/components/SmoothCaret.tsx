@@ -1,6 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
+import { useCodeStore } from "../state/code-store";
 
 const SMOOTH_CARET_ELEMENT_ID = "smooth-caret-element";
+
+const useBlinkingCursorAnimation = () => {
+  const controls = useAnimationControls();
+  const isPlaying = useCodeStore((state) => state.isPlaying)();
+  useEffect(() => {
+    if (!isPlaying) {
+      controls.start({
+        backgroundColor: ["rgba(0,0,0,0)", "#d6bcfa"],
+      });
+    } else {
+      controls.set({
+        backgroundColor: ["rgba(0,0,0,0)", "#d6bcfa"],
+      });
+      controls.stop();
+    }
+  }, [controls, isPlaying]);
+  return controls;
+};
 
 export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
   // TODO: make caret blink when not actively playing
@@ -13,16 +33,27 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
       setHidden(false);
     }
   }, [animator, left, top]);
+
+  const controls = useBlinkingCursorAnimation();
+
   return (
-    <div
-      hidden={hidden}
-      id={`${SMOOTH_CARET_ELEMENT_ID}`}
-      className={`absolute bg-purple-400 rounded-lg`}
-      style={{
-        height: "34px",
-        width: "3px",
-      }}
-    />
+    <AnimatePresence>
+      <motion.div
+        animate={controls}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+        }}
+        hidden={hidden}
+        id={`${SMOOTH_CARET_ELEMENT_ID}`}
+        className={`absolute rounded-lg`}
+        // className={`absolute bg-purple-400 rounded-lg`}
+        style={{
+          height: "34px",
+          width: "3px",
+        }}
+      />
+    </AnimatePresence>
   );
 };
 
