@@ -41,9 +41,9 @@ const ProfilePage = (props: ProfileProps) => {
   const challengeResults = userResults[resultSelector];
 
   return userResults ? (
-    <div className="flex text-off-white justify-center  h-full w-full mt-12 tracking-wider">
-      <div className="flex w-full items-center flex-col">
-        <div className="flex flex-wrap flex-grow items-center">
+    <div className="flex text-off-white items-center justify-center h-full tracking-wider">
+      <div className="flex items-center flex-col">
+        <div className="flex flex-wrap items-center">
           <ProfileItem>
             <div className="p-4 flex-row">
               <div className="pb-2 text-sm">Username:</div>
@@ -73,10 +73,10 @@ const ProfilePage = (props: ProfileProps) => {
             </div>
           </ProfileItem>
         </div>
-        <div className="max-w-5xl w-full flex-grow bg-dark-lake items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md text-white">
+        <div className="max-w-5xl w-full bg-dark-lake items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md text-white">
           <div className="flex flex-row">
             <h1 className="text-xl px-8 py-4 font-bold">Progress (WPM)</h1>
-            <div className="text-sm flex-grow"></div>
+            <div className="text-sm"></div>
             <button
               className={`font-bold my-4 outline-none border-none ${
                 resultSelector === "monthly"
