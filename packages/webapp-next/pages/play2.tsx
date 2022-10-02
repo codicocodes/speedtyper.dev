@@ -36,6 +36,13 @@ function Play2Page() {
     language: "",
   });
 
+  // Reset state when leaving page
+  useEffect(() => {
+    return () => {
+      initialize("");
+    };
+  }, [initialize]);
+
   useEffect(() => {
     game.play();
     // TODO: handle joining other rooms
@@ -143,7 +150,7 @@ function RenderTimer(seconds: number) {
 function RenderActionButtons(nextChallenge: () => void) {
   return (
     <div className="relative">
-      <div className="absolute" style={{ color: "rgb(184, 184, 184, 0.8)" }}>
+      <div className="absolute text-faded-gray">
         <Button
           color="invisible"
           title="Reload the challenge"

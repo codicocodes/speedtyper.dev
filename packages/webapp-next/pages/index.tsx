@@ -26,7 +26,7 @@ const IndexPage = () => {
 
   return (
     <>
-      <div className="text-off-white justify-center align-center h-full w-full tracking-wider bg-dark-ocean">
+      <div className="text-off-white justify-center align-center h-full mt-12 w-full tracking-wider bg-dark-ocean">
         <div className="flex justify-center items-center mt-4">
           <div className="relative" style={{ width: "125px", height: "66px" }}>
             <Image layout="fill" src="/logo.png" quality={100} />

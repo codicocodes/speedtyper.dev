@@ -24,6 +24,7 @@ module.exports = {
     extend: {
       colors: {
         citrus: "#F5CBA7",
+        "faded-gray": "rgb(184, 184, 184, 0.8)",
         "off-white": "#eeeeee",
         "dark-ocean": "#0E0E11",
         "dark-lake": "#18181b",

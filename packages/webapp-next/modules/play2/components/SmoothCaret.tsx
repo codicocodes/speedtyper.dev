@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import { useCodeStore } from "../state/code-store";
 
