@@ -28,7 +28,6 @@ const useBlinkingCursorAnimation = () => {
 };
 
 export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
-  // TODO: make caret blink when not actively playing
   const hasLoaded = useHasLoadedCode();
   const animator = useAnimator();
 
