@@ -2,7 +2,7 @@ import React from "react";
 
 const MarketingBar = (): JSX.Element => {
   return (
-    <div className="flex flex-col w-full hover:bg-gray-800 bg-dark-lake shadow-2xl justify-center items-center mt-4 py-2 text-lg text-off-white font-light rounded">
+    <div className="flex flex-col w-full hover:bg-gray-800 bg-dark-ocean shadow-2xl justify-center items-center mt-4 py-2 text-lg text-off-white font-light rounded">
       <span className="justify-center items-center text-xl font-medium tracking-wider mx-2 mx-8">
         <a
           className="flex justify-center items-center"

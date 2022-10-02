@@ -23,7 +23,7 @@ const Stream = () => {
   }, []);
   return (
     <div className="flex justify-center items-center pb-24 lg:w-5xl">
-      <div className="max-w-5xl flex flex-col justify-center items-center">
+      <div className="max-w-5xl flex flex-col justify-center items-center bg-dark-ocean w-full p-6 lg:rounded-md">
         <div
           className="flex justify-center max-w-4xl"
           id={"twitch-embed"}

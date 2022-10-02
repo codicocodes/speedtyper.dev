@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
   return (
     <div
+      className="bg-dark-lake"
       style={{
         height: "100vh",
         display: "grid",

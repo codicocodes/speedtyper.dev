@@ -105,7 +105,7 @@ const SecondChart = ({
 
   return (
     <div
-      className="max-w-5 xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-2 pl-4 py-2 text-lg text-off-white font-light rounded"
+      className="max-w-5 xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-2 pl-4 py-2 text-lg text-off-white font-light rounded"
       style={{ height: "350px" }}
     >
       {resultSelector === "monthly" ? (

@@ -26,7 +26,7 @@ const IndexPage = () => {
 
   return (
     <>
-      <div className="text-off-white justify-center align-center h-full w-full tracking-wider bg-dark-ocean">
+      <div className="text-off-white justify-center align-center h-full w-full tracking-wider bg-inherit">
         <div className="flex justify-center items-center mt-4">
           <div className="relative" style={{ width: "125px", height: "66px" }}>
             <Image layout="fill" src="/logo.png" quality={100} />
@@ -37,7 +37,7 @@ const IndexPage = () => {
         </h1>
         <div className="flex  justify-center mt-8">
           <div className="flex flex-col lg:flex-row max-w-5xl">
-            <div className="lg:mr-2 max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md">
+            <div className="lg:mr-2 max-w-5xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md">
               <h2 className="flex font-bold justify-start text-3xl mt-4 mx-12 mb-0 ">
                 Join a typing race
               </h2>
@@ -71,7 +71,7 @@ const IndexPage = () => {
                 </div>
               </div>
             </div>
-            <div className="lg:ml-2 w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md">
+            <div className="lg:ml-2 w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md">
               <h2 className="flex font-bold justify-start text-3xl mt-4 mx-12 mb-0">
                 Create a custom game
               </h2>
@@ -108,7 +108,7 @@ const IndexPage = () => {
         </div>
 
         <div className="flex justify-center">
-          <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
+          <div className="max-w-5xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
             <h2 className="flex font-bold justify-start text-2xl mt-4 mx-12 mb-0 ">
               Join the community
             </h2>
@@ -152,7 +152,7 @@ const IndexPage = () => {
 
         {user?.guest !== true && user?.username && (
           <div className="flex justify-center mt-4">
-            <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center text-lg text-off-white font-light lg:rounded-md py-8">
+            <div className="max-w-5xl w-full flex-grow bg-dark-ocean shadow-2xl items-center text-lg text-off-white font-light lg:rounded-md py-8">
               <h2 className="flex font-bold justify-start mx-12">
                 Flex your results on GitHub
               </h2>
@@ -195,7 +195,7 @@ const IndexPage = () => {
         {dailyResults.length > 0 && (
           <div>
             <div className="flex justify-center">
-              <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
+              <div className="max-w-5xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
                 <Toplist results={dailyResults} />
               </div>
             </div>

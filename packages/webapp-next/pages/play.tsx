@@ -49,7 +49,7 @@ const useDeprecationMessage = () => {
 const PlacementContainer = ({ gameState }: { gameState: IGameState }) => {
   return (
     <div
-      className="flex flex-col mb-6 bg-dark-lake p-4 rounded"
+      className="flex flex-col mb-6 bg-dark-ocean p-4 rounded"
       style={{ maxHeight: "300px", overflowY: "auto" }}
     >
       {Object.values(gameState.users)
@@ -219,7 +219,7 @@ const Play = () => {
             )}
             {!endTime && (
               <div
-                className={`mt-2 pt-2 rounded bg-dark-lake ${
+                className={`mt-2 pt-2 rounded bg-dark-ocean ${
                   !inputIsSelected ? "outline-white" : ""
                 }
                 `}
@@ -279,11 +279,11 @@ const Play = () => {
 
           {!!endTime && raceResults.length > 0 && (
             <>
-              <div className="max-w-5 xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 py-2 text-lg text-off-white font-light rounded">
+              <div className="max-w-5 xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 py-2 text-lg text-off-white font-light rounded">
                 <RaceResultsContainer results={raceResults} />
               </div>
               {topResults.length > 0 && (
-                <div className="max-w-5 xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 py-2 text-lg text-off-white font-light rounded">
+                <div className="max-w-5 xl w-full flex-grow bg-dark-ocean shadow-2xl items-center mt-4 py-2 text-lg text-off-white font-light rounded">
                   <Leaderboard results={topResults} />
                 </div>
               )}
@@ -292,31 +292,18 @@ const Play = () => {
           <MarketingBar />
           {challenge ? (
             <div className="flex w-full">
-              <div className="flex flex-grow items-center">
-                <h1
-                  style={{ color: "rgb(184, 184, 184, 0.3)" }}
-                  className="bg-dark-lake py-1 px-2 rounded text-sm font-bold"
-                >
+              <div
+                className="flex text-off-white flex-grow items-center"
+                style={{ color: "rgb(184, 184, 184, 0.8)" }}
+              >
+                <h1 className="bg-dark-ocean py-1 px-2 rounded text-sm font-bold">
                   Tab
                 </h1>
-                <span
-                  style={{ color: "rgb(184, 184, 184, 0.8)" }}
-                  className="mx-1 text-sm"
-                >
-                  - Next Challenge
-                </span>
-                <h1
-                  style={{ color: "rgb(184, 184, 184, 0.3)" }}
-                  className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2"
-                >
+                <span className="mx-1 text-sm">- Next Challenge</span>
+                <h1 className="bg-dark-ocean py-1 px-2 rounded text-sm font-bold ml-2">
                   Enter
                 </h1>
-                <span
-                  style={{ color: "rgb(184, 184, 184, 0.8)" }}
-                  className="mx-1 text-sm"
-                >
-                  - Start Challenge
-                </span>
+                <span className="mx-1 text-sm">- Start Challenge</span>
               </div>
               <ChallengeInfo challenge={challenge} />
             </div>
