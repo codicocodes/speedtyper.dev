@@ -243,7 +243,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     return get().code.substring(0, get().correctIndex);
   },
   isCompleted: () => {
-    return get().correctIndex === get().code.length;
+    return get().correctIndex > 0 && get().correctIndex === get().code.length;
   },
   _allCharsTyped: () => {
     return get().index === get().code.length;
