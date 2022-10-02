@@ -4,6 +4,7 @@ import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 interface KeyStroke {
   key: string;
   timestamp: number;
+  literal?: string;
   index: number;
 }
 
@@ -35,11 +36,14 @@ interface CodeState {
   initialize: (code: string) => void;
   handleKeyPress: (key: string) => void;
   isCompleted: () => boolean;
+  correctInput: () => string;
+  literals: string[];
 
   // private helper methods
   _getBackspaceOffset: () => number;
   _getForwardOffset: () => number;
   _allCharsTyped: () => boolean;
+  _buildLiterals: (code: string) => string[];
 }
 
 // There are 3 separate parts of logic in this store
@@ -135,9 +139,17 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   _saveKeyStroke: (key: string, index: number, correct: boolean) => {
     set((state) => {
       if (correct) {
+        // FIXME: correctIndex has not rerendered yet
+        const correctInput = get().code.substring(0, get().correctIndex + 1);
+        const literal = get().literals[0];
+        const endsWithLiteral = correctInput.endsWith(literal);
+        if (endsWithLiteral) {
+          get().literals.shift();
+        }
         state.keyStrokes.push({
           key,
           index,
+          literal,
           timestamp: new Date().getTime(),
         });
       } else {
@@ -165,6 +177,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   },
 
   // CODE rendering logic
+  literals: [],
   code: "",
   index: 0,
   correctIndex: 0,
@@ -179,6 +192,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       chars: [],
       keyStrokes: [],
       incorrectKeyStrokes: [],
+      literals: get()._buildLiterals(code),
     }));
   },
   handleKeyPress: (unparsedKey: string) => {
@@ -225,6 +239,9 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     }
     return get().code.slice(get().index + 1);
   },
+  correctInput: () => {
+    return get().code.substring(0, get().correctIndex);
+  },
   isCompleted: () => {
     return get().correctIndex === get().code.length;
   },
@@ -268,6 +285,18 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       }
     }
     return offset;
+  },
+  _buildLiterals: (code: string) => {
+    const literals = code
+      .substring(0)
+      .split(/[.\-=/_\:\;\,\}\{\)\(\"\'\]\[\/\#\?\>\<\&\*]/)
+      .flatMap((r) => {
+        return r.split(/[\n\r\s\t]+/);
+      })
+      .filter(Boolean);
+
+    console.log(literals);
+    return literals;
   },
 }));
 

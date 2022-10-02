@@ -3,6 +3,7 @@ import {
   ClipboardEvent,
   KeyboardEvent,
   MouseEvent,
+  useEffect,
   useState,
 } from "react";
 
@@ -20,6 +21,10 @@ export const HiddenCodeInput = ({
   inputRef,
 }: HiddenCodeInputProps) => {
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
+
+  // TODO: remove input and setInput
+  // instead introduc getTypedInput method in the store
+  // which gets code.substr(0, correctIndex)
   const [input, setInput] = useState("");
 
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {

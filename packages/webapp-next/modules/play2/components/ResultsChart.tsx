@@ -74,11 +74,13 @@ export default function ResultsChart() {
   }, [chartWPMData]);
 
   return (
-    <div
-      className="bg-dark-lake rounded-xl mt-2 p-2"
-      style={{ height: "250px" }}
-    >
-      <canvas ref={chartRef} />
+    <div className="flex rounded-xl flex-col bg-dark-lake m-2">
+      <div className="flex flex-row">
+        <h1 className="text-sm p-4 font-semibold">Words Per Minute</h1>
+      </div>
+      <div className="bg-dark-lake p-2 rounded-xl" style={{ height: "250px" }}>
+        <canvas ref={chartRef} />
+      </div>
     </div>
   );
 }
