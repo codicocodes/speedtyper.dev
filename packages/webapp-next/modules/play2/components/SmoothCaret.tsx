@@ -2,6 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import { useCodeStore } from "../state/code-store";
 
+const useHasLoadedCode = () => {
+  const code = useCodeStore((state) => state.code);
+  return code.length > 0;
+};
+
 const SMOOTH_CARET_ELEMENT_ID = "smooth-caret-element";
 
 const useBlinkingCursorAnimation = () => {
@@ -23,15 +28,11 @@ const useBlinkingCursorAnimation = () => {
 };
 
 export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
-  // TODO: make caret blink when not actively playing
-  const [hidden, setHidden] = useState(true);
+  const hasLoaded = useHasLoadedCode();
   const animator = useAnimator();
 
   useEffect(() => {
-    if (!isInitialPosition({ top, left })) {
-      animator.animate({ left, top });
-      setHidden(false);
-    }
+    animator.animate({ left, top });
   }, [animator, left, top]);
 
   const controls = useBlinkingCursorAnimation();
@@ -44,10 +45,9 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
           duration: 1,
           repeat: Infinity,
         }}
-        hidden={hidden}
+        hidden={!hasLoaded}
         id={`${SMOOTH_CARET_ELEMENT_ID}`}
         className={`absolute rounded-lg`}
-        // className={`absolute bg-purple-400 rounded-lg`}
         style={{
           height: "34px",
           width: "3px",
@@ -56,10 +56,6 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
     </AnimatePresence>
   );
 };
-
-function isInitialPosition(rect: { left: number; top: number }) {
-  return rect.top === 0 && rect.left === 0;
-}
 
 function useAnimator() {
   return useMemo(() => {
