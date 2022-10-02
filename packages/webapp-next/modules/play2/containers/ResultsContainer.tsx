@@ -6,12 +6,7 @@ import { useCodeStore } from "../state/code-store";
 function ResultsText({ title, value }: { title: string; value: string }) {
   return (
     <div className="m-2">
-      <p
-        className="color-inherit font-bold text"
-        style={{ color: "rgb(184, 184, 184, 0.8)" }}
-      >
-        {title}
-      </p>
+      <p className="color-inherit font-bold text-faded-gray">{title}</p>
       <p className="font-bold text-5xl text-purple-300">{value}</p>
     </div>
   );
