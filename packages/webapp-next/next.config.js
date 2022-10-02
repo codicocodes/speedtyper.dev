@@ -6,6 +6,7 @@ const nextConfig = {
     domains: ["avatars.githubusercontent.com"],
   },
   publicRuntimeConfig: {
+    isProduction: process.env.NODE_ENV === "production",
     title: "speedtyper.dev | Typing Practice For Programmers | Typing races",
     description:
       "speedtyper.dev is a typing application for programmers. Battle against other developers by typing challenges from real open source projects as fast as possible. Practice your typing to become a faster and more accurate programmer by practicing typing actual code sequences and symbols that are hard to find on the keyboard.",

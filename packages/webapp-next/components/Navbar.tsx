@@ -4,7 +4,7 @@ import AvatarModal from "./AvatarModal";
 import { useAppContext } from "../AppContext";
 import { IUser } from "../types";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "../common/components/Button";
 import { TwitchLogo, DiscordLogo } from "../assets/icons";
 import Image from "next/image";
 

@@ -4,11 +4,11 @@ const SmoothCaret = ({
   nextCharRef,
   inputIsSelected,
 }: {
-  nextCharRef: React.RefObject<HTMLSpanElement | null>;
+  nextCharRef: React.RefObject<HTMLSpanElement>;
   inputIsSelected: boolean;
 }) => {
-  const left = (nextCharRef?.current?.offsetLeft ?? 0) - 2 + "px";
-  const top = (nextCharRef?.current?.offsetTop ?? 0) - 5 + "px";
+  const left = (nextCharRef.current?.offsetLeft ?? 0) - 2 + "px";
+  const top = (nextCharRef.current?.offsetTop ?? 0) - 5 + "px";
 
   useEffect(() => {
     const element = document.getElementById("caret");

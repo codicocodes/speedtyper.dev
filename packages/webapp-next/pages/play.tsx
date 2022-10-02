@@ -33,7 +33,18 @@ import useTopResults from "../hooks/useTopResults";
 import Leaderboard from "../components/Leaderboard";
 import PingDiscordButton from "../components/PingDiscordButton";
 import LanguageDropdown from "../components/LanguageDropdown";
-import { useKeyMap } from "../hooks/useKeyMap";
+import getConfig from "next/config";
+
+const useDeprecationMessage = () => {
+  const {
+    publicRuntimeConfig: { isProduction },
+  } = getConfig();
+  if (!isProduction) {
+    console.warn(
+      "[speedtyper.dev]: /play page is deprecated in favor of /play2. Feature development of /play is frozen as it will be replaced."
+    );
+  }
+};
 
 const PlacementContainer = ({ gameState }: { gameState: IGameState }) => {
   return (
@@ -64,6 +75,7 @@ const PlacementContainer = ({ gameState }: { gameState: IGameState }) => {
 };
 
 const Play = () => {
+  useDeprecationMessage();
   const [state, dispatch] = useReducer(gameStateReducer, defaultGameState);
   const selectedUserState = state?.users[state?.selectedUserId ?? ""];
   const challenge = state.challenge;

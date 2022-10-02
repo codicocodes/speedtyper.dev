@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useLanguages from "../hooks/useLanguages";
-import Button from "./Button";
+import Button from "../common/components/Button";
 import { DownArrowIcon } from "../assets/icons";
 
 const LanguageDropdown = ({

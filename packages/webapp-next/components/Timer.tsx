@@ -5,13 +5,9 @@ import cpmToWpm from "../utils/cpmToWpm";
 export const toHHMMSS = (secs: number) => {
   const minutes = Math.floor(secs / 60) % 60;
   const seconds = secs % 60;
-
   let result = "";
-
   result = minutes ? result.concat(`${minutes} m, `) : result;
-
   result = result.concat(`${seconds} s`);
-
   return result;
 };
 

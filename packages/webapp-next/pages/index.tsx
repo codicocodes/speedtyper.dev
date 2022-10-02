@@ -8,7 +8,7 @@ import Stream from "../components/Stream";
 import { useAppContext } from "../AppContext";
 import Link from "next/link";
 import getConfig from "next/config";
-import Button from "../components/Button";
+import Button from "../common/components/Button";
 import {
   DiscordLogo,
   RightArrowIcon,

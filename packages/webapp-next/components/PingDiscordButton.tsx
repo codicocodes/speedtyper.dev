@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ky from "ky-universal";
 import { toast } from "react-toastify";
 import getConfig from "next/config";
-import Button from "./Button";
+import Button from "../common/components/Button";
 import { DiscordLogo } from "../assets/icons";
 
 const PingDiscordButton = ({ gameId }: { gameId: string }) => {

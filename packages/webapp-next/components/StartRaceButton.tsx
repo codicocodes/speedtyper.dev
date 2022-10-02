@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useKeyMap } from "../hooks/useKeyMap";
 import Socket from "../Socket";
-import Button from "./Button";
+import Button from "../common/components/Button";
 
 const StartRaceButton = ({
   socket,

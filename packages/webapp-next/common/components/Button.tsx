@@ -1,10 +1,12 @@
 import React, { ButtonHTMLAttributes } from "react";
 
+type ButtonColor = "primary" | "secondary" | "invisible";
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color: "primary" | "secondary";
+  color: ButtonColor;
   leftIcon?: React.ReactElement;
   rightIcon?: React.ReactElement;
-  text: string;
+  text?: string;
   size?: "sm" | "md" | "lg";
 }
 
@@ -18,12 +20,7 @@ const Button = ({
   title,
   size = "md",
 }: ButtonProps) => {
-  const sharedStyle =
-    "flex items-center text-gray-900 border-gray-200 border rounded";
-
-  const style =
-    color === "primary" ? `bg-off-white` : `bg-purple-400 hover:bg-purple-300`;
-
+  const colorStyles = getColorStyles(color);
   const disabledStyle = disabled
     ? "cursor-not-allowed opacity-80"
     : "cursor-pointer";
@@ -45,18 +42,32 @@ const Button = ({
       title={title}
       style={{ transition: "all .15s ease" }}
       onClick={onClick}
-      className={`${sharedStyle} ${style} ${disabledStyle} ${buttonSize()}`}
+      className={`${colorStyles} ${disabledStyle} ${buttonSize()}`}
       disabled={disabled}
       aria-expanded="true"
       aria-haspopup="true"
     >
       <>
         {leftIcon && leftIcon}
-        <p className="pl-1">{text}</p>
+        {text && <p className="pl-1">{text}</p>}
         {rightIcon && rightIcon}
       </>
     </button>
   );
 };
+
+function getColorStyles(color: ButtonColor) {
+  if (color === "invisible") {
+    return "off-white border-none";
+  }
+
+  const sharedStyle =
+    "flex items-center text-gray-900 border-gray-200 border rounded";
+
+  const style =
+    color === "primary" ? `bg-off-white` : `bg-purple-400 hover:bg-purple-300`;
+
+  return `${sharedStyle} ${style}`;
+}
 
 export default Button;
