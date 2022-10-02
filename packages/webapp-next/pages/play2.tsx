@@ -36,6 +36,13 @@ function Play2Page() {
     language: "",
   });
 
+  // Reset state when leaving page
+  useEffect(() => {
+    return () => {
+      initialize("");
+    };
+  }, [initialize]);
+
   useEffect(() => {
     game.play();
     // TODO: handle joining other rooms
