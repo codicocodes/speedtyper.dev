@@ -13,14 +13,12 @@ export function CodeArea({
   focused,
   children,
 }: CodeAreaProps) {
-  // TODO: css when unfocused: blur-sm opacity-40
   return (
     <div
       className="text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
       style={{
         backgroundColor: "black",
         height: "420px",
-        // width: "960px",
         fontFamily: "Fira Code",
         fontWeight: "normal",
       }}
