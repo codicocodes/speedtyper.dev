@@ -3,14 +3,20 @@ import { ReactNode } from "react";
 interface CodeAreaProps {
   language: string;
   filePath: string;
+  focused: boolean;
   children: ReactNode;
 }
 
-export function CodeArea({ language, filePath, children }: CodeAreaProps) {
+export function CodeArea({
+  language,
+  filePath,
+  focused,
+  children,
+}: CodeAreaProps) {
   // TODO: css when unfocused: blur-sm opacity-40
   return (
     <div
-      className="text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
+      className="relative text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
       style={{
         backgroundColor: "black",
         height: "420px",
@@ -19,8 +25,14 @@ export function CodeArea({ language, filePath, children }: CodeAreaProps) {
         fontWeight: "normal",
       }}
     >
+      {!focused && (
+        <div className="absolute flex justify-center items-center w-full h-full">
+          Click to focus
+        </div>
+      )}
+
       <CodeAreaHeader filePath={filePath} />
-      <pre>
+      <pre className={focused ? "blur-none opacity-100" : "blur-sm opacity-40"}>
         <code className={`${language}`}>{children}</code>
       </pre>
     </div>
