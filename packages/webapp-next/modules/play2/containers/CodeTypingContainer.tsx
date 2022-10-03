@@ -60,8 +60,8 @@ export function CodeTypingContainer({
       >
         <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
         {/* TODO: hide caret when input is not focused */}
-        {focused && <SmoothCaret top={rect.top} left={rect.left} />}
         <CodeArea language={language} filePath={filePath} focused={focused}>
+          {focused && <SmoothCaret top={rect.top} left={rect.left} />}
           <TypedChars />
           <IncorrectChars />
           <NextChar nextCharRef={currentNodeRef} />

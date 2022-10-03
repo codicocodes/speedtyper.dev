@@ -16,7 +16,7 @@ export function CodeArea({
   // TODO: css when unfocused: blur-sm opacity-40
   return (
     <div
-      className="relative text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
+      className="text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
       style={{
         backgroundColor: "black",
         height: "420px",
