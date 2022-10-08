@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { GithubRepository } from 'src/connectors/github/dtos/github-repository.dto';
+import { File } from 'src/files/file.entity';
 
 @Entity()
 export class SyncedProject {
@@ -26,9 +28,13 @@ export class SyncedProject {
   ownerAvatar: string;
   @Column()
   defaultBranch: string;
+
   @OneToOne(() => TrackedProject, (tracked) => tracked.syncedProject)
   @JoinColumn()
   trackedProject: TrackedProject;
+
+  @OneToMany(() => File, (file) => file.project)
+  files: File[];
 
   static fromGithubRepository(tracked: TrackedProject, repo: GithubRepository) {
     const project = new SyncedProject();

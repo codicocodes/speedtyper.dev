@@ -9,12 +9,10 @@ import { SyncedProject } from './synced-project.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([SyncedProject]),
-    TrackedProjectsModule, 
-    GithubConnectorModule
+    TrackedProjectsModule,
+    GithubConnectorModule,
   ],
-  providers: [
-    SyncedProjectsService,
-    RunSyncTrackedProjects
-  ],
+  providers: [SyncedProjectsService, RunSyncTrackedProjects],
+  exports: [SyncedProjectsService],
 })
 export class SyncedProjectsModule {}

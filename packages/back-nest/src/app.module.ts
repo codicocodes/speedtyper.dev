@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TrackedProjectsModule } from './tracked-projects/tracked-projects.module';
 import { SyncedProjectsModule } from './synced-projects/synced-projects.module';
 import { GithubConnectorModule } from './connectors/github/github.module';
+import { FilesModule } from './files/files.module';
 
 const PostgresModule = TypeOrmModule.forRoot({
   type: 'postgres',
@@ -12,7 +13,6 @@ const PostgresModule = TypeOrmModule.forRoot({
   username: 'postgres',
   password: 'postgres',
   database: 'speedtyper',
-  // entities: ['./**/*.entity.ts'],
   entities: [__dirname + '/**/*.entity.{ts,js}'],
   synchronize: true,
 });
@@ -24,6 +24,7 @@ const PostgresModule = TypeOrmModule.forRoot({
     TrackedProjectsModule,
     SyncedProjectsModule,
     GithubConnectorModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],
