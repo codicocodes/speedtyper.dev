@@ -1,14 +1,7 @@
 import { Project } from 'src/projects/entities/project.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  Column,
-  Index,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 
 @Entity()
-@Index(['path', 'project'], { unique: true })
 export class Challenge {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,6 +11,8 @@ export class Challenge {
   treeSha: string;
   @Column()
   path: string;
+  @Column({ unique: true })
+  url: string;
   @Column({ unique: true })
   content: string;
   @ManyToOne(() => Project, (project) => project.files)
