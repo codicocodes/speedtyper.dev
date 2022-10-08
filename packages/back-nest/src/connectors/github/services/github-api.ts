@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { validateDTO } from 'src/utils/validateDTO';
-import { GithubBlob } from '../dtos/github-blob';
-import { GithubRepository } from '../dtos/github-repository.dto';
-import { GithubTree } from '../dtos/github-tree.dto';
+import { GithubBlob } from '../schemas/github-blob';
+import { GithubRepository } from '../schemas/github-repository.dto';
+import { GithubTree } from '../schemas/github-tree.dto';
 
 @Injectable()
 export class GithubAPI {

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { GithubRepository } from 'src/connectors/github/dtos/github-repository.dto';
+import { GithubRepository } from 'src/connectors/github/schemas/github-repository.dto';
 import { UntrackedProject } from './untracked-project.entity';
 import { UnsyncedFile } from 'src/challenges/entities/unsynced-file.entity';
 

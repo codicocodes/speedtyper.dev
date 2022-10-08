@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GithubNode } from 'src/connectors/github/dtos/github-tree';
+import { GithubNode } from 'src/connectors/github/schemas/github-tree.dto';
 
 @Injectable()
 export class UnsyncedFileFilterer {

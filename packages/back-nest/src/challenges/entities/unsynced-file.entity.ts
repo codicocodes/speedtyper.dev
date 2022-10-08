@@ -1,4 +1,4 @@
-import { GithubNode } from 'src/connectors/github/dtos/github-tree';
+import { GithubNode } from 'src/connectors/github/schemas/github-tree.dto';
 import { Project } from 'src/projects/entities/project.entity';
 import {
   Entity,
