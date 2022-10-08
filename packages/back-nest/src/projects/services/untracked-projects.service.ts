@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TrackedProject } from '../tracked-project.entity';
+import { UntrackedProject } from '../entities/untracked-project.entity';
 
 @Injectable()
-export class TrackedProjectsService {
+export class UntrackedProjectService {
   constructor(
-    @InjectRepository(TrackedProject)
-    private trackedProjects: Repository<TrackedProject>,
+    @InjectRepository(UntrackedProject)
+    private trackedProjects: Repository<UntrackedProject>,
   ) {}
 
   async bulkUpsert(names: string[]): Promise<void> {
     const partialProjects = names.map((fullName) => ({ fullName }));
     await this.trackedProjects.upsert(partialProjects, ['fullName']);
   }
-  async findAll(): Promise<TrackedProject[]> {
+  async findAll(): Promise<UntrackedProject[]> {
     return await this.trackedProjects.find();
   }
 }

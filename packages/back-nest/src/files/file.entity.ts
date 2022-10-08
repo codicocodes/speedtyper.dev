@@ -1,5 +1,5 @@
 import { GithubNode } from 'src/connectors/github/dtos/github-tree';
-import { SyncedProject } from 'src/synced-projects/synced-project.entity';
+import { Project } from 'src/projects/entities/project.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -22,14 +22,10 @@ export class File {
   @Column({ nullable: true })
   syncedSha?: string;
 
-  @ManyToOne(() => SyncedProject, (project) => project.files)
-  project: SyncedProject;
+  @ManyToOne(() => Project, (project) => project.files)
+  project: Project;
 
-  static fromGithubNode(
-    project: SyncedProject,
-    treeSha: string,
-    node: GithubNode,
-  ) {
+  static fromGithubNode(project: Project, treeSha: string, node: GithubNode) {
     const file = new File();
     file.path = node.path;
     file.currentSha = node.sha;

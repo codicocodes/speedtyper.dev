@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { TrackedProjectsModule } from './tracked-projects/tracked-projects.module';
-import { SyncedProjectsModule } from './synced-projects/synced-projects.module';
 import { GithubConnectorModule } from './connectors/github/github.module';
 import { FilesModule } from './files/files.module';
+import { ProjectsModule } from './projects/projects.module';
 
 const PostgresModule = TypeOrmModule.forRoot({
   type: 'postgres',
@@ -21,8 +20,7 @@ const PostgresModule = TypeOrmModule.forRoot({
   imports: [
     ConfigModule.forRoot(),
     PostgresModule,
-    TrackedProjectsModule,
-    SyncedProjectsModule,
+    ProjectsModule,
     GithubConnectorModule,
     FilesModule,
   ],

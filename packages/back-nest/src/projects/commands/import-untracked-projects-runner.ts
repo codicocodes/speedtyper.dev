@@ -1,16 +1,16 @@
 import { Command, CommandRunner } from 'nest-commander';
-import { ReadProjectsFromFile } from '../services/read-projects-from-file';
-import { TrackedProjectsService } from '../services/tracked-projects';
+import { ProjectsFromFileReader } from '../services/projects-from-file-reader';
+import { UntrackedProjectService } from '../services/untracked-projects.service';
 
 @Command({
   name: 'import-projects',
   arguments: '',
   options: {},
 })
-export class RunImportTrackedProjects extends CommandRunner {
+export class ImportUntrackedProjectsRunner extends CommandRunner {
   constructor(
-    private reader: ReadProjectsFromFile,
-    private service: TrackedProjectsService,
+    private reader: ProjectsFromFileReader,
+    private service: UntrackedProjectService,
   ) {
     super();
   }

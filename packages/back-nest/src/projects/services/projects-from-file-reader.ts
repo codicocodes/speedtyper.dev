@@ -3,10 +3,10 @@ import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
 
 @Injectable()
-export class ReadProjectsFromFile {
+export class ProjectsFromFileReader {
   private static FILE_PATH = './tracked-projects.txt';
   async *readProjects() {
-    const stream = createReadStream(ReadProjectsFromFile.FILE_PATH);
+    const stream = createReadStream(ProjectsFromFileReader.FILE_PATH);
     const rl = createInterface({
       input: stream,
       crlfDelay: Infinity,

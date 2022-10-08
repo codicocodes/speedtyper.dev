@@ -1,5 +1,5 @@
 import { Command, CommandRunner } from 'nest-commander';
-import { SyncedProjectsService } from 'src/synced-projects/services/synced-projects';
+import { ProjectService } from 'src/projects/services/project.service';
 import { FilesImporter } from '../services/files-importer';
 
 @Command({
@@ -9,13 +9,13 @@ import { FilesImporter } from '../services/files-importer';
 })
 export class ImportFilesRunner extends CommandRunner {
   constructor(
-    private synced: SyncedProjectsService,
+    private projectService: ProjectService,
     private importer: FilesImporter,
   ) {
     super();
   }
   async run(): Promise<void> {
-    const projects = await this.synced.findAll();
+    const projects = await this.projectService.findAll();
     for (const project of projects) {
       await this.importer.import(project);
     }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GithubAPI } from 'src/connectors/github/services/github-api';
-import { SyncedProject } from 'src/synced-projects/synced-project.entity';
+import { Project } from 'src/projects/entities/project.entity';
 import { File } from '../file.entity';
 import { FilesService } from './files';
 import { FilesFilterer } from './files-filterer';
@@ -12,13 +12,12 @@ export class FilesImporter {
     private filterer: FilesFilterer,
     private svc: FilesService,
   ) {}
-  async import(project: SyncedProject) {
+  async import(project: Project) {
     const root = await this.api.fetchTree(
       project.fullName,
       project.defaultBranch,
     );
     const nodes = this.filterer.filter(root.tree);
-    console.log(nodes.length);
     const files = nodes.map((node) =>
       File.fromGithubNode(project, root.sha, node),
     );

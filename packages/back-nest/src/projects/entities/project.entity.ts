@@ -1,17 +1,10 @@
-import { TrackedProject } from '../tracked-projects/tracked-project.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { GithubRepository } from 'src/connectors/github/dtos/github-repository.dto';
 import { File } from 'src/files/file.entity';
+import { UntrackedProject } from './untracked-project.entity';
 
 @Entity()
-export class SyncedProject {
+export class Project {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column({ unique: true })
@@ -29,15 +22,14 @@ export class SyncedProject {
   @Column()
   defaultBranch: string;
 
-  @OneToOne(() => TrackedProject, (tracked) => tracked.syncedProject)
-  @JoinColumn()
-  trackedProject: TrackedProject;
-
   @OneToMany(() => File, (file) => file.project)
   files: File[];
 
-  static fromGithubRepository(tracked: TrackedProject, repo: GithubRepository) {
-    const project = new SyncedProject();
+  static fromGithubRepository(
+    tracked: UntrackedProject,
+    repo: GithubRepository,
+  ) {
+    const project = new Project();
     project.fullName = tracked.fullName;
     project.htmlUrl = repo.html_url;
     project.stars = repo.stargazers_count;
@@ -45,7 +37,6 @@ export class SyncedProject {
     project.licenseName = repo.license.name;
     project.ownerAvatar = repo.owner.avatar_url;
     project.defaultBranch = repo.default_branch;
-    project.trackedProject = tracked;
     return project;
   }
 }
