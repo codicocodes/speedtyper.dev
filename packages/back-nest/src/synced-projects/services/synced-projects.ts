@@ -13,4 +13,9 @@ export class SyncedProjectsService {
   async bulkUpsert(projects: SyncedProject[]): Promise<void> {
     await this.syncedProjects.upsert(projects, ['fullName']);
   }
+
+  async findAll(): Promise<SyncedProject[]> {
+    const projects = await this.syncedProjects.find();
+    return projects;
+  }
 }
