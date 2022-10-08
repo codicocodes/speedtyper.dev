@@ -14,6 +14,13 @@ export class ProjectService {
     await this.syncedProjects.upsert(projects, ['fullName']);
   }
 
+  async findByFullName(fullName: string) {
+    const project = await this.syncedProjects.findOneBy({
+      fullName,
+    });
+    return project;
+  }
+
   async findAll(): Promise<Project[]> {
     const projects = await this.syncedProjects.find();
     return projects;

@@ -7,14 +7,19 @@ import { UntrackedProject } from '../entities/untracked-project.entity';
 export class UntrackedProjectService {
   constructor(
     @InjectRepository(UntrackedProject)
-    private trackedProjects: Repository<UntrackedProject>,
+    private untrackedProjects: Repository<UntrackedProject>,
   ) {}
 
   async bulkUpsert(names: string[]): Promise<void> {
     const partialProjects = names.map((fullName) => ({ fullName }));
-    await this.trackedProjects.upsert(partialProjects, ['fullName']);
+    await this.untrackedProjects.upsert(partialProjects, ['fullName']);
   }
+
+  async remove(untrackedProjects: UntrackedProject[]): Promise<void> {
+    await this.untrackedProjects.remove(untrackedProjects);
+  }
+
   async findAll(): Promise<UntrackedProject[]> {
-    return await this.trackedProjects.find();
+    return await this.untrackedProjects.find();
   }
 }

@@ -18,13 +18,17 @@ export class SyncUntrackedProjectsRunner extends CommandRunner {
     super();
   }
   async run(): Promise<void> {
-    const trackedProjects = await this.untracked.findAll();
-    for (const trackedProject of trackedProjects) {
+    const untracked = await this.untracked.findAll();
+    for (const untrackedProject of untracked) {
       const repository = await this.api.fetchRepository(
-        trackedProject.fullName,
+        untrackedProject.fullName,
       );
-      const project = Project.fromGithubRepository(trackedProject, repository);
+      const project = Project.fromGithubRepository(
+        untrackedProject,
+        repository,
+      );
       await this.synced.bulkUpsert([project]);
+      await this.untracked.remove([untrackedProject]);
     }
   }
 }
