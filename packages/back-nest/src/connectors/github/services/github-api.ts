@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { validateDTO } from 'src/utils/validateDTO';
 import { GithubRepository } from '../dtos/github-repository.dto';
-import { GithubTree } from '../dtos/github-tree';
+import { GithubTree } from '../dtos/github-tree.dto';
 
 @Injectable()
 export class GithubAPI {
