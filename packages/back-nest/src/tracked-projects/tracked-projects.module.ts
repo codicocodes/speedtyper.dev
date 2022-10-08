@@ -12,5 +12,6 @@ import { TrackedProject } from './tracked-project.entity';
     RunImportTrackedProjects,
     ReadProjectsFromFile,
   ],
+  exports: [TrackedProjectsService],
 })
 export class TrackedProjectsModule {}

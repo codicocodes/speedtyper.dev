@@ -3,7 +3,7 @@ import { ReadProjectsFromFile } from '../services/read-projects-from-file';
 import { TrackedProjectsService } from '../services/tracked-projects';
 
 @Command({
-  name: 'import-tracked-projects',
+  name: 'import-projects',
   arguments: '',
   options: {},
 })

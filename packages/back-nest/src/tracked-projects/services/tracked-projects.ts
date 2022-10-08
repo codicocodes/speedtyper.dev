@@ -14,4 +14,7 @@ export class TrackedProjectsService {
     const partialProjects = names.map((fullName) => ({ fullName }));
     await this.trackedProjects.upsert(partialProjects, ['fullName']);
   }
+  async findAll(): Promise<TrackedProject[]> {
+    return await this.trackedProjects.find();
+  }
 }
