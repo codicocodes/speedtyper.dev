@@ -25,6 +25,9 @@ export class Project {
   @OneToMany(() => UnsyncedFile, (file) => file.project)
   files: File[];
 
+  @Column({ nullable: true })
+  syncedSha?: string;
+
   static fromGithubRepository(
     tracked: UntrackedProject,
     repo: GithubRepository,

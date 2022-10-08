@@ -7,22 +7,31 @@ import { Project } from '../entities/project.entity';
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
-    private syncedProjects: Repository<Project>,
+    private projectRepository: Repository<Project>,
   ) {}
 
   async bulkUpsert(projects: Project[]): Promise<void> {
-    await this.syncedProjects.upsert(projects, ['fullName']);
+    await this.projectRepository.upsert(projects, ['fullName']);
   }
 
   async findByFullName(fullName: string) {
-    const project = await this.syncedProjects.findOneBy({
+    const project = await this.projectRepository.findOneBy({
       fullName,
     });
     return project;
   }
 
+  async updateSyncedSha(id: string, syncedSha: string) {
+    await this.projectRepository.update(
+      {
+        id,
+      },
+      { syncedSha },
+    );
+  }
+
   async findAll(): Promise<Project[]> {
-    const projects = await this.syncedProjects.find();
+    const projects = await this.projectRepository.find();
     return projects;
   }
 }

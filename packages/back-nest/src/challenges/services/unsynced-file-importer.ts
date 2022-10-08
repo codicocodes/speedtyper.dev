@@ -22,5 +22,6 @@ export class UnsyncedFileImporter {
       UnsyncedFile.fromGithubNode(project, root.sha, node),
     );
     await this.svc.bulkUpsert(files);
+    return root.sha;
   }
 }
