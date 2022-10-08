@@ -4,11 +4,14 @@ import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { validateDTO } from 'src/utils/validateDTO';
 import { GithubRepository } from '../dtos/github-repository.dto';
+import { GithubTree } from '../dtos/github-tree';
 
 @Injectable()
 export class GithubAPI {
   private static BASE_URL = 'https://api.github.com';
-  private static REPOSITORY_URL = `${GithubAPI.BASE_URL}/repos/{fullName}`;
+  private static REPOSITORIES_URL = `${GithubAPI.BASE_URL}/repos`;
+  private static REPOSITORY_URL = `${GithubAPI.REPOSITORIES_URL}/{fullName}`;
+  private static TREE_URL = `${GithubAPI.REPOSITORY_URL}/git/trees/{sha}?recursive=true`;
   private token: string;
   constructor(private readonly http: HttpService, cfg: ConfigService) {
     this.token = getGithubAccessToken(cfg);
@@ -30,6 +33,16 @@ export class GithubAPI {
     const rawRepository = await this.get(url);
     const repository = await validateDTO(GithubRepository, rawRepository);
     return repository;
+  }
+
+  async fetchTree(fullName: string, sha: string): Promise<GithubTree> {
+    const treeUrl = GithubAPI.TREE_URL.replace('{fullName}', fullName).replace(
+      '{sha}',
+      sha,
+    );
+    const data = await this.get(treeUrl);
+    const rootNode = await validateDTO(GithubTree, data);
+    return rootNode;
   }
 }
 
