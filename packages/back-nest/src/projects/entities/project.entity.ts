@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { GithubRepository } from 'src/connectors/github/dtos/github-repository.dto';
-import { File } from 'src/files/file.entity';
 import { UntrackedProject } from './untracked-project.entity';
+import { UnsyncedFile } from 'src/challenges/entities/unsynced-file.entity';
 
 @Entity()
 export class Project {
@@ -22,7 +22,7 @@ export class Project {
   @Column()
   defaultBranch: string;
 
-  @OneToMany(() => File, (file) => file.project)
+  @OneToMany(() => UnsyncedFile, (file) => file.project)
   files: File[];
 
   static fromGithubRepository(

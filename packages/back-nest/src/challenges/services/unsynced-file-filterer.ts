@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { GithubNode } from 'src/connectors/github/dtos/github-tree';
 
 @Injectable()
-export class FilesFilterer {
+export class UnsyncedFileFilterer {
   filter(nodes: GithubNode[]) {
     return nodes
       .filter(isBlobNode)

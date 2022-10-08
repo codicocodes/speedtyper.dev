@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { GithubConnectorModule } from './connectors/github/github.module';
-import { FilesModule } from './files/files.module';
 import { ProjectsModule } from './projects/projects.module';
+import { ChallengesModule } from './challenges/challenges.module';
 
 const PostgresModule = TypeOrmModule.forRoot({
   type: 'postgres',
@@ -22,7 +22,7 @@ const PostgresModule = TypeOrmModule.forRoot({
     PostgresModule,
     ProjectsModule,
     GithubConnectorModule,
-    FilesModule,
+    ChallengesModule,
   ],
   controllers: [],
   providers: [],

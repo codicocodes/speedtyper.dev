@@ -30,8 +30,8 @@ export class GithubAPI {
 
   async fetchRepository(fullName: string): Promise<GithubRepository> {
     const url = GithubAPI.REPOSITORY_URL.replace('{fullName}', fullName);
-    const rawRepository = await this.get(url);
-    const repository = await validateDTO(GithubRepository, rawRepository);
+    const rawData = await this.get(url);
+    const repository = await validateDTO(GithubRepository, rawData);
     return repository;
   }
 
@@ -40,8 +40,8 @@ export class GithubAPI {
       '{sha}',
       sha,
     );
-    const data = await this.get(treeUrl);
-    const rootNode = await validateDTO(GithubTree, data);
+    const rawData = await this.get(treeUrl);
+    const rootNode = await validateDTO(GithubTree, rawData);
     return rootNode;
   }
 }

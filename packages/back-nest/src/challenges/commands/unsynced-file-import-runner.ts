@@ -1,16 +1,16 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { ProjectService } from 'src/projects/services/project.service';
-import { FilesImporter } from '../services/files-importer';
+import { UnsyncedFileImporter } from '../services/unsynced-file-importer';
 
 @Command({
   name: 'import-files',
   arguments: '',
   options: {},
 })
-export class ImportFilesRunner extends CommandRunner {
+export class UnsyncedFileImportRunner extends CommandRunner {
   constructor(
     private projectService: ProjectService,
-    private importer: FilesImporter,
+    private importer: UnsyncedFileImporter,
   ) {
     super();
   }

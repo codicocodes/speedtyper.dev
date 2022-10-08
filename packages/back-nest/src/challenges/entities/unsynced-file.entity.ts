@@ -10,7 +10,7 @@ import {
 
 @Entity()
 @Index(['path', 'project'], { unique: true })
-export class File {
+export class UnsyncedFile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column()
@@ -26,7 +26,7 @@ export class File {
   project: Project;
 
   static fromGithubNode(project: Project, treeSha: string, node: GithubNode) {
-    const file = new File();
+    const file = new UnsyncedFile();
     file.path = node.path;
     file.currentSha = node.sha;
     file.currentTreeSha = treeSha;

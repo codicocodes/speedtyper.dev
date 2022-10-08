@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { GithubAPI } from 'src/connectors/github/services/github-api';
 import { Project } from 'src/projects/entities/project.entity';
-import { File } from '../file.entity';
-import { FilesService } from './files';
-import { FilesFilterer } from './files-filterer';
+import { UnsyncedFile } from '../entities/unsynced-file.entity';
+import { UnsyncedFileFilterer } from './unsynced-file-filterer';
+import { UnsyncedFileService } from './unsynced-file.service';
 
 @Injectable()
-export class FilesImporter {
+export class UnsyncedFileImporter {
   constructor(
     private api: GithubAPI,
-    private filterer: FilesFilterer,
-    private svc: FilesService,
+    private filterer: UnsyncedFileFilterer,
+    private svc: UnsyncedFileService,
   ) {}
   async import(project: Project) {
     const root = await this.api.fetchTree(
@@ -19,7 +19,7 @@ export class FilesImporter {
     );
     const nodes = this.filterer.filter(root.tree);
     const files = nodes.map((node) =>
-      File.fromGithubNode(project, root.sha, node),
+      UnsyncedFile.fromGithubNode(project, root.sha, node),
     );
     await this.svc.bulkUpsert(files);
   }
