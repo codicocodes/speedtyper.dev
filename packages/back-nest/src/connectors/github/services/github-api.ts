@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { validateDTO } from 'src/utils/validateDTO';
+import { GithubBlob } from '../dtos/github-blob';
 import { GithubRepository } from '../dtos/github-repository.dto';
 import { GithubTree } from '../dtos/github-tree.dto';
 
@@ -12,7 +13,10 @@ export class GithubAPI {
   private static REPOSITORIES_URL = `${GithubAPI.BASE_URL}/repos`;
   private static REPOSITORY_URL = `${GithubAPI.REPOSITORIES_URL}/{fullName}`;
   private static TREE_URL = `${GithubAPI.REPOSITORY_URL}/git/trees/{sha}?recursive=true`;
+  private static BLOB_URL = `${GithubAPI.REPOSITORY_URL}/git/blobs/{sha}`;
+
   private token: string;
+
   constructor(private readonly http: HttpService, cfg: ConfigService) {
     this.token = getGithubAccessToken(cfg);
   }
@@ -43,6 +47,16 @@ export class GithubAPI {
     const rawData = await this.get(treeUrl);
     const rootNode = await validateDTO(GithubTree, rawData);
     return rootNode;
+  }
+
+  async fetchBlob(fullName: string, sha: string): Promise<GithubBlob> {
+    const url = GithubAPI.BLOB_URL.replace('{fullName}', fullName).replace(
+      '{sha}',
+      sha,
+    );
+    const rawData = await this.get(url);
+    const blob = await validateDTO(GithubBlob, rawData);
+    return blob;
   }
 }
 
