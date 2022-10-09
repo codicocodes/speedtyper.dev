@@ -21,6 +21,7 @@ export class UnsyncedFileImportRunner extends CommandRunner {
       if (!project.syncedSha) {
         const sha = await this.importer.import(project);
         await this.projectService.updateSyncedSha(project.id, sha);
+        console.info(`[FileImport]: Imported files for ${project.fullName}`);
       }
     }
   }

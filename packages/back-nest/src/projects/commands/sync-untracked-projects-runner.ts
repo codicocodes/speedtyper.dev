@@ -29,6 +29,7 @@ export class SyncUntrackedProjectsRunner extends CommandRunner {
       );
       await this.synced.bulkUpsert([project]);
       await this.untracked.remove([untrackedProject]);
+      console.info(`[ProjectSync]: Synced ${project.fullName}`);
     }
   }
 }

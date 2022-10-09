@@ -21,6 +21,7 @@ export class ImportUntrackedProjectsRunner extends CommandRunner {
       const syncedProject = await this.synced.findByFullName(project);
       if (!syncedProject) {
         await this.untracked.bulkUpsert([project]);
+        console.info(`[ProjectImport]: Imported ${project}`);
       }
     }
   }

@@ -14,11 +14,25 @@ export class GithubAPI {
   private static REPOSITORY_URL = `${GithubAPI.REPOSITORIES_URL}/{fullName}`;
   private static TREE_URL = `${GithubAPI.REPOSITORY_URL}/git/trees/{sha}?recursive=true`;
   private static BLOB_URL = `${GithubAPI.REPOSITORY_URL}/git/blobs/{sha}`;
+  private static BLOB_HTML_PERMA_LINK = `https://github.com/{fullName}/blob/{treeSha}/{path}/#L{lineNumber}`;
 
   private token: string;
 
   constructor(private readonly http: HttpService, cfg: ConfigService) {
     this.token = getGithubAccessToken(cfg);
+  }
+
+  static getBlobPermaLink(
+    fullName: string,
+    treeSha: string,
+    path: string,
+    lineNumber: number,
+  ) {
+    const url = GithubAPI.BLOB_HTML_PERMA_LINK.replace('{fullName}', fullName)
+      .replace('{treeSha}', treeSha)
+      .replace('{path}', path)
+      .replace('{lineNumber}', lineNumber.toString());
+    return url;
   }
 
   private async get(url: string) {

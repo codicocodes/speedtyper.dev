@@ -16,7 +16,7 @@ function isBlobNode(node: GithubNode) {
 }
 
 function hasTrackedFileExt(node: GithubNode) {
-  const trackedFileExtensions = ['.go'];
+  const trackedFileExtensions = ['.go', '.rs'];
   for (const includedExt of trackedFileExtensions) {
     if (node.path.endsWith(includedExt)) {
       // ends with tracked file extension

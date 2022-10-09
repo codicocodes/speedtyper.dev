@@ -18,8 +18,16 @@ export class UnsyncedFileService {
     await this.filesRepository.upsert(files, UnsyncedFileService.UpsertOptions);
   }
 
-  async findAll(): Promise<UnsyncedFile[]> {
-    const files = await this.filesRepository.find();
+  async findAllWithProject(): Promise<UnsyncedFile[]> {
+    const files = await this.filesRepository.find({
+      relations: {
+        project: true,
+      },
+    });
     return files;
+  }
+
+  async remove(files: UnsyncedFile[]): Promise<void> {
+    await this.filesRepository.remove(files);
   }
 }
