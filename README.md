@@ -50,3 +50,16 @@
 speedtyper.dev is open source software licensed as [MIT](https://github.com/codicocodes/speedtyper.dev/blob/main/LICENSE).
 
 The [logo](https://github.com/codicocodes/speedtyper.dev/blob/main/packages/webapp/public/images/logo.png) is made by [astrocanyounaut](https://www.twitch.tv/astrocanyounaut) 🧑‍🚀 and is not licensed under MIT.
+
+
+## Project Contributors⭐ 
+
+<table align="center">
+<tr>
+<td>
+<a href="https://github.com/codicocodes/speedtyper.dev/graphs/contributors" align="center">
+  <img src="https://contrib.rocks/image?repo=codicocodes/speedtyper.dev" /> 
+</a>
+</td>
+</tr>
+</table>
