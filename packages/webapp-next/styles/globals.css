@@ -20,3 +20,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+  background: #0e0e11;
+}
+::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border-radius: 100px;
+}
