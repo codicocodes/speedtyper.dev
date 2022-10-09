@@ -17,7 +17,7 @@ const ProfileItem = ({
   customWidth?: string;
 }) => {
   return (
-    <div className="flex items-center justify-around bg-dark-lake text-off-white p-5 gap-10 mb-4 rounded-xl shadow-lg w-full">
+    <div className="flex md:flex-row flex-col md:items-center md:justify-around justify-center bg-dark-lake text-off-white p-5 gap-10 mb-4 rounded-xl shadow-lg w-full">
       {children}
     </div>
   );
