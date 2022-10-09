@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import useUserResults from "../../hooks/useUserResults";
-import { humanizeTimePlayed } from "../../utils/humanize";
 import SecondChart from "../../components/SecondChart";
+import { toHHMMSS } from "../../components/Timer";
 import { useRouter } from "next/router";
 
 interface ProfileProps {
@@ -72,7 +72,7 @@ const ProfilePage = (props: ProfileProps) => {
                 <h3 className="text-xl">Time Played</h3>
                 <h4 className="text-4xl">
                   {" "}
-                  {humanizeTimePlayed(userResults.totalSecondsPlayed)}
+                  {toHHMMSS(userResults.totalSecondsPlayed)}
                 </h4>
               </div>
             </>
