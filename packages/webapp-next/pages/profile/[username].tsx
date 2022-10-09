@@ -12,7 +12,7 @@ interface ProfileProps {
 const ProfileItem = ({
   children,
 }: {
-  children: React.ReactChild;
+  children: React.ReactNode;
   customWidth?: string;
 }) => {
   return (
