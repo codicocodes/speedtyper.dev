@@ -4,6 +4,7 @@ import useUserResults from "../../hooks/useUserResults";
 import SecondChart from "../../components/SecondChart";
 import { toHHMMSS } from "../../components/Timer";
 import { useRouter } from "next/router";
+import { GithubLogo } from "../../assets/icons";
 
 interface ProfileProps {
   userName?: string;
@@ -56,7 +57,16 @@ const ProfilePage = (props: ProfileProps) => {
                   />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h3 className="text-2xl font-bold">{username}</h3>
+                  <a
+                    href={`https://github.com/${username}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center font-bold"
+                    title="github.com"
+                  >
+                    <GithubLogo />
+                    {username}
+                  </a>
                   <h4>
                     Joined{" "}
                     {new Date(userResults.createdAt).toDateString().slice(4)}
