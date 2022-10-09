@@ -16,7 +16,7 @@ const ProfileItem = ({
   customWidth?: string;
 }) => {
   return (
-    <div className="flex items-center justify-between bg-dark-lake text-off-white p-5 gap-10 mr-6 mb-4 rounded-xl shadow-lg w-full">
+    <div className="flex items-center justify-around bg-dark-lake text-off-white p-5 gap-10 mb-4 rounded-xl shadow-lg w-full">
       {children}
     </div>
   );
@@ -43,7 +43,7 @@ const ProfilePage = (props: ProfileProps) => {
 
   return userResults ? (
     <div className="flex text-off-white items-center justify-center h-full tracking-wider">
-      <div className="flex items-center flex-col">
+      <div className="flex items-center flex-col w-full max-w-5xl">
         <div className="flex flex-wrap items-center">
           <ProfileItem>
             <>
