@@ -30,6 +30,7 @@
     "@nestjs/typeorm": "^9.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "express-session": "^1.17.3",
     "nest-commander": "^3.1.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
@@ -51,13 +52,15 @@
     "tree-sitter-ruby": "^0.19.0",
     "tree-sitter-rust": "^0.19.1",
     "tree-sitter-typescript": "^0.19.0",
-    "typeorm": "^0.3.10"
+    "typeorm": "^0.3.10",
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.5",
     "@types/jest": "28.1.8",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
