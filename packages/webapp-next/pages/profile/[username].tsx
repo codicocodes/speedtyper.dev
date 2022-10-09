@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import useUserResults from "../../hooks/useUserResults";
-import { humanizeRelative, humanizeAbsolute } from "../../utils/humanize";
+import { humanizeTimePlayed } from "../../utils/humanize";
 import SecondChart from "../../components/SecondChart";
 import { useRouter } from "next/router";
 
@@ -15,7 +16,7 @@ const ProfileItem = ({
   customWidth?: string;
 }) => {
   return (
-    <div className="flex items-center justify-between bg-dark-lake text-off-white p-2 mr-6 mb-4 w-56 rounded-xl shadow-lg">
+    <div className="flex items-center justify-between bg-dark-lake text-off-white p-5 gap-10 mr-6 mb-4 rounded-xl shadow-lg w-full">
       {children}
     </div>
   );
@@ -45,32 +46,36 @@ const ProfilePage = (props: ProfileProps) => {
       <div className="flex items-center flex-col">
         <div className="flex flex-wrap items-center">
           <ProfileItem>
-            <div className="p-4 flex-row">
-              <div className="pb-2 text-sm">Username:</div>
-              <div className="text-xl">{username}</div>
-            </div>
-          </ProfileItem>
-          <ProfileItem>
-            <div className="p-4 flex-row">
-              <div className="pb-2 text-sm">Member for:</div>
-              <div className="text-xl">
-                {humanizeAbsolute(new Date(userResults.createdAt))}
+            <>
+              <div className="flex gap-5 items-center">
+                <div>
+                  <img
+                    src={`https://github.com/${username}.png`}
+                    alt={username as string}
+                    className="rounded-full w-24"
+                  />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-2xl font-bold">{username}</h3>
+                  <h4>
+                    Joined{" "}
+                    {new Date(userResults.createdAt).toDateString().slice(4)}
+                  </h4>
+                </div>
               </div>
-            </div>
-          </ProfileItem>
-          <ProfileItem>
-            <div className="p-4 flex-row">
-              <div className="pb-2 text-sm">Time played:</div>
-              <div className="text-xl">
-                {humanizeRelative(userResults.totalSecondsPlayed * 1000)}
+
+              <div className="flex flex-col gap-3">
+                <h3 className="text-xl">Games Played</h3>
+                <h4 className="text-4xl">{userResults.gamesPlayed}</h4>
               </div>
-            </div>
-          </ProfileItem>
-          <ProfileItem>
-            <div className="p-4 flex-row">
-              <div className="pb-2 text-sm">Games played:</div>
-              <div className="text-xl">{userResults.gamesPlayed}</div>
-            </div>
+              <div className="flex flex-col gap-3">
+                <h3 className="text-xl">Time Played</h3>
+                <h4 className="text-4xl">
+                  {" "}
+                  {humanizeTimePlayed(userResults.totalSecondsPlayed)}
+                </h4>
+              </div>
+            </>
           </ProfileItem>
         </div>
         <div className="max-w-5xl w-full bg-dark-lake items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md text-white">
