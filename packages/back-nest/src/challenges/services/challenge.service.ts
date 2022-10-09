@@ -20,4 +20,13 @@ export class ChallengeService {
       ChallengeService.UpsertOptions,
     );
   }
+
+  async getRandom(): Promise<Challenge> {
+    const randomChallenge = await this.challengeRepository
+      .createQueryBuilder('challenge')
+      .leftJoinAndSelect('challenge.project', 'project')
+      .orderBy('RANDOM()')
+      .getOne();
+    return randomChallenge;
+  }
 }
