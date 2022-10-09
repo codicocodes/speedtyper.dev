@@ -1,2 +1,3 @@
 etcd-io/etcd
 rust-lang/cargo
+rust-lang/rust

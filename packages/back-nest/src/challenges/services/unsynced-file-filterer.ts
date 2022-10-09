@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GithubNode } from 'src/connectors/github/schemas/github-tree.dto';
+import { getSupportFileExtensions } from './ts-parser.factory';
 
 @Injectable()
 export class UnsyncedFileFilterer {
@@ -16,7 +17,7 @@ function isBlobNode(node: GithubNode) {
 }
 
 function hasTrackedFileExt(node: GithubNode) {
-  const trackedFileExtensions = ['.go', '.rs'];
+  const trackedFileExtensions = getSupportFileExtensions();
   for (const includedExt of trackedFileExtensions) {
     if (node.path.endsWith(includedExt)) {
       // ends with tracked file extension
@@ -28,7 +29,14 @@ function hasTrackedFileExt(node: GithubNode) {
 }
 
 function isNotExcludedPath(node: GithubNode) {
-  const excludedSubStrings = ['types', 'test', '.pb.', '.proto', 'doc'];
+  const excludedSubStrings = [
+    'example',
+    'types',
+    'test',
+    '.pb.',
+    '.proto',
+    'doc',
+  ];
   for (const excludeStr of excludedSubStrings) {
     if (node.path.includes(excludeStr)) {
       // is excluded path
