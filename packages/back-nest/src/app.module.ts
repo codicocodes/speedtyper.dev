@@ -5,7 +5,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { ChallengesModule } from './challenges/challenges.module';
 import { UsersModule } from './users/users.module';
 import { PostgresModule } from './database.module';
-
+import { RacesModule } from './races/races.module';
 
 @Module({
   imports: [
@@ -15,6 +15,7 @@ import { PostgresModule } from './database.module';
     GithubConnectorModule,
     ChallengesModule,
     UsersModule,
+    RacesModule,
   ],
   controllers: [],
   providers: [],

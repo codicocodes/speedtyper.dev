@@ -1,31 +1,28 @@
 import { TypeormStore } from 'connect-typeorm/out';
 import * as session from 'express-session';
 import { PostgresDataSource } from 'src/database.module';
-import { User } from 'src/users/entities/user.entity';
 import { Session } from './session.entity';
 
-declare module 'express-session' {
-  export interface SessionData {
-    user: User;
-  }
-}
+const SESSION_SECRET_MIN_LENGTH = 12;
 
-export const sessionMiddleware = () => {
+export const cookieName = 'speedtyper-sid';
+
+export const getSessionMiddleware = () => {
   const sessionRepository = PostgresDataSource.getRepository(Session);
+
   return session({
+    name: cookieName,
     store: new TypeormStore().connect(sessionRepository),
     secret: getSessionSecret(),
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: 'strict',
-      secure: false,
+      sameSite: 'lax',
+      secure: !!(process.env.NODE_ENV === 'production'),
     },
   });
 };
-
-const SESSION_SECRET_MIN_LENGTH = 12;
 
 function getSessionSecret() {
   const secret = process.env.SESSION_SECRET;

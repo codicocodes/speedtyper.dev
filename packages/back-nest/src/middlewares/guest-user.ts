@@ -8,6 +8,7 @@ export function guestUserMiddleware(
 ) {
   if (!req.session.user) {
     req.session.user = User.generateAnonymousUser();
+    req.session.count = 0;
   }
   next();
 }
