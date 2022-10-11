@@ -76,11 +76,13 @@ const ProfilePage = (props: ProfileProps) => {
 
               <div className="flex flex-col gap-3">
                 <h3 className="font-bold">Games Played</h3>
-                <h4 className="text-3xl">{userResults.gamesPlayed}</h4>
+                <h4 className="text-3xl font-bold">
+                  {userResults.gamesPlayed}
+                </h4>
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="font-bold">Time Played</h3>
-                <h4 className="text-3xl">
+                <h4 className="text-3xl font-bold">
                   {" "}
                   {toHumanReadableTime(userResults.totalSecondsPlayed)}
                 </h4>
