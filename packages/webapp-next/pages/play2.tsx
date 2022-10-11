@@ -15,7 +15,7 @@ import useTotalSeconds from "../hooks/useTotalSeconds";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
-import { toHHMMSS } from "../components/Timer";
+import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 
 function Play2Page() {
   // TODO: Refactor this page
@@ -141,7 +141,7 @@ function RenderTimer(seconds: number) {
   return (
     <div className="relative">
       <div className="absolute text-3xl ml-4 font-bold text-purple-300">
-        {toHHMMSS(seconds)}
+        {toHumanReadableTime(seconds)}
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import Link from "next/link";
 import React from "react";
 import { IToplistResult } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
-import { toHHMMSS } from "./Timer";
 import Image from "next/image";
+import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 
 const RaceResults = ({
   results,
@@ -99,7 +99,9 @@ const RaceResults = ({
               </td>
               <td className="w-32 mr-8">{cpmToWpm(result.cpm)} wpm</td>
               <td className="w-32 mr-8">{result.accuracy}%</td>
-              <td className="w-auto">{toHHMMSS(result.totalSeconds)}</td>
+              <td className="w-auto">
+                {toHumanReadableTime(result.totalSeconds)}
+              </td>
             </tr>
           );
         })}

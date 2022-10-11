@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import useUserResults from "../../hooks/useUserResults";
 import SecondChart from "../../components/SecondChart";
-import { toHHMMSS } from "../../components/Timer";
 import { useRouter } from "next/router";
 import { GithubLogo } from "../../assets/icons";
+import { toHumanReadableTime } from "../../common/utils/toHumanReadableTime";
 
 interface ProfileProps {
   userName?: string;
@@ -82,7 +82,7 @@ const ProfilePage = (props: ProfileProps) => {
                 <h3 className="font-bold">Time Played</h3>
                 <h4 className="text-3xl">
                   {" "}
-                  {toHHMMSS(userResults.totalSecondsPlayed)}
+                  {toHumanReadableTime(userResults.totalSecondsPlayed)}
                 </h4>
               </div>
             </>

@@ -1,17 +1,7 @@
 import React from "react";
+import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { IAction } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
-
-export const toHHMMSS = (secs: number) => {
-  const hours = Math.floor(secs / 3600);
-  const minutes = Math.floor((secs - hours * 3600) / 60) % 60;
-  const seconds = secs - hours * 3600 - minutes * 60;
-  let result = "";
-  result = hours ? result.concat(`${hours}h `) : result;
-  result = minutes ? result.concat(`${minutes}m `) : result;
-  result = result.concat(`${seconds}s`);
-  return result;
-};
 
 const ResultItem = ({
   children,
@@ -57,7 +47,7 @@ const Timer = ({
           <div className="flex flex-row flex-grow justify-around items-center p-4">
             <p className="text-xl font-bold">Time</p>
             <p className="text-2xl text-purple-300 font-bold">
-              {toHHMMSS(totalSeconds)}
+              {toHumanReadableTime(totalSeconds)}
             </p>
           </div>
         </ResultItem>
