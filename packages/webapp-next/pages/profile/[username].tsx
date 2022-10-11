@@ -5,6 +5,7 @@ import SecondChart from "../../components/SecondChart";
 import { useRouter } from "next/router";
 import { GithubLogo } from "../../assets/icons";
 import { toHumanReadableTime } from "../../common/utils/toHumanReadableTime";
+import Image from "next/image";
 
 interface ProfileProps {
   userName?: string;
@@ -50,10 +51,12 @@ const ProfilePage = (props: ProfileProps) => {
             <>
               <div className="flex gap-5 items-center">
                 <div>
-                  <img
+                  <Image
+                    width="60px"
+                    height="60px"
                     src={userResults.avatarUrl}
                     alt={challengeResults.username}
-                    className="rounded-full w-16"
+                    className="rounded-full"
                   />
                 </div>
                 <div className="flex flex-col gap-3">
