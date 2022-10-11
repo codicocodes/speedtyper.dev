@@ -26,15 +26,13 @@ const renderChart = (
   const labels = [];
   const max = [];
   const avg = [];
-  const min = [];
   const backgroundColor = [];
 
   for (const result of challengeResults) {
-    const { maxCpm, averageCpm, minCpm, date } = result;
+    const { maxCpm, averageCpm, date } = result;
     labels.push(date); // instead of index put date here
     max.push(cpmToWpm(maxCpm));
     avg.push(cpmToWpm(averageCpm));
-    min.push(cpmToWpm(minCpm));
     backgroundColor.push("#d6bcfa");
   }
 
@@ -47,28 +45,18 @@ const renderChart = (
           fill: "origin",
           label: "Highest",
           data: max,
-          //  backgroundColor,
-          borderColor: ["#a0aec0"],
-          pointRadius: 7,
-          pointBackgroundColor: "#a0aec0",
+          pointRadius: 4,
+          borderColor: ["#d6bbfb"],
+          pointBackgroundColor: "#d6bbfb",
         },
         {
           fill: "origin",
           label: "Average",
           data: avg,
           backgroundColor: ["#18181de8"],
-          borderColor: ["#9f7aea"],
-          pointRadius: 7,
-          pointBackgroundColor: "#9f7aea",
-        },
-        {
-          fill: "origin",
-          label: "Lowest",
-          data: min,
-          backgroundColor: ["#0e0e11e8"],
-          borderColor: ["#f56565"],
-          pointRadius: 7,
-          pointBackgroundColor: "#f56565",
+          pointRadius: 4,
+          borderColor: ["#a0aec0"],
+          pointBackgroundColor: "#a0aec0",
         },
       ],
     },
