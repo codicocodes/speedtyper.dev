@@ -52,8 +52,8 @@ const ProfilePage = (props: ProfileProps) => {
                 <div>
                   <img
                     src={userResults.avatarUrl}
-                    alt={username as string}
-                    className="rounded-full w-24"
+                    alt={challengeResults.username}
+                    className="rounded-full w-16"
                   />
                 </div>
                 <div className="flex flex-col gap-3">
@@ -75,12 +75,12 @@ const ProfilePage = (props: ProfileProps) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <h3 className="text-xl">Games Played</h3>
-                <h4 className="text-4xl">{userResults.gamesPlayed}</h4>
+                <h3 className="font-bold">Games Played</h3>
+                <h4 className="text-3xl">{userResults.gamesPlayed}</h4>
               </div>
               <div className="flex flex-col gap-3">
-                <h3 className="text-xl">Time Played</h3>
-                <h4 className="text-4xl">
+                <h3 className="font-bold">Time Played</h3>
+                <h4 className="text-3xl">
                   {" "}
                   {toHHMMSS(userResults.totalSecondsPlayed)}
                 </h4>
