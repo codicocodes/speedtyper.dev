@@ -54,12 +54,6 @@ The [logo](https://github.com/codicocodes/speedtyper.dev/blob/main/packages/weba
 
 ## Project Contributors⭐ 
 
-<table align="center">
-<tr>
-<td>
 <a href="https://github.com/codicocodes/speedtyper.dev/graphs/contributors" align="center">
   <img src="https://contrib.rocks/image?repo=codicocodes/speedtyper.dev" /> 
 </a>
-</td>
-</tr>
-</table>
