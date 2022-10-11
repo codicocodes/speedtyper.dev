@@ -3,11 +3,13 @@ import { IAction } from "../types";
 import cpmToWpm from "../utils/cpmToWpm";
 
 export const toHHMMSS = (secs: number) => {
-  const minutes = Math.floor(secs / 60) % 60;
-  const seconds = secs % 60;
+  const hours = Math.floor(secs / 3600);
+  const minutes = Math.floor((secs - hours * 3600) / 60) % 60;
+  const seconds = secs - hours * 3600 - minutes * 60;
   let result = "";
-  result = minutes ? result.concat(`${minutes} m, `) : result;
-  result = result.concat(`${seconds} s`);
+  result = hours ? result.concat(`${hours}h `) : result;
+  result = minutes ? result.concat(`${minutes}m `) : result;
+  result = result.concat(`${seconds}s`);
   return result;
 };
 
