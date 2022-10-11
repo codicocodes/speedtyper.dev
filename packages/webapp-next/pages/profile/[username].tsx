@@ -45,7 +45,7 @@ const ProfilePage = (props: ProfileProps) => {
   return userResults ? (
     <div className="flex text-off-white items-center justify-center h-full tracking-wider">
       <div className="flex items-center flex-col w-full max-w-5xl">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center w-full">
           <ProfileItem>
             <>
               <div className="flex gap-5 items-center">
