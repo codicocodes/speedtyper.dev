@@ -69,6 +69,7 @@ const RaceResults = ({
                     height="25px"
                     quality={100}
                     src={result.avatarUrl}
+                    alt={result.username}
                   />
                 )}
               </td>
