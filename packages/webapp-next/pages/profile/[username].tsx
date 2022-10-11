@@ -93,7 +93,7 @@ const ProfilePage = (props: ProfileProps) => {
         <div className="max-w-5xl w-full bg-dark-lake items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md text-white">
           <div className="flex flex-row">
             <h2 className="text-xl px-8 py-4 font-bold">Progress (WPM)</h2>
-            <div className="text-sm"></div>
+            <div className="flex-grow"></div>
             <button
               className={`font-bold my-4 outline-none border-none ${
                 resultSelector === "monthly"
