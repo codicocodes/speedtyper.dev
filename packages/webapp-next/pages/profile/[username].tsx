@@ -51,14 +51,14 @@ const ProfilePage = (props: ProfileProps) => {
               <div className="flex gap-5 items-center">
                 <div>
                   <img
-                    src={`https://github.com/${username}.png`}
+                    src={userResults.avatarUrl}
                     alt={username as string}
                     className="rounded-full w-24"
                   />
                 </div>
                 <div className="flex flex-col gap-3">
                   <a
-                    href={`https://github.com/${username}`}
+                    href={userResults.githubUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center font-bold"
