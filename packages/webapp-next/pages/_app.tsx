@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 import Navbar from "../components/Navbar";
 import { AppProvider } from "../AppContext";
 import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <AppProvider>
         <Navbar />
+        <NextNProgress options={{ showSpinner: false }} color="#d6bbfa" />
         <Component {...pageProps} />
       </AppProvider>
     </div>
