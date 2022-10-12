@@ -1,5 +1,5 @@
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
-import { toHHMMSS } from "../../../components/Timer";
+import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import ResultsChart from "../components/ResultsChart";
 import { useCodeStore } from "../state/code-store";
 
@@ -16,7 +16,7 @@ export function ResultsContainer() {
   const cpm = useCodeStore((state) => state.getCPM)();
   const wpm = cpmToWPM(cpm);
   const ms = useCodeStore((state) => state.getTimeMS)();
-  const time = toHHMMSS(Math.floor(ms / 1000));
+  const time = toHumanReadableTime(Math.floor(ms / 1000));
   const mistakesCount = useCodeStore((state) => state.getMistakesCount)();
   const accuracy = useCodeStore((state) => state.getAccuracy)();
   return (

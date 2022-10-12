@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import useUserResults from "../../hooks/useUserResults";
 import SecondChart from "../../components/SecondChart";
-import { toHHMMSS } from "../../components/Timer";
 import { useRouter } from "next/router";
 import { GithubLogo } from "../../assets/icons";
+import { toHumanReadableTime } from "../../common/utils/toHumanReadableTime";
+import Image from "next/image";
 
 interface ProfileProps {
   userName?: string;
@@ -45,27 +46,29 @@ const ProfilePage = (props: ProfileProps) => {
   return userResults ? (
     <div className="flex text-off-white items-center justify-center h-full tracking-wider">
       <div className="flex items-center flex-col w-full max-w-5xl">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center w-full">
           <ProfileItem>
             <>
               <div className="flex gap-5 items-center">
                 <div>
-                  <img
-                    src={`https://github.com/${username}.png`}
-                    alt={username as string}
-                    className="rounded-full w-24"
+                  <Image
+                    width="60px"
+                    height="60px"
+                    src={userResults.avatarUrl}
+                    alt={challengeResults.username}
+                    className="rounded-full"
                   />
                 </div>
                 <div className="flex flex-col gap-3">
                   <a
-                    href={`https://github.com/${username}`}
+                    href={userResults.githubUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center font-bold"
                     title="github.com"
                   >
                     <GithubLogo />
-                    {username}
+                    <h1>{username}</h1>
                   </a>
                   <h4>
                     Joined{" "}
@@ -75,14 +78,16 @@ const ProfilePage = (props: ProfileProps) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <h3 className="text-xl">Games Played</h3>
-                <h4 className="text-4xl">{userResults.gamesPlayed}</h4>
+                <h3 className="font-bold">Games Played</h3>
+                <h4 className="text-3xl font-bold">
+                  {userResults.gamesPlayed}
+                </h4>
               </div>
               <div className="flex flex-col gap-3">
-                <h3 className="text-xl">Time Played</h3>
-                <h4 className="text-4xl">
+                <h3 className="font-bold">Time Played</h3>
+                <h4 className="text-3xl font-bold">
                   {" "}
-                  {toHHMMSS(userResults.totalSecondsPlayed)}
+                  {toHumanReadableTime(userResults.totalSecondsPlayed)}
                 </h4>
               </div>
             </>
@@ -90,8 +95,8 @@ const ProfilePage = (props: ProfileProps) => {
         </div>
         <div className="max-w-5xl w-full bg-dark-lake items-center mt-4 pt-2 text-lg text-off-white font-light rounded-md text-white">
           <div className="flex flex-row">
-            <h1 className="text-xl px-8 py-4 font-bold">Progress (WPM)</h1>
-            <div className="text-sm"></div>
+            <h2 className="text-xl px-8 py-4 font-bold">Progress (WPM)</h2>
+            <div className="flex-grow"></div>
             <button
               className={`font-bold my-4 outline-none border-none ${
                 resultSelector === "monthly"
