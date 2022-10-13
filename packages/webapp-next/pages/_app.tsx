@@ -49,7 +49,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <AppProvider>
         <Navbar />
-        <NextNProgress options={{ showSpinner: false }} color="#d6bbfa" />
+        <NextNProgress
+          options={{ showSpinner: false }}
+          color="#d6bbfa"
+          height={2}
+        />
         <Component {...pageProps} />
       </AppProvider>
     </div>
