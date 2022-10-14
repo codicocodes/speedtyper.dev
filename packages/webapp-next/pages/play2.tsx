@@ -16,6 +16,8 @@ import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
+import { PlayResults } from "../modules/play2/components/pages/play2/PlayResults";
+import { PlayFooter } from "../modules/play2/components/pages/play2/play-footer/PlayFooter";
 
 function Play2Page() {
   // TODO: Refactor this page
@@ -80,17 +82,7 @@ function Play2Page() {
           }}
         >
           <>
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full m-2"
-              >
-                {isCompleted && <ResultsContainer />}
-              </motion.div>
-            </AnimatePresence>
+            {isCompleted ? <PlayResults /> : null}
             <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -107,28 +99,16 @@ function Play2Page() {
                 )}
               </motion.div>
             </AnimatePresence>
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full"
-              >
-                {!isPlaying && RenderActionButtons(() => game.next())}
-              </motion.div>
-            </AnimatePresence>
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full"
-              >
-                {isPlaying && RenderTimer(totalSeconds)}
-              </motion.div>
-            </AnimatePresence>
+            <PlayFooter
+              isPlaying={isPlaying}
+              nextChallenge={() => game.next()}
+              seconds={totalSeconds}
+              challenge={{
+                name: "speedtyper.dev",
+                url: "https://github.com/codicocodes/speedtyper.dev",
+                licence: "MIT",
+              }}
+            />
           </>
         </div>
       </div>
