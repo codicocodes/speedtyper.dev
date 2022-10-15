@@ -25,6 +25,13 @@ export class RaceManager {
 
   join(user: User, raceId: string): Race | null {
     const race = this.races[raceId];
+    // it's important to return null instead of throwing
+    // a RaceDoesNotExist error because the exception filter
+    // sends a race_does_not_exist event back to the client
+    // and the client tries to join the race
+    // in the controller we create a game if no game exists
+    // preventing an infinite loop
+    // TODO: this should be handled better in the future
     if (!race) return null;
     race.addMember(user);
     return race;
