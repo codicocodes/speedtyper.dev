@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import Socket from "../../Socket";
-import { getServerUrl } from "../utils/getServerUrl";
+import SocketLatest from "../services/Socket";
+import { getExperimentalServerUrl } from "../utils/getServerUrl";
 
 export function useSocket() {
   return useMemo(() => {
-    const serverUrl = getServerUrl();
-    return new Socket(serverUrl);
+    const serverUrl = getExperimentalServerUrl();
+    return new SocketLatest(serverUrl);
   }, []);
 }

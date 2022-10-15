@@ -1,11 +1,11 @@
 import { addIDtoQueryParams } from "../../../common/utils/router";
-import Socket from "../../../Socket";
+import SocketLatest from "../../../common/services/Socket";
 
 export class Game {
   startTime?: Date;
   endTime?: Date;
+  constructor(private socket: SocketLatest) {
 
-  constructor(private socket: Socket) {
     this.socket.subscribe("race_joined", (_, data) => {
       // TODO: all the data we want is: roomID, members[]
       addIDtoQueryParams(data.id);

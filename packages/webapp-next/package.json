@@ -25,6 +25,7 @@
     "react-toastify": "^9.0.8",
     "sharp": "^0.31.1",
     "socket.io-client": "^2",
+    "socketio-latest": "npm:socket.io-client",
     "zustand": "^4.1.1"
   },
   "devDependencies": {

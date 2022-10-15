@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import Socket from "../../../Socket";
+import SocketLatest from "../../../common/services/Socket";
 import { Game } from "../services/Game";
 
-export const useGame = (socket: Socket) => {
+export const useGame = (socket: SocketLatest) => {
   return useMemo(() => new Game(socket), [socket]);
 };

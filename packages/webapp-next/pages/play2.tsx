@@ -1,3 +1,4 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
@@ -17,9 +18,22 @@ import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { ChallengeSource } from "../modules/play2/components/play-footer/ChallengeSource";
+import { fetchUser } from "../common/api/user";
 
-function Play2Page() {
-  // TODO: Refactor this page
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookie = context.req.headers.cookie;
+  const user = await fetchUser(cookie);
+  return {
+    props: {
+      user,
+    },
+  };
+};
+
+function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  // we need to connect to the backend with a http route from the client
+  // in order to create the session store
+  fetchUser();
   const isPlaying = useIsPlaying();
   const isCompleted = useIsCompleted();
   const endGame = useCodeStore((state) => state.end);
