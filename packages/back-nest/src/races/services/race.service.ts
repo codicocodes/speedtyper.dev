@@ -33,7 +33,7 @@ export class Race {
   members: Record<string, RacePlayer>;
 
   constructor(owner: User, challenge: Challenge) {
-    this.id = randomUUID();
+    this.id = randomUUID().replaceAll('-', '');
     this.members = {};
     this.owner = owner.id;
     this.challenge = challenge;
