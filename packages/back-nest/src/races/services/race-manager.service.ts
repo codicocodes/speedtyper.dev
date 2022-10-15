@@ -1,34 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { User } from 'src/users/entities/user.entity';
-
-export interface RaceState {
-  id: string;
-  challenge: Challenge;
-  owner: string;
-  members: Record<string, User>;
-}
+import { Race } from './race.service';
 
 @Injectable()
 export class RaceManager {
-  private races: Record<string, RaceState> = {};
+  private races: Record<string, Race> = {};
 
   constructor(private challengeService: ChallengeService) {}
 
-  async create(user: User): Promise<RaceState> {
-    const id = randomUUID();
+  async create(user: User): Promise<Race> {
     const challenge = await this.challengeService.getRandom();
-    const race = {
-      id: id,
-      challenge,
-      owner: user.id,
-      members: {
-        [user.id]: user,
-      },
-    };
-    this.races[id] = race;
+    const race = new Race(user, challenge);
+    this.races[race.id] = race;
     return race;
   }
 
@@ -38,10 +23,10 @@ export class RaceManager {
     return challenge;
   }
 
-  join(user: User, raceId: string): RaceState | null {
+  join(user: User, raceId: string): Race | null {
     const race = this.races[raceId];
     if (!race) return null;
-    race.members[user.id] = user;
+    race.addMember(user);
     return race;
   }
 
