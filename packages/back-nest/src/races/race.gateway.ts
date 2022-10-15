@@ -5,19 +5,13 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { socketCors } from 'src/config/cors';
 import { RaceExceptions } from './race.exceptions';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
 import { SessionState } from './services/session-state.service';
 
-export const options = {
-  cors: {
-    origin: ['http://localhost:3001'],
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-};
-@WebSocketGateway(options)
+@WebSocketGateway(socketCors)
 export class RaceGateway {
   @WebSocketServer()
   server: Server;
