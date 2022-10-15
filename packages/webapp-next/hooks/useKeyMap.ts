@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 
+export enum Keys {
+  Tab = "Tab",
+}
+
 export const useKeyMap = (
   isActive: boolean,
   selectedKey: string,

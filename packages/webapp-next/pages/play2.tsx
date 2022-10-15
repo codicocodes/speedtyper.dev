@@ -6,7 +6,7 @@ import { LinkIcon } from "../assets/icons/LinkIcon";
 import { ReloadIcon } from "../assets/icons/ReloadIcon";
 import { useSocket } from "../common/hooks/useSocket";
 import Button from "../common/components/Button";
-import { useKeyMap } from "../hooks/useKeyMap";
+import { Keys, useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
 import { copyToClipboard } from "../common/utils/clipboard";
@@ -27,9 +27,8 @@ function Play2Page() {
   const socket = useSocket();
   const game = useGame(socket);
 
-  // TODO: Move isPlaying to a React Context so it can be accessed anywhere in the app...
   // FIXME: Tab should be not a string literal
-  useKeyMap(true, "Tab", () => game.next());
+  useKeyMap(true, Keys.Tab, () => game.next());
 
   const [challenge, setChallenge] = useState({
     code: "",
