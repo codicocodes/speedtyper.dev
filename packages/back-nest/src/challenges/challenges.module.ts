@@ -27,5 +27,6 @@ import { UnsyncedFileService } from './services/unsynced-file.service';
     UnsyncedFileImportRunner,
     UnsyncedFileService,
   ],
+  exports: [ChallengeService],
 })
 export class ChallengesModule {}

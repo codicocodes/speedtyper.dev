@@ -9,7 +9,6 @@ export const cookieName = 'speedtyper-sid';
 
 export const getSessionMiddleware = () => {
   const sessionRepository = PostgresDataSource.getRepository(Session);
-
   return session({
     name: cookieName,
     store: new TypeormStore().connect(sessionRepository),
