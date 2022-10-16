@@ -1,68 +1,10 @@
 import Parser from "tree-sitter";
 
-// @ts-ignore
-import JavaScript from "tree-sitter-javascript";
-// @ts-ignore
-import TypeScript from "tree-sitter-typescript/typescript";
-// @ts-ignore
-import Rust from "tree-sitter-rust";
-// @ts-ignore
-import Java from "tree-sitter-java";
-// @ts-ignore
-import C from "tree-sitter-c";
-// @ts-ignore
-import css from "tree-sitter-css";
-// @ts-ignore
-import cpp from "tree-sitter-cpp";
-// @ts-ignore
-import elm from "tree-sitter-elm";
-// @ts-ignore
-import go from "tree-sitter-go";
-// @ts-ignore
-import lua from "tree-sitter-lua";
-// @ts-ignore
-import php from "tree-sitter-php";
-// @ts-ignore
-import python from "tree-sitter-python";
-// @ts-ignore
-import ruby from "tree-sitter-ruby";
-// @ts-ignore
-import rust from "tree-sitter-rust";
-// @ts-ignore
-import csharp from "tree-sitter-c-sharp";
-
 import strip from "strip-comments";
+import { getLanguageParser } from "./getLanguageParser";
 
 const MAX_LONGEST_LINE_LENGTH = 65;
 
-const getLanguageParser = (language: string) => {
-  const mapper: { [key: string]: any } = {
-    TypeScript,
-    JavaScript,
-    Rust,
-    C,
-    Java,
-    css,
-    "c++": cpp,
-    cpp,
-    elm,
-    go,
-    lua,
-    php,
-    python,
-    Python: python,
-    ruby,
-    rust,
-    csharp,
-    "c#": csharp,
-  };
-
-  const parser = mapper[language];
-
-  if (!parser) throw new Error(`No parser for language: ${language}`);
-
-  return mapper[language];
-};
 const longestLineIsTooLong = (snippet: string) =>
   snippet.split("\n").findIndex((line) => {
     return line.length > MAX_LONGEST_LINE_LENGTH;
@@ -125,24 +67,28 @@ const getSnippets = (
 
 const parser = new Parser();
 
+function removeEmptyLines(content: string) {
+  return content
+    .replace(/^\s*$(?:\r\n?|\n)/gm, "") // deleting empty lines
+    .trim();
+}
+
+const TABS_IN_SPACES = "  ";
+
+function replaceTabsWithSpaces(content: string) {
+  return content.replace(/\t/g, TABS_IN_SPACES);
+}
+
 export default (
   fullCodeString: string,
   language: string
 ): { snippet: string; type: string }[] => {
-  const tabsInSpaces = "  ";
-  const strippedFullCodeString = strip(fullCodeString)
-    // thank you indiemonkey
-    .replace(/^\s*$(?:\r\n?|\n)/gm, "") // deleting empty lines
-    .trim()
-    // replace(/^(?<\s*)\t/g, two_spaces)
-    .replace(/\t/g, tabsInSpaces);
-
-  // the best thing might be ("\t", " " * tabLength)
-  // so it will replace each tab individually with required number of spaces.
-  // so get rid of the "^" and the "+"
+  const strippedFullCodeString = [fullCodeString]
+    .map((s) => strip(s))
+    .map(removeEmptyLines)
+    .map(replaceTabsWithSpaces)[0];
 
   const languageParser = getLanguageParser(language);
-
   parser.setLanguage(languageParser);
 
   const tree = parser.parse(strippedFullCodeString);

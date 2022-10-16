@@ -5,12 +5,13 @@ import socketIO from "socket.io";
 import createMongoStore from "connect-mongo";
 import createExpressSession from "express-session";
 import createSharedSession from "express-socket.io-session";
+import db from "mongoose";
 import onSocketConnection from "./sockets";
-import db from "./db";
 import routes from "./api";
 import { IGameMode } from "./types";
 import RaceManager from "./RaceManager";
 import pingDiscordHandler from "./api/pingDiscord";
+import { connectToDB } from "./db";
 
 declare module "express-session" {
   export interface SessionData {
@@ -44,7 +45,8 @@ const session = createExpressSession({
 
 const { PORT } = process.env;
 
-export default () => {
+export default async () => {
+  await connectToDB();
   const app = express();
   app.use(session);
   app.use(
