@@ -23,8 +23,7 @@ import { useChallenge } from "../modules/play2/hooks/useChallenge";
 import { useEndGame } from "../modules/play2/hooks/useEndGame";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookie = context.req.headers.cookie;
-  const user = await fetchUser(cookie);
+  const user = await fetchUser(context);
   return {
     props: {
       user,
@@ -33,9 +32,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  // we need to connect to the backend with a http route from the client
-  // in order to create the session store
-  fetchUser();
   const isPlaying = useIsPlaying();
   const isCompleted = useIsCompleted();
   const endGame = useCodeStore((state) => state.end);
