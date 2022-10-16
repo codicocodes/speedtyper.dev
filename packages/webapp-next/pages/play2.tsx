@@ -20,6 +20,7 @@ import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { ChallengeSource } from "../modules/play2/components/play-footer/ChallengeSource";
 import { fetchUser } from "../common/api/user";
 import { useChallenge } from "../modules/play2/hooks/useChallenge";
+import { useEndGame } from "../modules/play2/hooks/useEndGame";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookie = context.req.headers.cookie;
@@ -56,17 +57,13 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const startTime = useCodeStore((state) => state.startTime);
   const endTime = useCodeStore((state) => state.endTime);
 
+  useEndGame();
+
   // TODO: move useTotalSeconds to modules folder
   const totalSeconds = useTotalSeconds(
     startTime?.getTime(),
     endTime?.getTime()
   );
-
-  useEffect(() => {
-    if (isCompleted && isPlaying) {
-      endGame();
-    }
-  }, [endGame, isPlaying, isCompleted]);
 
   return (
     <>
