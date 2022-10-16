@@ -5,6 +5,7 @@ interface KeyStroke {
   key: string;
   timestamp: number;
   literal?: string;
+  progress: number;
   index: number;
 }
 
@@ -24,6 +25,8 @@ interface CodeState {
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
   _saveKeyStroke: (key: string, index: number, correct: boolean) => void;
+  calculateProgress: (correct: boolean) => number;
+  expectedMaxCorrectKeyStrokes: number;
 
   // Code rendering state
   code: string;
@@ -48,7 +51,7 @@ interface CodeState {
 
 // There are 3 separate parts of logic in this store
 // 1. Code rendering logic which is necessary to render the code strings
-// 2. Match logic which conerns itself with maintaining the match
+// 2. Match logic which concerns itself with maintaining the match
 // 3. Results logic which shows data after the race
 // Match logic depends on code rendering logic.
 // Results logic depends on Match logic.
@@ -58,6 +61,7 @@ interface CodeState {
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   // RESULTS logic
+  expectedMaxCorrectKeyStrokes: 0,
   getAccuracy: () => {
     // const allKeyStrokes = get().keyStrokes.length;
     const validKeyStrokes = get()._getValidKeyStrokes().length;
@@ -133,34 +137,46 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     const seconds = ms / 1000;
     return Math.floor((60 * validKeyStrokesCount) / seconds);
   },
+
   // MATCH logic
   keyStrokes: [],
   incorrectKeyStrokes: [],
   _saveKeyStroke: (key: string, index: number, correct: boolean) => {
     set((state) => {
+      const progress = get().calculateProgress(correct);
       if (correct) {
         // FIXME: correctIndex has not rerendered yet
         const correctInput = get().code.substring(0, get().correctIndex + 1);
         const literal = get().literals[0];
         const endsWithLiteral = correctInput.endsWith(literal);
-        if (endsWithLiteral) {
+        if (endsWithLiteral && get().literals.length > 1) {
           get().literals.shift();
         }
         state.keyStrokes.push({
           key,
           index,
           literal,
+          progress,
           timestamp: new Date().getTime(),
         });
       } else {
         state.incorrectKeyStrokes.push({
           key,
           index,
+          progress,
           timestamp: new Date().getTime(),
         });
       }
       return state;
     });
+  },
+  calculateProgress: (correct: Boolean) => {
+    const validKeyStrokesCount =
+      get()._getValidKeyStrokes().length + Number(correct);
+    const progress = Math.floor(
+      (validKeyStrokesCount * 100) / get().expectedMaxCorrectKeyStrokes
+    );
+    return progress;
   },
   start: () => {
     set((state) => {
@@ -185,6 +201,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     set((state) => ({
       ...state,
       code,
+      expectedMaxCorrectKeyStrokes: calculateExpectedMaxCorrectKeyStrokes(code),
       index: 0,
       correctIndex: 0,
       startTime: undefined,
@@ -294,8 +311,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
         return r.split(/[\n\r\s\t]+/);
       })
       .filter(Boolean);
-
-    console.log(literals);
     return literals;
   },
 }));
@@ -330,4 +345,12 @@ function isSkippable(key: string) {
     default:
       return false;
   }
+}
+
+function calculateExpectedMaxCorrectKeyStrokes(code: string) {
+  const expectedMaxCorrectKeyStrokes = code
+    .split("\n")
+    .map((subText) => subText.trimStart())
+    .join("\n").length;
+  return expectedMaxCorrectKeyStrokes;
 }
