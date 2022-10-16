@@ -102,7 +102,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
               >
                 {!isPlaying && (
                   <div className="flex row justify-between items-top">
-                    {RenderActionButtons(() => game.next())}
+                {!isPlaying && RenderActionButtons(game)}
                     <div className="text-faded-gray">
                       <ChallengeSource
                         name="speedtyper.dev"
@@ -141,25 +141,31 @@ function RenderTimer(seconds: number) {
   );
 }
 
-function RenderActionButtons(nextChallenge: () => void) {
+function RenderActionButtons(game: Game) {
   return (
-    <div className="text-faded-gray h-[42px]">
-      <Button
-        color="invisible"
-        title="Reload the challenge"
-        size="sm"
-        onClick={nextChallenge}
-        leftIcon={<ReloadIcon />}
-      />
-      <Button
-        color="invisible"
-        title="Invite your friends to race"
-        size="sm"
-        onClick={() => {
-          copyToClipboard(window.location.href, "URL copied to clipboard");
-        }}
-        leftIcon={<LinkIcon />}
-      />
+    <div className="relative">
+      <div className="absolute text-faded-gray">
+        <Button
+          color="invisible"
+          title="Reload the challenge"
+          size="sm"
+          onClick={() => game.next()}
+          leftIcon={<ReloadIcon />}
+        />
+        <Button
+          color="invisible"
+          title="Invite your friends to race"
+          size="sm"
+          onClick={() => {
+            const url = new URL(window.location.href);
+            if (game.id) {
+              url.searchParams.set("id", game.id);
+            }
+            copyToClipboard(url.toString(), `${url} copied to clipboard`);
+          }}
+          leftIcon={<LinkIcon />}
+        />
+      </div>
     </div>
   );
 }
