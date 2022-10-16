@@ -1,7 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { LinkIcon } from "../assets/icons/LinkIcon";
 import { ReloadIcon } from "../assets/icons/ReloadIcon";
@@ -18,9 +17,13 @@ import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { ChallengeSource } from "../modules/play2/components/play-footer/ChallengeSource";
+import { Game } from "../modules/play2/services/Game";
 import { fetchUser } from "../common/api/user";
 import { useChallenge } from "../modules/play2/hooks/useChallenge";
 import { useEndGame } from "../modules/play2/hooks/useEndGame";
+import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUnmount";
+import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam";
+import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const user = await fetchUser(context);
@@ -34,25 +37,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const isPlaying = useIsPlaying();
   const isCompleted = useIsCompleted();
-  const endGame = useCodeStore((state) => state.end);
-  const initialize = useCodeStore((state) => state.initialize);
   const socket = useSocket();
   const game = useGame(socket);
-
-  // FIXME: Tab should be not a string literal
-  useKeyMap(true, Keys.Tab, () => game.next());
-
-  // Reset state when leaving page
-  useEffect(() => {
-    return () => {
-      initialize("");
-    };
-  }, [initialize]);
-
   const challenge = useChallenge(socket);
+  const gameID = useGameIdQueryParam();
   const startTime = useCodeStore((state) => state.startTime);
   const endTime = useCodeStore((state) => state.endTime);
 
+  useConnectToGame(game, gameID);
+  useKeyMap(true, Keys.Tab, () => game.next());
+  useResetStateOnUnmount();
   useEndGame();
 
   // TODO: move useTotalSeconds to modules folder
