@@ -19,6 +19,7 @@ import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { ChallengeSource } from "../modules/play2/components/play-footer/ChallengeSource";
 import { fetchUser } from "../common/api/user";
+import { useChallenge } from "../modules/play2/hooks/useChallenge";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookie = context.req.headers.cookie;
@@ -44,12 +45,6 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // FIXME: Tab should be not a string literal
   useKeyMap(true, Keys.Tab, () => game.next());
 
-  const [challenge, setChallenge] = useState({
-    code: "",
-    filePath: "",
-    language: "",
-  });
-
   // Reset state when leaving page
   useEffect(() => {
     return () => {
@@ -57,18 +52,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
     };
   }, [initialize]);
 
-  useEffect(() => {
-    game.play();
-    // TODO: handle joining other rooms
-    socket.subscribe("challenge_selected", (_, data) => {
-      setChallenge({
-        code: data.fullCodeString,
-        language: data.language,
-        filePath: "",
-      });
-      initialize(data.fullCodeString);
-    });
-  }, [socket, game, initialize]);
+  const challenge = useChallenge(socket);
   const startTime = useCodeStore((state) => state.startTime);
   const endTime = useCodeStore((state) => state.endTime);
 
