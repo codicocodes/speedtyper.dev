@@ -8,11 +8,24 @@ export class RacePlayer {
   username: string;
   recentlyTypedLiteral?: string;
   progress: number;
+
   @Exclude()
-  typedChars: any[];
+  typedKeyStrokes: any[];
 
   toJSON() {
     return instanceToPlain(this);
+  }
+
+  reset() {
+    this.recentlyTypedLiteral = '';
+    this.progress = 0;
+    this.typedKeyStrokes = [];
+  }
+
+  updateProgress(keyStroke: any) {
+    this.recentlyTypedLiteral = keyStroke.literal;
+    this.progress = keyStroke.progress;
+    this.typedKeyStrokes.push(keyStroke);
   }
 
   static fromUser(user: User) {
@@ -21,7 +34,7 @@ export class RacePlayer {
     player.username = user.username;
     player.progress = 0;
     player.recentlyTypedLiteral = '';
-    player.typedChars = [];
+    player.typedKeyStrokes = [];
     return player;
   }
 }
@@ -38,6 +51,16 @@ export class Race {
     this.owner = owner.id;
     this.challenge = challenge;
     this.addMember(owner);
+  }
+
+  getPlayer(id: string) {
+    return this.members[id];
+  }
+
+  resetProgress() {
+    Object.values(this.members).forEach((player) => {
+      player.reset();
+    });
   }
 
   addMember(user: User) {

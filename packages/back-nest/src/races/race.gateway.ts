@@ -47,9 +47,8 @@ export class RaceGateway {
     if (!raceId) return;
     const user = this.sessionState.getUser(socket);
     if (this.raceManager.isOwner(user.id, raceId)) {
-      const challenge = await this.raceManager.refresh(raceId);
-      socket.to(raceId).emit('challenge_selected', challenge);
-      socket.emit('challenge_selected', challenge);
+      const race = await this.raceManager.refresh(raceId);
+      this.raceEvents.updatedRace(socket, race);
     }
   }
 
@@ -59,6 +58,17 @@ export class RaceGateway {
     const race = await this.raceManager.create(user);
     this.raceEvents.createdRace(socket, race);
     this.sessionState.saveRaceID(socket, race.id);
+  }
+
+  @UseFilters(new RaceExceptions())
+  @SubscribeMessage('key_stroke')
+  async onKeyStroke(socket: Socket, keystroke: any) {
+    const user = this.sessionState.getUser(socket);
+    const raceId = this.sessionState.getRaceID(socket);
+    const race = this.raceManager.getRace(raceId);
+    const player = race.getPlayer(user.id);
+    player.updateProgress(keystroke);
+    this.raceEvents.progressUpdated(socket, raceId, player);
   }
 
   @SubscribeMessage('join')

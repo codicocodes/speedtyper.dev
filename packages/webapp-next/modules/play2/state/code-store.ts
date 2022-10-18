@@ -1,7 +1,7 @@
 import create from "zustand";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 
-interface KeyStroke {
+export interface KeyStroke {
   key: string;
   timestamp: number;
   literal?: string;

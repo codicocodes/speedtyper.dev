@@ -1,4 +1,5 @@
 import SocketLatest from "../../../common/services/Socket";
+import { KeyStroke } from "../state/code-store";
 import { RacePlayer, useGameStore } from "../state/game-store";
 
 export class Game {
@@ -15,6 +16,10 @@ export class Game {
 
   get progress() {
     return Object.values(useGameStore.getState().members);
+  }
+
+  sendKeyStroke(keyStroke: KeyStroke) {
+    this.socket.emit("key_stroke", keyStroke);
   }
 
   next() {

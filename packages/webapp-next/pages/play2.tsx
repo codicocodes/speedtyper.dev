@@ -24,6 +24,7 @@ import { useEndGame } from "../modules/play2/hooks/useEndGame";
 import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUnmount";
 import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam";
 import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
+import { useSendKeyStrokes } from "../modules/play2/hooks/useSendKeyStrokes";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const user = await fetchUser(context);
@@ -48,6 +49,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
   useKeyMap(true, Keys.Tab, () => game.next());
   useResetStateOnUnmount();
   useEndGame();
+  useSendKeyStrokes(game);
 
   // TODO: move useTotalSeconds to modules folder
   const totalSeconds = useTotalSeconds(
@@ -102,7 +104,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
               >
                 {!isPlaying && (
                   <div className="flex row justify-between items-top">
-                {!isPlaying && RenderActionButtons(game)}
+                    {RenderActionButtons(game)}
                     <div className="text-faded-gray">
                       <ChallengeSource
                         name="speedtyper.dev"
@@ -144,7 +146,7 @@ function RenderTimer(seconds: number) {
 function RenderActionButtons(game: Game) {
   return (
     <div className="relative">
-      <div className="absolute text-faded-gray">
+      <div className="text-faded-gray">
         <Button
           color="invisible"
           title="Reload the challenge"
