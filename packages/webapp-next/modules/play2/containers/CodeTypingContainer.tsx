@@ -19,6 +19,8 @@ interface CodeTypingContainerProps {
   game: Game;
 }
 
+const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ".split("");
+
 export function CodeTypingContainer({
   filePath,
   language,
@@ -37,7 +39,7 @@ export function CodeTypingContainer({
     game.next();
   });
 
-  useKeyMap(!focused, "", () => {
+  useKeyMap(!focused, triggerKeys, () => {
     triggerFocus();
     setFocused(true);
   });
