@@ -119,7 +119,7 @@ function Play2Page() {
                 {!isPlaying && (
                   <div className="flex row justify-between items-center">
                     {RenderActionButtons(() => game.next())}
-                    <div className={"text-faded-gray"}>
+                    <div className="text-faded-gray">
                       <ChallengeSource
                         name="speedtyper.dev"
                         url="https://github.com/codicocodes/speedtyper.dev"
