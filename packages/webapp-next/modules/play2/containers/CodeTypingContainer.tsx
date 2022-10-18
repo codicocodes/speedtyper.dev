@@ -10,15 +10,21 @@ import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
+import { useKeyMap } from "../../../hooks/useKeyMap";
+import { useSocket } from "../../../common/hooks/useSocket";
+import { useGame } from "../hooks/useGame";
+import { Game } from "../services/Game";
 
 interface CodeTypingContainerProps {
   filePath: string;
   language: string;
+  game: Game;
 }
 
 export function CodeTypingContainer({
   filePath,
   language,
+  game,
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
@@ -28,6 +34,10 @@ export function CodeTypingContainer({
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const [focused, setFocused] = useState(true);
+
+  useKeyMap(focused, "Tab", () => {
+    game.next();
+  });
 
   useEffect(() => {
     if (!isPlaying && index > 0) {
