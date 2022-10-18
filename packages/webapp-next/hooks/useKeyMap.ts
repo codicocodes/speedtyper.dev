@@ -8,7 +8,7 @@ export const useKeyMap = (
   useEffect(() => {
     const handleKeyDown = (e: any) => {
       const { key: pressedKey } = e;
-      if (pressedKey === selectedKey) {
+      if (pressedKey === selectedKey || selectedKey === "") {
         e.preventDefault();
         callback();
       }

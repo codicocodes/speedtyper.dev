@@ -11,8 +11,6 @@ import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 import { useKeyMap } from "../../../hooks/useKeyMap";
-import { useSocket } from "../../../common/hooks/useSocket";
-import { useGame } from "../hooks/useGame";
 import { Game } from "../services/Game";
 
 interface CodeTypingContainerProps {
@@ -37,6 +35,11 @@ export function CodeTypingContainer({
 
   useKeyMap(focused, "Tab", () => {
     game.next();
+  });
+
+  useKeyMap(!focused, "", () => {
+    triggerFocus();
+    setFocused(true);
   });
 
   useEffect(() => {
