@@ -17,6 +17,7 @@ import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam"
 import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
 import { useSendKeyStrokes } from "../modules/play2/hooks/useSendKeyStrokes";
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
+import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const user = await fetchUser(context);
@@ -50,6 +51,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
           }}
         >
           <>
+            <PlayHeader />
             <AnimatePresence>
               <motion.div
                 initial={{ opacity: 0 }}

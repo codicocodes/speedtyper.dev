@@ -37,10 +37,11 @@ export class Game {
   private listenForRaceJoined() {
     this.socket.subscribe("race_joined", (_, race) => {
       console.log("race_joined", race);
-      useGameStore.setState(() => ({
+      useGameStore.setState((game) => ({
         id: race.id,
         owner: race.owner,
         members: race.members,
+        count: game.count + 1,
       }));
     });
   }
@@ -66,6 +67,7 @@ export class Game {
       return {
         ...game,
         members,
+        count: game.count + 1,
       };
     });
   }
