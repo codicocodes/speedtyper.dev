@@ -10,8 +10,6 @@ export interface ChallengeSourceProps {
 export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
   const { url, name, license } = props;
 
-  // Render
-  //--------------------------------------------------------------------------
   return (
     <Link href={url} passHref>
       <a target={"_blank"} className={"text-2xl"}>
