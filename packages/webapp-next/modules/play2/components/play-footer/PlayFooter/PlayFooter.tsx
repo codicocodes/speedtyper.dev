@@ -100,7 +100,7 @@ function RenderActionButtons(game: Game) {
 
 function RenderTimer(seconds: number) {
   return (
-    <div className="absolute text-3xl ml-4 font-bold text-purple-300">
+    <div className="absolute text-3xl ml-2 font-bold text-purple-300">
       {toHumanReadableTime(seconds)}
     </div>
   );
