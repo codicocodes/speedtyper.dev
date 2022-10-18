@@ -12,7 +12,7 @@ export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
 
   return (
     <Link href={url} passHref>
-      <a target={"_blank"} className={"text-2xl"}>
+      <a target="_blank" className="text-lg font-medium">
         {name} ({license})
       </a>
     </Link>
