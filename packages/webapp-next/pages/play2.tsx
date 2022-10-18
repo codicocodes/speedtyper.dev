@@ -6,12 +6,9 @@ import { useSocket } from "../common/hooks/useSocket";
 import { Keys, useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
-import { useCodeStore } from "../modules/play2/state/code-store";
-import useTotalSeconds from "../hooks/useTotalSeconds";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
-import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
 import { fetchUser } from "../common/api/user";
 import { useChallenge } from "../modules/play2/hooks/useChallenge";
 import { useEndGame } from "../modules/play2/hooks/useEndGame";
@@ -31,7 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const isPlaying = useIsPlaying();
   const isCompleted = useIsCompleted();
   const socket = useSocket();
   const game = useGame(socket);
