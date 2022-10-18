@@ -16,6 +16,7 @@ import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { toHumanReadableTime } from "../common/utils/toHumanReadableTime";
+import { ChallengeSource } from "../modules/play2/components/play-footer/ChallengeSource";
 
 function Play2Page() {
   // TODO: Refactor this page
@@ -115,7 +116,18 @@ function Play2Page() {
                 transition={{ duration: 0.5 }}
                 className="w-full"
               >
-                {!isPlaying && RenderActionButtons(() => game.next())}
+                {!isPlaying && (
+                  <div className="flex row justify-between items-top">
+                    {RenderActionButtons(() => game.next())}
+                    <div className="text-faded-gray">
+                      <ChallengeSource
+                        name="speedtyper.dev"
+                        url="https://github.com/codicocodes/speedtyper.dev"
+                        license="MIT"
+                      />
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
             <AnimatePresence>
@@ -139,35 +151,31 @@ function Play2Page() {
 
 function RenderTimer(seconds: number) {
   return (
-    <div className="relative">
-      <div className="absolute text-3xl ml-4 font-bold text-purple-300">
-        {toHumanReadableTime(seconds)}
-      </div>
+    <div className="text-3xl ml-4 font-bold text-purple-300 h-[42px]">
+      {toHumanReadableTime(seconds)}
     </div>
   );
 }
 
 function RenderActionButtons(nextChallenge: () => void) {
   return (
-    <div className="relative">
-      <div className="absolute text-faded-gray">
-        <Button
-          color="invisible"
-          title="Reload the challenge"
-          size="sm"
-          onClick={nextChallenge}
-          leftIcon={<ReloadIcon />}
-        />
-        <Button
-          color="invisible"
-          title="Invite your friends to race"
-          size="sm"
-          onClick={() => {
-            copyToClipboard(window.location.href, "URL copied to clipboard");
-          }}
-          leftIcon={<LinkIcon />}
-        />
-      </div>
+    <div className="text-faded-gray h-[42px]">
+      <Button
+        color="invisible"
+        title="Reload the challenge"
+        size="sm"
+        onClick={nextChallenge}
+        leftIcon={<ReloadIcon />}
+      />
+      <Button
+        color="invisible"
+        title="Invite your friends to race"
+        size="sm"
+        onClick={() => {
+          copyToClipboard(window.location.href, "URL copied to clipboard");
+        }}
+        leftIcon={<LinkIcon />}
+      />
     </div>
   );
 }
