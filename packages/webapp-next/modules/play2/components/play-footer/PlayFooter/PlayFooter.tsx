@@ -29,7 +29,7 @@ export function PlayFooter({ game }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
   return (
-    <>
+    <div className="w-full relative">
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
@@ -39,20 +39,21 @@ export function PlayFooter({ game }: PlayFooterProps) {
           className="w-full"
         >
           {!isPlaying && (
-            <div className="flex row justify-between items-top">
-              {RenderActionButtons(game)}
-              <div className="text-faded-gray">
-                <ChallengeSource
-                  name="speedtyper.dev"
-                  url="https://github.com/codicocodes/speedtyper.dev"
-                  license="MIT"
-                />
+            <div className="absolute w-full">
+              <div className="flex row justify-between items-top">
+                {RenderActionButtons(game)}
+                <div className="text-faded-gray">
+                  <ChallengeSource
+                    name="speedtyper.dev"
+                    url="https://github.com/codicocodes/speedtyper.dev"
+                    license="MIT"
+                  />
+                </div>
               </div>
             </div>
           )}
         </motion.div>
       </AnimatePresence>
-
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
@@ -64,7 +65,7 @@ export function PlayFooter({ game }: PlayFooterProps) {
           {isPlaying && RenderTimer(totalSeconds)}
         </motion.div>
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 
@@ -99,7 +100,7 @@ function RenderActionButtons(game: Game) {
 
 function RenderTimer(seconds: number) {
   return (
-    <div className="text-3xl ml-4 font-bold text-purple-300">
+    <div className="absolute text-3xl ml-4 font-bold text-purple-300">
       {toHumanReadableTime(seconds)}
     </div>
   );

@@ -90,6 +90,4 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
   );
 }
 
-
-
 export default Play2Page;
