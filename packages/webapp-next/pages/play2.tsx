@@ -88,7 +88,7 @@ function Play2Page() {
                 transition={{ duration: 0.5 }}
                 className="w-full m-2"
               >
-                {isCompleted && <ResultsContainer />}
+                {isCompleted && <ResultsContainer game={game} />}
               </motion.div>
             </AnimatePresence>
             <AnimatePresence>
