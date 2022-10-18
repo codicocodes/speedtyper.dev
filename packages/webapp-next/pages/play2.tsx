@@ -117,7 +117,7 @@ function Play2Page() {
                 className="w-full"
               >
                 {!isPlaying && (
-                  <div className="flex row justify-between items-center">
+                  <div className="flex row justify-between items-top">
                     {RenderActionButtons(() => game.next())}
                     <div className="text-faded-gray">
                       <ChallengeSource
