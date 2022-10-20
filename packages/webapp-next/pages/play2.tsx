@@ -6,7 +6,6 @@ import { useSocket } from "../common/hooks/useSocket";
 import { Keys, useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
-import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
 import { fetchUser } from "../common/api/user";

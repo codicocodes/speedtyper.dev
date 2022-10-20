@@ -55,7 +55,6 @@ export class Game {
 
   private listenForProgressUpdated() {
     this.socket.subscribe("progress_updated", (_, member: RacePlayer) => {
-      console.log("progress_updated", member);
       this.updateMemberInState(member);
     });
   }

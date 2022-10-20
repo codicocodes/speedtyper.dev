@@ -29,7 +29,7 @@ export function PlayFooter({ game }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
   return (
-    <div className="w-full relative">
+    <div className="w-full relative mt-2">
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
@@ -72,7 +72,7 @@ export function PlayFooter({ game }: PlayFooterProps) {
 function RenderActionButtons(game: Game) {
   return (
     <div className="relative">
-      <div className="text-faded-gray">
+      <div className="flex row text-faded-gray gap-1">
         <Button
           color="invisible"
           title="Reload the challenge"

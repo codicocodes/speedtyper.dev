@@ -2,8 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RacePlayer, useGameStore } from "../../../state/game-store";
 
 export function ProgressContainer() {
-  const count = useGameStore((state) => state.count);
-  console.log({ count });
+  useGameStore((state) => state.count);
   const players = Object.values(useGameStore.getState().members);
   return (
     <div className="my-2">
