@@ -19,7 +19,9 @@ import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const user = await fetchUser(context);
+  const user = await fetchUser(context).catch(() => {
+    return null;
+  });
   return {
     props: {
       user,
