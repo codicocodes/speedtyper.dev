@@ -29,7 +29,10 @@ function Play2Page() {
 
   // TODO: Move isPlaying to a React Context so it can be accessed anywhere in the app...
   // FIXME: Tab should be not a string literal
-  useKeyMap(true, "Tab", () => game.next());
+
+  useKeyMap(true, "Tab", () => {
+    game.next();
+  });
 
   const [challenge, setChallenge] = useState({
     code: "",

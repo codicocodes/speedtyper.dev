@@ -10,11 +10,14 @@ import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
+import { useKeyMap } from "../../../hooks/useKeyMap";
 
 interface CodeTypingContainerProps {
   filePath: string;
   language: string;
 }
+
+const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ".split("");
 
 export function CodeTypingContainer({
   filePath,
@@ -22,12 +25,22 @@ export function CodeTypingContainer({
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
+  const code = useCodeStore((state) => state.code);
   const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
   const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const [focused, setFocused] = useState(true);
+
+  useKeyMap(!focused, triggerKeys, () => {
+    triggerFocus();
+    setFocused(true);
+  });
+
+  useEffect(() => {
+    triggerFocus();
+  }, [code, triggerFocus]);
 
   useEffect(() => {
     if (!isPlaying && index > 0) {

@@ -35,3 +35,6 @@ typings/
 
 # Local Netlify folder
 .netlify
+
+# development
+.idea
