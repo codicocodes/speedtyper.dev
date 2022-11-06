@@ -30,6 +30,10 @@ function Play2Page() {
   // TODO: Move isPlaying to a React Context so it can be accessed anywhere in the app...
   // FIXME: Tab should be not a string literal
 
+  useKeyMap(true, "Tab", () => {
+    game.next();
+  });
+
   const [challenge, setChallenge] = useState({
     code: "",
     filePath: "",
@@ -88,7 +92,7 @@ function Play2Page() {
                 transition={{ duration: 0.5 }}
                 className="w-full m-2"
               >
-                {isCompleted && <ResultsContainer game={game} />}
+                {isCompleted && <ResultsContainer />}
               </motion.div>
             </AnimatePresence>
             <AnimatePresence>
@@ -103,7 +107,6 @@ function Play2Page() {
                   <CodeTypingContainer
                     filePath={challenge.filePath}
                     language={challenge.language}
-                    game={game}
                   />
                 )}
               </motion.div>
