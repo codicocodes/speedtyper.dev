@@ -25,6 +25,7 @@ export function CodeTypingContainer({
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
+  const code = useCodeStore((state) => state.code);
   const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
   const char = useCodeStore((state) => state.currentChar)();
@@ -36,6 +37,10 @@ export function CodeTypingContainer({
     triggerFocus();
     setFocused(true);
   });
+
+  useEffect(() => {
+    triggerFocus();
+  }, [code, triggerFocus]);
 
   useEffect(() => {
     if (!isPlaying && index > 0) {
