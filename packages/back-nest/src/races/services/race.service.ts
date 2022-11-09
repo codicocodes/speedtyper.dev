@@ -8,7 +8,6 @@ export class RacePlayer {
   username: string;
   recentlyTypedLiteral?: string;
   progress: number;
-
   @Exclude()
   typedKeyStrokes: any[];
 

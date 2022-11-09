@@ -23,7 +23,11 @@ export const denyWithoutUserInSession = (
   next: NextFunction,
 ) => {
   if (!socket.request.session.user) {
-    return socket.disconnect();
+    console.log(
+      'disconnect because there is no user in the session',
+      socket.id,
+    );
+    return socket.disconnect(true);
   }
   next();
 };
