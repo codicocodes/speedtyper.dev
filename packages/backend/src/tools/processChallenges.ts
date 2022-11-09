@@ -1,3 +1,4 @@
+import { connectToDB } from "../db";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -9,6 +10,7 @@ import { ICodeSource } from "../models/CodeSource";
 import parseCodeSource from "../utils/parseCodeSource";
 
 const processChallenges = async () => {
+  await connectToDB();
   try {
     const allCodeSources: CodeSourceDoc[] = await CodeSource.find({
       parsed: false,

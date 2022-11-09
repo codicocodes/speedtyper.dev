@@ -24,7 +24,7 @@ export function CodeArea({
     >
       {!focused && (
         <div className="absolute flex justify-center items-center w-full h-full">
-          Click to focus
+          Click or press any key to focus
         </div>
       )}
 

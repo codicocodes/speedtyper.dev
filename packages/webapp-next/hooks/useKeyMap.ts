@@ -6,16 +6,17 @@ export enum Keys {
 
 export const useKeyMap = (
   isActive: boolean,
-  selectedKey: string,
+  selectedKey: string | Array<string>,
   callback: () => void
 ) => {
   useEffect(() => {
     const handleKeyDown = (e: any) => {
       const { key: pressedKey } = e;
-      if (pressedKey === selectedKey) {
-        e.preventDefault();
-        callback();
-      }
+      if (Array.isArray(selectedKey) && !selectedKey.includes(pressedKey))
+        return;
+      if (typeof selectedKey === "string" && pressedKey !== selectedKey) return;
+      e.preventDefault();
+      callback();
     };
 
     if (window && document) {

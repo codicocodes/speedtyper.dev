@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 import CodeSource, { CodeSourceDoc } from "../models/CodeSource";
+import { connectToDB } from "../db";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -12,6 +13,7 @@ const fetchCodeSources = (): Promise<any> => {
 };
 
 const seedCodeSources = async () => {
+  await connectToDB();
   const rawCodeSources = await fetchCodeSources();
 
   const codeSourceDocs = rawCodeSources.map(

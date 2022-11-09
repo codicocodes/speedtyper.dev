@@ -19,6 +19,7 @@ export function ResultsContainer() {
   const time = toHumanReadableTime(Math.floor(ms / 1000));
   const mistakesCount = useCodeStore((state) => state.getMistakesCount)();
   const accuracy = useCodeStore((state) => state.getAccuracy)();
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex flex-row gap-4">
