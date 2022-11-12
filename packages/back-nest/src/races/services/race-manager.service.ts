@@ -27,7 +27,7 @@ export class RaceManager {
     const race = this.races[id];
     race.challenge = challenge;
     race.literals = literals;
-    race.resetProgress();
+    race.resetProgress(literals);
     return race;
   }
 
@@ -47,7 +47,7 @@ export class RaceManager {
     // preventing an infinite loop
     // TODO: this should be handled better in the future
     if (!race) return null;
-    race.addMember(user);
+    race.addMember(user, race.literals);
     return race;
   }
 

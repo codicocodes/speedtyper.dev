@@ -145,17 +145,9 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     set((state) => {
       const progress = get().calculateProgress(correct);
       if (correct) {
-        // FIXME: correctIndex has not rerendered yet
-        const correctInput = get().code.substring(0, get().correctIndex + 1);
-        const literal = get().literals[0];
-        const endsWithLiteral = correctInput.endsWith(literal);
-        if (endsWithLiteral && get().literals.length > 1) {
-          get().literals.shift();
-        }
         state.keyStrokes.push({
           key,
           index,
-          literal,
           progress,
           timestamp: new Date().getTime(),
         });
