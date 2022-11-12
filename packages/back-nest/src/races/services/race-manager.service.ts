@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { User } from 'src/users/entities/user.entity';
 import { Race } from './race.service';
@@ -17,10 +16,18 @@ export class RaceManager {
     return race;
   }
 
-  async refresh(id: string): Promise<Challenge> {
+  async refresh(id: string): Promise<Race> {
     const challenge = await this.challengeService.getRandom();
-    this.races[id].challenge = challenge;
-    return challenge;
+    const race = this.races[id];
+    race.challenge = challenge;
+    race.resetProgress();
+    return race;
+  }
+
+  getRace(id: string): Race {
+    const race = this.races[id];
+    if (!race) throw new RaceDoesNotExist(id);
+    return race;
   }
 
   join(user: User, raceId: string): Race | null {

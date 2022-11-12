@@ -6,3 +6,10 @@ export function getServerUrl() {
   } = getConfig();
   return serverUrl;
 }
+
+export function getExperimentalServerUrl() {
+  const {
+    publicRuntimeConfig: { experimentalServerUrl },
+  } = getConfig();
+  return experimentalServerUrl;
+}

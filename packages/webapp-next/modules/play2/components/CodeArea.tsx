@@ -15,9 +15,8 @@ export function CodeArea({
 }: CodeAreaProps) {
   return (
     <div
-      className="text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
+      className="bg-dark-lake text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
       style={{
-        backgroundColor: "black",
         height: "420px",
         fontFamily: "Fira Code",
         fontWeight: "normal",

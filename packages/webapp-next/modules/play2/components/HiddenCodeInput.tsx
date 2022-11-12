@@ -3,7 +3,6 @@ import {
   ClipboardEvent,
   KeyboardEvent,
   MouseEvent,
-  useEffect,
   useState,
 } from "react";
 
