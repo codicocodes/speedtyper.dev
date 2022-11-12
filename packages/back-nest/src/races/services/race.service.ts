@@ -43,12 +43,14 @@ export class Race {
   challenge: Challenge;
   owner: string;
   members: Record<string, RacePlayer>;
+  literals: string[];
 
-  constructor(owner: User, challenge: Challenge) {
+  constructor(owner: User, challenge: Challenge, literals: string[]) {
     this.id = randomUUID().replaceAll('-', '');
     this.members = {};
     this.owner = owner.id;
     this.challenge = challenge;
+    this.literals = literals;
     this.addMember(owner);
   }
 

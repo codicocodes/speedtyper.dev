@@ -7,6 +7,7 @@ import { UnsyncedFileImportRunner } from './commands/unsynced-file-import-runner
 import { Challenge } from './entities/challenge.entity';
 import { UnsyncedFile } from './entities/unsynced-file.entity';
 import { ChallengeService } from './services/challenge.service';
+import { LiteralService } from './services/literal.service';
 import { ParserService } from './services/parser.service';
 import { UnsyncedFileFilterer } from './services/unsynced-file-filterer';
 import { UnsyncedFileImporter } from './services/unsynced-file-importer';
@@ -21,12 +22,13 @@ import { UnsyncedFileService } from './services/unsynced-file.service';
   providers: [
     ParserService,
     ChallengeService,
+    LiteralService,
     ChallengeImportRunner,
     UnsyncedFileFilterer,
     UnsyncedFileImporter,
     UnsyncedFileImportRunner,
     UnsyncedFileService,
   ],
-  exports: [ChallengeService],
+  exports: [ChallengeService, LiteralService],
 })
 export class ChallengesModule {}
