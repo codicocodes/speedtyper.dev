@@ -6,12 +6,14 @@ import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
+import { ChallengeInfo } from "../../../hooks/useChallenge";
 import { Game } from "../../../services/Game";
 import { useCodeStore } from "../../../state/code-store";
 import { ChallengeSource } from "../ChallengeSource";
 
 interface PlayFooterProps {
   game: Game;
+  challenge: ChallengeInfo;
 }
 
 function useCodeStoreTotalSeconds() {
@@ -25,7 +27,7 @@ function useCodeStoreTotalSeconds() {
   return totalSeconds;
 }
 
-export function PlayFooter({ game }: PlayFooterProps) {
+export function PlayFooter({ game, challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
   return (
@@ -44,9 +46,9 @@ export function PlayFooter({ game }: PlayFooterProps) {
                 {RenderActionButtons(game)}
                 <div className="text-faded-gray">
                   <ChallengeSource
-                    name="speedtyper.dev"
-                    url="https://github.com/codicocodes/speedtyper.dev"
-                    license="MIT"
+                    name={challenge.projectName}
+                    url={challenge.url}
+                    license={challenge.license}
                   />
                 </div>
               </div>
