@@ -19,6 +19,10 @@ interface CodeTypingContainerProps {
 
 const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ".split("");
 
+const CODE_INPUT_BLUR_DEBOUNCE_MS = 1000;
+
+let trulyFocusedCodeInput = true;
+
 export function CodeTypingContainer({
   filePath,
   language,
@@ -48,9 +52,19 @@ export function CodeTypingContainer({
     }
   }, [index, isPlaying, start]);
 
-  const onFocus = useCallback(() => setFocused(true), [setFocused]);
+  const onFocus = useCallback(() => {
+    trulyFocusedCodeInput = true;
+    setFocused(true);
+  }, [setFocused]);
 
-  const onBlur = useCallback(() => setFocused(false), [setFocused]);
+  const onBlur = useCallback(() => {
+    trulyFocusedCodeInput = false;
+    setTimeout(() => {
+      if (!trulyFocusedCodeInput) {
+        setFocused(false);
+      }
+    }, CODE_INPUT_BLUR_DEBOUNCE_MS);
+  }, [setFocused]);
 
   // onBlur gets triggered when onFocus is also called more than once
   // which caused a flicker when you repeatedly click the code area
