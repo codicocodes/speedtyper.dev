@@ -43,7 +43,7 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
           {!isPlaying && (
             <div className="absolute w-full">
               <div className="flex row justify-between items-top">
-                {RenderActionButtons(game)}
+                <ActionButtons game={game} />
                 <div className="text-faded-gray">
                   <ChallengeSource
                     name={challenge.projectName}
@@ -71,7 +71,7 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
   );
 }
 
-function RenderActionButtons(game: Game) {
+function ActionButtons({ game }: { game: Game }) {
   return (
     <div className="relative">
       <div className="flex row text-faded-gray gap-1">
