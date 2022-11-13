@@ -1,20 +1,14 @@
-import { GetServerSidePropsContext, PreviewData } from "next";
-import { ParsedUrlQuery } from "querystring";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
+import { ServerSideContext } from "./types";
 
 const USER_API = "/api/user";
 
-const withCookie = (
-  ctx?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
-) => {
+const withCookie = (ctx?: ServerSideContext) => {
   const cookie = ctx?.req?.headers?.cookie;
   return cookie ? { cookie } : undefined;
 };
 
-const withSetHeaders = (
-  resp: Response,
-  ctx?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
-) => {
+const withSetHeaders = (resp: Response, ctx?: ServerSideContext) => {
   const setCookie = resp.headers.get("set-cookie");
   if (ctx && setCookie) {
     ctx.res.setHeader("set-cookie", setCookie);
@@ -22,9 +16,7 @@ const withSetHeaders = (
   return resp;
 };
 
-export const fetchUser = async (
-  context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
-) => {
+export const fetchUser = async (context?: ServerSideContext) => {
   const serverUrl = getExperimentalServerUrl();
   const url = serverUrl + USER_API;
   return fetch(url, {
