@@ -3,10 +3,10 @@ import "./../spinner.css";
 import "./../progressbar.css";
 
 import type { AppProps } from "next/app";
-import Navbar from "../components/Navbar";
 import { AppProvider } from "../AppContext";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
+import { Layout } from "../common/components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       style={{
         height: "100vh",
         display: "grid",
-        gridTemplateRows: "auto 1fr",
+        gridTemplateRows: "auto 1fr auto",
       }}
     >
       <Head>
@@ -48,13 +48,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         ></script>
       </Head>
       <AppProvider>
-        <Navbar />
         <NextNProgress
           options={{ showSpinner: false }}
           color="#d6bbfa"
           height={2}
         />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AppProvider>
     </div>
   );
