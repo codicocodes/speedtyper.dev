@@ -80,7 +80,7 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
                 )}
               </motion.div>
             </AnimatePresence>
-            <PlayFooter game={game} />
+            <PlayFooter game={game} challenge={challenge} />
           </>
         </div>
       </div>

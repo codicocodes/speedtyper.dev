@@ -69,6 +69,8 @@ export class RaceGateway {
     const race = this.raceManager.getRace(raceId);
     const player = race.getPlayer(user.id);
     player.updateProgress(keystroke);
+    const code = race.challenge.content;
+    player.updateLiteral(code, keystroke);
     this.raceEvents.progressUpdated(socket, raceId, player);
   }
 

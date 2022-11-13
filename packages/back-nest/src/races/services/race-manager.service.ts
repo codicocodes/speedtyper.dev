@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
+import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
 import { Race } from './race.service';
 
@@ -7,20 +8,26 @@ import { Race } from './race.service';
 export class RaceManager {
   private races: Record<string, Race> = {};
 
-  constructor(private challengeService: ChallengeService) {}
+  constructor(
+    private challengeService: ChallengeService,
+    private literalsService: LiteralService,
+  ) {}
 
   async create(user: User): Promise<Race> {
     const challenge = await this.challengeService.getRandom();
-    const race = new Race(user, challenge);
+    const literals = this.literalsService.calculateLiterals(challenge.content);
+    const race = new Race(user, challenge, literals);
     this.races[race.id] = race;
     return race;
   }
 
   async refresh(id: string): Promise<Race> {
     const challenge = await this.challengeService.getRandom();
+    const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = this.races[id];
     race.challenge = challenge;
-    race.resetProgress();
+    race.literals = literals;
+    race.resetProgress(literals);
     return race;
   }
 
@@ -40,7 +47,7 @@ export class RaceManager {
     // preventing an infinite loop
     // TODO: this should be handled better in the future
     if (!race) return null;
-    race.addMember(user);
+    race.addMember(user, race.literals);
     return race;
   }
 

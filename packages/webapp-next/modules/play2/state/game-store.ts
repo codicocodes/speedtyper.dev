@@ -5,6 +5,7 @@ export interface GameState {
   owner?: string;
   members: Record<string, RacePlayer>;
   count: number;
+  connected: boolean;
 }
 
 export interface RacePlayer {
@@ -15,6 +16,7 @@ export interface RacePlayer {
 }
 
 export const useGameStore = create<GameState>((_set, _get) => ({
+  connected: true,
   count: 0,
   members: {},
 }));
