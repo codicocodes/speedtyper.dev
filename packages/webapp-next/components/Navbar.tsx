@@ -4,8 +4,6 @@ import AvatarModal from "./AvatarModal";
 import { useAppContext } from "../AppContext";
 import { IUser } from "../types";
 import Link from "next/link";
-import Button from "../common/components/Button";
-import { TwitchLogo, DiscordLogo } from "../assets/icons";
 import Image from "next/image";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { AnimatePresence, motion } from "framer-motion";
@@ -30,7 +28,7 @@ const Navbar = () => {
   return (
     <header className="relative">
       <div className="absolute w-full">
-        <div className="flex items-start py-2 px-2 sm:px-2 lg:px-40 xl:px-40 lg:py-4">
+        <div className="flex items-start py-2">
           <Link href="/">
             <span className="flex items-center cursor-pointer trailing-widest leading-normal text-xl  pl-2 text-off-white hover:text-white mr-2 lg:mr-6">
               <div className="flex items-center mr-4 mb-1">
@@ -99,24 +97,6 @@ const NavBarButtons = () => {
             <div className="text-sm flex-grow"></div>
             {userIsGuest && <LoginModal />}
             {isUserLoggedIn && <AvatarModal user={user} logout={logout} />}
-            <a href="https://discord.gg/AMbnnN5eep" target="blank">
-              <Button
-                color="primary"
-                leftIcon={<DiscordLogo />}
-                size="sm"
-                title="Join the discord"
-                text="Join"
-              />
-            </a>
-            <a href="https://twitch.tv/codico" target="blank">
-              <Button
-                color="primary"
-                size="sm"
-                leftIcon={<TwitchLogo />}
-                title="Follow codico on twitch"
-                text="Follow"
-              />
-            </a>
           </motion.div>
         </AnimatePresence>
       )}

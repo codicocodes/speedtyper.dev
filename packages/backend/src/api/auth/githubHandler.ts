@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 const { GITHUB_CLIENT_ID, SERVER_URI } = process.env;
 

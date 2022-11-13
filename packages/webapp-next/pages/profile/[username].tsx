@@ -44,7 +44,7 @@ const ProfilePage = (props: ProfileProps) => {
   const challengeResults = userResults[resultSelector];
 
   return userResults ? (
-    <div className="flex text-off-white items-center justify-center h-full tracking-wider mt-10">
+    <div className="flex text-off-white items-center justify-center h-full w-full tracking-wider mt-10">
       <div className="flex items-center flex-col w-full max-w-5xl">
         <div className="flex flex-wrap items-center w-full">
           <ProfileItem>
@@ -68,7 +68,7 @@ const ProfilePage = (props: ProfileProps) => {
                     title="github.com"
                   >
                     <GithubLogo />
-                    <h1>{username}</h1>
+                    <h1 className="ml-1">{username}</h1>
                   </a>
                   <h4>
                     Joined{" "}
