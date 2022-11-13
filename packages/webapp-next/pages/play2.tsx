@@ -44,46 +44,37 @@ function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   return (
     <>
-      <div className="flex items-center justify-center h-full w-full">
-        <div
-          className="flex flex-col max-w-5xl items-center justify-center"
-          style={{
-            width: "920px",
-          }}
-        >
-          <>
-            <PlayHeader />
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full"
-              >
-                {isCompleted && <ResultsContainer />}
-              </motion.div>
-            </AnimatePresence>
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full"
-              >
-                {!isCompleted && (
-                  <CodeTypingContainer
-                    filePath={challenge.filePath}
-                    language={challenge.language}
-                  />
-                )}
-              </motion.div>
-            </AnimatePresence>
-            <PlayFooter game={game} challenge={challenge} />
-          </>
-        </div>
-      </div>
+      <>
+        <PlayHeader />
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+            {isCompleted && <ResultsContainer />}
+          </motion.div>
+        </AnimatePresence>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+            {!isCompleted && (
+              <CodeTypingContainer
+                filePath={challenge.filePath}
+                language={challenge.language}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+        <PlayFooter game={game} challenge={challenge} />
+      </>
       <ToastContainer />
     </>
   );
