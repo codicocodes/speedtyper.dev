@@ -32,8 +32,7 @@ export function CodeTypingContainer({
   const code = useCodeStore((state) => state.code);
   const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
-  const char = useCodeStore((state) => state.currentChar)();
-  const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(char);
+  const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(index.toString());
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const [focused, setFocused] = useState(true);
 
