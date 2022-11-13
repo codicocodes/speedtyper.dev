@@ -68,7 +68,7 @@ const ProfilePage = (props: ProfileProps) => {
                     title="github.com"
                   >
                     <GithubLogo />
-                    <h1>{username}</h1>
+                    <h1 className="ml-1">{username}</h1>
                   </a>
                   <h4>
                     Joined{" "}
