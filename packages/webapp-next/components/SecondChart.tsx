@@ -97,10 +97,10 @@ const SecondChart = ({
       style={{ height: "350px" }}
     >
       {resultSelector === "monthly" ? (
-        <canvas ref={monthlyRef} width="400" height="400" />
+        <canvas ref={monthlyRef} width="100%" />
       ) : null}
       {resultSelector === "annual" ? (
-        <canvas ref={annual} width="400" height="400" />
+        <canvas ref={annual} width="100%" />
       ) : null}
     </div>
   );
