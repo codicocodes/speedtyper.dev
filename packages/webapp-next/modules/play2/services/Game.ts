@@ -8,6 +8,7 @@ export class Game {
     this.listenForMemberJoined();
     this.listenForProgressUpdated();
     this.listenForRaceDoesNotExist();
+    this.listenForDisconnect();
   }
 
   get id() {
@@ -80,6 +81,17 @@ export class Game {
       // without stopping the user from typing
       // and allowing them to finnish typing if they want to
       this.join(id);
+    });
+  }
+
+  private listenForDisconnect() {
+    this.socket.subscribe("disconnect", (_, data) => {
+      useGameStore.setState((game) => {
+        return {
+          ...game,
+          connected: false,
+        };
+      });
     });
   }
 }
