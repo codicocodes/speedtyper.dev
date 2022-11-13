@@ -195,13 +195,13 @@ const IndexPage = () => {
         {dailyResults.length > 0 && (
           <div>
             <div className="flex justify-center">
-              <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
+              <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md mb-8">
                 <Toplist results={dailyResults} />
               </div>
             </div>
           </div>
         )}
-        <div className="hidden lg:block mt-4">
+        <div className="hidden lg:block">
           <Stream />
         </div>
       </div>
