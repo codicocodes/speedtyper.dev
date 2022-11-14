@@ -17,6 +17,7 @@ import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
 import { useSendKeyStrokes } from "../modules/play2/hooks/useSendKeyStrokes";
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
+import { useInitializeUserStore } from "../common/state/user-store";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const user = await fetchUser(context).catch(() => {
@@ -29,7 +30,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-function Play2Page(_: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Play2Page({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  useInitializeUserStore(user);
   const isCompleted = useIsCompleted();
   const socket = useSocket();
   const game = useGame(socket);

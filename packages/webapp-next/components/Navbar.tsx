@@ -44,7 +44,7 @@ const Navbar = () => {
   );
 };
 
-const WebsiteName = () => {
+export const WebsiteName = () => {
   const isPlaying = useIsPlaying();
   const websiteName = "speedtyper";
   const colorClass = isPlaying ? "text-faded-gray" : "text-inherit";
@@ -57,7 +57,7 @@ const WebsiteName = () => {
   );
 };
 
-const Logo = () => {
+export const Logo = () => {
   const isPlaying = useIsPlaying();
   return isPlaying ? (
     <Image

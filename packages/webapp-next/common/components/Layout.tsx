@@ -1,5 +1,5 @@
-import Navbar from "../../components/Navbar";
 import { Footer } from "./Footer";
+import { navbarFactory } from "./NewNavbar";
 
 interface LayoutProps {
   children: JSX.Element;
@@ -22,6 +22,7 @@ export function Container({ children, centered }: ContainerProps) {
 }
 
 export function Layout({ children }: LayoutProps) {
+  const Navbar = navbarFactory();
   return (
     <>
       <Container centered={false}>
