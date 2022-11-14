@@ -1,18 +1,12 @@
 import { ReactNode } from "react";
 
 interface CodeAreaProps {
-  language: string;
   filePath: string;
   focused: boolean;
   children: ReactNode;
 }
 
-export function CodeArea({
-  language,
-  filePath,
-  focused,
-  children,
-}: CodeAreaProps) {
+export function CodeArea({ filePath, focused, children }: CodeAreaProps) {
   return (
     <div
       className="bg-dark-lake text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
@@ -30,7 +24,7 @@ export function CodeArea({
 
       <CodeAreaHeader filePath={filePath} />
       <pre className={focused ? "blur-none opacity-100" : "blur-sm opacity-40"}>
-        <code className={`${language}`}>{children}</code>
+        <code>{children}</code>
       </pre>
     </div>
   );

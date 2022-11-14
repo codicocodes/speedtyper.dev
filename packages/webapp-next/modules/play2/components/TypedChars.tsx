@@ -3,7 +3,11 @@ import "highlight.js/styles/github-dark.css";
 import { useEffect, useRef } from "react";
 import { useCodeStore } from "../state/code-store";
 
-export function TypedChars() {
+interface TypedCharsProps {
+  language: string;
+}
+
+export function TypedChars({ language }: TypedCharsProps) {
   useCodeStore((state) => state.code);
   const index = useCodeStore((state) => state.index);
   const typedChars = useCodeStore((state) => state.correctChars);
@@ -14,7 +18,11 @@ export function TypedChars() {
     }
   }, [index]);
   return (
-    <span ref={typedRef} style={{ background: "none" }}>
+    <span
+      className={`${language}`}
+      ref={typedRef}
+      style={{ background: "none" }}
+    >
       {typedChars()}
     </span>
   );
