@@ -5,7 +5,7 @@ import { KogWheel } from "../../assets/icons/KogWheel";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import { useUserStore } from "../state/user-store";
-import { Avatar } from "./Avatar";
+import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
 export const navbarFactory = () => {
   const {
@@ -42,7 +42,7 @@ const ProfileSection = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="text-sm flex-grow"></div>
-            <Avatar url={user.avatarUrl} username={user.username} />
+            <NewGithubLoginModal />
             <KogWheel />
           </motion.div>
         </AnimatePresence>
