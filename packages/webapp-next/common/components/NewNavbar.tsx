@@ -4,7 +4,6 @@ import Link from "next/link";
 import { KogWheel } from "../../assets/icons/KogWheel";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
 import { useIsPlaying } from "../hooks/useIsPlaying";
-import { useUserStore } from "../state/user-store";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
 export const navbarFactory = () => {
@@ -29,7 +28,6 @@ const HomeLink = () => {
 
 const ProfileSection = () => {
   const isPlaying = useIsPlaying();
-  const user = useUserStore();
   return (
     <>
       {!isPlaying && (
