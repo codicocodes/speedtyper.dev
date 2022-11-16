@@ -51,8 +51,8 @@ const ProfileSection = () => {
 
 export const NewNavbar = () => {
   return (
-    <header className="relative">
-      <div className="absolute w-full">
+    <header className="h-10">
+      <div className="w-full">
         <div className="flex items-start py-2">
           <HomeLink />
           <ProfileSection />
