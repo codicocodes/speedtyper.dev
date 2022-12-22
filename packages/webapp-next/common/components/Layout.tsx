@@ -16,7 +16,9 @@ export function Container({ children, centered }: ContainerProps) {
       className={`flex justify-center h-full w-full 
      ${centered ? "items-center justify-content" : ""} `}
     >
-      <div className="flex flex-col max-w-5xl w-full">{children}</div>
+      <div className="flex flex-col max-w-5xl w-full h-full justify-center">
+        {children}
+      </div>
     </div>
   );
 }

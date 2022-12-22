@@ -47,7 +47,7 @@ function Play2Page({
   useSendKeyStrokes(game);
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <>
         <PlayHeader />
         <AnimatePresence>
@@ -80,7 +80,7 @@ function Play2Page({
         <PlayFooter game={game} challenge={challenge} />
       </>
       <ToastContainer />
-    </>
+    </div>
   );
 }
 

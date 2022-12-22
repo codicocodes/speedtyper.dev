@@ -11,7 +11,7 @@ export const Overlay: React.FC<OverlayProps> = (props) => {
         onClick={props.onOverlayClick}
       >
         <div
-          className="relative w-auto my-6 mx-auto max-w-3xl"
+          className="relative my-6 mx-auto max-w-3xl w-full"
           onClick={(e) => e.stopPropagation()}
         >
           {props.children}
