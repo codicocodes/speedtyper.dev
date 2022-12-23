@@ -139,7 +139,7 @@ const Play = () => {
   // TODO: isOwner switching from true to false causes rerender of action buttons
   return (
     <>
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex items-center justify-center mt-4 h-full">
         <div className="flex m-18 w-full max-w-5xl items-center justify-center flex-col">
           <div className="w-full hmax-w-5xl">
             <div className="flex w-full flex-wrap text-dark-ocean my-4 gap-4">

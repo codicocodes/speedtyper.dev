@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="relative">
       {!isPlaying && (
-        <div className="absolute bottom-0 w-full bg-dark-ocean">
+        <div className="w-full bg-dark-ocean">
           <AnimatePresence>
             <motion.div
               className="flex items-center text-off-white"

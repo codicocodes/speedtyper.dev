@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import LoginModal from "./LoginModal";
 import AvatarModal from "./AvatarModal";
 import { useAppContext } from "../AppContext";
 import { IUser } from "../types";
@@ -7,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { AnimatePresence, motion } from "framer-motion";
+import { GithubLoginModal } from "../common/components/modals/GithubLoginModal";
 // TODO: should not be able to be both null and undefined
 // Maybe we should consider putting isGuest on the user object
 // on the server
@@ -44,7 +44,7 @@ const Navbar = () => {
   );
 };
 
-const WebsiteName = () => {
+export const WebsiteName = () => {
   const isPlaying = useIsPlaying();
   const websiteName = "speedtyper";
   const colorClass = isPlaying ? "text-faded-gray" : "text-inherit";
@@ -57,7 +57,7 @@ const WebsiteName = () => {
   );
 };
 
-const Logo = () => {
+export const Logo = () => {
   const isPlaying = useIsPlaying();
   return isPlaying ? (
     <Image
@@ -95,7 +95,7 @@ const NavBarButtons = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="text-sm flex-grow"></div>
-            {userIsGuest && <LoginModal />}
+            {userIsGuest && <GithubLoginModal />}
             {isUserLoggedIn && <AvatarModal user={user} logout={logout} />}
           </motion.div>
         </AnimatePresence>

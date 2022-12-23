@@ -85,9 +85,9 @@ export function CodeTypingContainer({
         onMouseDown={onMouseDownPreventBlur}
       >
         <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
-        <CodeArea language={language} filePath={filePath} focused={focused}>
+        <CodeArea filePath={filePath} focused={focused}>
           {focused && <SmoothCaret top={rect.top} left={rect.left} />}
-          <TypedChars />
+          <TypedChars language={language} />
           <IncorrectChars />
           <NextChar nextCharRef={currentNodeRef} />
           <UntypedChars />

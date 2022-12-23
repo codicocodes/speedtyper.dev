@@ -1,5 +1,12 @@
 import getConfig from "next/config";
 
+export function getSiteRoot() {
+  const {
+    publicRuntimeConfig: { siteRoot },
+  } = getConfig();
+  return siteRoot;
+}
+
 export function getServerUrl() {
   const {
     publicRuntimeConfig: { serverUrl },

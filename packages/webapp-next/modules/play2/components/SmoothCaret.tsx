@@ -9,21 +9,28 @@ const useHasLoadedCode = () => {
 
 const SMOOTH_CARET_ELEMENT_ID = "smooth-caret-element";
 
-const useBlinkingCursorAnimation = () => {
+export const PRIMARY_PINK_COLOR = "#d6bcfa";
+
+export const OFF_WHITE_COLOR = "#374151";
+
+export const useBlinkingCursorAnimation = (color: string, runAnimation: boolean = true) => {
   const controls = useAnimationControls();
   const isPlaying = useCodeStore((state) => state.isPlaying)();
   useEffect(() => {
+    if (!runAnimation) {
+      return
+    }
     if (!isPlaying) {
       controls.start({
-        backgroundColor: ["rgba(0,0,0,0)", "#d6bcfa"],
+        backgroundColor: ["rgba(0,0,0,0)", color],
       });
     } else {
       controls.set({
-        backgroundColor: ["rgba(0,0,0,0)", "#d6bcfa"],
+        backgroundColor: ["rgba(0,0,0,0)", color],
       });
       controls.stop();
     }
-  }, [controls, isPlaying]);
+  }, [color, controls, isPlaying]);
   return controls;
 };
 
@@ -35,7 +42,7 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
     animator.animate({ left, top });
   }, [animator, left, top]);
 
-  const controls = useBlinkingCursorAnimation();
+  const controls = useBlinkingCursorAnimation(PRIMARY_PINK_COLOR);
 
   return (
     <AnimatePresence>
