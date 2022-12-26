@@ -13,12 +13,15 @@ export const PRIMARY_PINK_COLOR = "#d6bcfa";
 
 export const OFF_WHITE_COLOR = "#374151";
 
-export const useBlinkingCursorAnimation = (color: string, runAnimation: boolean = true) => {
+export const useBlinkingCursorAnimation = (
+  color: string,
+  runAnimation: boolean = true
+) => {
   const controls = useAnimationControls();
   const isPlaying = useCodeStore((state) => state.isPlaying)();
   useEffect(() => {
     if (!runAnimation) {
-      return
+      return;
     }
     if (!isPlaying) {
       controls.start({
