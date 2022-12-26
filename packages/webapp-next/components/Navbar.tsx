@@ -27,7 +27,7 @@ const useIsGuest = (user: IUser | null | undefined): boolean => {
 const Navbar = () => {
   return (
     <header className="relative">
-      <div className="absolute w-full">
+      <div className="w-full">
         <div className="flex items-start py-2">
           <Link href="/">
             <span className="flex items-center cursor-pointer trailing-widest leading-normal text-xl  pl-2 text-off-white hover:text-white mr-2 lg:mr-6">
