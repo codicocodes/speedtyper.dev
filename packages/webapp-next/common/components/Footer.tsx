@@ -6,7 +6,7 @@ import Button from "./Button";
 export function Footer() {
   const isPlaying = useIsPlaying();
   return (
-    <footer className="relative">
+    <footer className="h-10">
       {!isPlaying && (
         <div className="w-full bg-dark-ocean">
           <AnimatePresence>
