@@ -37,7 +37,7 @@ export const NewGithubLoginModal = () => {
   return (
     <>
       <button onClick={showModal}>
-        <Avatar url={user.avatarUrl} username={user.username} />
+        <Avatar username={user.username} />
       </button>
       {modalIsVisible ? (
         <>
