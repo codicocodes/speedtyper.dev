@@ -2,6 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useGithubAuthFactory } from "../../api/auth";
 import { useUserStore } from "../../state/user-store";
+import {
+  getExperimentalServerUrl,
+  getServerUrl,
+} from "../../utils/getServerUrl";
 import { Avatar } from "../Avatar";
 import { GithubLoginButton } from "../buttons/GithubLoginButton";
 import { GithubLoginOverlay } from "../overlays/GithubLoginOverlay";
@@ -11,7 +15,8 @@ export const GithubLoginModal = () => {
   const [modalIsVisible, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
   const showModal = () => setShowModal(true);
-  const initGithubAuth = useGithubAuthFactory(router);
+  const serverUrl = getServerUrl();
+  const initGithubAuth = useGithubAuthFactory(router, serverUrl);
   return (
     <>
       <GithubLoginButton showModal={showModal} />
@@ -32,7 +37,8 @@ export const NewGithubLoginModal = () => {
   const [modalIsVisible, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
   const showModal = () => setShowModal(true);
-  const initGithubAuth = useGithubAuthFactory(router);
+  const serverUrl = getExperimentalServerUrl();
+  const initGithubAuth = useGithubAuthFactory(router, serverUrl);
   const user = useUserStore();
   return (
     <>

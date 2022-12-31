@@ -1,14 +1,14 @@
 import { NextRouter } from "next/router";
 import { useCallback } from "react";
-import { getServerUrl, getSiteRoot } from "../utils/getServerUrl";
+import { getSiteRoot } from "../utils/getServerUrl";
 
-export const useGithubAuthFactory = (router: NextRouter) => {
+export const useGithubAuthFactory = (router: NextRouter, serverUrl: string) => {
   return useCallback(() => {
-    const serverUrl = getServerUrl();
-    let currentUrl = getSiteRoot();
+    let nextUrl = getSiteRoot();
     if (document !== undefined) {
-      currentUrl = window.location.href;
+      nextUrl = window.location.href;
     }
-    router.push(`${serverUrl}/auth/github?currentUrl=${currentUrl}`);
-  }, [router]);
+    const authUrl = `${serverUrl}/auth/github?next=${nextUrl}`;
+    router.push(authUrl);
+  }, [router, serverUrl]);
 };
