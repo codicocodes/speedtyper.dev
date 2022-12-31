@@ -43,7 +43,7 @@ const AvatarModal = ({ user, logout }: { user: IUser; logout: () => void }) => {
               <Container centered={false}>
                 {/*content*/}
 
-                <div className="flex flex-row-reverse">
+                <div className="absolute top-0 right-0 flex-row-reverse">
                   <div className="w-fit cursor-pointer border-0 rounded flex flex-col bg-white outline-none focus:outline-none shadow-xl">
                     {/*body*/}
                     <div>
