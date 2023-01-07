@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { guestUserMiddleware } from './middlewares/guest-user';
@@ -18,6 +19,7 @@ async function runServer() {
   app.use(guestUserMiddleware);
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
   app.setGlobalPrefix(GLOBAl_API_PREFIX);
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(1337);
 }
 

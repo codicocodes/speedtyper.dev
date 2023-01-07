@@ -7,17 +7,19 @@ import { UsersModule } from './users/users.module';
 import { PostgresModule } from './database.module';
 import { RacesModule } from './races/races.module';
 import { SeederModule } from './seeder/seeder.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ChallengesModule,
     ConfigModule.forRoot(),
+    GithubConnectorModule,
     PostgresModule,
     ProjectsModule,
-    GithubConnectorModule,
-    ChallengesModule,
-    UsersModule,
     RacesModule,
     SeederModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
