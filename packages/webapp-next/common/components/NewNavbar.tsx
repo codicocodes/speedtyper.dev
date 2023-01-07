@@ -32,7 +32,7 @@ const ProfileSection = () => {
       {!isPlaying && (
         <AnimatePresence>
           <motion.div
-            className="flex-grow flex items-center gap-4"
+            className="flex-grow flex items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

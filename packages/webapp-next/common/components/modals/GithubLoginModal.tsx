@@ -9,6 +9,7 @@ import {
 import { Avatar } from "../Avatar";
 import { GithubLoginButton } from "../buttons/GithubLoginButton";
 import { GithubLoginOverlay } from "../overlays/GithubLoginOverlay";
+import { ProfileModal } from "./ProfileModal";
 
 export const GithubLoginModal = () => {
   const router = useRouter();
@@ -38,9 +39,7 @@ export const NewGithubLoginModal = () => {
   const [modalIsVisible, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
   const showModal = () => {
-    if (user.isAnonymous) {
-      setShowModal(true);
-    }
+    setShowModal(true);
   };
   const serverUrl = getExperimentalServerUrl();
   const initGithubAuth = useGithubAuthFactory(router, serverUrl + "/api");
@@ -51,10 +50,14 @@ export const NewGithubLoginModal = () => {
       </button>
       {modalIsVisible ? (
         <>
-          <GithubLoginOverlay
-            closeModal={closeModal}
-            initializeAuthentication={initGithubAuth}
-          />
+          {user.isAnonymous ? (
+            <GithubLoginOverlay
+              closeModal={closeModal}
+              initializeAuthentication={initGithubAuth}
+            />
+          ) : (
+            <ProfileModal closeModal={closeModal} />
+          )}
         </>
       ) : null}
     </>
