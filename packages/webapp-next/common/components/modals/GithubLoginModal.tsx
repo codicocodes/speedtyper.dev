@@ -33,17 +33,21 @@ export const GithubLoginModal = () => {
 };
 
 export const NewGithubLoginModal = () => {
+  const user = useUserStore();
   const router = useRouter();
   const [modalIsVisible, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
-  const showModal = () => setShowModal(true);
+  const showModal = () => {
+    if (user.isAnonymous) {
+      setShowModal(true);
+    }
+  };
   const serverUrl = getExperimentalServerUrl();
-  const initGithubAuth = useGithubAuthFactory(router, serverUrl);
-  const user = useUserStore();
+  const initGithubAuth = useGithubAuthFactory(router, serverUrl + "/api");
   return (
     <>
       <button onClick={showModal}>
-        <Avatar username={user.username} />
+        <Avatar avatarUrl={user.avatarUrl} username={user.username} />
       </button>
       {modalIsVisible ? (
         <>

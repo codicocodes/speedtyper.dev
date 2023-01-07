@@ -1,11 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import getConfig from "next/config";
 import Link from "next/link";
-import { KogWheel } from "../../assets/icons/KogWheel";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
-import { SettingsModal } from "./modals/SettingsModal";
 
 export const navbarFactory = () => {
   const {
@@ -42,12 +40,6 @@ const ProfileSection = () => {
           >
             <div className="text-sm flex-grow"></div>
             <NewGithubLoginModal />
-
-            <Link href="/settings">
-              <a>
-                <KogWheel />
-              </a>
-            </Link>
           </motion.div>
         </AnimatePresence>
       )}

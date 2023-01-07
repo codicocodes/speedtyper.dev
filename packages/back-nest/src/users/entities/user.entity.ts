@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Result } from 'src/results/entities/result.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { generateRandomUsername } from '../utils/generateRandomUsername';
 
 @Entity()
@@ -9,14 +10,16 @@ export class User {
   @Column({ unique: true })
   username: string;
   @Column({ unique: true })
-  githubId: number;
+  githubId: string;
   @Column({ unique: true })
-  htmlUrl: string;
+  githubUrl: string;
   @Column()
   avatarUrl: string;
-  @Column()
+  @Column({ default: false })
   banned: boolean;
 
+  @OneToMany(() => Result, (result) => result.user)
+  results: Result[];
   isAnonymous: boolean;
   static generateAnonymousUser() {
     const user = new User();

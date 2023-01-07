@@ -2,19 +2,21 @@ import Image from "next/image";
 import { ProfileIcon } from "../../assets/icons";
 
 interface AvatarProps {
-  url?: string;
+  avatarUrl?: string;
   username: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ url, username }) => {
+export const Avatar: React.FC<AvatarProps> = ({ avatarUrl, username }) => {
   return (
     <div className="flex items-center cursor-pointer font-semibold text-sm gap-2">
       {username}
-      {url ? (
+      {avatarUrl ? (
         <Image
-          className="w-8 h-8 cursor-pointer rounded-full"
+          className="cursor-pointer rounded-full"
+          width="30"
+          height="30"
           quality={100}
-          src={url}
+          src={avatarUrl}
           alt={username}
         />
       ) : (
