@@ -2,6 +2,8 @@ import * as TSParser from 'tree-sitter';
 import { Injectable } from '@nestjs/common';
 import { getTSLanguageParser } from './ts-parser.factory';
 
+// TODO: fix \t should be \s\s in the scraper/parsing layer
+// TODO: Chars like ♡ should be filtered out
 @Injectable()
 export class ParserService {
   getParser(language: string) {

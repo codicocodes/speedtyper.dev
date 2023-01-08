@@ -14,7 +14,6 @@ import { useEndGame } from "../modules/play2/hooks/useEndGame";
 import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUnmount";
 import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam";
 import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
-import { useSendKeyStrokes } from "../modules/play2/hooks/useSendKeyStrokes";
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
@@ -44,7 +43,6 @@ function Play2Page({
   useKeyMap(true, Keys.Tab, () => game.next());
   useResetStateOnUnmount();
   useEndGame();
-  useSendKeyStrokes(game);
 
   return (
     <div className="flex flex-col items-center">
@@ -73,6 +71,7 @@ function Play2Page({
               <CodeTypingContainer
                 filePath={challenge.filePath}
                 language={challenge.language}
+                game={game}
               />
             )}
           </motion.div>

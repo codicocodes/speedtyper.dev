@@ -11,10 +11,12 @@ import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 import { useKeyMap } from "../../../hooks/useKeyMap";
+import { Game } from "../services/Game";
 
 interface CodeTypingContainerProps {
   filePath: string;
   language: string;
+  game: Game;
 }
 
 const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ".split("");
@@ -26,6 +28,7 @@ let trulyFocusedCodeInput = true;
 export function CodeTypingContainer({
   filePath,
   language,
+  game,
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
@@ -84,7 +87,12 @@ export function CodeTypingContainer({
         onBlur={onBlur}
         onMouseDown={onMouseDownPreventBlur}
       >
-        <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
+        <HiddenCodeInput
+          hide={true}
+          disabled={false}
+          inputRef={inputRef}
+          game={game}
+        />
         <CodeArea filePath={filePath} focused={focused}>
           {focused && <SmoothCaret top={rect.top} left={rect.left} />}
           <TypedChars language={language} />

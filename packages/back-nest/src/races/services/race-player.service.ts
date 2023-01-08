@@ -4,6 +4,7 @@ import { User } from 'src/users/entities/user.entity';
 export interface KeyStroke {
   key: string;
   timestamp: number;
+  correct: boolean;
   index: number;
 }
 
@@ -35,7 +36,9 @@ export class RacePlayer {
     const keyStrokes = this.typedKeyStrokes;
     const validKeyStrokes = Object.values(
       Object.fromEntries(
-        keyStrokes.map((keyStroke) => [keyStroke.index, keyStroke]),
+        keyStrokes
+          .filter((keyStroke) => keyStroke.correct)
+          .map((keyStroke) => [keyStroke.index, keyStroke]),
       ),
     );
     return validKeyStrokes;

@@ -5,19 +5,24 @@ import {
   MouseEvent,
   useState,
 } from "react";
+import { useGame } from "../hooks/useGame";
+import { Game } from "../services/Game";
 
 import { TrackedKeys, useCodeStore } from "../state/code-store";
+import { useGameStore } from "../state/game-store";
 
 interface HiddenCodeInputProps {
   hide: boolean; // Used for debugging the input
   disabled: boolean;
   inputRef: (node: HTMLTextAreaElement) => void;
+  game: Game;
 }
 
 export const HiddenCodeInput = ({
   disabled,
   hide,
   inputRef,
+  game,
 }: HiddenCodeInputProps) => {
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
 
@@ -32,13 +37,13 @@ export const HiddenCodeInput = ({
     // send backspaces
     if (backspaces > 0) {
       for (let i = 1; i <= backspaces; i++) {
-        handleKeyPress(TrackedKeys.Backspace);
+        handleKeyPress(TrackedKeys.Backspace, game);
       }
     } else {
       // send regular characters
       const typed = e.target.value.substring(input.length);
       for (const char of typed) {
-        handleKeyPress(char);
+        handleKeyPress(char, game);
       }
     }
     setInput(e.target.value);

@@ -25,9 +25,11 @@ export class KeyStrokeValidationService {
   validateKeyStroke(player: RacePlayer, recentKeyStroke: KeyStroke) {
     const currentInput = player.getValidInput() + recentKeyStroke.key;
     const strippedCode = this.getStrippedCode(player.raceId, recentKeyStroke);
-    if (currentInput !== strippedCode) {
-      throw new InvalidKeyStroke();
+    const correct = currentInput === strippedCode;
+    if (recentKeyStroke.correct !== correct) {
+      throw new Error('Unexpected keystroke');
     }
+    recentKeyStroke.correct = correct;
   }
 
   private getStrippedCode(raceId: string, recentKeyStroke: KeyStroke) {

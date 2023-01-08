@@ -1,10 +1,12 @@
 import create from "zustand";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
+import { Game } from "../services/Game";
 
 export interface KeyStroke {
   key: string;
   timestamp: number;
   index: number;
+  correct: boolean;
 }
 
 interface CodeState {
@@ -12,7 +14,6 @@ interface CodeState {
   startTime?: Date;
   endTime?: Date;
   keyStrokes: KeyStroke[];
-  incorrectKeyStrokes: KeyStroke[];
   start: () => void;
   end: () => void;
   isPlaying: () => boolean;
@@ -22,19 +23,20 @@ interface CodeState {
   getAccuracy: () => number;
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
-  _saveKeyStroke: (key: string, index: number, correct: boolean) => void;
+  _getIncorrectKeyStrokes: () => KeyStroke[];
   expectedMaxCorrectKeyStrokes: number;
 
   // Code rendering state
   code: string;
   index: number;
   correctIndex: number;
+  lastTypedIndex: number;
   correctChars: () => string;
   incorrectChars: () => string;
   currentChar: () => string;
   untypedChars: () => string;
   initialize: (code: string) => void;
-  handleKeyPress: (key: string) => void;
+  handleKeyPress: (key: string, game: Game) => void;
   isCompleted: () => boolean;
   correctInput: () => string;
   // private helper methods
@@ -60,12 +62,12 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     // const allKeyStrokes = get().keyStrokes.length;
     const validKeyStrokes = get()._getValidKeyStrokes().length;
     // const invalidKeyStrokes = allKeyStrokes - validKeyStrokes;
-    const mistakes = get().incorrectKeyStrokes.length;
+    const mistakes = get()._getIncorrectKeyStrokes().length;
     const accuracy = (validKeyStrokes - mistakes) / validKeyStrokes;
     return Math.floor(accuracy * 100);
   },
   getMistakesCount: () => {
-    const mistakes = get().incorrectKeyStrokes;
+    const mistakes = get()._getIncorrectKeyStrokes();
     return mistakes.length;
   },
   getChartWPM: () => {
@@ -106,10 +108,16 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     const keyStrokes = get().keyStrokes;
     const validKeyStrokes = Object.values(
       Object.fromEntries(
-        keyStrokes.map((keyStroke) => [keyStroke.index, keyStroke])
+        keyStrokes
+          .filter((stroke) => stroke.correct)
+          .map((keyStroke) => [keyStroke.index, keyStroke])
       )
     );
     return validKeyStrokes;
+  },
+  _getIncorrectKeyStrokes: () => {
+    const keyStrokes = get().keyStrokes;
+    return keyStrokes.filter((stroke) => !stroke.correct);
   },
   getTimeMS: () => {
     const end = get().endTime?.getTime();
@@ -137,19 +145,12 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   incorrectKeyStrokes: [],
   _saveKeyStroke: (key: string, index: number, correct: boolean) => {
     set((state) => {
-      if (correct) {
-        state.keyStrokes.push({
-          key,
-          index,
-          timestamp: new Date().getTime(),
-        });
-      } else {
-        state.incorrectKeyStrokes.push({
-          key,
-          index,
-          timestamp: new Date().getTime(),
-        });
-      }
+      state.keyStrokes.push({
+        key,
+        index,
+        timestamp: new Date().getTime(),
+        correct,
+      });
       return state;
     });
   },
@@ -171,6 +172,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   code: "",
   index: 0,
   correctIndex: 0,
+  lastTypedIndex: 0,
   initialize: (code: string) => {
     set((state) => ({
       ...state,
@@ -178,14 +180,14 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       expectedMaxCorrectKeyStrokes: calculateExpectedMaxCorrectKeyStrokes(code),
       index: 0,
       correctIndex: 0,
+      lastTypedIndex: 0,
       startTime: undefined,
       endTime: undefined,
       chars: [],
       keyStrokes: [],
-      incorrectKeyStrokes: [],
     }));
   },
-  handleKeyPress: (unparsedKey: string) => {
+  handleKeyPress: (unparsedKey: string, game: Game) => {
     set((state) => {
       const key = parseKey(unparsedKey);
       if (isSkippable(key)) return state;
@@ -204,8 +206,16 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       const correct =
         state.index === state.correctIndex && key === state.code[state.index];
       const correctIndex = !correct ? state.correctIndex : index;
-      get()._saveKeyStroke(key, correctIndex, correct);
-      return { ...state, index, correctIndex };
+      const lastTypedIndex = index;
+      const keyStroke = {
+        key,
+        index,
+        timestamp: new Date().getTime(),
+        correct,
+      };
+      state.keyStrokes.push(keyStroke);
+      game.sendKeyStroke(keyStroke);
+      return { ...state, index, correctIndex, lastTypedIndex };
     });
   },
   correctChars: () => {
