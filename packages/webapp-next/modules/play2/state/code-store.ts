@@ -40,13 +40,10 @@ interface CodeState {
   handleKeyPress: (key: string) => void;
   isCompleted: () => boolean;
   correctInput: () => string;
-  literals: string[];
-
   // private helper methods
   _getBackspaceOffset: () => number;
   _getForwardOffset: () => number;
   _allCharsTyped: () => boolean;
-  _buildLiterals: (code: string) => string[];
 }
 
 // There are 3 separate parts of logic in this store
@@ -185,7 +182,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   },
 
   // CODE rendering logic
-  literals: [],
   code: "",
   index: 0,
   correctIndex: 0,
@@ -201,7 +197,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       chars: [],
       keyStrokes: [],
       incorrectKeyStrokes: [],
-      literals: get()._buildLiterals(code),
     }));
   },
   handleKeyPress: (unparsedKey: string) => {
@@ -294,16 +289,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       }
     }
     return offset;
-  },
-  _buildLiterals: (code: string) => {
-    const literals = code
-      .substring(0)
-      .split(/[.\-=/_\:\;\,\}\{\)\(\"\'\]\[\/\#\?\>\<\&\*]/)
-      .flatMap((r) => {
-        return r.split(/[\n\r\s\t]+/);
-      })
-      .filter(Boolean);
-    return literals;
   },
 }));
 
