@@ -1,6 +1,5 @@
 import { Body, Controller, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
-import { SaveResultDTO } from '../schemas/save-result.dto';
 import { ResultFactoryService } from '../services/result-factory.service';
 import { ResultService } from '../services/results.service';
 import { SaveResultRequestValidator } from '../services/save-result-request-validator';
@@ -14,10 +13,7 @@ export class ResultsController {
   ) {}
 
   @Post()
-  async saveResult(
-    @Req() request: Request,
-    @Body() _saveResultDTO: SaveResultDTO,
-  ) {
+  async saveResult(@Req() request: Request) {
     this.resultValidator.validate(request);
     const user = request.session.user;
     const raceId = request.session.raceId;

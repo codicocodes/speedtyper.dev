@@ -10,10 +10,14 @@ export class ResultFactoryService {
     const result = new Result();
     const timeMS = this.resultCalculation.getTimeMS(raceId, user.id);
     const cpm = this.resultCalculation.getCPM(raceId, timeMS);
+    const mistakes = this.resultCalculation.getMistakesCount(raceId, user.id);
+    const accuracy = this.resultCalculation.getAccuracy(raceId, user.id);
     result.raceId = raceId;
     result.user = user;
     result.timeMS = timeMS;
     result.cpm = cpm;
+    result.mistakes = mistakes;
+    result.accuracy = accuracy;
     return result;
   }
 }

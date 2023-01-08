@@ -22,4 +22,17 @@ export class ResultCalculationService {
     const cpm = cps * 60;
     return Math.floor(cpm);
   }
+
+  getMistakesCount(raceId: string, userId: string): number {
+    const player = this.raceManager.getPlayer(raceId, userId);
+    return player.incorrectKeyStrokes().length;
+  }
+
+  getAccuracy(raceId: string, userId: string): number {
+    const player = this.raceManager.getPlayer(raceId, userId);
+    const incorrectKeyStrokes = player.incorrectKeyStrokes().length;
+    const validKeyStrokes = player.validKeyStrokes().length;
+    const totalKeySrokes = validKeyStrokes + incorrectKeyStrokes;
+    return Math.floor((validKeyStrokes / totalKeySrokes) * 100);
+  }
 }

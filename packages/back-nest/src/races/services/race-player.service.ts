@@ -44,6 +44,13 @@ export class RacePlayer {
     return validKeyStrokes;
   }
 
+  incorrectKeyStrokes() {
+    const incorrectKeyStrokes = this.typedKeyStrokes.filter(
+      (keyStroke) => !keyStroke.correct,
+    );
+    return incorrectKeyStrokes;
+  }
+
   getValidInput() {
     const validInput = this.validKeyStrokes()
       .map((keyStroke) => keyStroke.key)
