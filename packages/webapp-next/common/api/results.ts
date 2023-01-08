@@ -9,5 +9,8 @@ export const saveResult = async (data: any) => {
     credentials: "include",
     method: "POST",
     body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then((resp) => resp.json());
 };
