@@ -4,7 +4,6 @@ import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 export interface KeyStroke {
   key: string;
   timestamp: number;
-  literal?: string;
   progress: number;
   index: number;
 }
