@@ -21,7 +21,7 @@ export enum NodeTypes {
 export class Parser {
   private MAX_NODE_LENGTH = 300;
   private MIN_NODE_LENGTH = 100;
-  private MAX_NUM_LINES = 12;
+  private MAX_NUM_LINES = 11;
   private MAX_LINE_LENGTH = 55;
 
   constructor(private ts: TSParser) {}
