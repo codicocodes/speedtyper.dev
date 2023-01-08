@@ -15,7 +15,7 @@ export class User {
   githubUrl: string;
   @Column()
   avatarUrl: string;
-  @Column({ default: false })
+  @Column({ default: false, select: false })
   banned: boolean;
 
   @OneToMany(() => Result, (result) => result.user)
