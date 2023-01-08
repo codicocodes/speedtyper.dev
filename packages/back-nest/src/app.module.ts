@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { PostgresModule } from './database.module';
 import { RacesModule } from './races/races.module';
 import { SeederModule } from './seeder/seeder.module';
+import { ResultsModule } from './results/results.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
     PostgresModule,
     ProjectsModule,
     RacesModule,
+    ResultsModule,
     SeederModule,
     UsersModule,
     AuthModule,

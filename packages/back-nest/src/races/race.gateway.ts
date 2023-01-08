@@ -7,8 +7,11 @@ import {
 import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
 import { RaceExceptions } from './race.exceptions';
+import { KeyStrokeValidationService } from './services/keystroke-validator.service';
+import { ProgressService } from './services/progress.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
+import { KeyStroke } from './services/race-player.service';
 import { SessionState } from './services/session-state.service';
 
 @WebSocketGateway(socketCors)
@@ -21,6 +24,8 @@ export class RaceGateway {
     private raceManager: RaceManager,
     private sessionState: SessionState,
     private raceEvents: RaceEvents,
+    private keyStrokeValidator: KeyStrokeValidationService,
+    private progressService: ProgressService,
   ) {}
 
   afterInit() {
@@ -55,7 +60,6 @@ export class RaceGateway {
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
     const user = this.sessionState.getUser(socket);
-    console.log('PLAY', user);
     const race = await this.raceManager.create(user);
     this.raceEvents.createdRace(socket, race);
     this.sessionState.saveRaceID(socket, race.id);
@@ -63,13 +67,14 @@ export class RaceGateway {
 
   @UseFilters(new RaceExceptions())
   @SubscribeMessage('key_stroke')
-  async onKeyStroke(socket: Socket, keystroke: any) {
+  async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
     const user = this.sessionState.getUser(socket);
     const raceId = this.sessionState.getRaceID(socket);
-    const race = this.raceManager.getRace(raceId);
-    const player = race.getPlayer(user.id);
-    player.updateProgress(keystroke);
-    const code = race.challenge.content;
+    const player = this.raceManager.getPlayer(raceId, user.id);
+    this.keyStrokeValidator.validateKeyStroke(player, keystroke);
+    player.addKeyStroke(keystroke);
+    player.progress = this.progressService.calculateProgress(player);
+    const code = this.raceManager.getCode(raceId);
     player.updateLiteral(code, keystroke);
     this.raceEvents.progressUpdated(socket, raceId, player);
   }

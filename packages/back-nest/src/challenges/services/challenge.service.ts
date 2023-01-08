@@ -27,6 +27,9 @@ export class ChallengeService {
       .leftJoinAndSelect('challenge.project', 'project')
       .orderBy('RANDOM()')
       .getOne();
+
+    // TODO: fix this in the scraper/parsing layer
+    randomChallenge.content = randomChallenge.content.replaceAll('\t', '  ');
     return randomChallenge;
   }
 }

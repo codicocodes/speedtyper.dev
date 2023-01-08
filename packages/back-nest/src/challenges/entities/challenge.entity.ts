@@ -41,4 +41,11 @@ export class Challenge {
     );
     return challenge;
   }
+  static getStrippedCode(code: string) {
+    const strippedCode = code
+      .split('\n')
+      .map((subText) => subText.trimStart())
+      .join('\n');
+    return strippedCode;
+  }
 }

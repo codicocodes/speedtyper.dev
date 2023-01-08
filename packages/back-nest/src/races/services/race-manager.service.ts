@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
+import { RacePlayer } from './race-player.service';
 import { Race } from './race.service';
 
 @Injectable()
@@ -37,6 +38,17 @@ export class RaceManager {
     return race;
   }
 
+  getPlayer(raceId: string, userId: string): RacePlayer {
+    const race = this.getRace(raceId);
+    return race.getPlayer(userId);
+  }
+
+  // Get the full code string of the currently active challenge for the provided race id
+  getCode(raceId: string): string {
+    const race = this.getRace(raceId);
+    return race.challenge.content;
+  }
+
   join(user: User, raceId: string): Race | null {
     const race = this.races[raceId];
     // it's important to return null instead of throwing
@@ -58,7 +70,7 @@ export class RaceManager {
   }
 }
 
-export class RaceDoesNotExist extends Error {
+export class RaceDoesNotExist extends BadRequestException {
   id: string;
   constructor(id: string) {
     super(`Race with id=${id} does not exist`);
