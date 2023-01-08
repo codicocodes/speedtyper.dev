@@ -4,7 +4,6 @@ import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 export interface KeyStroke {
   key: string;
   timestamp: number;
-  progress: number;
   index: number;
 }
 
@@ -24,7 +23,6 @@ interface CodeState {
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
   _saveKeyStroke: (key: string, index: number, correct: boolean) => void;
-  calculateProgress: (correct: boolean) => number;
   expectedMaxCorrectKeyStrokes: number;
 
   // Code rendering state
@@ -139,32 +137,21 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   incorrectKeyStrokes: [],
   _saveKeyStroke: (key: string, index: number, correct: boolean) => {
     set((state) => {
-      const progress = get().calculateProgress(correct);
       if (correct) {
         state.keyStrokes.push({
           key,
           index,
-          progress,
           timestamp: new Date().getTime(),
         });
       } else {
         state.incorrectKeyStrokes.push({
           key,
           index,
-          progress,
           timestamp: new Date().getTime(),
         });
       }
       return state;
     });
-  },
-  calculateProgress: (correct: Boolean) => {
-    const validKeyStrokesCount =
-      get()._getValidKeyStrokes().length + Number(correct);
-    const progress = Math.floor(
-      (validKeyStrokesCount * 100) / get().expectedMaxCorrectKeyStrokes
-    );
-    return progress;
   },
   start: () => {
     set((state) => {
