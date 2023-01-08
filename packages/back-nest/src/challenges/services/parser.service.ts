@@ -2,7 +2,6 @@ import * as TSParser from 'tree-sitter';
 import { Injectable } from '@nestjs/common';
 import { getTSLanguageParser } from './ts-parser.factory';
 
-// TODO: fix \t should be \s\s in the scraper/parsing layer
 // TODO: Chars like ♡ should be filtered out
 @Injectable()
 export class ParserService {
@@ -37,7 +36,8 @@ export class Parser {
       .filter((n) => this.filterLongNodes(n))
       .filter((n) => this.filterShortNodes(n))
       .filter((n) => this.filterTooLongLines(n))
-      .filter((n) => this.filterTooManyLines(n));
+      .filter((n) => this.filterTooManyLines(n))
+      .map((n) => this.replaceTabsWithSpaces(n));
     return nodes;
   }
 
@@ -73,5 +73,10 @@ export class Parser {
       }
     }
     return true;
+  }
+
+  private replaceTabsWithSpaces(node: TSParser.SyntaxNode) {
+    node.text = node.text.replaceAll('\t', '  ');
+    return node;
   }
 }
