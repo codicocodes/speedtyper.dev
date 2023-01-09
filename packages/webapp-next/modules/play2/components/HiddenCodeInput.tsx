@@ -26,6 +26,7 @@ export const HiddenCodeInput = ({
 }: HiddenCodeInputProps) => {
   const handleBackspace = useCodeStore((state) => state.handleBackspace);
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
+  const keyPressFactory = useCodeStore((state) => state.keyPressFactory);
 
   // TODO: remove input and setInput
   // instead introduc getTypedInput method in the store
@@ -44,7 +45,8 @@ export const HiddenCodeInput = ({
       // send regular characters
       const typed = e.target.value.substring(input.length);
       for (const char of typed) {
-        handleKeyPress(char, game);
+        const keyPress = keyPressFactory(char);
+        handleKeyPress(keyPress, game);
       }
     }
     setInput(e.target.value);

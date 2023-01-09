@@ -28,14 +28,14 @@ interface CodeState {
   code: string;
   index: number;
   correctIndex: number;
-  lastTypedIndex: number;
   correctChars: () => string;
   incorrectChars: () => string;
   currentChar: () => string;
   untypedChars: () => string;
   initialize: (code: string) => void;
   handleBackspace: () => void;
-  handleKeyPress: (key: string, game: Game) => void;
+  handleKeyPress: (keyStroke: KeyStroke, game: Game) => void;
+  keyPressFactory: (key: string) => KeyStroke;
   isCompleted: () => boolean;
   correctInput: () => string;
   // private helper methods
@@ -127,7 +127,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   code: "",
   index: 0,
   correctIndex: 0,
-  lastTypedIndex: 0,
   initialize: (code: string) => {
     set((state) => ({
       ...state,
@@ -135,7 +134,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       expectedMaxCorrectKeyStrokes: calculateExpectedMaxCorrectKeyStrokes(code),
       index: 0,
       correctIndex: 0,
-      lastTypedIndex: 0,
       startTime: undefined,
       endTime: undefined,
       chars: [],
@@ -154,26 +152,29 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       return { ...state, index, correctIndex };
     });
   },
-  handleKeyPress: (unparsedKey: string, game: Game) => {
+  keyPressFactory: (unparsedKey: string) => {
+    const key = parseKey(unparsedKey);
+    const offset = get()._getForwardOffset();
+    const index = Math.min(offset + get().index, get().code.length);
+    const correct =
+      get().index === get().correctIndex && key === get().code[get().index];
+    const keyStroke = {
+      key,
+      index,
+      timestamp: new Date().getTime(),
+      correct,
+    };
+    return keyStroke;
+  },
+  handleKeyPress: (keyStroke: KeyStroke, game: Game) => {
     set((state) => {
-      const key = parseKey(unparsedKey);
-      if (isSkippable(key)) return state;
+      if (isSkippable(keyStroke.key)) return state;
       if (state._allCharsTyped()) return state;
-      const offset = state._getForwardOffset();
-      const index = Math.min(offset + state.index, state.code.length);
-      const correct =
-        state.index === state.correctIndex && key === state.code[state.index];
-      const correctIndex = !correct ? state.correctIndex : index;
-      const lastTypedIndex = index;
-      const keyStroke = {
-        key,
-        index,
-        timestamp: new Date().getTime(),
-        correct,
-      };
+      const index = keyStroke.index;
+      const correctIndex = !keyStroke.correct ? state.correctIndex : index;
       state.keyStrokes.push(keyStroke);
       game.sendKeyStroke(keyStroke);
-      return { ...state, index, correctIndex, lastTypedIndex };
+      return { ...state, index, correctIndex };
     });
   },
   correctChars: () => {
