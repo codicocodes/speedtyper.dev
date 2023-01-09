@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RacePlayer } from 'src/races/services/race-player.service';
 import { User } from 'src/users/entities/user.entity';
 import { Result } from '../entities/result.entity';
 import { ResultCalculationService } from './result-calculation.service';
@@ -6,14 +7,14 @@ import { ResultCalculationService } from './result-calculation.service';
 @Injectable()
 export class ResultFactoryService {
   constructor(private resultCalculation: ResultCalculationService) {}
-  factory(raceId: string, user: User): Result {
+  factory(code: string, player: RacePlayer): Result {
     const result = new Result();
-    const timeMS = this.resultCalculation.getTimeMS(raceId, user.id);
-    const cpm = this.resultCalculation.getCPM(raceId, timeMS);
-    const mistakes = this.resultCalculation.getMistakesCount(raceId, user.id);
-    const accuracy = this.resultCalculation.getAccuracy(raceId, user.id);
-    result.raceId = raceId;
-    result.user = user;
+    const timeMS = this.resultCalculation.getTimeMS(player);
+    const cpm = this.resultCalculation.getCPM(code, timeMS);
+    const mistakes = this.resultCalculation.getMistakesCount(player);
+    const accuracy = this.resultCalculation.getAccuracy(player);
+    result.raceId = player.raceId;
+    result.user = { id: player.id } as User;
     result.timeMS = timeMS;
     result.cpm = cpm;
     result.mistakes = mistakes;

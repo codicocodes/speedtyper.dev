@@ -29,4 +29,5 @@ export class Result {
   public createdAt: Date;
   @ManyToOne(() => User, (user) => user.results)
   user: User;
+  userId: string;
 }

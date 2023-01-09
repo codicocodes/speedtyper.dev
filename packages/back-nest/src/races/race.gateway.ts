@@ -6,6 +6,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
+import { ResultFactoryService } from 'src/results/services/result-factory.service';
+import { ResultService } from 'src/results/services/results.service';
 import { RaceExceptions } from './race.exceptions';
 import { KeyStrokeValidationService } from './services/keystroke-validator.service';
 import { ProgressService } from './services/progress.service';
@@ -26,6 +28,8 @@ export class RaceGateway {
     private raceEvents: RaceEvents,
     private keyStrokeValidator: KeyStrokeValidationService,
     private progressService: ProgressService,
+    private resultsFactory: ResultFactoryService,
+    private resultsService: ResultService,
   ) {}
 
   afterInit() {
@@ -36,6 +40,7 @@ export class RaceGateway {
     this.logger.info(
       `Client disconnected: ${socket.request.session.user.username}`,
     );
+    // TODO: remove user from race
     this.sessionState.removeRaceID(socket);
   }
 
@@ -77,6 +82,13 @@ export class RaceGateway {
     const code = this.raceManager.getCode(raceId);
     player.updateLiteral(code, keystroke);
     this.raceEvents.progressUpdated(socket, raceId, player);
+    if (player.progress === 100) {
+      let result = this.resultsFactory.factory(code, player);
+      if (!user.isAnonymous) {
+        result = await this.resultsService.create(result);
+      }
+      console.log({ result });
+    }
   }
 
   @SubscribeMessage('join')
