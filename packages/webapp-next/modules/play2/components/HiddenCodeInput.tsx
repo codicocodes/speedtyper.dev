@@ -5,11 +5,9 @@ import {
   MouseEvent,
   useState,
 } from "react";
-import { useGame } from "../hooks/useGame";
 import { Game } from "../services/Game";
 
-import { TrackedKeys, useCodeStore } from "../state/code-store";
-import { useGameStore } from "../state/game-store";
+import { isSkippable, useCodeStore } from "../state/code-store";
 
 interface HiddenCodeInputProps {
   hide: boolean; // Used for debugging the input
@@ -45,8 +43,10 @@ export const HiddenCodeInput = ({
       // send regular characters
       const typed = e.target.value.substring(input.length);
       for (const char of typed) {
+        if (isSkippable(char)) continue;
         const keyPress = keyPressFactory(char);
-        handleKeyPress(keyPress, game);
+        handleKeyPress(keyPress);
+        game.sendKeyStroke(keyPress);
       }
     }
     setInput(e.target.value);

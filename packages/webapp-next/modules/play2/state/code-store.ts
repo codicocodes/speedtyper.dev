@@ -33,7 +33,7 @@ interface CodeState {
   untypedChars: () => string;
   initialize: (code: string) => void;
   handleBackspace: () => void;
-  handleKeyPress: (keyStroke: KeyStroke, game: Game) => void;
+  handleKeyPress: (keyStroke: KeyStroke) => void;
   keyPressFactory: (key: string) => KeyStroke;
   isCompleted: () => boolean;
   correctInput: () => string;
@@ -137,10 +137,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       keyStrokes: [],
     }));
   },
-  // TODO: extract game from here
-  // 1. create different methods for handleBackspace and handleKeyPress
-  // 2. Break out creation of KeyStroke interface and pass it into handleKeyPress
-  // 3. call game.sendKeyStroke outside of the state manager
   handleBackspace: () => {
     set((state) => {
       const offset = state._getBackspaceOffset();
@@ -163,14 +159,13 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     };
     return keyStroke;
   },
-  handleKeyPress: (keyStroke: KeyStroke, game: Game) => {
+  handleKeyPress: (keyStroke: KeyStroke) => {
     set((state) => {
       if (isSkippable(keyStroke.key)) return state;
       if (state._allCharsTyped()) return state;
       const index = keyStroke.index;
       const correctIndex = !keyStroke.correct ? state.correctIndex : index;
       state.keyStrokes.push(keyStroke);
-      game.sendKeyStroke(keyStroke);
       return { ...state, index, correctIndex };
     });
   },
@@ -261,7 +256,7 @@ function parseKey(key: string) {
   }
 }
 
-function isSkippable(key: string) {
+export function isSkippable(key: string) {
   switch (key) {
     case "Shift":
     case "OS":
