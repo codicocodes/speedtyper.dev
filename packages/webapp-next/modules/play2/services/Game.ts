@@ -1,6 +1,7 @@
 import SocketLatest from "../../../common/services/Socket";
+import { useUserStore } from "../../../common/state/user-store";
 import { KeyStroke } from "../state/code-store";
-import { RacePlayer, useGameStore } from "../state/game-store";
+import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
 
 export class Game {
   constructor(private socket: SocketLatest) {
@@ -8,16 +9,13 @@ export class Game {
     this.listenForRaceJoined();
     this.listenForMemberJoined();
     this.listenForProgressUpdated();
+    this.listenForRaceCompleted();
     this.listenForRaceDoesNotExist();
     this.listenForDisconnect();
   }
 
   get id() {
     return useGameStore.getState().id;
-  }
-
-  get progress() {
-    return Object.values(useGameStore.getState().members);
   }
 
   sendKeyStroke(keyStroke: KeyStroke) {
@@ -40,16 +38,16 @@ export class Game {
     this.socket.subscribe("race_joined", (_, race) => {
       console.log("race_joined", race);
       useGameStore.setState((game) => ({
+        ...game,
         id: race.id,
         owner: race.owner,
         members: race.members,
-        count: game.count + 1,
       }));
     });
   }
 
   private listenForMemberJoined() {
-    this.socket.subscribe("member_joined", (_, member) => {
+    this.socket.subscribe("member_joined", (_, member: RacePlayer) => {
       console.log("member_joined", member);
       this.updateMemberInState(member);
     });
@@ -61,14 +59,29 @@ export class Game {
     });
   }
 
+  private listenForRaceCompleted() {
+    this.socket.subscribe("race_completed", (_, result: RaceResult) => {
+      const userId = useUserStore.getState().id;
+      const isMyResult = userId === result.user.id;
+      useGameStore.setState((game) => {
+        const results = game.results;
+        results.push(result);
+        return {
+          ...game,
+          results,
+          myResult: isMyResult ? result : game.myResult,
+        };
+      });
+    });
+  }
+
   private updateMemberInState(member: RacePlayer) {
     useGameStore.setState((game) => {
-      const members = game.members;
+      const members = { ...game.members };
       members[member.id] = member;
       return {
         ...game,
         members,
-        count: game.count + 1,
       };
     });
   }
@@ -86,7 +99,7 @@ export class Game {
   }
 
   private listenForDisconnect() {
-    this.socket.subscribe("disconnect", (_, data) => {
+    this.socket.subscribe("disconnect", (_, _data) => {
       useGameStore.setState((game) => {
         return {
           ...game,

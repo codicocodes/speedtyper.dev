@@ -14,13 +14,11 @@ interface CodeState {
   startTime?: Date;
   endTime?: Date;
   keyStrokes: KeyStroke[];
+  // TODO: Can we move match state to GameState
+  // perhaps start and end time can be set from backend events
   start: () => void;
   end: () => void;
   isPlaying: () => boolean;
-  getTimeMS: () => number;
-  getCPM: () => number;
-  getMistakesCount: () => number;
-  getAccuracy: () => number;
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
   _getIncorrectKeyStrokes: () => KeyStroke[];
@@ -52,24 +50,12 @@ interface CodeState {
 // Match logic depends on code rendering logic.
 // Results logic depends on Match logic.
 // Perhaps Match and results logic could be split into a separate store
-// But this was a bit simpler as we can call _saveKeyStroke from the handleKeyPress method
+// But this was a bit simpler as we can just push to keyStrokes from the handleKeyPress method
 // The other option would be to pass in the saveKeyStroke method into the handleKeyPress method
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   // RESULTS logic
   expectedMaxCorrectKeyStrokes: 0,
-  getAccuracy: () => {
-    // const allKeyStrokes = get().keyStrokes.length;
-    const validKeyStrokes = get()._getValidKeyStrokes().length;
-    // const invalidKeyStrokes = allKeyStrokes - validKeyStrokes;
-    const mistakes = get()._getIncorrectKeyStrokes().length;
-    const accuracy = (validKeyStrokes - mistakes) / validKeyStrokes;
-    return Math.floor(accuracy * 100);
-  },
-  getMistakesCount: () => {
-    const mistakes = get()._getIncorrectKeyStrokes();
-    return mistakes.length;
-  },
   getChartWPM: () => {
     const startTime = get().startTime?.getTime();
     if (!startTime) {
@@ -119,41 +105,9 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     const keyStrokes = get().keyStrokes;
     return keyStrokes.filter((stroke) => !stroke.correct);
   },
-  getTimeMS: () => {
-    const end = get().endTime?.getTime();
-    const start = get().startTime?.getTime();
-    if (!start || !end) return 0;
-    return end - start;
-  },
-  getCPM: () => {
-    const validKeyStrokesCount = new Set(
-      get().keyStrokes.map((keyStroke) => keyStroke.index)
-    ).size;
-    const now = new Date();
-    const start = get().startTime ?? now;
-    const end = get().endTime ?? now;
-    const ms = end.getTime() - start.getTime();
-    if (ms === 0) {
-      return 0;
-    }
-    const seconds = ms / 1000;
-    return Math.floor((60 * validKeyStrokesCount) / seconds);
-  },
-
   // MATCH logic
   keyStrokes: [],
   incorrectKeyStrokes: [],
-  _saveKeyStroke: (key: string, index: number, correct: boolean) => {
-    set((state) => {
-      state.keyStrokes.push({
-        key,
-        index,
-        timestamp: new Date().getTime(),
-        correct,
-      });
-      return state;
-    });
-  },
   start: () => {
     set((state) => {
       return { ...state, startTime: new Date() };
@@ -187,6 +141,10 @@ export const useCodeStore = create<CodeState>((set, get) => ({
       keyStrokes: [],
     }));
   },
+  // TODO: extract game from here
+  // 1. create different methods for handleBackspace and handleKeyPress
+  // 2. Break out creation of KeyStroke interface and pass it into handleKeyPress
+  // 3. call game.sendKeyStroke outside of the state manager
   handleKeyPress: (unparsedKey: string, game: Game) => {
     set((state) => {
       const key = parseKey(unparsedKey);

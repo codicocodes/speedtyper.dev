@@ -83,11 +83,11 @@ export class RaceGateway {
     player.updateLiteral(code, keystroke);
     this.raceEvents.progressUpdated(socket, raceId, player);
     if (player.progress === 100) {
-      let result = this.resultsFactory.factory(code, player);
+      let result = this.resultsFactory.factory(code, player, user);
       if (!user.isAnonymous) {
         result = await this.resultsService.create(result);
       }
-      console.log({ result });
+      this.raceEvents.raceCompleted(socket, result);
     }
   }
 

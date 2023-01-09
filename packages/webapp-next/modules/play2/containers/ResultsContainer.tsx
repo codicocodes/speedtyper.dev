@@ -2,6 +2,7 @@ import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import ResultsChart from "../components/ResultsChart";
 import { useCodeStore } from "../state/code-store";
+import { useGameStore } from "../state/game-store";
 
 function ResultsText({ title, value }: { title: string; value: string }) {
   return (
@@ -13,13 +14,15 @@ function ResultsText({ title, value }: { title: string; value: string }) {
 }
 
 export function ResultsContainer() {
-  const cpm = useCodeStore((state) => state.getCPM)();
+  const result = useGameStore((state) => state.myResult);
+  // TODO: Show loading indicator here
+  if (!result) return null;
+  const cpm = result.cpm;
   const wpm = cpmToWPM(cpm);
-  const ms = useCodeStore((state) => state.getTimeMS)();
+  const ms = result.timeMS;
   const time = toHumanReadableTime(Math.floor(ms / 1000));
-  const mistakesCount = useCodeStore((state) => state.getMistakesCount)();
-  const accuracy = useCodeStore((state) => state.getAccuracy)();
-
+  const mistakesCount = result.mistakes;
+  const accuracy = result.accuracy;
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex flex-row gap-4">
