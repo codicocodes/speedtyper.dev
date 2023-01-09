@@ -24,6 +24,7 @@ export const HiddenCodeInput = ({
   inputRef,
   game,
 }: HiddenCodeInputProps) => {
+  const handleBackspace = useCodeStore((state) => state.handleBackspace);
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
 
   // TODO: remove input and setInput
@@ -37,7 +38,7 @@ export const HiddenCodeInput = ({
     // send backspaces
     if (backspaces > 0) {
       for (let i = 1; i <= backspaces; i++) {
-        handleKeyPress(TrackedKeys.Backspace, game);
+        handleBackspace();
       }
     } else {
       // send regular characters
