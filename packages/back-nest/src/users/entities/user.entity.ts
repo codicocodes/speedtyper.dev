@@ -10,7 +10,7 @@ export class User {
   @Column({ unique: true })
   username: string;
   @Column({ unique: true })
-  githubId: string;
+  githubId: number;
   @Column({ unique: true })
   githubUrl: string;
   @Column()

@@ -22,7 +22,7 @@ export class UpsertGithubUserDTO {
   }
   toUser() {
     const user = new User();
-    user.githubId = this.githubId;
+    user.githubId = parseInt(this.githubId);
     user.username = this.username;
     user.githubUrl = this.githubUrl;
     user.avatarUrl = this.avatarUrl;
