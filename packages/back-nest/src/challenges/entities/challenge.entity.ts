@@ -1,8 +1,15 @@
 import TSParser from 'tree-sitter';
 import { Project } from 'src/projects/entities/project.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Column,
+  OneToMany,
+} from 'typeorm';
 import { UnsyncedFile } from './unsynced-file.entity';
 import { GithubAPI } from 'src/connectors/github/services/github-api';
+import { Result } from 'src/results/entities/result.entity';
 
 @Entity()
 export class Challenge {
@@ -20,6 +27,8 @@ export class Challenge {
   content: string;
   @ManyToOne(() => Project, (project) => project.files)
   project: Project;
+  @OneToMany(() => Result, (result) => result.user)
+  results: Result[];
 
   static fromTSNode(
     project: Project,

@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
@@ -43,10 +44,14 @@ export class RaceManager {
     return race.getPlayer(userId);
   }
 
+  getChallenge(raceId: string): Challenge {
+    const race = this.getRace(raceId);
+    return race.challenge;
+  }
+
   // Get the full code string of the currently active challenge for the provided race id
   getCode(raceId: string): string {
-    const race = this.getRace(raceId);
-    return race.challenge.content;
+    return this.getChallenge(raceId).content;
   }
 
   join(user: User, raceId: string): Race | null {

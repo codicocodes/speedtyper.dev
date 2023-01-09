@@ -1,3 +1,4 @@
+import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -27,6 +28,10 @@ export class Result {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public createdAt: Date;
+  @ManyToOne(() => Challenge, (challenge) => challenge.results, {
+    onDelete: 'SET NULL',
+  })
+  challenge: Challenge;
   @ManyToOne(() => User, (user) => user.results, {
     onDelete: 'SET NULL',
   })
