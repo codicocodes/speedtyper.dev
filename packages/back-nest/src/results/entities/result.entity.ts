@@ -27,7 +27,9 @@ export class Result {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public createdAt: Date;
-  @ManyToOne(() => User, (user) => user.results)
+  @ManyToOne(() => User, (user) => user.results, {
+    onDelete: 'SET NULL',
+  })
   user: User;
   userId: string;
 }
