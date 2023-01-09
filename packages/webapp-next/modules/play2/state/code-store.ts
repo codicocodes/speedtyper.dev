@@ -22,7 +22,6 @@ interface CodeState {
   getChartWPM: () => number[];
   _getValidKeyStrokes: () => KeyStroke[];
   _getIncorrectKeyStrokes: () => KeyStroke[];
-  expectedMaxCorrectKeyStrokes: number;
 
   // Code rendering state
   code: string;
@@ -56,7 +55,6 @@ interface CodeState {
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   // RESULTS logic
-  expectedMaxCorrectKeyStrokes: 0,
   getChartWPM: () => {
     const startTime = get().startTime?.getTime();
     if (!startTime) {
@@ -131,7 +129,6 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     set((state) => ({
       ...state,
       code,
-      expectedMaxCorrectKeyStrokes: calculateExpectedMaxCorrectKeyStrokes(code),
       index: 0,
       correctIndex: 0,
       startTime: undefined,
@@ -255,10 +252,6 @@ function isLineBreak(key: string) {
   return key === "\n";
 }
 
-function isBackspace(key: string) {
-  return key === TrackedKeys.Backspace;
-}
-
 function parseKey(key: string) {
   switch (key) {
     case "Enter":
@@ -277,12 +270,4 @@ function isSkippable(key: string) {
     default:
       return false;
   }
-}
-
-function calculateExpectedMaxCorrectKeyStrokes(code: string) {
-  const expectedMaxCorrectKeyStrokes = code
-    .split("\n")
-    .map((subText) => subText.trimStart())
-    .join("\n").length;
-  return expectedMaxCorrectKeyStrokes;
 }
