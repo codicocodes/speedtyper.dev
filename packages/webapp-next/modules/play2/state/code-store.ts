@@ -1,6 +1,5 @@
 import create from "zustand";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
-import { Game } from "../services/Game";
 
 export interface KeyStroke {
   key: string;
