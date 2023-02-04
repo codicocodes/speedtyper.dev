@@ -40,6 +40,7 @@ export class RaceGateway {
     const user = this.sessionState.getUser(socket);
     this.raceManager.leaveRace(user, raceId);
     this.sessionState.removeRaceID(socket);
+    this.raceEvents.leftRace(socket, user, raceId);
   }
 
   handleConnection(socket: Socket) {

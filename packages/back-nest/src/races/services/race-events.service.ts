@@ -27,6 +27,10 @@ export class RaceEvents {
     socket.to(race.id).emit('member_joined', race.members[user.id]);
   }
 
+  leftRace(socket: Socket, user: User, raceId: string) {
+    socket.to(raceId).emit('member_left', user.id);
+  }
+
   progressUpdated(socket: Socket, raceId: string, player: RacePlayer) {
     socket.to(raceId).emit('progress_updated', player);
     socket.emit('progress_updated', player);
