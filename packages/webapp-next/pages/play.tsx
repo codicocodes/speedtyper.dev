@@ -16,7 +16,6 @@ import gameStateReducer, {
 } from "../reducers/gameStateReducer";
 import { IGameState } from "../types";
 import useSocket from "../hooks/useSocket";
-import MarketingBar from "../components/MarketingBar";
 import ReloadChallengeButton from "../components/ReloadChallengeButton";
 import StartRaceButton from "../components/StartRaceButton";
 import getSkippedMessage from "../utils/getSkippedMessage";
@@ -289,7 +288,6 @@ const Play = () => {
               )}
             </>
           )}
-          <MarketingBar />
           {challenge ? (
             <div className="flex w-full">
               <div className="flex flex-grow items-center">
