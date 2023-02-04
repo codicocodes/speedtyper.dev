@@ -16,10 +16,10 @@ async function fetchStargazersCount() {
       ) as string;
       const resetDate = new Date(parseInt(rateLimitResetSeconds) * 1000);
       const repoData = await res.json();
-      localStorage.setItem(stargazersCountKey, repoData.stargazers_count);
-      console.log({ resetDate });
+      const stargazersCount = repoData.stargazers_count;
+      localStorage.setItem(stargazersCountKey, stargazersCount);
       localStorage.setItem(rateLimitResetKey, resetDate.toISOString());
-      return repoData;
+      return stargazersCount;
     }
   );
 }
