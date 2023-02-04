@@ -8,6 +8,7 @@ export class Game {
     this.initializeConnectedState(socket);
     this.listenForRaceJoined();
     this.listenForMemberJoined();
+    this.listenForMemberLeft();
     this.listenForProgressUpdated();
     this.listenForRaceCompleted();
     this.listenForRaceDoesNotExist();
@@ -53,6 +54,13 @@ export class Game {
     });
   }
 
+  private listenForMemberLeft() {
+    this.socket.subscribe("member_left", (_, userId: string) => {
+      console.log("member_left", { userId });
+      this.leaveRace(userId);
+    });
+  }
+
   private listenForProgressUpdated() {
     this.socket.subscribe("progress_updated", (_, member: RacePlayer) => {
       this.updateMemberInState(member);
@@ -79,6 +87,17 @@ export class Game {
     useGameStore.setState((game) => {
       const members = { ...game.members };
       members[member.id] = member;
+      return {
+        ...game,
+        members,
+      };
+    });
+  }
+
+  private leaveRace(userId: string) {
+    useGameStore.setState((game) => {
+      const members = { ...game.members };
+      delete members[userId];
       return {
         ...game,
         members,
