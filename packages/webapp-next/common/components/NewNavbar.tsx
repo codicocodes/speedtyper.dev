@@ -49,7 +49,12 @@ const ProfileSection = () => {
 
 export const NewNavbar = () => {
   return (
-    <header className="h-10">
+    <header
+      className="h-10 tracking-tighter"
+      style={{
+        fontFamily: "Fira Code",
+      }}
+    >
       <div className="w-full">
         <div className="flex items-start py-2">
           <HomeLink />

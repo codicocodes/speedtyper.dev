@@ -1,17 +1,35 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { DiscordLogo, GithubLogo, TwitchLogo } from "../../assets/icons";
+import { getStargazersCount } from "../github/stargazers";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import Button from "./Button";
 
+function useStargazersCount() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    getStargazersCount().then((stargazersCount) => {
+      setCount(stargazersCount);
+    });
+  }, []);
+  return count;
+}
+
 export function Footer() {
   const isPlaying = useIsPlaying();
+  const stargazersCount = useStargazersCount();
   return (
-    <footer className="h-10">
+    <footer
+      className="h-10 tracking-tighter"
+      style={{
+        fontFamily: "Fira Code",
+      }}
+    >
       {!isPlaying && (
         <div className="w-full bg-dark-ocean">
           <AnimatePresence>
             <motion.div
-              className="flex items-center text-off-white"
+              className="flex items-center justify-center text-off-white"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -25,6 +43,7 @@ export function Footer() {
                   color="invisible"
                   size="sm"
                   title="Star on GitHub"
+                  text={`${stargazersCount} stars`}
                   leftIcon={<GithubLogo />}
                 />
               </a>
@@ -33,6 +52,7 @@ export function Footer() {
                   color="invisible"
                   size="sm"
                   title="Join Discord"
+                  text="join"
                   leftIcon={<DiscordLogo />}
                 />
               </a>
@@ -41,6 +61,7 @@ export function Footer() {
                   color="invisible"
                   size="sm"
                   title="Watch livestreams"
+                  text="watch"
                   leftIcon={<TwitchLogo />}
                 />
               </a>
