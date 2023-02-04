@@ -1,5 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { RacePlayer, useGameStore } from "../../../state/game-store";
+import { CrownIcon } from "../../../../../assets/icons/CrownIcon";
+import {
+  RacePlayer,
+  useGameStore,
+  useIsMultiplayer,
+} from "../../../state/game-store";
 
 export function ProgressContainer() {
   const members = useGameStore((state) => state.members);
@@ -43,14 +48,22 @@ export function Progress({ progress, word }: ProgressProps) {
 }
 
 export function ProgressBar({ player }: ProgressBarProps) {
-  return (
+  const isMultiplayer = useIsMultiplayer();
+  const ownerId = useGameStore.getState().owner;
+  const isOwner = ownerId === player.id;
+  return isMultiplayer ? (
     <div className="flex row w-full items-center bg-dark-lake rounded-lg px-3 py-2 my-2">
-      <span className="w-48 mr-4 text-sm font-semibold truncate">
+      <span className="flex w-48 ml-1 mr-4 text-sm font-semibold truncate">
         {player.username}
+        {isOwner ? (
+          <div className="ml-1">
+            <CrownIcon />
+          </div>
+        ) : null}
       </span>
       <Progress progress={player.progress} word={player.recentlyTypedLiteral} />
     </div>
-  );
+  ) : null;
 }
 
 export function PlayHeader() {

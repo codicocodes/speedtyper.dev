@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { PlayIcon } from "../../../../../assets/icons";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
+import { useUserStore } from "../../../../../common/state/user-store";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
 import { ChallengeInfo } from "../../../hooks/useChallenge";
 import { Game } from "../../../services/Game";
 import { useCodeStore } from "../../../state/code-store";
+import { useIsMultiplayer, useIsOwner } from "../../../state/game-store";
 import { ChallengeSource } from "../ChallengeSource";
 
 interface PlayFooterProps {
@@ -72,15 +75,21 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
 }
 
 function ActionButtons({ game }: { game: Game }) {
+  const isMultiplayer = useIsMultiplayer();
+  const isOwner = useIsOwner();
+
+  console.log({ isMultiplayer, isOwner })
   return (
     <div className="flex row text-faded-gray gap-1">
-      <Button
-        color="invisible"
-        title="Reload the challenge"
-        size="sm"
-        onClick={() => game.next()}
-        leftIcon={<ReloadIcon />}
-      />
+      {isOwner && (
+        <Button
+          color="invisible"
+          title="Reload the challenge"
+          size="sm"
+          onClick={() => game.next()}
+          leftIcon={<ReloadIcon />}
+        />
+      )}
       <Button
         color="invisible"
         title="Invite your friends to race"
@@ -94,6 +103,17 @@ function ActionButtons({ game }: { game: Game }) {
         }}
         leftIcon={<LinkIcon />}
       />
+      {isOwner && isMultiplayer && (
+        <Button
+          color="invisible"
+          title="Start the race"
+          size="sm"
+          onClick={() => {
+            console.log("START");
+          }}
+          leftIcon={<PlayIcon />}
+        />
+      )}
     </div>
   );
 }
