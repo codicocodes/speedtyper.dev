@@ -68,6 +68,12 @@ export class RaceManager {
     return race;
   }
 
+  leaveRace(user: User, raceId: string) {
+    const race = this.races[raceId];
+    if (!race) return;
+    race.removeMember(user);
+  }
+
   isOwner(userId: string, raceId: string): boolean {
     const race = this.races[raceId];
     if (!race) throw new RaceDoesNotExist(raceId);

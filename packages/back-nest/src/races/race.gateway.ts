@@ -36,7 +36,9 @@ export class RaceGateway {
     this.logger.info(
       `Client disconnected: ${socket.request.session.user.username}`,
     );
-    // TODO: remove user from race
+    const raceId = this.sessionState.getRaceID(socket);
+    const user = this.sessionState.getUser(socket);
+    this.raceManager.leaveRace(user, raceId);
     this.sessionState.removeRaceID(socket);
   }
 

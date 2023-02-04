@@ -36,6 +36,10 @@ export class Race {
   }
 
   addMember(user: User, literals: string[]) {
-    this.members[user.id] = RacePlayer.fromUser(this.id, user, literals);
+    this.members[user.id] = RacePlayer.fromUser(this.id, user, [...literals]);
+  }
+
+  removeMember(user: User) {
+    delete this.members[user.id];
   }
 }
