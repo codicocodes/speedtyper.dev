@@ -31,7 +31,6 @@ export interface RaceResult {
 
 export const useGameStore = create<GameState>((_set, _get) => ({
   connected: true,
-  count: 0,
   members: {},
   results: [],
 }));

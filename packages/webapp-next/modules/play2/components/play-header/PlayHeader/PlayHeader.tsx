@@ -2,10 +2,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RacePlayer, useGameStore } from "../../../state/game-store";
 
 export function ProgressContainer() {
-  const players = Object.values(useGameStore.getState().members);
+  const members = useGameStore((state) => state.members);
   return (
     <div className="my-2">
-      {players.map((player) => {
+      {Object.values(members).map((player) => {
         return <ProgressBar key={player.id} player={player} />;
       })}
     </div>
