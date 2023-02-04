@@ -9,7 +9,12 @@ export class Race {
   challenge: Challenge;
   owner: string;
   members: Record<string, RacePlayer>;
+  @Exclude()
   literals: string[];
+
+  toJSON() {
+    return instanceToPlain(this);
+  }
 
   constructor(owner: User, challenge: Challenge, literals: string[]) {
     this.id = randomUUID().replaceAll('-', '');
