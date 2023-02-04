@@ -26,7 +26,7 @@ export class Race {
 
   resetProgress(literals: string[]) {
     Object.values(this.members).forEach((player) => {
-      player.reset(literals);
+      player.reset([...literals]);
     });
   }
 
