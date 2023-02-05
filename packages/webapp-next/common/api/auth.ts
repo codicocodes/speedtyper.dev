@@ -1,5 +1,6 @@
 import { NextRouter } from "next/router";
 import { useCallback } from "react";
+import { useGameStore } from "../../modules/play2/state/game-store";
 import { useUserStore } from "../state/user-store";
 import { getExperimentalServerUrl, getSiteRoot } from "../utils/getServerUrl";
 import { fetchUser } from "./user";
@@ -22,11 +23,18 @@ export const logout = async () => {
     method: "DELETE",
     credentials: "include",
   }).then(async () => {
+    const prevUserId = useUserStore.getState().id;
     const user = await fetchUser();
     useUserStore.setState((state) => ({
       ...state,
       ...user,
       avatarUrl: undefined,
     }));
+    useGameStore.setState((state) => {
+      return {
+        ...state,
+        owner: state.owner === prevUserId ? user.id : state.owner,
+      };
+    });
   });
 };
