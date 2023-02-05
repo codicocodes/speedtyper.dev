@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import Countdown from "../../../components/Countdown";
+import { useGameStore } from "../state/game-store";
 
 interface CodeAreaProps {
   filePath: string;
@@ -7,6 +9,7 @@ interface CodeAreaProps {
 }
 
 export function CodeArea({ filePath, focused, children }: CodeAreaProps) {
+  const countDown = useGameStore((state) => state.countdown);
   return (
     <div
       className="bg-dark-lake text-faded-gray flex-shrink tracking-wider rounded-xl p-4 text-2xl w-full"
@@ -19,6 +22,11 @@ export function CodeArea({ filePath, focused, children }: CodeAreaProps) {
       {!focused && (
         <div className="absolute flex justify-center items-center w-full h-full">
           Click or press any key to focus
+        </div>
+      )}
+      {countDown && (
+        <div className="absolute flex justify-center items-center w-full h-full">
+          <Countdown countdown={countDown} />
         </div>
       )}
 

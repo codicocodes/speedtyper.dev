@@ -9,6 +9,7 @@ export class Game {
     this.listenForRaceJoined();
     this.listenForRaceStarted();
     this.listenForMemberJoined();
+    this.listenForCountdown();
     this.listenForMemberLeft();
     this.listenForProgressUpdated();
     this.listenForRaceCompleted();
@@ -42,10 +43,13 @@ export class Game {
 
   private listenForRaceStarted() {
     this.socket.subscribe("race_started", (_, time: string) => {
-      console.log("race_started", { time });
       useCodeStore.setState((codeState) => ({
         ...codeState,
         startTime: new Date(time),
+      }));
+      useGameStore.setState((state) => ({
+        ...state,
+        countdown: undefined,
       }));
     });
   }
@@ -58,6 +62,15 @@ export class Game {
         id: race.id,
         owner: race.owner,
         members: race.members,
+      }));
+    });
+  }
+
+  private listenForCountdown() {
+    this.socket.subscribe("countdown", (_, countdown: number) => {
+      useGameStore.setState((state) => ({
+        ...state,
+        countdown,
       }));
     });
   }

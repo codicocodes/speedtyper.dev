@@ -100,9 +100,24 @@ export class RaceGateway {
     const user = this.sessionState.getUser(socket);
     const raceID = this.sessionState.getRaceID(socket);
     const race = this.raceManager.getRace(raceID);
-    if (!race.startTime && race.owner === user.id) {
-      race.start();
-      this.raceEvents.raceStarted(socket, race);
+    if (!race.countdown && !race.startTime && race.owner === user.id) {
+      race.countdown = true;
+      const seconds = 5;
+      for (let i = seconds; i > 0; i--) {
+        const delay = seconds - i;
+        const timeout = setTimeout(() => {
+          this.raceEvents.countdown(socket, race.id, i);
+        }, delay * 1000);
+        race.timeouts.push(timeout);
+      }
+
+      const timeout = setTimeout(() => {
+        race.start();
+        this.raceEvents.raceStarted(socket, race);
+        race.timeouts = [];
+      }, seconds * 1000);
+
+      race.timeouts.push(timeout);
     }
   }
 }

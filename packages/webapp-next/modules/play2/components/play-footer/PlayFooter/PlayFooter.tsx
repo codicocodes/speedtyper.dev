@@ -11,7 +11,11 @@ import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
 import { ChallengeInfo } from "../../../hooks/useChallenge";
 import { Game } from "../../../services/Game";
 import { useCodeStore } from "../../../state/code-store";
-import { useIsMultiplayer, useIsOwner } from "../../../state/game-store";
+import {
+  useGameStore,
+  useIsMultiplayer,
+  useIsOwner,
+} from "../../../state/game-store";
 import { ChallengeSource } from "../ChallengeSource";
 
 interface PlayFooterProps {
@@ -78,8 +82,11 @@ function ActionButtons({ game }: { game: Game }) {
   const isMultiplayer = useIsMultiplayer();
   const isOwner = useIsOwner();
   const hasEndTime = useCodeStore((state) => state.endTime);
-  const canManuallyStartGame = isOwner && isMultiplayer && !hasEndTime;
-  const waitingForOwnerToStart = !isOwner && isMultiplayer && !hasEndTime;
+  const countdown = useGameStore((state) => state.countdown);
+  const canManuallyStartGame =
+    isOwner && isMultiplayer && !hasEndTime && !countdown;
+  const waitingForOwnerToStart =
+    !isOwner && isMultiplayer && !hasEndTime && !countdown;
   const startGame = () => game.start();
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (

@@ -11,8 +11,10 @@ export class Race {
   members: Record<string, RacePlayer>;
   @Exclude()
   literals: string[];
+  timeouts: NodeJS.Timeout[];
 
   startTime?: Date;
+  countdown: boolean;
 
   toJSON() {
     return instanceToPlain(this);
@@ -24,6 +26,8 @@ export class Race {
     this.owner = owner.id;
     this.challenge = challenge;
     this.literals = literals;
+    this.timeouts = [];
+    this.countdown = false;
     this.addMember(owner, literals);
   }
 
@@ -40,6 +44,11 @@ export class Race {
       player.reset([...literals]);
     });
     this.startTime = undefined;
+    for (const timeout of this.timeouts) {
+      clearTimeout(timeout);
+    }
+    this.timeouts = [];
+    this.countdown = false;
   }
 
   addMember(user: User, literals: string[]) {

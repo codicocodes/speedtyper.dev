@@ -13,6 +13,11 @@ export class RaceEvents {
     socket.emit('challenge_selected', race.challenge);
   }
 
+  countdown(socket: Socket, raceID: string, i: number) {
+    socket.emit('countdown', i);
+    socket.to(raceID).emit('countdown', i);
+  }
+
   raceStarted(socket: Socket, race: Race) {
     socket.emit('race_started', race.startTime);
     socket.to(race.id).emit('race_started', race.startTime);

@@ -9,6 +9,7 @@ export interface GameState {
   members: Record<string, RacePlayer>;
   results: RaceResult[];
   myResult?: RaceResult;
+  countdown?: number;
 }
 
 export interface RacePlayer {
