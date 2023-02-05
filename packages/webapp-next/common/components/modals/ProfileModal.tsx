@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { ProfileIcon } from "../../../assets/icons";
-import { KogWheel } from "../../../assets/icons/KogWheel";
 import { logout } from "../../api/auth";
 import { useUserStore } from "../../state/user-store";
 import { Container } from "../Layout";

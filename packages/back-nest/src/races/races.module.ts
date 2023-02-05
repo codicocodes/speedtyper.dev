@@ -22,6 +22,6 @@ import { SessionState } from './services/session-state.service';
     ResultsHandlerService,
     SessionState,
   ],
-  exports: [RaceManager, KeyStrokeValidationService],
+  exports: [RaceManager, RaceEvents, KeyStrokeValidationService],
 })
 export class RacesModule {}

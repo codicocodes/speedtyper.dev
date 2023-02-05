@@ -7,6 +7,7 @@ import {
 } from './github/github.controller';
 import { GithubStrategy } from './github/github.strategy';
 import { UsersModule } from 'src/users/users.module';
+import { RacesModule } from 'src/races/races.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UsersModule } from 'src/users/users.module';
     }),
     ConfigModule,
     UsersModule,
+    RacesModule,
   ],
   controllers: [GithubAuthController, AuthController],
   providers: [GithubStrategy],

@@ -24,15 +24,15 @@ export class AddKeyStrokeService {
     private events: RaceEvents,
   ) {}
 
-  validate(socket: Socket, keyStroke: KeyStroke) {
-    const user = this.session.getUser(socket);
+  async validate(socket: Socket, keyStroke: KeyStroke) {
+    const user = await this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     this.validator.validateKeyStroke(player, keyStroke);
   }
 
-  addKeyStroke(socket: Socket, keyStroke: KeyStroke) {
-    const user = this.session.getUser(socket);
+  async addKeyStroke(socket: Socket, keyStroke: KeyStroke) {
+    const user = await this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     player.addKeyStroke(keyStroke);

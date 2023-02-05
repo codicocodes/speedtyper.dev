@@ -15,6 +15,17 @@ export class RaceManager {
     private literalsService: LiteralService,
   ) {}
 
+  syncUser(raceId: string, prevUserId: string, user: User) {
+    const race = this.races[raceId];
+    if (race.owner === prevUserId) {
+      race.owner = user.id;
+    }
+    const player = race.members[prevUserId];
+    player.id = user.id;
+    player.username = user.username;
+    delete race.members[prevUserId];
+    race.members[user.id] = player;
+  }
   async create(user: User): Promise<Race> {
     const challenge = await this.challengeService.getRandom();
     const literals = this.literalsService.calculateLiterals(challenge.content);

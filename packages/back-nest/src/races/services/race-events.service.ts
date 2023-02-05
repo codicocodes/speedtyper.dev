@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { Result } from 'src/results/entities/result.entity';
 import { User } from 'src/users/entities/user.entity';
 import { RacePlayer } from './race-player.service';
@@ -7,6 +7,7 @@ import { Race } from './race.service';
 
 @Injectable()
 export class RaceEvents {
+  server: Server;
   createdRace(socket: Socket, race: Race) {
     socket.join(race.id);
     socket.emit('race_joined', race);

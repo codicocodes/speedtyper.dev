@@ -22,7 +22,7 @@ export class ResultsHandlerService {
     private results: ResultService,
   ) {}
   async handleResult(socket: Socket) {
-    const user = this.session.getUser(socket);
+    const user = await this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     const challenge = this.manager.getChallenge(raceId);

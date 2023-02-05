@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class SessionState {
-  getUser(socket: Socket) {
-    return socket.request.session.user;
+  async getUser(socket: Socket) {
+    return new Promise<User>((resolve) => {
+      socket.request.session.reload(() => {
+        resolve(socket.request.session.user);
+      });
+    });
   }
 
   getRaceID(socket: Socket) {
