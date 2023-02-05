@@ -72,6 +72,11 @@ export class RaceManager {
     const race = this.races[raceId];
     if (!race) return;
     race.removeMember(user);
+    if (Object.values(race.members).length === 0) {
+      delete this.races[raceId];
+    } else if (race.owner === user.id) {
+      race.owner = Object.values(race.members)[0].id;
+    }
   }
 
   isOwner(userId: string, raceId: string): boolean {
