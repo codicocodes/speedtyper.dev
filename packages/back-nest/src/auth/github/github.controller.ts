@@ -1,7 +1,18 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from 'src/users/entities/user.entity';
 import { GithubOauthGuard } from './github.guard';
+
+@Controller('auth')
+export class AuthController {
+  @Delete()
+  async logout(@Req() request: Request) {
+    console.log(request.session.user, request.user);
+    request.session.destroy((err) => {
+      console.log('Session destroyed', { err });
+    });
+  }
+}
 
 @Controller('auth/github')
 export class GithubAuthController {
