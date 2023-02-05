@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { PlayIcon } from "../../../../../assets/icons";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
+import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
 import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
@@ -34,9 +35,17 @@ function useCodeStoreTotalSeconds() {
   return totalSeconds;
 }
 
+function useMistakeWarningMessage() {
+  const currentMistakeCount = useCodeStore((state) => state.incorrectChars)()
+    .length;
+  const message = "Undo mistakes to continue";
+  return currentMistakeCount > 10 ? message : undefined;
+}
+
 export function PlayFooter({ game, challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
+  const mistakesWarning = useMistakeWarningMessage();
   return (
     <div className="w-full h-10 mt-2">
       <AnimatePresence>
@@ -69,9 +78,15 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full"
+          className="flex items-center w-full"
         >
           {isPlaying && RenderTimer(totalSeconds)}
+          {mistakesWarning && (
+            <span className="flex ml-2 text-red-400 font-medium gap-1">
+              <WarningIcon />
+              {mistakesWarning}
+            </span>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
