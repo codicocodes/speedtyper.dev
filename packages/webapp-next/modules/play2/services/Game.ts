@@ -1,12 +1,13 @@
 import SocketLatest from "../../../common/services/Socket";
 import { useUserStore } from "../../../common/state/user-store";
-import { KeyStroke } from "../state/code-store";
+import { KeyStroke, useCodeStore } from "../state/code-store";
 import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
 
 export class Game {
   constructor(private socket: SocketLatest) {
     this.initializeConnectedState(socket);
     this.listenForRaceJoined();
+    this.listenForRaceStarted();
     this.listenForMemberJoined();
     this.listenForMemberLeft();
     this.listenForProgressUpdated();
@@ -17,6 +18,10 @@ export class Game {
 
   get id() {
     return useGameStore.getState().id;
+  }
+
+  start() {
+    this.socket.emit("start_race");
   }
 
   sendKeyStroke(keyStroke: KeyStroke) {
@@ -33,6 +38,16 @@ export class Game {
 
   play() {
     this.socket.emit("play");
+  }
+
+  private listenForRaceStarted() {
+    this.socket.subscribe("race_started", (_, time: string) => {
+      console.log("race_started", { time });
+      useCodeStore.setState((codeState) => ({
+        ...codeState,
+        startTime: new Date(time),
+      }));
+    });
   }
 
   private listenForRaceJoined() {

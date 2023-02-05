@@ -13,6 +13,11 @@ export class RaceEvents {
     socket.emit('challenge_selected', race.challenge);
   }
 
+  raceStarted(socket: Socket, race: Race) {
+    socket.emit('race_started', race.startTime);
+    socket.to(race.id).emit('race_started', race.startTime);
+  }
+
   updatedRace(socket: Socket, race: Race) {
     socket.emit('race_joined', race);
     socket.emit('challenge_selected', race.challenge);

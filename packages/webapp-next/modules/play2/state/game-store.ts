@@ -1,5 +1,6 @@
 import create from "zustand";
 import { User, useUserStore } from "../../../common/state/user-store";
+import { useCodeStore } from "./code-store";
 
 export interface GameState {
   id?: string;
@@ -34,6 +35,12 @@ export const useGameStore = create<GameState>((_set, _get) => ({
   members: {},
   results: [],
 }));
+
+export const useCanType = () => {
+  const isMultiplayer = useIsMultiplayer();
+  const hasStartTime = useCodeStore((state) => state.startTime);
+  return !isMultiplayer || hasStartTime;
+};
 
 export const useIsMultiplayer = () => {
   const members = useGameStore((state) => state.members);

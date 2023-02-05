@@ -94,4 +94,15 @@ export class RaceGateway {
     this.raceEvents.joinedRace(socket, race, user);
     this.sessionState.saveRaceID(socket, id);
   }
+
+  @SubscribeMessage('start_race')
+  async onStart(socket: Socket) {
+    const user = this.sessionState.getUser(socket);
+    const raceID = this.sessionState.getRaceID(socket);
+    const race = this.raceManager.getRace(raceID);
+    if (!race.startTime && race.owner === user.id) {
+      race.start();
+      this.raceEvents.raceStarted(socket, race);
+    }
+  }
 }

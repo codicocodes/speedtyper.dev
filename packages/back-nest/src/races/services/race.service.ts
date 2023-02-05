@@ -12,6 +12,8 @@ export class Race {
   @Exclude()
   literals: string[];
 
+  startTime?: Date;
+
   toJSON() {
     return instanceToPlain(this);
   }
@@ -25,6 +27,10 @@ export class Race {
     this.addMember(owner, literals);
   }
 
+  start() {
+    this.startTime = new Date();
+  }
+
   getPlayer(id: string) {
     return this.members[id];
   }
@@ -33,6 +39,7 @@ export class Race {
     Object.values(this.members).forEach((player) => {
       player.reset([...literals]);
     });
+    this.startTime = undefined;
   }
 
   addMember(user: User, literals: string[]) {

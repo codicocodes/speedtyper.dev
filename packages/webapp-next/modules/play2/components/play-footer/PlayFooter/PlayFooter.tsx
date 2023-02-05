@@ -4,9 +4,9 @@ import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
-import { useUserStore } from "../../../../../common/state/user-store";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
+import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
 import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
 import { ChallengeInfo } from "../../../hooks/useChallenge";
 import { Game } from "../../../services/Game";
@@ -77,8 +77,11 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
 function ActionButtons({ game }: { game: Game }) {
   const isMultiplayer = useIsMultiplayer();
   const isOwner = useIsOwner();
-
-  console.log({ isMultiplayer, isOwner })
+  const hasEndTime = useCodeStore((state) => state.endTime);
+  const canManuallyStartGame = isOwner && isMultiplayer && !hasEndTime;
+  const waitingForOwnerToStart = !isOwner && isMultiplayer && !hasEndTime;
+  const startGame = () => game.start();
+  useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
       {isOwner && (
@@ -103,17 +106,17 @@ function ActionButtons({ game }: { game: Game }) {
         }}
         leftIcon={<LinkIcon />}
       />
-      {isOwner && isMultiplayer && (
+      {canManuallyStartGame && (
         <Button
           color="invisible"
           title="Start the race"
           size="sm"
-          onClick={() => {
-            console.log("START");
-          }}
+          text="Click to start"
+          onClick={startGame}
           leftIcon={<PlayIcon />}
         />
       )}
+      {waitingForOwnerToStart && <span>Waiting for race to start</span>}
     </div>
   );
 }

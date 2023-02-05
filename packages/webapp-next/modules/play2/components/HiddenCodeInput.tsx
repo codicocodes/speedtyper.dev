@@ -8,6 +8,7 @@ import {
 import { Game } from "../services/Game";
 
 import { isSkippable, useCodeStore } from "../state/code-store";
+import { useCanType } from "../state/game-store";
 
 interface HiddenCodeInputProps {
   hide: boolean; // Used for debugging the input
@@ -25,6 +26,7 @@ export const HiddenCodeInput = ({
   const handleBackspace = useCodeStore((state) => state.handleBackspace);
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
   const keyPressFactory = useCodeStore((state) => state.keyPressFactory);
+  const canType = useCanType();
 
   // TODO: remove input and setInput
   // instead introduc getTypedInput method in the store
@@ -33,6 +35,7 @@ export const HiddenCodeInput = ({
 
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // TODO: use e.isTrusted
+    if (!canType) return;
     const backspaces = input.length - e.target.value.length;
     // send backspaces
     if (backspaces > 0) {
