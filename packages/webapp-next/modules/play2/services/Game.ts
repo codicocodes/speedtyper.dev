@@ -161,6 +161,7 @@ export class Game {
       return {
         ...game,
         connected,
+        game: this,
       };
     });
   }

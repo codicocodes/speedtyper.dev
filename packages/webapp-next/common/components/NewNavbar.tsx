@@ -1,8 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import getConfig from "next/config";
 import Link from "next/link";
+import { TerminalIcon } from "../../assets/icons/TerminalIcon";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
+import { useGameStore } from "../../modules/play2/state/game-store";
 import { useIsPlaying } from "../hooks/useIsPlaying";
+import Button from "./Button";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
 export const navbarFactory = () => {
@@ -56,8 +59,16 @@ export const NewNavbar = () => {
       }}
     >
       <div className="w-full">
-        <div className="flex items-start py-2">
+        <div className="flex items-center items-start py-2">
           <HomeLink />
+          <Link href="/play2">
+            <Button
+              size="sm"
+              color="invisible"
+              onClick={() => useGameStore.getState().game?.play()}
+              leftIcon={<TerminalIcon />}
+            />
+          </Link>
           <ProfileSection />
         </div>
       </div>

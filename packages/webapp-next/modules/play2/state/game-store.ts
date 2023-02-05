@@ -1,5 +1,6 @@
 import create from "zustand";
 import { User, useUserStore } from "../../../common/state/user-store";
+import { Game } from "../services/Game";
 import { useCodeStore } from "./code-store";
 
 export interface GameState {
@@ -10,6 +11,7 @@ export interface GameState {
   results: RaceResult[];
   myResult?: RaceResult;
   countdown?: number;
+  game?: Game;
 }
 
 export interface RacePlayer {
