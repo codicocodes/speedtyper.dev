@@ -62,6 +62,7 @@ export class Game {
         id: race.id,
         owner: race.owner,
         members: race.members,
+        countdown: undefined,
       }));
     });
   }
