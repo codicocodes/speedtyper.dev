@@ -129,16 +129,20 @@ function ActionButtons({ game }: { game: Game }) {
         leftIcon={<LinkIcon />}
       />
       {canManuallyStartGame && (
-        <Button
-          color="invisible"
-          title="Start the race"
-          size="sm"
-          text="Click to start"
-          onClick={startGame}
-          leftIcon={<PlayIcon />}
-        />
+        <div className="font-medium">
+          <Button
+            color="invisible"
+            title="Start the race"
+            size="sm"
+            text="Click to start"
+            onClick={startGame}
+            leftIcon={<PlayIcon />}
+          />
+        </div>
       )}
-      {waitingForOwnerToStart && <span>Waiting for race to start</span>}
+      {waitingForOwnerToStart && (
+        <span className="font-medium">Waiting for race to start</span>
+      )}
     </div>
   );
 }
