@@ -8,6 +8,11 @@ import { Race } from './race.service';
 @Injectable()
 export class RaceEvents {
   server: Server;
+
+  getPlayerCount() {
+    return this.server.sockets.sockets.size;
+  }
+
   createdRace(socket: Socket, race: Race) {
     socket.join(race.id);
     socket.emit('race_joined', race);
