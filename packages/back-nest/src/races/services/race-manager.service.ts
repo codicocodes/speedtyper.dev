@@ -26,7 +26,16 @@ export class RaceManager {
     delete race.members[prevUserId];
     race.members[user.id] = player;
   }
+
+  debugSize(msg: string) {
+    const racesSize = JSON.stringify(this.races).length;
+    console.log(msg, {
+      racesSize,
+      races: Object.keys(this.races).length,
+    });
+  }
   async create(user: User): Promise<Race> {
+    this.debugSize('create');
     const challenge = await this.challengeService.getRandom();
     const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = new Race(user, challenge, literals);
@@ -35,6 +44,7 @@ export class RaceManager {
   }
 
   async refresh(id: string): Promise<Race> {
+    this.debugSize('refresh');
     const challenge = await this.challengeService.getRandom();
     const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = this.races[id];

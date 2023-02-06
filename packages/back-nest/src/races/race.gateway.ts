@@ -20,13 +20,17 @@ export class RaceGateway {
   server: Server;
   logger = console;
 
+  createRaceLock: Set<string>;
+
   constructor(
     private raceManager: RaceManager,
     private sessionState: SessionState,
     private raceEvents: RaceEvents,
     private addKeyStrokeService: AddKeyStrokeService,
     private resultHandler: ResultsHandlerService,
-  ) {}
+  ) {
+    this.createRaceLock = new Set<string>();
+  }
 
   afterInit(server: Server) {
     this.logger.info('[SpeedTyper.dev] Websocket Server Started.');
@@ -42,6 +46,7 @@ export class RaceGateway {
     this.raceManager.leaveRace(user, raceId);
     this.sessionState.removeRaceID(socket);
     this.raceEvents.leftRace(socket, user, raceId);
+    this.createRaceLock.delete(socket.id);
   }
 
   handleConnection(socket: Socket) {
@@ -54,7 +59,9 @@ export class RaceGateway {
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
     const raceId = this.sessionState.getRaceID(socket);
-    if (!raceId) return;
+    if (!raceId) {
+      return;
+    }
     const user = await this.sessionState.getUser(socket);
     if (this.raceManager.isOwner(user.id, raceId)) {
       const race = await this.raceManager.refresh(raceId);
@@ -64,9 +71,18 @@ export class RaceGateway {
 
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
+    const socketID = socket.id;
+    if (this.createRaceLock.has(socketID)) {
+      console.log('Already locked', socketID);
+      return;
+    }
+    console.log('Locking', socketID);
+    this.createRaceLock.add(socketID);
     const user = await this.sessionState.getUser(socket);
+    const raceId = this.sessionState.getRaceID(socket);
     const race = await this.raceManager.create(user);
     this.raceEvents.createdRace(socket, race);
+    this.raceManager.leaveRace(user, raceId);
     this.sessionState.saveRaceID(socket, race.id);
   }
 

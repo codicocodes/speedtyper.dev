@@ -11,6 +11,8 @@ export class Race {
   members: Record<string, RacePlayer>;
   @Exclude()
   literals: string[];
+
+  @Exclude()
   timeouts: NodeJS.Timeout[];
 
   startTime?: Date;
