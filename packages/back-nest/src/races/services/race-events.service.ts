@@ -54,7 +54,6 @@ export class RaceEvents {
   }
 
   raceDoesNotExist(socket: Socket, id: string) {
-    console.log("KEKERS")
     socket.emit('race_does_not_exist', id);
   }
 }
