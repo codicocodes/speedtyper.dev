@@ -12,7 +12,10 @@ export class RacePlayer {
   id: string;
   username: string;
   recentlyTypedLiteral: string;
+
+  @Exclude()
   literals: string[];
+
   progress: number;
 
   @Exclude()
