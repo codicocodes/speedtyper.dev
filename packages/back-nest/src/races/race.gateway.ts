@@ -84,8 +84,8 @@ export class RaceGateway {
   @UseFilters(new RaceExceptions())
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
-    console.log('refresh_challenge');
     const socketID = socket.id;
+    console.log('refresh_challenge', socketID);
     await this.manageRaceLock.run(socketID, async () => {
       const raceId = await this.sessionState.getRaceID(socket);
       if (!raceId) {
@@ -101,8 +101,8 @@ export class RaceGateway {
 
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
-    console.log('play');
     const socketID = socket.id;
+    console.log('play', socketID);
     await this.manageRaceLock.run(socketID, async () => {
       const user = await this.sessionState.getUser(socket);
       const raceId = await this.sessionState.getRaceID(socket);
@@ -110,7 +110,6 @@ export class RaceGateway {
       const race = await this.raceManager.create(user);
       this.raceEvents.createdRace(socket, race);
       this.sessionState.saveRaceID(socket, race.id);
-      this.raceManager.leaveRace(user, raceId);
     });
   }
 
@@ -124,20 +123,27 @@ export class RaceGateway {
 
   @SubscribeMessage('join')
   async onJoin(socket: Socket, id: string) {
-    const user = await this.sessionState.getUser(socket);
-    const race = this.raceManager.join(user, id);
-    if (!race) {
-      // if there is no race with the ID in the state
-      // we recreate a race for the user
-      // this makes sure that the game does not crash for the user
-      // TODO: we should create a race with the same ID, and even same challenge selected
-      // So that the other people in the race can then join the same room
-      // instead of creating their own through this same functionality
-      // we do however have to reset the progress for all participants as it is only kept in state
-      return this.onPlay(socket);
-    }
-    this.raceEvents.joinedRace(socket, race, user);
-    this.sessionState.saveRaceID(socket, id);
+    console.log('join', socket.id);
+    this.manageRaceLock.run(socket.id, async () => {
+      const user = await this.sessionState.getUser(socket);
+      const raceID = await this.sessionState.getRaceID(socket);
+      this.raceManager.leaveRace(user, raceID);
+      const race = this.raceManager.join(user, id);
+      if (!race) {
+        console.log('no race...');
+        // if there is no race with the ID in the state
+        // we recreate a race for the user
+        // this makes sure that the game does not crash for the user
+        // TODO: we should create a race with the same ID, and even same challenge selected
+        // So that the other people in the race can then join the same room
+        // instead of creating their own through this same functionality
+        // we do however have to reset the progress for all participants as it is only kept in state
+        this.manageRaceLock.release(socket.id);
+        return this.onPlay(socket);
+      }
+      this.raceEvents.joinedRace(socket, race, user);
+      this.sessionState.saveRaceID(socket, id);
+    });
   }
 
   @SubscribeMessage('start_race')
