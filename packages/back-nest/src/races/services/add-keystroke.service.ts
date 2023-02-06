@@ -1,11 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
-import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { KeyStrokeValidationService } from './keystroke-validator.service';
 import { ProgressService } from './progress.service';
 import { RaceEvents } from './race-events.service';
 import { RaceManager } from './race-manager.service';
-import { KeyStroke, RacePlayer } from './race-player.service';
+import { KeyStroke } from './race-player.service';
 import { SessionState } from './session-state.service';
 
 export class InvalidKeyStroke extends BadRequestException {
@@ -26,14 +25,14 @@ export class AddKeyStrokeService {
 
   async validate(socket: Socket, keyStroke: KeyStroke) {
     const user = await this.session.getUser(socket);
-    const raceId = this.session.getRaceID(socket);
+    const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     this.validator.validateKeyStroke(player, keyStroke);
   }
 
   async addKeyStroke(socket: Socket, keyStroke: KeyStroke) {
     const user = await this.session.getUser(socket);
-    const raceId = this.session.getRaceID(socket);
+    const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     player.addKeyStroke(keyStroke);
     player.progress = this.progressService.calculateProgress(player);

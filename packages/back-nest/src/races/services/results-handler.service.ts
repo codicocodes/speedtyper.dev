@@ -23,7 +23,7 @@ export class ResultsHandlerService {
   ) {}
   async handleResult(socket: Socket) {
     const user = await this.session.getUser(socket);
-    const raceId = this.session.getRaceID(socket);
+    const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     const challenge = this.manager.getChallenge(raceId);
     if (player.progress === 100) {

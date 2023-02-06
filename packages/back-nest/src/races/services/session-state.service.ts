@@ -12,8 +12,12 @@ export class SessionState {
     });
   }
 
-  getRaceID(socket: Socket) {
-    return socket.request.session.raceId;
+  async getRaceID(socket: Socket) {
+    return new Promise<string>((resolve) => {
+      socket.request.session.reload(() => {
+        resolve(socket.request.session.raceId);
+      });
+    });
   }
 
   saveRaceID(socket: Socket, id: string) {

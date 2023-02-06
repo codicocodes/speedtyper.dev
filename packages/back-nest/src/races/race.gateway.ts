@@ -14,13 +14,39 @@ import { KeyStroke } from './services/race-player.service';
 import { ResultsHandlerService } from './services/results-handler.service';
 import { SessionState } from './services/session-state.service';
 
+export class CallbackLocker {
+  lockedIDs: Set<string>;
+  constructor() {
+    this.lockedIDs = new Set<string>();
+  }
+
+  async run(lockID: string, callback: () => Promise<void>) {
+    if (this.lockedIDs.has(lockID)) {
+      console.log('Already locked...', lockID);
+      return;
+    }
+    console.log('Locking', lockID);
+    this.lockedIDs.add(lockID);
+    try {
+      await callback();
+    } finally {
+      console.log('Unlocking', lockID);
+      this.lockedIDs.delete(lockID);
+    }
+  }
+
+  release(id: string) {
+    this.lockedIDs.delete(id);
+  }
+}
+
 @WebSocketGateway(socketCors)
 export class RaceGateway {
   @WebSocketServer()
   server: Server;
   logger = console;
 
-  createRaceLock: Set<string>;
+  manageRaceLock: CallbackLocker;
 
   constructor(
     private raceManager: RaceManager,
@@ -29,7 +55,7 @@ export class RaceGateway {
     private addKeyStrokeService: AddKeyStrokeService,
     private resultHandler: ResultsHandlerService,
   ) {
-    this.createRaceLock = new Set<string>();
+    this.manageRaceLock = new CallbackLocker();
   }
 
   afterInit(server: Server) {
@@ -41,12 +67,12 @@ export class RaceGateway {
     this.logger.info(
       `Client disconnected: ${socket.request.session.user.username}`,
     );
-    const raceId = this.sessionState.getRaceID(socket);
+    const raceId = await this.sessionState.getRaceID(socket);
     const user = await this.sessionState.getUser(socket);
     this.raceManager.leaveRace(user, raceId);
     this.sessionState.removeRaceID(socket);
     this.raceEvents.leftRace(socket, user, raceId);
-    this.createRaceLock.delete(socket.id);
+    this.manageRaceLock.release(socket.id);
   }
 
   handleConnection(socket: Socket) {
@@ -58,32 +84,34 @@ export class RaceGateway {
   @UseFilters(new RaceExceptions())
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
-    const raceId = this.sessionState.getRaceID(socket);
-    if (!raceId) {
-      return;
-    }
-    const user = await this.sessionState.getUser(socket);
-    if (this.raceManager.isOwner(user.id, raceId)) {
-      const race = await this.raceManager.refresh(raceId);
-      this.raceEvents.updatedRace(socket, race);
-    }
+    console.log('refresh_challenge');
+    const socketID = socket.id;
+    await this.manageRaceLock.run(socketID, async () => {
+      const raceId = await this.sessionState.getRaceID(socket);
+      if (!raceId) {
+        return;
+      }
+      const user = await this.sessionState.getUser(socket);
+      if (this.raceManager.isOwner(user.id, raceId)) {
+        const race = await this.raceManager.refresh(raceId);
+        this.raceEvents.updatedRace(socket, race);
+      }
+    });
   }
 
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
+    console.log('play');
     const socketID = socket.id;
-    if (this.createRaceLock.has(socketID)) {
-      console.log('Already locked', socketID);
-      return;
-    }
-    console.log('Locking', socketID);
-    this.createRaceLock.add(socketID);
-    const user = await this.sessionState.getUser(socket);
-    const raceId = this.sessionState.getRaceID(socket);
-    const race = await this.raceManager.create(user);
-    this.raceEvents.createdRace(socket, race);
-    this.raceManager.leaveRace(user, raceId);
-    this.sessionState.saveRaceID(socket, race.id);
+    await this.manageRaceLock.run(socketID, async () => {
+      const user = await this.sessionState.getUser(socket);
+      const raceId = await this.sessionState.getRaceID(socket);
+      this.raceManager.leaveRace(user, raceId);
+      const race = await this.raceManager.create(user);
+      this.raceEvents.createdRace(socket, race);
+      this.sessionState.saveRaceID(socket, race.id);
+      this.raceManager.leaveRace(user, raceId);
+    });
   }
 
   @UseFilters(new RaceExceptions())
@@ -115,7 +143,7 @@ export class RaceGateway {
   @SubscribeMessage('start_race')
   async onStart(socket: Socket) {
     const user = await this.sessionState.getUser(socket);
-    const raceID = this.sessionState.getRaceID(socket);
+    const raceID = await this.sessionState.getRaceID(socket);
     const race = this.raceManager.getRace(raceID);
     if (!race.countdown && !race.startTime && race.owner === user.id) {
       race.countdown = true;
