@@ -3,6 +3,10 @@ import { Game } from "../services/Game";
 
 export function useConnectToGame(game: Game, gameID: string | undefined) {
   useEffect(() => {
-    gameID ? game.join(gameID) : game.play();
+    if (!gameID) {
+      game.play();
+    } else if (game.id !== gameID) {
+      game.join(gameID);
+    }
   }, [game, gameID]);
 }
