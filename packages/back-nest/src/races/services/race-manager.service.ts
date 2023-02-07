@@ -15,6 +15,10 @@ export class RaceManager {
     private literalsService: LiteralService,
   ) {}
 
+  getPublicRaces() {
+    return Object.values(this.races);
+  }
+
   syncUser(raceId: string, prevUserId: string, user: User) {
     const race = this.races[raceId];
     if (race.owner === prevUserId) {
