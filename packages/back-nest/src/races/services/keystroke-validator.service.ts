@@ -23,6 +23,7 @@ export class KeyStrokeValidationService {
   }
 
   validateKeyStroke(player: RacePlayer, recentKeyStroke: KeyStroke) {
+    this.validateRaceStarted(player.raceId);
     const currentInput = player.getValidInput() + recentKeyStroke.key;
     const strippedCode = this.getStrippedCode(player.raceId, recentKeyStroke);
     const correct = currentInput === strippedCode;
@@ -30,6 +31,13 @@ export class KeyStrokeValidationService {
       throw new Error('Unexpected keystroke');
     }
     recentKeyStroke.correct = correct;
+  }
+
+  validateRaceStarted(raceID: string) {
+    const race = this.raceManager.getRace(raceID);
+    if (!race.startTime && Object.keys(race.members).length > 1) {
+      throw new Error('Unexpected keystroke');
+    }
   }
 
   private getStrippedCode(raceId: string, recentKeyStroke: KeyStroke) {
