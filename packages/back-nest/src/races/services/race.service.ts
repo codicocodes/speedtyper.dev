@@ -37,6 +37,10 @@ export class Race {
     this.startTime = new Date();
   }
 
+  canStartRace(userID: string): boolean {
+    return !this.countdown && !this.startTime && this.owner === userID;
+  }
+
   getPlayer(id: string) {
     return this.members[id];
   }

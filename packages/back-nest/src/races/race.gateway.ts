@@ -8,6 +8,7 @@ import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
 import { RaceExceptions } from './race.exceptions';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
+import { CountdownService } from './services/countdown.service';
 import { Locker } from './services/locker.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
@@ -28,6 +29,7 @@ export class RaceGateway {
     private addKeyStrokeService: AddKeyStrokeService,
     private resultHandler: ResultsHandlerService,
     private manageRaceLock: Locker,
+    private countdownService: CountdownService,
   ) {}
 
   afterInit(server: Server) {
@@ -123,24 +125,8 @@ export class RaceGateway {
     const user = await this.sessionState.getUser(socket);
     const raceID = await this.sessionState.getRaceID(socket);
     const race = this.raceManager.getRace(raceID);
-    if (!race.countdown && !race.startTime && race.owner === user.id) {
-      race.countdown = true;
-      const seconds = 5;
-      for (let i = seconds; i > 0; i--) {
-        const delay = seconds - i;
-        const timeout = setTimeout(() => {
-          this.raceEvents.countdown(socket, race.id, i);
-        }, delay * 1000);
-        race.timeouts.push(timeout);
-      }
-
-      const timeout = setTimeout(() => {
-        race.start();
-        this.raceEvents.raceStarted(socket, race);
-        race.timeouts = [];
-      }, seconds * 1000);
-
-      race.timeouts.push(timeout);
+    if (race.canStartRace(user.id)) {
+      this.countdownService.countdown(race);
     }
   }
 }

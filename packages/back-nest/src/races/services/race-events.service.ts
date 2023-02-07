@@ -19,14 +19,13 @@ export class RaceEvents {
     socket.emit('challenge_selected', race.challenge);
   }
 
-  countdown(socket: Socket, raceID: string, i: number) {
-    socket.emit('countdown', i);
-    socket.to(raceID).emit('countdown', i);
+  countdown(raceID: string, i: number) {
+    const event = 'countdown';
+    this.server.to(raceID).emit(event, i);
   }
 
-  raceStarted(socket: Socket, race: Race) {
-    socket.emit('race_started', race.startTime);
-    socket.to(race.id).emit('race_started', race.startTime);
+  raceStarted(race: Race) {
+    this.server.to(race.id).emit('race_started', race.startTime);
   }
 
   updatedRace(socket: Socket, race: Race) {
