@@ -30,7 +30,7 @@ export class Race {
     this.literals = literals;
     this.timeouts = [];
     this.countdown = false;
-    this.addMember(owner, literals);
+    this.addMember(owner);
   }
 
   start() {
@@ -45,9 +45,9 @@ export class Race {
     return this.members[id];
   }
 
-  resetProgress(literals: string[]) {
+  resetProgress() {
     Object.values(this.members).forEach((player) => {
-      player.reset([...literals]);
+      player.reset(this.literals);
     });
     this.startTime = undefined;
     for (const timeout of this.timeouts) {
@@ -57,8 +57,8 @@ export class Race {
     this.countdown = false;
   }
 
-  addMember(user: User, literals: string[]) {
-    this.members[user.id] = RacePlayer.fromUser(this.id, user, [...literals]);
+  addMember(user: User) {
+    this.members[user.id] = RacePlayer.fromUser(this.id, user, this.literals);
   }
 
   removeMember(user: User) {

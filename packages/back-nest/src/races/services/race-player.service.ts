@@ -11,7 +11,11 @@ export interface KeyStroke {
 export class RacePlayer {
   id: string;
   username: string;
+
   recentlyTypedLiteral: string;
+
+  @Exclude()
+  literalOffset: number;
 
   @Exclude()
   literals: string[];
@@ -30,7 +34,8 @@ export class RacePlayer {
 
   reset(literals: string[]) {
     this.literals = literals;
-    this.recentlyTypedLiteral = this.literals.shift();
+    this.literalOffset = 0;
+    this.recentlyTypedLiteral = this.literals[this.literalOffset];
     this.progress = 0;
     this.typedKeyStrokes = [];
   }
@@ -64,6 +69,7 @@ export class RacePlayer {
   addKeyStroke(keyStroke: KeyStroke) {
     keyStroke.timestamp = new Date().getTime();
     this.typedKeyStrokes.push(keyStroke);
+    this.recentlyTypedLiteral = this.literals[this.literalOffset];
   }
 
   updateLiteral(code: string, keyStroke: KeyStroke) {
@@ -71,8 +77,7 @@ export class RacePlayer {
     const literal = this.literals[0];
     const startsWithLiteral = untypedCode.trimStart().startsWith(literal);
     if (startsWithLiteral && this.literals.length > 1) {
-      this.literals.shift();
-      this.recentlyTypedLiteral = literal;
+      this.literalOffset++;
     }
   }
 
@@ -82,8 +87,9 @@ export class RacePlayer {
     player.raceId = raceId;
     player.username = user.username;
     player.progress = 0;
-    player.recentlyTypedLiteral = literals.shift();
+    player.literalOffset = 0;
     player.literals = literals;
+    player.recentlyTypedLiteral = player.literals[player.literalOffset];
     player.typedKeyStrokes = [];
     return player;
   }
