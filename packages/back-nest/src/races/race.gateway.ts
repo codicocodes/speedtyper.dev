@@ -8,37 +8,12 @@ import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
 import { RaceExceptions } from './race.exceptions';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
+import { Locker } from './services/locker.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
 import { KeyStroke } from './services/race-player.service';
 import { ResultsHandlerService } from './services/results-handler.service';
 import { SessionState } from './services/session-state.service';
-
-export class CallbackLocker {
-  lockedIDs: Set<string>;
-  constructor() {
-    this.lockedIDs = new Set<string>();
-  }
-
-  async run(lockID: string, callback: () => Promise<void>) {
-    if (this.lockedIDs.has(lockID)) {
-      console.log('Already locked...', lockID);
-      return;
-    }
-    console.log('Locking', lockID);
-    this.lockedIDs.add(lockID);
-    try {
-      await callback();
-    } finally {
-      console.log('Unlocking', lockID);
-      this.lockedIDs.delete(lockID);
-    }
-  }
-
-  release(id: string) {
-    this.lockedIDs.delete(id);
-  }
-}
 
 @WebSocketGateway(socketCors)
 export class RaceGateway {
@@ -46,17 +21,14 @@ export class RaceGateway {
   server: Server;
   logger = console;
 
-  manageRaceLock: CallbackLocker;
-
   constructor(
     private raceManager: RaceManager,
     private sessionState: SessionState,
     private raceEvents: RaceEvents,
     private addKeyStrokeService: AddKeyStrokeService,
     private resultHandler: ResultsHandlerService,
-  ) {
-    this.manageRaceLock = new CallbackLocker();
-  }
+    private manageRaceLock: Locker,
+  ) {}
 
   afterInit(server: Server) {
     this.logger.info('[SpeedTyper.dev] Websocket Server Started.');

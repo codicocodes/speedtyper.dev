@@ -5,6 +5,7 @@ import { RacesController } from './race.controllers';
 import { RaceGateway } from './race.gateway';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
 import { KeyStrokeValidationService } from './services/keystroke-validator.service';
+import { Locker } from './services/locker.service';
 import { ProgressService } from './services/progress.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
@@ -23,6 +24,7 @@ import { SessionState } from './services/session-state.service';
     RaceManager,
     ResultsHandlerService,
     SessionState,
+    Locker,
   ],
   exports: [RaceManager, RaceEvents, KeyStrokeValidationService],
 })
