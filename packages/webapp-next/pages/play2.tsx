@@ -43,7 +43,6 @@ function Play2Page({
   const challenge = useChallenge(socket);
   const gameID = useGameIdQueryParam();
 
-
   useEffect(() => {
     if (game.id && game.id !== gameID) {
       router.query["id"] = game.id;
