@@ -2,10 +2,10 @@ export const TwitchLogo = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="22"
-      height="22"
+      width="17"
+      height="17"
       fill="currentColor"
-      viewBox="0 0 16 16"
+      viewBox="0 0 18 18"
       className="fill-current"
     >
       <path d="M3.857 0L1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0H3.857zm9.714 7.429l-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142v6.286z" />

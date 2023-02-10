@@ -29,7 +29,7 @@ export function Footer() {
         <div className="w-full bg-dark-ocean">
           <AnimatePresence>
             <motion.div
-              className="flex items-center justify-center text-off-white"
+              className="flex items-center justify-center text-faded-gray"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
