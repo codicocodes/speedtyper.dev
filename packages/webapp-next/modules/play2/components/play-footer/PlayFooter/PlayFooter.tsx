@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { ButtonHTMLAttributes } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
-import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
@@ -93,6 +93,26 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
   );
 }
 
+interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  icon: React.ReactElement;
+  text: String;
+}
+
+function ActionButton({ text, icon, ...buttonProps }: ActionButtonProps) {
+  return (
+    <button
+      {...buttonProps}
+      style={{
+        fontFamily: "Fira Code",
+      }}
+      className="flex text-sm font-light text-dark-ocean items-center justify-between gap-2 rounded-3xl bg-gray-300 hover:bg-gray-400 hover:cursor-pointer px-3 py-1 my-1"
+    >
+      <div className="flex">{text}</div>
+      {icon}
+    </button>
+  );
+}
+
 function ActionButtons({ game }: { game: Game }) {
   const isMultiplayer = useIsMultiplayer();
   const isOwner = useIsOwner();
@@ -107,18 +127,17 @@ function ActionButtons({ game }: { game: Game }) {
   return (
     <div className="flex row text-faded-gray gap-1">
       {isOwner && (
-        <Button
-          color="invisible"
-          title="Reload the challenge"
-          size="sm"
+        <ActionButton
+          text="refresh"
+          title="Refresh the challenge"
           onClick={() => game.next()}
-          leftIcon={<ReloadIcon />}
+          icon={<ReloadIcon />}
         />
       )}
-      <Button
-        color="invisible"
-        title="Invite your friends to race"
-        size="sm"
+      <ActionButton
+        text="invite"
+        title="Invite your friends to play"
+        icon={<LinkIcon />}
         onClick={() => {
           const url = new URL(window.location.href);
           if (game.id) {
@@ -126,22 +145,19 @@ function ActionButtons({ game }: { game: Game }) {
           }
           copyToClipboard(url.toString(), `${url} copied to clipboard`);
         }}
-        leftIcon={<LinkIcon />}
       />
       {canManuallyStartGame && (
-        <div className="font-medium">
-          <Button
-            color="invisible"
-            title="Start the race"
-            size="sm"
-            text="Click to start"
-            onClick={startGame}
-            leftIcon={<PlayIcon />}
-          />
-        </div>
+        <ActionButton
+          title="Start the game"
+          text="start"
+          onClick={startGame}
+          icon={<PlayIcon />}
+        />
       )}
       {waitingForOwnerToStart && (
-        <span className="font-medium">Waiting for race to start</span>
+        <span className="flex text-sm font-light text-off-white items-center justify-between">
+          Waiting for race to start
+        </span>
       )}
     </div>
   );
