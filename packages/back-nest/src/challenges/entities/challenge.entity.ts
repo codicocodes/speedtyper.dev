@@ -10,6 +10,7 @@ import {
 import { UnsyncedFile } from './unsynced-file.entity';
 import { GithubAPI } from 'src/connectors/github/services/github-api';
 import { Result } from 'src/results/entities/result.entity';
+import { getTextWithoutTabs } from '../services/parser.service';
 
 @Entity()
 export class Challenge {
@@ -40,13 +41,14 @@ export class Challenge {
     challenge.sha = file.currentSha;
     challenge.treeSha = file.currentTreeSha;
     challenge.project = project;
-    challenge.content = node.text;
+    challenge.content = getTextWithoutTabs(node);
     challenge.url = GithubAPI.getBlobPermaLink(
       project.fullName,
       file.currentTreeSha,
       file.path,
       // NOTE: row is 0 indexed, while #L is 1 indexed
       node.startPosition.row + 1,
+      node.endPosition.row + 1,
     );
     return challenge;
   }

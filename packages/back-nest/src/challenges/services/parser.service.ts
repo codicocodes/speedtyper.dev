@@ -36,8 +36,7 @@ export class Parser {
       .filter((n) => this.filterLongNodes(n))
       .filter((n) => this.filterShortNodes(n))
       .filter((n) => this.filterTooLongLines(n))
-      .filter((n) => this.filterTooManyLines(n))
-      .map((n) => this.replaceTabsWithSpaces(n));
+      .filter((n) => this.filterTooManyLines(n));
     return nodes;
   }
 
@@ -74,11 +73,10 @@ export class Parser {
     }
     return true;
   }
+}
 
-  private replaceTabsWithSpaces(node: TSParser.SyntaxNode) {
-    const tab = '\t';
-    const spaces = '  ';
-    node.text = node.text.replaceAll(tab, spaces);
-    return node;
-  }
+export function getTextWithoutTabs(node: TSParser.SyntaxNode) {
+  const tab = '\t';
+  const spaces = '  ';
+  return node.text.replaceAll(tab, spaces);
 }

@@ -14,7 +14,7 @@ export class GithubAPI {
   private static REPOSITORY_URL = `${GithubAPI.REPOSITORIES_URL}/{fullName}`;
   private static TREE_URL = `${GithubAPI.REPOSITORY_URL}/git/trees/{sha}?recursive=true`;
   private static BLOB_URL = `${GithubAPI.REPOSITORY_URL}/git/blobs/{sha}`;
-  private static BLOB_HTML_PERMA_LINK = `https://github.com/{fullName}/blob/{treeSha}/{path}/#L{lineNumber}`;
+  private static BLOB_HTML_PERMA_LINK = `https://github.com/{fullName}/blob/{treeSha}/{path}/#L{startLine}-L{endLine}`;
 
   private token: string;
 
@@ -26,12 +26,14 @@ export class GithubAPI {
     fullName: string,
     treeSha: string,
     path: string,
-    lineNumber: number,
+    startLine: number,
+    endLine: number,
   ) {
     const url = GithubAPI.BLOB_HTML_PERMA_LINK.replace('{fullName}', fullName)
       .replace('{treeSha}', treeSha)
       .replace('{path}', path)
-      .replace('{lineNumber}', lineNumber.toString());
+      .replace('{startLine}', startLine.toString())
+      .replace('{endLine}', endLine.toString());
     return url;
   }
 
