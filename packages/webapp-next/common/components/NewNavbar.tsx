@@ -54,6 +54,7 @@ const ProfileSection = () => {
 };
 
 export const NewNavbar = () => {
+  const isPlaying = useIsPlaying();
   return (
     <header
       className="h-10 tracking-tighter"
@@ -64,14 +65,16 @@ export const NewNavbar = () => {
       <div className="w-full">
         <div className="flex items-center items-start py-2">
           <HomeLink />
-          <Link href="/play2">
-            <Button
-              size="sm"
-              color="invisible"
-              onClick={() => useGameStore.getState().game?.play()}
-              leftIcon={<TerminalIcon />}
-            />
-          </Link>
+          {!isPlaying && (
+            <Link href="/play2">
+              <Button
+                size="sm"
+                color="invisible"
+                onClick={() => useGameStore.getState().game?.play()}
+                leftIcon={<TerminalIcon />}
+              />
+            </Link>
+          )}
           <ProfileSection />
         </div>
       </div>
