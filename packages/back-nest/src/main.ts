@@ -18,7 +18,6 @@ async function runServer() {
     origin: getAllowedOrigins(),
     credentials: true,
   });
-  console.log('Enabling cors for origins: ', getAllowedOrigins());
   app.use(sessionMiddleware);
   app.use(guestUserMiddleware);
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
