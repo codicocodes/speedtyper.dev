@@ -21,7 +21,7 @@ const nextConfig = {
         : "http://localhost:5001",
     experimentalServerUrl:
       process.env.NODE_ENV === "production"
-        ? "https://speedtyperdev-production.up.railway.app"
+        ? "v3.speedtyper.dev"
         : "http://localhost:1337",
   },
 };
