@@ -1,4 +1,5 @@
 import { Exclude, instanceToPlain } from 'class-transformer';
+import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
 
 export interface KeyStroke {
@@ -27,6 +28,9 @@ export class RacePlayer {
 
   @Exclude()
   typedKeyStrokes: KeyStroke[];
+
+  @Exclude()
+  literalService: LiteralService;
 
   toJSON() {
     return instanceToPlain(this);
@@ -75,8 +79,9 @@ export class RacePlayer {
   updateLiteral(code: string, keyStroke: KeyStroke) {
     const untypedCode = code.substring(keyStroke.index);
     const nextLiteral = this.literals[this.literalOffset + 1];
-    const startsWithNextLiteral = untypedCode
-      .trimStart()
+    const startsWithNextLiteral = this.literalService
+      .calculateLiterals(untypedCode.trimStart())
+      .join('')
       .startsWith(nextLiteral);
     if (startsWithNextLiteral && this.literals.length > 1) {
       this.literalOffset++;
@@ -93,6 +98,7 @@ export class RacePlayer {
     player.recentlyTypedLiteral = player.literals[0];
     player.literalOffset = 0;
     player.typedKeyStrokes = [];
+    player.literalService = new LiteralService();
     return player;
   }
 }
