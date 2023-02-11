@@ -10,7 +10,8 @@ const GLOBAl_API_PREFIX = 'api';
 
 async function runServer() {
   const port = process.env.PORT || 1337;
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.set('trust proxy', 1);
   const sessionMiddleware = getSessionMiddleware();
   app.enableCors({
     origin: getAllowedOrigins(),
