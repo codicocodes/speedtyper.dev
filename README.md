@@ -38,13 +38,6 @@
   <img src="https://user-images.githubusercontent.com/76068197/187993983-6133fe16-46ed-45f7-a459-fa798bda4a92.png" alt="Twitch Stream" width="auto" height="50px"/>
 </a>
 
-## Roadmap 🛣️
-
-- [ ] Improve scraping and parsing of code sources so that it's easier to add snippets and all snippets are correctly formatted
-- [ ] Reintroduce practice mode without a countdown
-- [ ] Remove public race mode and introduce a daily challenge
-- [ ] Improve design and usability of user page
-
 ## License 📜
 
 speedtyper.dev is open source software licensed as [MIT](https://github.com/codicocodes/speedtyper.dev/blob/main/LICENSE).
