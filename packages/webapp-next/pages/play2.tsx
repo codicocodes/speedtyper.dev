@@ -22,6 +22,7 @@ import {
 } from "../common/state/user-store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { getExperimentalServerUrl } from "../common/utils/getServerUrl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -43,13 +44,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Play2Page({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  fetchUser().then((userWithCookie) => {
-    console.log({ user, userWithCookie });
-    useUserStore.setState((userStore) => ({
-      ...userStore,
-      ...userWithCookie,
-    }));
-  });
+  const serverUrl = getExperimentalServerUrl();
+  const url = serverUrl + "/api/user";
+  fetch(url, {
+    credentials: "include",
+  })
+    .then((resp) => {
+      const setCookie = resp.headers.get("set-cookie");
+      console.log({ setCookie });
+      return resp.json();
+    })
+    .then((userWithCookie) => {
+      console.log({ user, userWithCookie });
+      useUserStore.setState((userStore) => ({
+        ...userStore,
+        ...userWithCookie,
+      }));
+    });
   useInitializeUserStore(user);
   const router = useRouter();
   const isCompleted = useIsCompleted();
