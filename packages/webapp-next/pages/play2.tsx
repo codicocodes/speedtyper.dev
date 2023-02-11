@@ -34,6 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Play2Page({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log("loaded user", { user });
   useInitializeUserStore(user);
   const router = useRouter();
   const isCompleted = useIsCompleted();
