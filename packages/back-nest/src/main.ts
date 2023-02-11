@@ -8,6 +8,7 @@ import { getSessionMiddleware } from './sessions/session.middleware';
 const GLOBAl_API_PREFIX = 'api';
 
 async function runServer() {
+  const port = process.env.PORT || 1337;
   const app = await NestFactory.create(AppModule);
   const sessionMiddleware = getSessionMiddleware();
   app.enableCors({
@@ -20,7 +21,7 @@ async function runServer() {
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
   app.setGlobalPrefix(GLOBAl_API_PREFIX);
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(1337);
+  await app.listen(port);
 }
 
 runServer();
