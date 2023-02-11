@@ -24,7 +24,7 @@ export const getSessionMiddleware = () => {
       maxAge: ONE_DAY,
       ...(process.env.NODE_ENV === 'production'
         ? {
-            domain: 'speedtyper.dev',
+            domain: '.speedtyper.dev',
           }
         : {}),
     },
