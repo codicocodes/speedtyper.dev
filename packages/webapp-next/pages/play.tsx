@@ -290,20 +290,6 @@ const Play = () => {
           )}
           {challenge ? (
             <div className="flex w-full">
-              <div className="flex flex-grow items-center">
-                <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold text-faded-gray">
-                  Tab
-                </h1>
-                <span className="mx-1 text-sm text-faded-gray">
-                  - Next Challenge
-                </span>
-                <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2 text-faded-gray">
-                  Enter
-                </h1>
-                <span className="mx-1 text-sm text-faded-gray">
-                  - Start Challenge
-                </span>
-              </div>
               <ChallengeInfo challenge={challenge} />
             </div>
           ) : null}

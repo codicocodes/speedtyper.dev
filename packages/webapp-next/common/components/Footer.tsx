@@ -15,6 +15,21 @@ function useStargazersCount() {
   return count;
 }
 
+export function KeybindInfo() {
+  return (
+    <div className="flex flex-grow items-center">
+      <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold text-faded-gray">
+        Tab
+      </h1>
+      <span className="mx-1 text-sm text-faded-gray">- Next Challenge</span>
+      <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2 text-faded-gray">
+        Enter
+      </h1>
+      <span className="mx-1 text-sm text-faded-gray">- Start Challenge</span>
+    </div>
+  );
+}
+
 export function Footer() {
   const isPlaying = useIsPlaying();
   const stargazersCount = useStargazersCount();
@@ -35,6 +50,7 @@ export function Footer() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
+              <KeybindInfo />
               <a
                 href="https://github.com/codicocodes/speedtyper.dev"
                 target="blank"
