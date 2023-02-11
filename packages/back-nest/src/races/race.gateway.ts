@@ -43,9 +43,8 @@ export class RaceGateway {
     );
     const raceId = await this.sessionState.getRaceID(socket);
     const user = await this.sessionState.getUser(socket);
-    this.raceManager.leaveRace(user, raceId);
-    this.sessionState.removeRaceID(socket);
-    this.raceEvents.leftRace(socket, user, raceId);
+    await this.raceManager.leaveRace(socket, user, raceId);
+    await this.sessionState.removeRaceID(socket);
     this.manageRaceLock.release(socket.id);
   }
 
@@ -53,6 +52,7 @@ export class RaceGateway {
     this.logger.info(
       `Client connected: ${socket.request.session.user.username}`,
     );
+    socket.request.session.save();
   }
 
   @UseFilters(new RaceExceptions())
@@ -76,14 +76,13 @@ export class RaceGateway {
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
     const socketID = socket.id;
-    console.log('play', socketID);
     await this.manageRaceLock.run(socketID, async () => {
       const user = await this.sessionState.getUser(socket);
       const raceId = await this.sessionState.getRaceID(socket);
-      this.raceManager.leaveRace(user, raceId);
+      await this.raceManager.leaveRace(socket, user, raceId);
       const race = await this.raceManager.create(user);
       this.raceEvents.createdRace(socket, race);
-      this.sessionState.saveRaceID(socket, race.id);
+      await this.sessionState.saveRaceID(socket, race.id);
     });
   }
 
@@ -101,7 +100,7 @@ export class RaceGateway {
     this.manageRaceLock.run(socket.id, async () => {
       const user = await this.sessionState.getUser(socket);
       const raceID = await this.sessionState.getRaceID(socket);
-      this.raceManager.leaveRace(user, raceID);
+      await this.raceManager.leaveRace(socket, user, raceID);
       const race = this.raceManager.join(user, id);
       if (!race) {
         console.log('no race...');
@@ -116,7 +115,7 @@ export class RaceGateway {
         return this.onPlay(socket);
       }
       this.raceEvents.joinedRace(socket, race, user);
-      this.sessionState.saveRaceID(socket, id);
+      await this.sessionState.saveRaceID(socket, id);
     });
   }
 

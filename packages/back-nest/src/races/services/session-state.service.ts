@@ -20,13 +20,23 @@ export class SessionState {
     });
   }
 
-  saveRaceID(socket: Socket, id: string) {
-    socket.request.session.raceId = id;
-    socket.request.session.save();
+  async saveRaceID(socket: Socket, id: string) {
+    return new Promise<void>((resolve) => {
+      socket.request.session.raceId = id;
+      socket.request.session.save(() => {
+        resolve();
+      });
+    });
   }
 
-  removeRaceID(socket: Socket) {
-    socket.request.session.raceId = null;
-    socket.request.session.save();
+  async removeRaceID(socket: Socket) {
+    const raceID = socket.request.session.raceId;
+    await socket.leave(raceID);
+    return new Promise<void>(async (resolve) => {
+      socket.request.session.raceId = null;
+      socket.request.session.save(() => {
+        resolve();
+      });
+    });
   }
 }

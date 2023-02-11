@@ -20,10 +20,9 @@ export class SaveResultRequestValidator {
   validate(request: Request) {
     const raceId = request.session.raceId;
     const user = request.session.user;
-    const userId = user.id;
     this.validateUser(user);
-    this.validateRace(raceId, userId);
-    this.validateKeyStrokes(raceId, userId);
+    this.validateRace(raceId, user.id);
+    this.validateKeyStrokes(raceId, user.id);
   }
 
   validateKeyStrokes(raceId: string, userId: string) {

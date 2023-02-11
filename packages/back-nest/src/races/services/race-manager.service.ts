@@ -1,10 +1,18 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Socket } from 'socket.io';
 import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
+import { RaceEvents } from './race-events.service';
 import { RacePlayer } from './race-player.service';
 import { Race } from './race.service';
+
+export interface PublicRace {
+  id: string;
+  ownerName: string;
+  memberCount: number;
+}
 
 @Injectable()
 export class RaceManager {
@@ -13,10 +21,15 @@ export class RaceManager {
   constructor(
     private challengeService: ChallengeService,
     private literalsService: LiteralService,
+    private raceEvents: RaceEvents,
   ) {}
 
-  getPublicRaces() {
-    return Object.values(this.races);
+  getPublicRaces(): PublicRace[] {
+    const races = Object.values(this.races);
+    const publicRaces = races.map((race) => {
+      return race.toPublic();
+    });
+    return publicRaces;
   }
 
   syncUser(raceId: string, prevUserId: string, user: User) {
@@ -93,7 +106,7 @@ export class RaceManager {
     return race;
   }
 
-  leaveRace(user: User, raceId: string) {
+  async leaveRace(socket: Socket, user: User, raceId: string) {
     const race = this.races[raceId];
     if (!race) return;
     race.removeMember(user);
@@ -102,6 +115,8 @@ export class RaceManager {
     } else if (race.owner === user.id) {
       race.owner = Object.values(race.members)[0].id;
     }
+    await socket.leave(raceId);
+    this.raceEvents.leftRace(socket, user, raceId);
   }
 
   isOwner(userId: string, raceId: string): boolean {

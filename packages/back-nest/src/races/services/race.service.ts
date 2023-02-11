@@ -4,6 +4,12 @@ import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { User } from 'src/users/entities/user.entity';
 import { RacePlayer } from './race-player.service';
 
+export interface PublicRace {
+  id: string;
+  ownerName: string;
+  memberCount: number;
+}
+
 export class Race {
   id: string;
   challenge: Challenge;
@@ -17,6 +23,15 @@ export class Race {
 
   startTime?: Date;
   countdown: boolean;
+  toPublic(): PublicRace {
+    const ownerName = this.members[this.owner].username;
+    const memberCount = Object.keys(this.members).length;
+    return {
+      id: this.id,
+      ownerName,
+      memberCount,
+    };
+  }
 
   toJSON() {
     return instanceToPlain(this);
