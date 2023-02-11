@@ -13,14 +13,11 @@ const ProgressBar = ({
 }) => {
   const hoverColor = me ? "hover:bg-purple-600" : "hover:bg-purple-300";
 
-  const meRef = useRef(null);
-
   return (
     <div
       className={`flex flex-row items-center align-middle text-md border-l-8  ${
         me ? "border-purple-400" : "border-transparent"
       } p-2 pl-4`}
-      ref={me ? meRef : null}
     >
       {
         <span
