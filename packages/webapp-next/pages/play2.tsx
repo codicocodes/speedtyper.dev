@@ -37,15 +37,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Play2Page({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  fetchUser()
-    .then((res) => res.json())
-    .then((userWithCookie) => {
-      console.log({ user, userWithCookie });
-      useUserStore.setState((userStore) => ({
-        ...userStore,
-        ...userWithCookie,
-      }));
-    });
+  fetchUser().then((userWithCookie) => {
+    console.log({ user, userWithCookie });
+    useUserStore.setState((userStore) => ({
+      ...userStore,
+      ...userWithCookie,
+    }));
+  });
   useInitializeUserStore(user);
   const router = useRouter();
   const isCompleted = useIsCompleted();
