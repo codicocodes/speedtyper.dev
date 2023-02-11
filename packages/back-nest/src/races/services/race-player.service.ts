@@ -74,9 +74,11 @@ export class RacePlayer {
 
   updateLiteral(code: string, keyStroke: KeyStroke) {
     const untypedCode = code.substring(keyStroke.index);
-    const literal = this.literals[0];
-    const startsWithLiteral = untypedCode.trimStart().startsWith(literal);
-    if (startsWithLiteral && this.literals.length > 1) {
+    const nextLiteral = this.literals[this.literalOffset + 1];
+    const startsWithNextLiteral = untypedCode
+      .trimStart()
+      .startsWith(nextLiteral);
+    if (startsWithNextLiteral && this.literals.length > 1) {
       this.literalOffset++;
     }
   }
@@ -87,9 +89,9 @@ export class RacePlayer {
     player.raceId = raceId;
     player.username = user.username;
     player.progress = 0;
-    player.literalOffset = 0;
     player.literals = literals;
-    player.recentlyTypedLiteral = player.literals[player.literalOffset];
+    player.recentlyTypedLiteral = player.literals[0];
+    player.literalOffset = 0;
     player.typedKeyStrokes = [];
     return player;
   }
