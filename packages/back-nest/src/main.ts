@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { getAllowedOrigins } from './config/cors';
 import { guestUserMiddleware } from './middlewares/guest-user';
 import { SessionAdapter } from './sessions/session.adapter';
 import { getSessionMiddleware } from './sessions/session.middleware';
@@ -12,8 +13,7 @@ async function runServer() {
   const app = await NestFactory.create(AppModule);
   const sessionMiddleware = getSessionMiddleware();
   app.enableCors({
-    // TODO: Fix for production
-    origin: ['http://localhost:3001'],
+    origin: getAllowedOrigins(),
     credentials: true,
   });
   app.use(sessionMiddleware);
