@@ -76,7 +76,9 @@ export class Parser {
   }
 
   private replaceTabsWithSpaces(node: TSParser.SyntaxNode) {
-    node.text = node.text.replaceAll('\t', '  ');
+    const tab = '\t';
+    const spaces = '  ';
+    node.text = node.text.replaceAll(tab, spaces);
     return node;
   }
 }
