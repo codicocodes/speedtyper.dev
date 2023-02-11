@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { BattleIcon } from "../../assets/icons/BattleIcon";
 import { UserGroupIcon } from "../../assets/icons/UserGroupIcon";
 import { useGameStore } from "../../modules/play2/state/game-store";
+import { getExperimentalServerUrl } from "../utils/getServerUrl";
 import { Overlay } from "./Overlay";
 
 export const BattleMatcher: React.FC = () => {
@@ -55,8 +56,9 @@ interface BattleMatcherModalProps {
 
 const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
   const raceID = useGameStore((state) => state.id);
+  const baseUrl = getExperimentalServerUrl();
   const { data } = useSWR(
-    "http://localhost:1337/api/races",
+    `${baseUrl}/api/races`,
     (...args) => fetch(...args).then((res) => res.json()),
     { refreshInterval: 10000 }
   );
