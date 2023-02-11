@@ -16,7 +16,10 @@ import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam"
 import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
-import { useInitializeUserStore } from "../common/state/user-store";
+import {
+  useInitializeUserStore,
+  useUserStore,
+} from "../common/state/user-store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -34,7 +37,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function Play2Page({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log("loaded user", { user });
+  fetchUser()
+    .then((res) => res.json())
+    .then((userWithCookie) => {
+      console.log({ user, userWithCookie });
+      useUserStore.setState((userStore) => ({
+        ...userStore,
+        ...userWithCookie,
+      }));
+    });
   useInitializeUserStore(user);
   const router = useRouter();
   const isCompleted = useIsCompleted();
