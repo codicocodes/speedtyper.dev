@@ -19,7 +19,6 @@ import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import useSWR from "swr";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const user = await fetchUser(context).catch(() => {
