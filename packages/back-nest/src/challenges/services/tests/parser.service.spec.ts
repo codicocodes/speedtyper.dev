@@ -49,7 +49,7 @@ describe('getFormattedText', () => {
     expect(parsed).toEqual(output);
   });
   it('should replace tabs with spaces', () => {
-    const parsed = getFormattedText(trippleNewLineInput);
+    const parsed = getFormattedText(inputWithTabs);
     expect(parsed).toEqual(output);
   });
 });
