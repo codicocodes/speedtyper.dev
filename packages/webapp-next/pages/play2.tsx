@@ -24,14 +24,20 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const user = await fetchUser(context).catch(() => {
-    return null;
-  });
-  return {
-    props: {
-      user,
-    },
-  };
+  try {
+    const user = await fetchUser(context);
+    return {
+      props: {
+        user,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        user: null,
+      },
+    };
+  }
 };
 
 function Play2Page({
