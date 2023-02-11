@@ -23,6 +23,7 @@ export class Race {
 
   startTime?: Date;
   countdown: boolean;
+  isPublic: boolean;
   toPublic(): PublicRace {
     const ownerName = this.members[this.owner].username;
     const memberCount = Object.keys(this.members).length;
@@ -46,6 +47,7 @@ export class Race {
     this.timeouts = [];
     this.countdown = false;
     this.addMember(owner);
+    this.isPublic = false;
   }
 
   start() {

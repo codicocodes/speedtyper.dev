@@ -26,9 +26,11 @@ export class RaceManager {
 
   getPublicRaces(): PublicRace[] {
     const races = Object.values(this.races);
-    const publicRaces = races.map((race) => {
-      return race.toPublic();
-    });
+    const publicRaces = races
+      .filter((race) => race.isPublic)
+      .map((race) => {
+        return race.toPublic();
+      });
     return publicRaces;
   }
 
