@@ -35,9 +35,11 @@ export class AddKeyStrokeService {
     const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     player.addKeyStroke(keyStroke);
-    player.progress = this.progressService.calculateProgress(player);
-    const code = this.manager.getCode(raceId);
-    player.updateLiteral(code, keyStroke);
-    this.events.progressUpdated(socket, raceId, player);
+    if (keyStroke.correct) {
+      player.progress = this.progressService.calculateProgress(player);
+      const code = this.manager.getCode(raceId);
+      player.updateLiteral(code, keyStroke);
+      this.events.progressUpdated(socket, raceId, player);
+    }
   }
 }
