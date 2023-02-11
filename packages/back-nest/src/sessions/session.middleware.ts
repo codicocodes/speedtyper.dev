@@ -5,7 +5,9 @@ import { Session } from './session.entity';
 
 const SESSION_SECRET_MIN_LENGTH = 12;
 
-export const cookieName = 'speedtyper-sid';
+const ONE_DAY = 1000 * 60 * 60 * 24;
+
+export const cookieName = 'speedtyper-v2-sid';
 
 export const getSessionMiddleware = () => {
   const sessionRepository = PostgresDataSource.getRepository(Session);
@@ -19,6 +21,7 @@ export const getSessionMiddleware = () => {
       httpOnly: true,
       sameSite: 'lax',
       secure: !!(process.env.NODE_ENV === 'production'),
+      maxAge: ONE_DAY,
     },
   });
 };
