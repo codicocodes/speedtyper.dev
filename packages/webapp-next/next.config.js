@@ -21,7 +21,7 @@ const nextConfig = {
         : "http://localhost:5001",
     experimentalServerUrl:
       process.env.NODE_ENV === "production"
-        ? "v3.speedtyper.dev"
+        ? "https://v3.speedtyper.dev"
         : "http://localhost:1337",
   },
 };
