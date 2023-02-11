@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -45,7 +46,17 @@ export class GithubAPI {
         },
       }),
     );
+    this.logRateLimit(resp);
     return resp.data;
+  }
+
+  private logRateLimit(resp: AxiosResponse) {
+    const rateLimitResetSeconds = resp.headers['x-ratelimit-reset'];
+    const resetDate = new Date(parseInt(rateLimitResetSeconds) * 1000);
+    const rateLimitRemaining = resp.headers['x-ratelimit-remaining'];
+    console.log(
+      `GH Rate Limiting. Remaining: ${rateLimitRemaining} Reset: ${resetDate}`,
+    );
   }
 
   async fetchRepository(fullName: string): Promise<GithubRepository> {
