@@ -54,14 +54,12 @@ interface BattleMatcherModalProps {
 }
 
 const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
-  // const raceID = useGameStore((state) => state.id);
-
+  const raceID = useGameStore((state) => state.id);
   const { data } = useSWR(
     "http://localhost:1337/api/races",
     (...args) => fetch(...args).then((res) => res.json()),
     { refreshInterval: 10000 }
   );
-
   return (
     <Overlay onOverlayClick={closeModal}>
       <div
@@ -75,9 +73,11 @@ const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
           // TODO: Show a loading indicator when isLoading=true
         }
         {data &&
-          data.map((race: any, i: number) => (
-            <BatteListItem key={i} race={race} closeModal={closeModal} />
-          ))}
+          data
+            .filter((race: any) => race.id !== raceID)
+            .map((race: any, i: number) => (
+              <BatteListItem key={i} race={race} closeModal={closeModal} />
+            ))}
       </div>
     </Overlay>
   );
