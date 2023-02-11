@@ -1,9 +1,7 @@
 export const getAllowedOrigins = () => {
-  return [
-    process.env.NODE_ENV === 'production'
-      ? 'https://speedtyper.dev'
-      : 'http://localhost:3001',
-  ];
+  return process.env.NODE_ENV === 'production'
+    ? ['https://speedtyper.dev', 'https://www.speedtyper.dev']
+    : ['http://localhost:3001'];
 };
 
 export const socketCors = {
