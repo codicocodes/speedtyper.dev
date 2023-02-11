@@ -15,6 +15,15 @@ export class Game {
     this.listenForRaceCompleted();
     this.listenForRaceDoesNotExist();
     this.listenForDisconnect();
+    this.socket.subscribe("challenge_selected", () => {
+      useGameStore.setState((game) => {
+        return {
+          ...game,
+          results: {},
+          myResult: undefined,
+        };
+      });
+    });
   }
 
   get id() {
@@ -101,8 +110,10 @@ export class Game {
       const userId = useUserStore.getState().id;
       const isMyResult = userId === result.user.id;
       useGameStore.setState((game) => {
-        const results = game.results;
-        results.push(result);
+        const results = {
+          ...game.results,
+          [result.user.id]: result,
+        };
         return {
           ...game,
           results,

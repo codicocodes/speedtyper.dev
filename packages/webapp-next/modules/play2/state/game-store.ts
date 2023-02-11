@@ -8,7 +8,7 @@ export interface GameState {
   owner?: string;
   connected: boolean;
   members: Record<string, RacePlayer>;
-  results: RaceResult[];
+  results: Record<string, RaceResult>;
   myResult?: RaceResult;
   countdown?: number;
   game?: Game;
@@ -36,7 +36,7 @@ export interface RaceResult {
 export const useGameStore = create<GameState>((_set, _get) => ({
   connected: true,
   members: {},
-  results: [],
+  results: {},
 }));
 
 export const useCanType = () => {

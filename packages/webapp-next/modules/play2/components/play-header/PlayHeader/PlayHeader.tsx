@@ -1,18 +1,68 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CrownIcon } from "../../../../../assets/icons/CrownIcon";
+import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
+import cpmToWpm from "../../../../../utils/cpmToWpm";
 import {
   RacePlayer,
+  RaceResult,
   useGameStore,
   useIsMultiplayer,
 } from "../../../state/game-store";
 
-export function ProgressContainer() {
-  const members = useGameStore((state) => state.members);
+export function ResultsContainer() {
+  const results = useGameStore((state) => state.results);
   return (
+    <div className="my-2">
+      {Object.values(results).map((result, i) => {
+        const place = i + 1;
+        return <Result key={i} result={result} place={place} />;
+      })}
+    </div>
+  );
+}
+
+export function ProgressContainer() {
+  const isMultiplayer = useIsMultiplayer();
+  const members = useGameStore((state) => state.members);
+  return isMultiplayer ? (
     <div className="my-2">
       {Object.values(members).map((player) => {
         return <ProgressBar key={player.id} player={player} />;
       })}
+    </div>
+  ) : null;
+}
+
+interface ResultProps {
+  result: RaceResult;
+  place: number;
+}
+
+export function Result({ result, place }: ResultProps) {
+  return (
+    <div className="flex row w-full items-center bg-dark-lake rounded-lg px-3 py-2 my-2">
+      <span className="flex w-48 ml-1 mr-4 text-sm font-semibold truncate">
+        {result.user.username}
+      </span>
+      <div className="flex w-full gap-2">
+        <span className="flex font-semibold text-xs rounded-lg px-2 py-1 bg-purple-300 text-dark-ocean">
+          {place} place
+        </span>
+        <div className="flex flex-grow justify-end gap-2">
+          <span className="font-semibold text-xs rounded-lg px-2 py-1 bg-gray-700">
+            {cpmToWpm(result.cpm)} wpm
+          </span>
+          <span className="font-semibold text-xs rounded-lg px-2 py-1 bg-gray-700">
+            {result.accuracy}% accuracy
+          </span>
+          <span className="font-semibold text-xs rounded-lg px-2 py-1 bg-gray-700">
+            {toHumanReadableTime(Math.floor(result.timeMS / 1000))}
+          </span>
+          <span className="font-semibold text-xs rounded-lg px-2 py-1 bg-gray-700">
+            {result.mistakes} mistakes
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -48,10 +98,10 @@ export function Progress({ progress, word }: ProgressProps) {
 }
 
 export function ProgressBar({ player }: ProgressBarProps) {
-  const isMultiplayer = useIsMultiplayer();
   const ownerId = useGameStore.getState().owner;
   const isOwner = ownerId === player.id;
-  return isMultiplayer ? (
+  const isCompleted = player.progress === 100;
+  return !isCompleted ? (
     <div className="flex row w-full items-center bg-dark-lake rounded-lg px-3 py-2 my-2">
       <span className="flex w-48 ml-1 mr-4 text-sm font-semibold truncate">
         {player.username}
@@ -77,6 +127,7 @@ export function PlayHeader() {
           transition={{ duration: 0.5 }}
           className="w-full"
         >
+          <ResultsContainer />
           <ProgressContainer />
         </motion.div>
       </AnimatePresence>
