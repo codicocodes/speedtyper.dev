@@ -22,6 +22,11 @@ export const getSessionMiddleware = () => {
       sameSite: 'none',
       secure: !!(process.env.NODE_ENV === 'production'),
       maxAge: ONE_DAY,
+      ...(process.env.NODE_ENV === 'production'
+        ? {
+            domain: 'speedtyper.dev',
+          }
+        : {}),
     },
   });
 };
