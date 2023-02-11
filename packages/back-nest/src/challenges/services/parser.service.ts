@@ -75,8 +75,26 @@ export class Parser {
   }
 }
 
-export function getTextWithoutTabs(node: TSParser.SyntaxNode) {
+export function removeDuplicateNewLines(rawText: string) {
+  const newLine = '\n';
+  const duplicateNewLine = '\n\n';
+  let newRawText = rawText;
+  let prevRawText = rawText;
+  do {
+    prevRawText = newRawText;
+    newRawText = newRawText.replaceAll(duplicateNewLine, newLine);
+  } while (newRawText !== prevRawText);
+  return newRawText;
+}
+
+export function replaceTabsWithSpaces(rawText: string) {
   const tab = '\t';
   const spaces = '  ';
-  return node.text.replaceAll(tab, spaces);
+  return rawText.replaceAll(tab, spaces);
+}
+
+export function getFormattedText(rawText: string) {
+  rawText = replaceTabsWithSpaces(rawText);
+  rawText = removeDuplicateNewLines(rawText);
+  return rawText;
 }

@@ -10,7 +10,7 @@ import {
 import { UnsyncedFile } from './unsynced-file.entity';
 import { GithubAPI } from 'src/connectors/github/services/github-api';
 import { Result } from 'src/results/entities/result.entity';
-import { getTextWithoutTabs } from '../services/parser.service';
+import { getFormattedText } from '../services/parser.service';
 
 @Entity()
 export class Challenge {
@@ -41,7 +41,7 @@ export class Challenge {
     challenge.sha = file.currentSha;
     challenge.treeSha = file.currentTreeSha;
     challenge.project = project;
-    challenge.content = getTextWithoutTabs(node);
+    challenge.content = getFormattedText(node.text);
     challenge.url = GithubAPI.getBlobPermaLink(
       project.fullName,
       file.currentTreeSha,
