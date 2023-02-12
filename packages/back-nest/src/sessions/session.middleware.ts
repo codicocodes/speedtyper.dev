@@ -19,7 +19,7 @@ export const getSessionMiddleware = () => {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
       maxAge: ONE_DAY,
       ...(process.env.NODE_ENV === 'production'
