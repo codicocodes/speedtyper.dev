@@ -1,9 +1,7 @@
 import { useFocusRef } from "../hooks/useFocusRef";
-import { useNodeRect } from "../hooks/useNodeRect";
 import { useCodeStore } from "../state/code-store";
 import { CodeArea } from "../components/CodeArea";
 import { HiddenCodeInput } from "../components/HiddenCodeInput";
-import { SmoothCaret } from "../components/SmoothCaret";
 import { TypedChars } from "../components/TypedChars";
 import { NextChar } from "../components/NextChar";
 import { IncorrectChars } from "../components/IncorrectChars";
