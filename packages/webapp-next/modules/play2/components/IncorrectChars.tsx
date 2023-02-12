@@ -13,7 +13,7 @@ export function IncorrectChars() {
         const bgColor =
           isOnlySpace(chars) && chars.length > 1 ? "" : "bg-red-500";
         return (
-          <span key={index} className={`${bgColor} py-1`}>
+          <span key={index} className={`${bgColor} pb-1 pt-2`}>
             {chars}
           </span>
         );

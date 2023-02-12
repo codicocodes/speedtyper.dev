@@ -28,7 +28,7 @@ export function NextChar({ focused }: NextCharProps) {
       <motion.span
         ref={nextCharRef}
         animate={controls}
-        className="rounded-sm py-1"
+        className="rounded-sm pb-1 pt-2"
         transition={{
           duration: 1,
           repeat: Infinity,
