@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Challenge } from 'src/challenges/entities/challenge.entity';
-import { RaceManager } from 'src/races/services/race-manager.service';
 import { RacePlayer } from 'src/races/services/race-player.service';
+import { Race } from 'src/races/services/race.service';
 
 @Injectable()
 export class ResultCalculationService {
-  getTimeMS(player: RacePlayer): number {
+  getTimeMS(race: Race, player: RacePlayer): number {
+    const firstTimeStampMS = race.startTime.getTime();
     const keyStrokes = player.validKeyStrokes();
-    const firstTimeStampMS = keyStrokes[0].timestamp;
     const lastTimeStampMS = keyStrokes[keyStrokes.length - 1].timestamp;
     return lastTimeStampMS - firstTimeStampMS;
   }
