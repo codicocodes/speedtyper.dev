@@ -66,6 +66,7 @@ export function WarningContainer() {
         fetchRaceStatus(raceId).then(({ ok }) => {
           setRaceExistsInServer(ok);
         });
+        updateUserInStore();
       }
       setIsDisconnected(false);
       socket.socket.connect();

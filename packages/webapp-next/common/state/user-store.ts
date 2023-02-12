@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import create from "zustand";
+import { fetchUser } from "../api/user";
 
 export interface User {
   id: string;
@@ -22,4 +23,12 @@ export const useInitializeUserStore = (user: User) => {
       ...user,
     }));
   }, [user]);
+};
+
+export const updateUserInStore = async () => {
+  const user = await fetchUser();
+  useUserStore.setState((userStore) => ({
+    ...userStore,
+    ...user,
+  }));
 };
