@@ -22,8 +22,13 @@ export class Race {
   timeouts: NodeJS.Timeout[];
 
   startTime?: Date;
+
+  @Exclude()
   countdown: boolean;
+
+  @Exclude()
   isPublic: boolean;
+
   toPublic(): PublicRace {
     const ownerName = this.members[this.owner].username;
     const memberCount = Object.keys(this.members).length;
