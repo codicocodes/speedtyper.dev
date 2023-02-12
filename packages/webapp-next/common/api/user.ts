@@ -11,7 +11,6 @@ const withCookie = (ctx?: ServerSideContext) => {
 const withSetHeaders = (resp: Response, ctx?: ServerSideContext) => {
   const setCookie = resp.headers.get("set-cookie");
   if (ctx && setCookie) {
-    console.log({ setCookie });
     ctx.res.setHeader("set-cookie", setCookie);
   }
   return resp;
