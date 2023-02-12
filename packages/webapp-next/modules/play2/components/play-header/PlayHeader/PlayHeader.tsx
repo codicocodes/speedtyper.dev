@@ -10,15 +10,16 @@ import {
 } from "../../../state/game-store";
 
 export function ResultsContainer() {
+  const isMultiplayer = useIsMultiplayer();
   const results = useGameStore((state) => state.results);
-  return (
+  return isMultiplayer ? (
     <div className="my-2">
       {Object.values(results).map((result, i) => {
         const place = i + 1;
         return <Result key={i} result={result} place={place} />;
       })}
     </div>
-  );
+  ) : null;
 }
 
 export function ProgressContainer() {
