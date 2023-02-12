@@ -22,28 +22,42 @@ export class KeyStrokeValidationService {
     }
   }
 
+  getCurrentInputBeforeKeystroke(player: RacePlayer, keystroke: KeyStroke) {
+    const currentInputBeforeKey = player
+      .validKeyStrokes()
+      .filter((stroke) => stroke.index < keystroke.index)
+      .map((stroke) => stroke.key)
+      .join('');
+    return currentInputBeforeKey;
+  }
+
   validateKeyStroke(player: RacePlayer, recentKeyStroke: KeyStroke) {
     this.validateRaceStarted(player.raceId);
-    const currentInput = player.getValidInput() + recentKeyStroke.key;
+    const currentInputBeforeKey = this.getCurrentInputBeforeKeystroke(
+      player,
+      recentKeyStroke,
+    );
+    const currentInput = currentInputBeforeKey + recentKeyStroke.key;
     const strippedCode = this.getStrippedCode(player.raceId, recentKeyStroke);
     const correct = currentInput === strippedCode;
-    if (recentKeyStroke.correct !== correct) {
-      throw new Error('Unexpected keystroke');
+    if (recentKeyStroke.correct && recentKeyStroke.correct !== correct) {
+      throw new Error(
+        `Unexpected keystroke: KeyStroke.correct=${recentKeyStroke.correct} expected=${correct}`,
+      );
     }
-    recentKeyStroke.correct = correct;
   }
 
   validateRaceStarted(raceID: string) {
     const race = this.raceManager.getRace(raceID);
-    if (!race.startTime && Object.keys(race.members).length > 1) {
-      throw new Error('Unexpected keystroke');
+    if (!race.startTime && race.isMultiplayer()) {
+      throw new Error('Unexpected keystroke: Race not started.');
     }
   }
 
-  private getStrippedCode(raceId: string, recentKeyStroke: KeyStroke) {
+  private getStrippedCode(raceId: string, keystroke: KeyStroke) {
     const code = this.raceManager.getCode(raceId);
     const strippedCode = Challenge.getStrippedCode(
-      code.substring(0, recentKeyStroke.index),
+      code.substring(0, keystroke.index),
     );
     return strippedCode;
   }
