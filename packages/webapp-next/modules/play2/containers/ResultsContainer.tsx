@@ -1,7 +1,6 @@
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import ResultsChart from "../components/ResultsChart";
-import { useCodeStore } from "../state/code-store";
 import { useGameStore } from "../state/game-store";
 
 function ResultsText({ title, value }: { title: string; value: string }) {
