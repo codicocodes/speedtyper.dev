@@ -3,6 +3,7 @@ import { useEffect } from "react";
 export enum Keys {
   Tab = "Tab",
   Enter = "Enter",
+  Escape = "Escape",
 }
 
 export const useKeyMap = (

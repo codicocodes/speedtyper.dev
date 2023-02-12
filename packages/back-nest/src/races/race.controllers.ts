@@ -10,6 +10,14 @@ export class RacesController {
     return this.raceManager.getPublicRaces();
   }
 
+  @Get('online')
+  getOnlineCount(): { online: number } {
+    const online = this.raceManager.getOnlineCount();
+    return {
+      online,
+    };
+  }
+
   @Get(':raceId/status')
   getRaceStatus(
     @Req() request: Request,

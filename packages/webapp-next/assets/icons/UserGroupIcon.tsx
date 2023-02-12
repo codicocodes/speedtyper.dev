@@ -2,7 +2,7 @@ export const UserGroupIcon = () => {
   // <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
   return (
     <svg
-      className="fill-current h-4"
+      className="fill-current h-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 640 512"
     >

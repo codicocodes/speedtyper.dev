@@ -1,9 +1,12 @@
+import { Keys, useKeyMap } from "../../hooks/useKeyMap";
+
 interface OverlayProps {
   onOverlayClick: () => void;
   children: React.ReactNode;
 }
 
 export const Overlay: React.FC<OverlayProps> = (props) => {
+  useKeyMap(true, Keys.Escape, props.onOverlayClick);
   return (
     <>
       <div

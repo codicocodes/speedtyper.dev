@@ -24,6 +24,14 @@ export class RaceManager {
     private raceEvents: RaceEvents,
   ) {}
 
+  getOnlineCount(): number {
+    const memberIds = Object.values(this.races)
+      .flatMap((race) => Object.values(race.members))
+      .map((member) => member.id);
+    const uniqueMemberIds = new Set(memberIds);
+    return uniqueMemberIds.size;
+  }
+
   getPublicRaces(): PublicRace[] {
     const races = Object.values(this.races);
     const publicRaces = races

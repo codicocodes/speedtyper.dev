@@ -1,8 +1,9 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { BattleIcon } from "../../assets/icons/BattleIcon";
+import { OnlineIcon } from "../../assets/icons/OnlineIcon";
 import { UserGroupIcon } from "../../assets/icons/UserGroupIcon";
 import { useGameStore } from "../../modules/play2/state/game-store";
+import { ONLINE_COUNT_API } from "../api/races";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
 import { Overlay } from "./Overlay";
 
@@ -12,8 +13,17 @@ export const BattleMatcher: React.FC = () => {
   const closeModal = () => setIsOpen(false);
   return (
     <div className="flex items-center font-semibold text-sm ml-2">
-      <button className="flex items-center" onClick={openModal}>
-        <BattleIcon />
+      <button
+        className="ml-2 flex items-center text-off-white h-5 px-1"
+        onClick={openModal}
+      >
+        <OnlineIcon />
+        <div className="flex h-full items-end">
+          <div
+            className="bg-green-300 rounded-full"
+            style={{ width: "5px", height: "5px" }}
+          />
+        </div>
       </button>
       {isOpen && <BattleMatcherModal closeModal={closeModal} />}
     </div>
@@ -39,7 +49,10 @@ const BatteListItem: React.FC<BatteListItemProps> = ({ race, closeModal }) => {
     >
       <div className="flex">
         <div className="flex items-center bg-purple-300 px-2 rounded mr-2">
-          <UserGroupIcon /> <span className="mx-2">{memberCount}</span>
+          <div className="h-3">
+            <UserGroupIcon />
+          </div>
+          <span className="mx-2">{memberCount}</span>
         </div>
         <span>{ownerName}</span>
       </div>
@@ -54,6 +67,28 @@ interface BattleMatcherModalProps {
   closeModal: () => void;
 }
 
+const PlayingNow = () => {
+  const { data } = useSWR(
+    ONLINE_COUNT_API,
+    (...args) => fetch(...args).then((res) => res.json()),
+    { refreshInterval: 5000 }
+  );
+  return (
+    <h3 className="my-2 font-semibold text-xs tracking-wide">
+      <div className="flex items-center px-1 rounded mr-2 uppercase">
+        <div className="mr-2 h-2 w-2 bg-green-400 rounded-full " />
+        Playing now
+        <div className="flex items-center bg-gray-300 px-2 rounded mx-2">
+          <div className="h-2 mr-1">
+            <UserGroupIcon />
+          </div>
+          {data?.online ?? 0}
+        </div>
+      </div>
+    </h3>
+  );
+};
+
 const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
   const raceID = useGameStore((state) => state.id);
   const baseUrl = getExperimentalServerUrl();
@@ -62,6 +97,7 @@ const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
     (...args) => fetch(...args).then((res) => res.json()),
     { refreshInterval: 10000 }
   );
+  const availableRaces = data && data.filter((race: any) => race.id !== raceID);
   return (
     <Overlay onOverlayClick={closeModal}>
       <div
@@ -70,16 +106,15 @@ const BattleMatcherModal = ({ closeModal }: BattleMatcherModalProps) => {
           width: "350px",
         }}
       >
-        <h2 className="text-xl mb-4">Join a race</h2>
-        {
-          // TODO: Show a loading indicator when isLoading=true
-        }
-        {data &&
-          data
-            .filter((race: any) => race.id !== raceID)
-            .map((race: any, i: number) => (
+        <PlayingNow />
+        {availableRaces && availableRaces.length > 0 && (
+          <div className="mt-4">
+            <h2 className="text-xl mb-2">Join a race</h2>
+            {availableRaces.map((race: any, i: number) => (
               <BatteListItem key={i} race={race} closeModal={closeModal} />
             ))}
+          </div>
+        )}
       </div>
     </Overlay>
   );
