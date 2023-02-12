@@ -13,12 +13,14 @@ export function useNodeRect<T extends HTMLElement>(
     top: 0,
     left: 0,
   });
+  const top = node?.offsetTop ?? 0;
+  const left = node?.offsetLeft ?? 0;
   useEffect(() => {
     if (!node) return;
     setRect({
-      top: node.offsetTop,
-      left: node.offsetLeft,
+      top,
+      left,
     });
-  }, [node, refreshValue]);
+  }, [node, top, left, refreshValue]);
   return [rect, setNode];
 }

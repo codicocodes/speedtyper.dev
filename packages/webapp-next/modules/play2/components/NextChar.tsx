@@ -14,7 +14,9 @@ interface NextCharProps {
 export function NextChar({ focused }: NextCharProps) {
   const useSmoothCaret = true;
   const index = useCodeStore((state) => state.index);
-  const [rect, nextCharRef] = useNodeRect<HTMLSpanElement>(index.toString());
+  const [{ top, left }, nextCharRef] = useNodeRect<HTMLSpanElement>(
+    index.toString()
+  );
   const getNextChar = useCodeStore((state) => state.currentChar);
   const nextChar = getNextChar().replace(/\n/g, "↵\n");
   const runBlinkingCursorAnimation = !useSmoothCaret;
@@ -34,9 +36,7 @@ export function NextChar({ focused }: NextCharProps) {
           repeat: Infinity,
         }}
       >
-        {focused && useSmoothCaret && (
-          <SmoothCaret top={rect.top} left={rect.left} />
-        )}
+        {focused && useSmoothCaret && <SmoothCaret top={top} left={left} />}
         {nextChar}
       </motion.span>
     </AnimatePresence>
