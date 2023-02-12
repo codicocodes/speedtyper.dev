@@ -8,6 +8,7 @@ import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
 import { fetchRaceStatus } from "../../../../../common/api/races";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { useSocket } from "../../../../../common/hooks/useSocket";
+import { updateUserInStore } from "../../../../../common/state/user-store";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
