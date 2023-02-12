@@ -5,6 +5,7 @@ import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
+import { useSocket } from "../../../../../common/hooks/useSocket";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
@@ -38,14 +39,34 @@ function useCodeStoreTotalSeconds() {
 function useMistakeWarningMessage() {
   const currentMistakeCount = useCodeStore((state) => state.incorrectChars)()
     .length;
-  const message = "Undo mistakes to continue";
-  return currentMistakeCount > 10 ? message : undefined;
+  return currentMistakeCount > 10;
+}
+
+export function WarningContainer() {
+  const mistakesWarning = useMistakeWarningMessage();
+  const socket = useSocket();
+  const isDisconnected = socket.socket.disconnected;
+  return (
+    <>
+      {mistakesWarning && (
+        <span className="flex ml-2 text-red-400 font-medium gap-1">
+          <WarningIcon />
+          Undo mistakes to continue
+        </span>
+      )}
+      {isDisconnected && (
+        <span className="flex ml-2 text-red-400 font-medium gap-1">
+          <WarningIcon />
+          The socket has disconnected. Attempt to reconnect.
+        </span>
+      )}
+    </>
+  );
 }
 
 export function PlayFooter({ game, challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
-  const mistakesWarning = useMistakeWarningMessage();
   return (
     <div className="w-full h-10 mt-2">
       <AnimatePresence>
@@ -81,12 +102,7 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
           className="flex items-center w-full"
         >
           {isPlaying && RenderTimer(totalSeconds)}
-          {mistakesWarning && (
-            <span className="flex ml-2 text-red-400 font-medium gap-1">
-              <WarningIcon />
-              {mistakesWarning}
-            </span>
-          )}
+          <WarningContainer />
         </motion.div>
       </AnimatePresence>
     </div>
