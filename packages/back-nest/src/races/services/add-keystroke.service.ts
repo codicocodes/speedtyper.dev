@@ -41,5 +41,13 @@ export class AddKeyStrokeService {
       player.updateLiteral(code, keyStroke);
       this.events.progressUpdated(socket, raceId, player);
     }
+    this.syncStartTime(raceId, new Date(keyStroke.timestamp));
+  }
+
+  async syncStartTime(raceId: string, timestamp: Date) {
+    const race = this.manager.getRace(raceId);
+    if (!race.isMultiplayer()) {
+      race.startTime = race.startTime ?? timestamp;
+    }
   }
 }

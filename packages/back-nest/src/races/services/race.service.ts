@@ -34,6 +34,10 @@ export class Race {
     };
   }
 
+  isMultiplayer(): boolean {
+    return Object.keys(this.members).length > 1;
+  }
+
   toJSON() {
     return instanceToPlain(this);
   }
