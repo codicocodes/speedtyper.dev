@@ -56,7 +56,7 @@ export const NewNavbar = () => {
   const isPlaying = useIsPlaying();
   return (
     <header
-      className="h-10 tracking-tighter"
+      className="mt-2 h-10 tracking-tighter"
       style={{
         fontFamily: "Fira Code",
       }}
