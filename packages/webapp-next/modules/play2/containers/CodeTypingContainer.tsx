@@ -35,7 +35,6 @@ export function CodeTypingContainer({
   const code = useCodeStore((state) => state.code);
   const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
-  const [rect, currentNodeRef] = useNodeRect<HTMLSpanElement>(index.toString());
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const [focused, setFocused] = useState(true);
 
@@ -94,10 +93,9 @@ export function CodeTypingContainer({
           game={game}
         />
         <CodeArea filePath={filePath} focused={focused}>
-          {focused && <SmoothCaret top={rect.top} left={rect.left} />}
           <TypedChars language={language} />
           <IncorrectChars />
-          <NextChar nextCharRef={currentNodeRef} />
+          <NextChar focused={focused} />
           <UntypedChars />
         </CodeArea>
       </div>

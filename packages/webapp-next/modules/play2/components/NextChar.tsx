@@ -1,18 +1,23 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { useNodeRect } from "../hooks/useNodeRect";
 import { useCodeStore } from "../state/code-store";
 import {
   useBlinkingCursorAnimation,
   OFF_WHITE_COLOR as GRAY_COLOR,
+  SmoothCaret,
 } from "./SmoothCaret";
 
-export function NextChar({
-  nextCharRef,
-}: {
-  nextCharRef: (node: HTMLSpanElement) => void;
-}) {
+interface NextCharProps {
+  focused: boolean;
+}
+
+export function NextChar({ focused }: NextCharProps) {
+  const useSmoothCaret = true;
+  const index = useCodeStore((state) => state.index);
+  const [rect, nextCharRef] = useNodeRect<HTMLSpanElement>(index.toString());
   const getNextChar = useCodeStore((state) => state.currentChar);
   const nextChar = getNextChar().replace(/\n/g, "↵\n");
-  const runBlinkingCursorAnimation = false;
+  const runBlinkingCursorAnimation = !useSmoothCaret;
   const controls = useBlinkingCursorAnimation(
     GRAY_COLOR,
     runBlinkingCursorAnimation
@@ -23,12 +28,15 @@ export function NextChar({
       <motion.span
         ref={nextCharRef}
         animate={controls}
-        className="rounded-sm"
+        className="rounded-sm py-1"
         transition={{
           duration: 1,
           repeat: Infinity,
         }}
       >
+        {focused && useSmoothCaret && (
+          <SmoothCaret top={rect.top} left={rect.left} />
+        )}
         {nextChar}
       </motion.span>
     </AnimatePresence>

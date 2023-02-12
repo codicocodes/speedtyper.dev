@@ -97,7 +97,7 @@ class Animator {
     const element = this.getElement();
     if (!element) return;
     const left = rect.left - 4 + "px";
-    const top = rect.top - 5 + "px";
+    const top = rect.top + "px";
     const duration = this.elementInStarterPosition(element) ? 0 : 100;
     const caretAnimation = element.animate([{ left, top }], {
       easing: "linear",
