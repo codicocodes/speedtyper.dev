@@ -1,9 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, useCallback, useEffect, useState } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
+import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
+import { fetchRaceStatus } from "../../../../../common/api/races";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { useSocket } from "../../../../../common/hooks/useSocket";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
@@ -43,9 +45,42 @@ function useMistakeWarningMessage() {
 }
 
 export function WarningContainer() {
+  const raceId = useGameStore((state) => state.id);
   const mistakesWarning = useMistakeWarningMessage();
   const socket = useSocket();
-  const isDisconnected = socket.socket.disconnected;
+  const [isDisconnected, setIsDisconnected] = useState(false);
+
+  const [raceExistsInServer, setRaceExistsInServer] = useState(true);
+
+  useEffect(() => {
+    if (raceId) {
+      fetchRaceStatus(raceId).then(({ ok }) => {
+        setRaceExistsInServer(ok);
+      });
+    }
+  }, [raceId]);
+
+  const onConnect = useCallback(
+    (_err: string | null, _msg: string) => {
+      if (raceId && isDisconnected) {
+        fetchRaceStatus(raceId).then(({ ok }) => {
+          setRaceExistsInServer(ok);
+        });
+      }
+      setIsDisconnected(false);
+      socket.socket.connect();
+    },
+    [isDisconnected, raceId, socket.socket]
+  );
+
+  useEffect(() => {
+    const onDisconnect = (_err: string | null, _msg: string) => {
+      setIsDisconnected(true);
+    };
+    socket.subscribe("connect_error", onDisconnect);
+    socket.subscribe("disconnect", onDisconnect);
+    socket.subscribe("connect", onConnect);
+  }, [socket, onConnect, setIsDisconnected]);
   return (
     <>
       {mistakesWarning && (
@@ -57,8 +92,20 @@ export function WarningContainer() {
       {isDisconnected && (
         <span className="flex ml-2 text-red-400 font-medium gap-1">
           <WarningIcon />
-          The socket has disconnected. Attempt to reconnect.
+          You are not connected to the server.
         </span>
+      )}
+      {!raceExistsInServer && (
+        <h2 className="text-red-400 flex justify-center items-center ml-2 text-lg font-medium gap-1 my-2">
+          <WarningIcon />
+          This race does not exist. Refresh to continue.
+          <i
+            className="text-off-white h-4"
+            title="When the server restarts current race state is resets"
+          >
+            <InfoIcon />
+          </i>
+        </h2>
       )}
     </>
   );
@@ -101,7 +148,7 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
           transition={{ duration: 0.5 }}
           className="flex items-center w-full"
         >
-          {isPlaying && RenderTimer(totalSeconds)}
+          {isPlaying && <Timer seconds={totalSeconds} />}
           <WarningContainer />
         </motion.div>
       </AnimatePresence>
@@ -114,7 +161,11 @@ interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: String;
 }
 
-function ActionButton({ text, icon, ...buttonProps }: ActionButtonProps) {
+export function ActionButton({
+  text,
+  icon,
+  ...buttonProps
+}: ActionButtonProps) {
   return (
     <button
       {...buttonProps}
@@ -179,7 +230,7 @@ function ActionButtons({ game }: { game: Game }) {
   );
 }
 
-function RenderTimer(seconds: number) {
+function Timer({ seconds }: { seconds: number }) {
   return (
     <div className="text-3xl ml-2 font-bold text-purple-300">
       {toHumanReadableTime(seconds)}
