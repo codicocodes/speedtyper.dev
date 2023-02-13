@@ -6,7 +6,10 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
-import { RaceDoesNotExistFilter } from './race.exceptions';
+import {
+  InvalidKeystrokeFilter,
+  RaceDoesNotExistFilter,
+} from './race.exceptions';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
 import { CountdownService } from './services/countdown.service';
 import { Locker } from './services/locker.service';
@@ -88,7 +91,7 @@ export class RaceGateway {
     });
   }
 
-  @UseFilters(new RaceDoesNotExistFilter())
+  @UseFilters(new RaceDoesNotExistFilter(), new InvalidKeystrokeFilter())
   @SubscribeMessage('key_stroke')
   async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
     await this.addKeyStrokeService.validate(socket, keystroke);
