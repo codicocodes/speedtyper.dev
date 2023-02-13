@@ -110,22 +110,19 @@ const IndexPage = () => {
         <div className="flex justify-center">
           <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
             <h2 className="flex font-bold justify-start text-2xl mt-4 mx-12 mb-0 ">
-              Try the v2 beta
+              V2 Beta
             </h2>
             <div className="flex justify-start items-center mt-4 mx-12 mb-0 text-xl">
               For the last couple of months I have been working on a version 2
               of SpeedTyper.dev and it is close to ready to be released. Please
               test it and provide feedback in Discord or GitHub.
             </div>
-            <div className="flex flex-col lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
+            <div className="flex flex-col items-center justify-center lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
               <Link href="/play2">
                 <a className="hidden md:inline-block">
-                  <Button
-                    color="primary"
-                    title="Enter v2 of speedtyper.dev beta"
-                    text="Try the v2 beta"
-                    size="lg"
-                  />
+                  <button className="bg-purple-300 text-dark-ocean font-bold p-2 px-4 rounded-lg">
+                    Try the v2 beta
+                  </button>
                 </a>
               </Link>
             </div>
