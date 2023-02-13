@@ -1,16 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
 import { ResultFactoryService } from 'src/results/services/result-factory.service';
 import { ResultService } from 'src/results/services/results.service';
 import { RaceEvents } from './race-events.service';
 import { RaceManager } from './race-manager.service';
 import { SessionState } from './session-state.service';
-
-export class InvalidKeyStroke extends BadRequestException {
-  constructor() {
-    super('Incorrect keystroke');
-  }
-}
 
 @Injectable()
 export class ResultsHandlerService {
