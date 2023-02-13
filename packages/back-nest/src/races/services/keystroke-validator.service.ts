@@ -19,15 +19,6 @@ export class RaceNotStartedException extends BadRequestException {
 export class KeyStrokeValidationService {
   constructor(private raceManager: RaceManager) {}
 
-  validateAllKeyStrokes(player: RacePlayer) {
-    const currentInput = player.getValidInput();
-    const code = this.raceManager.getCode(player.raceId);
-    const strippedCode = Challenge.getStrippedCode(code);
-    if (currentInput !== strippedCode) {
-      throw new InvalidKeyStroke();
-    }
-  }
-
   getCurrentInputBeforeKeystroke(player: RacePlayer, keystroke: KeyStroke) {
     const currentInputBeforeKey = player
       .validKeyStrokes()
