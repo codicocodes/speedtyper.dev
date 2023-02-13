@@ -26,19 +26,17 @@ const useIsGuest = (user: IUser | null | undefined): boolean => {
 
 const Navbar = () => {
   return (
-    <header className="relative h-2">
-      <div className="w-full">
-        <div className="flex items-start py-2">
-          <Link href="/">
-            <span className="flex items-center cursor-pointer trailing-widest leading-normal text-xl  pl-2 text-off-white hover:text-white mr-2 lg:mr-6">
-              <div className="flex items-center mr-4 mb-1">
-                <Logo />
-              </div>
-              <WebsiteName />
-            </span>
-          </Link>
-          <NavBarButtons />
-        </div>
+    <header style={{ height: "50px" }}>
+      <div className="flex items-start py-2">
+        <Link href="/">
+          <span className="flex items-center cursor-pointer trailing-widest leading-normal text-xl  pl-2 text-off-white hover:text-white mr-2 lg:mr-6">
+            <div className="flex items-center mr-4">
+              <Logo />
+            </div>
+            <WebsiteName />
+          </span>
+        </Link>
+        <NavBarButtons />
       </div>
     </header>
   );
