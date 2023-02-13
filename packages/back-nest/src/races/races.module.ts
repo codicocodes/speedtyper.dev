@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ChallengesModule } from 'src/challenges/challenges.module';
 import { ResultsModule } from 'src/results/results.module';
+import { TrackingModule } from 'src/tracking/tracking.module';
 import { RacesController } from './race.controllers';
 import { RaceGateway } from './race.gateway';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
@@ -14,7 +15,7 @@ import { ResultsHandlerService } from './services/results-handler.service';
 import { SessionState } from './services/session-state.service';
 
 @Module({
-  imports: [ChallengesModule, ResultsModule],
+  imports: [ChallengesModule, ResultsModule, TrackingModule],
   controllers: [RacesController],
   providers: [
     AddKeyStrokeService,

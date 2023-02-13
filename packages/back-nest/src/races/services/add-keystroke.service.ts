@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { TrackingService } from 'src/tracking/tracking.service';
 import { KeyStrokeValidationService } from './keystroke-validator.service';
 import { ProgressService } from './progress.service';
 import { RaceEvents } from './race-events.service';
@@ -14,6 +15,7 @@ export class AddKeyStrokeService {
     private session: SessionState,
     private validator: KeyStrokeValidationService,
     private progressService: ProgressService,
+    private trackingService: TrackingService,
     private events: RaceEvents,
   ) {}
 
@@ -28,6 +30,9 @@ export class AddKeyStrokeService {
     const user = await this.session.getUser(socket);
     const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
+    if (player.typedKeyStrokes.length === 0) {
+      this.trackingService.trackRaceStarted();
+    }
     player.addKeyStroke(keyStroke);
     if (keyStroke.correct) {
       player.progress = this.progressService.calculateProgress(player);
