@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
 import { ResultFactoryService } from 'src/results/services/result-factory.service';
 import { ResultService } from 'src/results/services/results.service';
+import { TrackingService } from 'src/tracking/tracking.service';
 import { RaceEvents } from './race-events.service';
 import { RaceManager } from './race-manager.service';
 import { SessionState } from './session-state.service';
@@ -14,6 +15,7 @@ export class ResultsHandlerService {
     private factory: ResultFactoryService,
     private events: RaceEvents,
     private results: ResultService,
+    private tracker: TrackingService,
   ) {}
   async handleResult(socket: Socket) {
     const user = await this.session.getUser(socket);
@@ -25,6 +27,7 @@ export class ResultsHandlerService {
       if (!user.isAnonymous) {
         result = await this.results.create(result);
       }
+      this.tracker.trackRaceCompleted();
       this.events.raceCompleted(socket, result);
     }
   }
