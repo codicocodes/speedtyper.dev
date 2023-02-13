@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import getConfig from "next/config";
 import Link from "next/link";
+import { KogWheel } from "../../assets/icons/KogWheel";
 import { TerminalIcon } from "../../assets/icons/TerminalIcon";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
 import { useGameStore } from "../../modules/play2/state/game-store";
@@ -65,14 +66,27 @@ export const NewNavbar = () => {
         <div className="flex items-center items-start py-2">
           <HomeLink />
           {!isPlaying && (
-            <Link href="/play2">
-              <Button
-                size="sm"
-                color="invisible"
-                onClick={() => useGameStore.getState().game?.play()}
-                leftIcon={<TerminalIcon />}
-              />
-            </Link>
+            <>
+              <Link href="/play2">
+                <Button
+                  size="sm"
+                  color="invisible"
+                  onClick={() => useGameStore.getState().game?.play()}
+                  leftIcon={<TerminalIcon />}
+                />
+              </Link>
+              <Link href="/settings">
+                <Button
+                  size="sm"
+                  color="invisible"
+                  leftIcon={
+                    <div className="h-4">
+                      <KogWheel />
+                    </div>
+                  }
+                />
+              </Link>
+            </>
           )}
           <ProfileSection />
         </div>

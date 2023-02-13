@@ -2,7 +2,7 @@ export const KogWheel = () => {
   // Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
   return (
     <svg
-      className="h-6 fill-current"
+      className="h-full fill-current"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
     >
