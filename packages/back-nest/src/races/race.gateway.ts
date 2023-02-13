@@ -63,6 +63,8 @@ export class RaceGateway {
     await this.manageRaceLock.run(socketID, async () => {
       const raceId = await this.sessionState.getRaceID(socket);
       if (!raceId) {
+        this.manageRaceLock.release(socket.id);
+        this.onPlay(socket);
         return;
       }
       const user = await this.sessionState.getUser(socket);
