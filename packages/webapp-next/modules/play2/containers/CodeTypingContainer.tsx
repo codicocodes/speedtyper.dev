@@ -8,7 +8,7 @@ import { IncorrectChars } from "../components/IncorrectChars";
 import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
-import { useKeyMap } from "../../../hooks/useKeyMap";
+import { useKeyMap, triggerKeys } from "../../../hooks/useKeyMap";
 import { Game } from "../services/Game";
 
 interface CodeTypingContainerProps {
@@ -16,8 +16,6 @@ interface CodeTypingContainerProps {
   language: string;
   game: Game;
 }
-
-const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ".split("");
 
 const CODE_INPUT_BLUR_DEBOUNCE_MS = 1000;
 

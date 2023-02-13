@@ -6,17 +6,27 @@ export enum Keys {
   Escape = "Escape",
 }
 
+export const triggerKeys = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*() ";
+
 export const useKeyMap = (
   isActive: boolean,
-  selectedKey: string | Array<string>,
+  selectedKeys: string,
   callback: () => void
 ) => {
   useEffect(() => {
     const handleKeyDown = (e: any) => {
       const { key: pressedKey } = e;
-      if (Array.isArray(selectedKey) && !selectedKey.includes(pressedKey))
+      if (
+        Object.values(Keys)
+          .map((en) => en.toString())
+          .includes(selectedKeys)
+      ) {
+        if (pressedKey !== selectedKeys) return;
+        e.preventDefault();
+        callback();
         return;
-      if (typeof selectedKey === "string" && pressedKey !== selectedKey) return;
+      }
+      if (!selectedKeys.includes(pressedKey)) return;
       e.preventDefault();
       callback();
     };
@@ -29,5 +39,5 @@ export const useKeyMap = (
         document.removeEventListener("keydown", handleKeyDown);
       }
     }
-  }, [isActive, callback, selectedKey]);
+  }, [isActive, callback, selectedKeys]);
 };
