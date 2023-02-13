@@ -153,7 +153,7 @@ export class Game {
       // we probably want to show a warning about being disconnected from the race
       // without stopping the user from typing
       // and allowing them to finnish typing if they want to
-      this.join(id);
+      this.play();
     });
   }
 
