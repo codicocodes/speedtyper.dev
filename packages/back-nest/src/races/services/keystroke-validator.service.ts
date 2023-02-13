@@ -9,6 +9,12 @@ export class InvalidKeyStroke extends BadRequestException {
   }
 }
 
+export class RaceNotStartedException extends BadRequestException {
+  constructor() {
+    super('Race not started');
+  }
+}
+
 @Injectable()
 export class KeyStrokeValidationService {
   constructor(private raceManager: RaceManager) {}
@@ -50,7 +56,7 @@ export class KeyStrokeValidationService {
   validateRaceStarted(raceID: string) {
     const race = this.raceManager.getRace(raceID);
     if (!race.startTime && race.isMultiplayer()) {
-      throw new Error('Unexpected keystroke: Race not started.');
+      throw new RaceNotStartedException();
     }
   }
 
