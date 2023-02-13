@@ -5,7 +5,7 @@ import { RaceEvents } from './services/race-events.service';
 import { RaceDoesNotExist } from './services/race-manager.service';
 
 @Catch(RaceDoesNotExist)
-export class RaceExceptions extends BaseWsExceptionFilter {
+export class RaceDoesNotExistFilter extends BaseWsExceptionFilter {
   raceEvents: RaceEvents;
   constructor() {
     super();

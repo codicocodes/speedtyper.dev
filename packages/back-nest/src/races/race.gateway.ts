@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { socketCors } from 'src/config/cors';
-import { RaceExceptions } from './race.exceptions';
+import { RaceDoesNotExistFilter } from './race.exceptions';
 import { AddKeyStrokeService } from './services/add-keystroke.service';
 import { CountdownService } from './services/countdown.service';
 import { Locker } from './services/locker.service';
@@ -55,7 +55,7 @@ export class RaceGateway {
     socket.request.session.save();
   }
 
-  @UseFilters(new RaceExceptions())
+  @UseFilters(new RaceDoesNotExistFilter())
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
     const socketID = socket.id;
@@ -88,7 +88,7 @@ export class RaceGateway {
     });
   }
 
-  @UseFilters(new RaceExceptions())
+  @UseFilters(new RaceDoesNotExistFilter())
   @SubscribeMessage('key_stroke')
   async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
     await this.addKeyStrokeService.validate(socket, keystroke);
