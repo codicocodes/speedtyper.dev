@@ -26,7 +26,7 @@ const useIsGuest = (user: IUser | null | undefined): boolean => {
 
 const Navbar = () => {
   return (
-    <header className="relative">
+    <header className="relative h-2">
       <div className="w-full">
         <div className="flex items-start py-2">
           <Link href="/">
@@ -94,6 +94,11 @@ const NavBarButtons = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
+            <Link href="/play2">
+              <a className="trailing-widest flex items-bottom rounded px-2 bg-purple-200 text-sm text-dark-ocean">
+                v2 beta
+              </a>
+            </Link>
             <div className="text-sm flex-grow"></div>
             {userIsGuest && <GithubLoginModal />}
             {isUserLoggedIn && <AvatarModal user={user} logout={logout} />}
