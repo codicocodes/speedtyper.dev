@@ -9,10 +9,21 @@ export class TrackingService {
     @InjectRepository(TrackingEvent)
     private repository: Repository<TrackingEvent>,
   ) {}
+
   async trackRaceStarted(): Promise<TrackingEvent> {
+    return this.trackRaceEvent(TrackingEventType.RaceStarted);
+  }
+
+  async trackRaceCompleted(): Promise<TrackingEvent> {
+    return this.trackRaceEvent(TrackingEventType.RaceCompleted);
+  }
+
+  private async trackRaceEvent(
+    event: TrackingEventType,
+  ): Promise<TrackingEvent> {
     return await this.repository.manager.transaction(async (transaction) => {
       let trackingEvent = new TrackingEvent();
-      trackingEvent.event = TrackingEventType.RaceStarted;
+      trackingEvent.event = event;
       await transaction.upsert(TrackingEvent, trackingEvent, {
         conflictPaths: ['event'],
         skipUpdateIfNoValuesChanged: true,
