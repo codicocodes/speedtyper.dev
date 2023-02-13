@@ -33,7 +33,6 @@ export class TrackingService {
       });
       trackingEvent.count++;
       trackingEvent = await transaction.save(TrackingEvent, trackingEvent);
-      console.log('after', trackingEvent);
       return trackingEvent;
     });
   }
