@@ -57,10 +57,7 @@ export class KeyStrokeValidationService {
     const userInput = currentInputBeforeKey + recentKeyStroke.key;
     const expectedInput = this.getStrippedCode(player.raceId, recentKeyStroke);
     const correct = userInput === expectedInput;
-    if (
-      true ||
-      (recentKeyStroke.correct && recentKeyStroke.correct !== correct)
-    ) {
+    if (recentKeyStroke.correct && recentKeyStroke.correct !== correct) {
       throw new InvalidKeystrokeException(
         player.id,
         recentKeyStroke,
