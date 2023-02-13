@@ -17,7 +17,7 @@ export class InvalidKeystrokeException extends Error {
     expectedUserInput: string,
     race: Race,
   ) {
-    super('Unexpected keystroke received');
+    super('Unexpected keystroke received2');
     this.userId = userId;
     this.keystroke = keystroke;
     this.input = userInput;
