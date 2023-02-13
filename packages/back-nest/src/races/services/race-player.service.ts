@@ -73,7 +73,6 @@ export class RacePlayer {
   addKeyStroke(keyStroke: KeyStroke) {
     keyStroke.timestamp = new Date().getTime();
     this.typedKeyStrokes.push(keyStroke);
-    this.recentlyTypedLiteral = this.literals[this.literalOffset];
   }
 
   updateLiteral(code: string, keyStroke: KeyStroke) {
@@ -86,6 +85,7 @@ export class RacePlayer {
     if (startsWithNextLiteral && this.literals.length > 1) {
       this.literalOffset++;
     }
+    this.recentlyTypedLiteral = this.literals[this.literalOffset];
   }
 
   static fromUser(raceId: string, user: User, literals: string[]) {
