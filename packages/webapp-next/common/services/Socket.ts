@@ -11,7 +11,6 @@ export default class SocketLatest {
   }
 
   disconnect() {
-    this.socket.emit("disconnect");
     if (this.socket) this.socket.disconnect();
   }
 
