@@ -46,13 +46,21 @@ export class RacePlayer {
 
   validKeyStrokes() {
     const keyStrokes = this.typedKeyStrokes;
-    const validKeyStrokes = Object.values(
-      Object.fromEntries(
-        keyStrokes
-          .filter((keyStroke) => keyStroke.correct)
-          .map((keyStroke) => [keyStroke.index, keyStroke]),
-      ),
+    const latestKeyStrokePerIndex = Object.fromEntries(
+      keyStrokes.map((keyStroke) => {
+        return [keyStroke.index, keyStroke];
+      }),
     );
+    const firstIncorrectKeystroke = Object.values(latestKeyStrokePerIndex).find(
+      (keystroke) => !keystroke.correct,
+    );
+    const validKeyStrokes = Object.values(latestKeyStrokePerIndex)
+      .filter((keyStroke) => keyStroke.correct)
+      .filter((keystroke) =>
+        firstIncorrectKeystroke
+          ? keystroke.index < firstIncorrectKeystroke.index
+          : true,
+      );
     return validKeyStrokes;
   }
 
