@@ -33,12 +33,16 @@ export class RaceDoesNotExistFilter extends BaseWsExceptionFilter {
 export class InvalidKeystrokeFilter extends BaseWsExceptionFilter {
   async catch(error: InvalidKeystrokeException) {
     Sentry.withScope((scope) => {
+      const player = error.race.members[error.userId];
       const data = {
         challengeId: error.race.challenge.id,
         expected: error.expected,
         input: error.input,
         keystroke: error.keystroke,
         userId: error.userId,
+        race: error.race.toJSON(),
+        typedKeystrokes: player.typedKeyStrokes,
+        validKeystrokes: player.validKeyStrokes(),
       };
       scope.setUser({ id: error.userId });
       scope.setExtras({ error: data });
