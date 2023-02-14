@@ -3,6 +3,7 @@ import {
   ClipboardEvent,
   KeyboardEvent,
   MouseEvent,
+  useEffect,
   useState,
 } from "react";
 import { Game } from "../services/Game";
@@ -17,6 +18,31 @@ interface HiddenCodeInputProps {
   game: Game;
 }
 
+const useAutoTyper = (
+  handleOnChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+) => {
+  const isAutoTyperEnabled = false;
+  const code = useCodeStore.getState().code;
+  useEffect(() => {
+    if (code && isAutoTyperEnabled) {
+      const current = useCodeStore.getState().currentChar();
+      const untyped = useCodeStore
+        .getState()
+        .untypedChars()
+        .split("\n")
+        .map((st) => st.trimStart())
+        .join("\n");
+      const value = current + untyped;
+      console.log({ value });
+      handleOnChange({
+        target: {
+          value,
+        },
+      } as unknown as ChangeEvent<HTMLTextAreaElement>);
+    }
+  }, [isAutoTyperEnabled, code, handleOnChange]);
+};
+
 export const HiddenCodeInput = ({
   disabled,
   hide,
@@ -26,6 +52,7 @@ export const HiddenCodeInput = ({
   const handleBackspace = useCodeStore((state) => state.handleBackspace);
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
   const keyPressFactory = useCodeStore((state) => state.keyPressFactory);
+  useAutoTyper(handleOnChange);
   const canType = useCanType();
 
   // TODO: remove input and setInput
