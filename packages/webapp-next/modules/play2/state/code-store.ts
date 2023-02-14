@@ -148,6 +148,10 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     const key = parseKey(unparsedKey);
     const offset = get()._getForwardOffset();
     const index = Math.min(offset + get().index, get().code.length);
+    // BUG: "correct" below is a bug
+    // if index i-1 is not correct this calculation can evaluate index i to be correct
+    // this is addressed in the backend but should also be fixed here...
+    // or perhaps removed compleptely and we can rely on the backend calculation with appropriate text coverage
     const correct =
       get().index === get().correctIndex && key === get().code[get().index];
     const keyStroke = {
