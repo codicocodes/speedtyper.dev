@@ -51,10 +51,8 @@ export class RaceEvents {
     socket.emit('progress_updated', player);
   }
 
-  raceCompleted(socket: Socket, result: Result) {
-    const raceId = socket.request.session.raceId;
-    socket.to(raceId).emit('race_completed', result);
-    socket.emit('race_completed', result);
+  raceCompleted(raceId: string, result: Result) {
+    this.server.to(raceId).emit('race_completed', result);
   }
 
   raceDoesNotExist(socket: Socket, id: string) {
