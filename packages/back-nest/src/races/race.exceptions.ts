@@ -50,8 +50,8 @@ export class InvalidKeystrokeFilter extends BaseWsExceptionFilter {
       scope.setUser({
         id:
           process.env.NODE_ENV === 'production'
-            ? error.userId
-            : 'local-testing',
+            ? `${error.race.id}-${error.userId}`
+            : `[local-testing] ${error.race.id}`,
       });
       scope.setExtras({ error: data, typedKeystrokes, validKeyStrokes });
       Sentry.captureException(error);
