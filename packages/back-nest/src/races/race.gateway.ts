@@ -98,14 +98,12 @@ export class RaceGateway {
 
   @SubscribeMessage('join')
   async onJoin(socket: Socket, id: string) {
-    console.log('join', socket.id);
     this.manageRaceLock.runIfOpen(socket.id, async () => {
       const user = this.session.getUser(socket);
       const raceID = this.session.getRaceID(socket);
       this.raceManager.leaveRace(socket, user, raceID);
       const race = this.raceManager.join(user, id);
       if (!race) {
-        console.log('no race...');
         // if there is no race with the ID in the state
         // we recreate a race for the user
         // this makes sure that the game does not crash for the user
