@@ -1,4 +1,5 @@
 import ReactSwitch from "react-switch";
+import { ActionButton } from "../modules/play2/components/play-footer/PlayFooter";
 import {
   toggleSmoothCaret,
   useSettingsStore,
@@ -18,15 +19,12 @@ export default function SettingsPage() {
           Settings
         </h2>
         <div className="flex my-4">
-          <p className="pr-4">Smooth Caret</p>
-          <ReactSwitch
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            onChange={() => {
-              toggleSmoothCaret();
-            }}
-            checked={smoothCaret ?? false}
+          <ActionButton
+            onClick={toggleSmoothCaret}
+            icon={
+              <ReactSwitch onChange={() => {}} checked={smoothCaret ?? false} />
+            }
+            text="smooth caret"
           />
         </div>
       </div>
