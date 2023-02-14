@@ -20,7 +20,6 @@
 - [Features](#features-🎉)
 - [Contribute](#contribute-👷)
 - [Community](#community-☕)
-- [Roadmap](#roadmap-🛣️)
 - [License](#license-📜)
 - [Project Contributors](#project-contributors⭐)
 
