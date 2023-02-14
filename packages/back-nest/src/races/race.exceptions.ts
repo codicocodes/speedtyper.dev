@@ -18,13 +18,16 @@ export function getSocketFromArgs(host: ArgumentsHost): Socket {
 @Catch(RaceDoesNotExist)
 export class RaceDoesNotExistFilter extends BaseWsExceptionFilter {
   raceEvents: RaceEvents;
+  sessionState: SessionState;
   constructor() {
     super();
     this.raceEvents = new RaceEvents();
+    this.sessionState = new SessionState();
   }
 
   async catch(error: RaceDoesNotExist, host: ArgumentsHost) {
     const socket = getSocketFromArgs(host);
+    this.sessionState.removeRaceID(socket);
     this.raceEvents.raceDoesNotExist(socket, error.id);
   }
 }

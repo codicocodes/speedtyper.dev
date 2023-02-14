@@ -1,6 +1,7 @@
 import SocketLatest from "../../../common/services/Socket";
 import { useUserStore } from "../../../common/state/user-store";
 import { KeyStroke, useCodeStore } from "../state/code-store";
+import { useConnectionStore } from "../state/connection-store";
 import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
 
 export class Game {
@@ -72,6 +73,10 @@ export class Game {
         owner: race.owner,
         members: race.members,
         countdown: undefined,
+      }));
+      useConnectionStore.setState((state) => ({
+        ...state,
+        raceExistsInServer: true,
       }));
     });
   }
@@ -148,12 +153,10 @@ export class Game {
   private listenForRaceDoesNotExist() {
     this.socket.subscribe("race_does_not_exist", (_, id) => {
       console.log("race_does_not_exist", id);
-      // TODO: this should be handled different in the future
-      // because this could abruptly stops the gameplay for the user if they are in the middle of a race
-      // we probably want to show a warning about being disconnected from the race
-      // without stopping the user from typing
-      // and allowing them to finnish typing if they want to
-      this.play();
+      useConnectionStore.setState((state) => ({
+        ...state,
+        raceExistsInServer: false,
+      }));
     });
   }
 

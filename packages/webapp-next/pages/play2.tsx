@@ -19,6 +19,7 @@ import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useConnectionManager } from "../modules/play2/state/connection-store";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -44,6 +45,7 @@ function Play2Page({
   const router = useRouter();
   const isCompleted = useIsCompleted();
   const socket = useSocket();
+  useConnectionManager(socket);
   const game = useGame(socket);
   const challenge = useChallenge(socket);
   const gameID = useGameIdQueryParam();

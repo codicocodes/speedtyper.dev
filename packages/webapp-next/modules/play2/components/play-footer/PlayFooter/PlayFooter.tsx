@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ButtonHTMLAttributes, useCallback, useEffect, useState } from "react";
+import { ButtonHTMLAttributes } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
 import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
@@ -7,8 +7,6 @@ import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
 import { fetchRaceStatus } from "../../../../../common/api/races";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
-import { useSocket } from "../../../../../common/hooks/useSocket";
-import { updateUserInStore } from "../../../../../common/state/user-store";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
@@ -16,6 +14,7 @@ import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
 import { ChallengeInfo } from "../../../hooks/useChallenge";
 import { Game } from "../../../services/Game";
 import { useCodeStore } from "../../../state/code-store";
+import { useConnectionStore } from "../../../state/connection-store";
 import {
   useGameStore,
   useIsMultiplayer,
@@ -46,43 +45,11 @@ function useMistakeWarningMessage() {
 }
 
 export function WarningContainer() {
-  const raceId = useGameStore((state) => state.id);
   const mistakesWarning = useMistakeWarningMessage();
-  const socket = useSocket();
-  const [isDisconnected, setIsDisconnected] = useState(false);
-
-  const [raceExistsInServer, setRaceExistsInServer] = useState(true);
-
-  useEffect(() => {
-    if (raceId) {
-      fetchRaceStatus(raceId).then(({ ok }) => {
-        setRaceExistsInServer(ok);
-      });
-    }
-  }, [raceId]);
-
-  const onConnect = useCallback(
-    (_err: string | null, _msg: string) => {
-      if (raceId && isDisconnected) {
-        fetchRaceStatus(raceId).then(({ ok }) => {
-          setRaceExistsInServer(ok);
-        });
-        updateUserInStore();
-      }
-      setIsDisconnected(false);
-      socket.socket.connect();
-    },
-    [isDisconnected, raceId, socket.socket]
+  const isConnected = useConnectionStore((state) => state.isConnected);
+  const raceExistsInServer = useConnectionStore(
+    (state) => state.raceExistsInServer
   );
-
-  useEffect(() => {
-    const onDisconnect = (_err: string | null, _msg: string) => {
-      setIsDisconnected(true);
-    };
-    socket.subscribe("connect_error", onDisconnect);
-    socket.subscribe("disconnect", onDisconnect);
-    socket.subscribe("connect", onConnect);
-  }, [socket, onConnect, setIsDisconnected]);
   return (
     <>
       {mistakesWarning && (
@@ -91,7 +58,7 @@ export function WarningContainer() {
           Undo mistakes to continue
         </span>
       )}
-      {isDisconnected && (
+      {!isConnected && (
         <span className="flex ml-2 text-red-400 font-medium gap-1">
           <WarningIcon />
           You are not connected to the server.
