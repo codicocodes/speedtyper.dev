@@ -10,7 +10,7 @@ export class Locker {
   // this is a global lock function
   // it locks all run methods called with this lockid
   // even if they are coming from different classes
-  async run<T>(lockID: string, callback: () => Promise<T>): Promise<T> {
+  async runIfOpen<T>(lockID: string, callback: () => Promise<T>): Promise<T> {
     if (this.lockedIDs.has(lockID)) {
       return;
     }

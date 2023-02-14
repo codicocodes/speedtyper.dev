@@ -63,7 +63,7 @@ export class RaceGateway {
   async onRefreshChallenge(socket: Socket) {
     const socketID = socket.id;
     console.log('refresh_challenge', socketID);
-    await this.manageRaceLock.run(socketID, async () => {
+    await this.manageRaceLock.runIfOpen(socketID, async () => {
       const raceId = await this.sessionState.getRaceID(socket);
       if (!raceId) {
         this.manageRaceLock.release(socket.id);
@@ -81,7 +81,7 @@ export class RaceGateway {
   @SubscribeMessage('play')
   async onPlay(socket: Socket) {
     const socketID = socket.id;
-    await this.manageRaceLock.run(socketID, async () => {
+    await this.manageRaceLock.runIfOpen(socketID, async () => {
       const user = await this.sessionState.getUser(socket);
       const raceId = await this.sessionState.getRaceID(socket);
       await this.raceManager.leaveRace(socket, user, raceId);
@@ -102,7 +102,7 @@ export class RaceGateway {
   @SubscribeMessage('join')
   async onJoin(socket: Socket, id: string) {
     console.log('join', socket.id);
-    this.manageRaceLock.run(socket.id, async () => {
+    this.manageRaceLock.runIfOpen(socket.id, async () => {
       const user = await this.sessionState.getUser(socket);
       const raceID = await this.sessionState.getRaceID(socket);
       await this.raceManager.leaveRace(socket, user, raceID);
