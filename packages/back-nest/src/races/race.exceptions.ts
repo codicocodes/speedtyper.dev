@@ -40,12 +40,16 @@ export class InvalidKeystrokeFilter extends BaseWsExceptionFilter {
         input: error.input,
         keystroke: error.keystroke,
         userId: error.userId,
-        race: error.race.toJSON(),
-        typedKeystrokes: player.typedKeyStrokes,
-        validKeystrokes: player.validKeyStrokes(),
       };
-      scope.setUser({ id: error.userId });
-      scope.setExtras({ error: data });
+      const typedKeystrokes = player.typedKeyStrokes;
+      const validKeyStrokes = player.validKeyStrokes();
+      scope.setUser({
+        id:
+          process.env.NODE_ENV === 'production'
+            ? error.userId
+            : 'local-testing',
+      });
+      scope.setExtras({ error: data, typedKeystrokes, validKeyStrokes });
       Sentry.captureException(error);
     });
   }
