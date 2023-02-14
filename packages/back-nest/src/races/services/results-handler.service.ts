@@ -22,7 +22,7 @@ export class ResultsHandlerService {
     const raceId = await this.session.getRaceID(socket);
     const race = this.manager.getRace(raceId);
     const player = race.getPlayer(user.id);
-    if (player.progress === 100) {
+    if (player.hasCompletedRace()) {
       let result = this.factory.factory(race, player, user);
       if (!user.isAnonymous) {
         result = await this.results.create(result);

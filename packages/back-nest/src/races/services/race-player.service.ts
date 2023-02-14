@@ -92,6 +92,10 @@ export class RacePlayer {
     return this.typedKeyStrokes.length === 0;
   }
 
+  hasCompletedRace(): boolean {
+    return this.progress === 100;
+  }
+
   static fromUser(raceId: string, user: User, literals: string[]) {
     const player = new RacePlayer();
     player.id = user.id;
