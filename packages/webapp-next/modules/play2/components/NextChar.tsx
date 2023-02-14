@@ -28,7 +28,9 @@ export function NextChar({ focused }: NextCharProps) {
 
   return (
     <>
-      {focused && useSmoothCaret && <SmoothCaret top={top} left={left} />}
+      {focused && useSmoothCaret && typeof window !== "undefined" && (
+        <SmoothCaret top={top} left={left} />
+      )}
       <AnimatePresence>
         <motion.span
           ref={nextCharRef}
