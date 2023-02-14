@@ -5,6 +5,7 @@ import { Socket } from 'socket.io';
 import { InvalidKeystrokeException } from './services/keystroke-validator.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceDoesNotExist } from './services/race-manager.service';
+import { SessionState } from './services/session-state.service';
 
 export function getSocketFromArgs(host: ArgumentsHost): Socket {
   const args = host.getArgs();
