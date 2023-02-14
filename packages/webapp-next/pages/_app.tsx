@@ -7,6 +7,7 @@ import { AppProvider } from "../AppContext";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import { Layout } from "../common/components/Layout";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
@@ -41,12 +42,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://speedtyper.dev" />
         <link rel="icon" href="/favicon.ico" />
-        <Script
-          defer
-          data-domain="speedtyper.dev"
-          src="https://plausible.io/js/plausible.js"
-        />
       </Head>
+      <Script
+        defer
+        data-domain="speedtyper.dev"
+        src="https://plausible.io/js/plausible.js"
+      />
       <AppProvider>
         <NextNProgress
           options={{ showSpinner: false }}
