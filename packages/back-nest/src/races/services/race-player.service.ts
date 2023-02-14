@@ -88,6 +88,10 @@ export class RacePlayer {
     this.recentlyTypedLiteral = this.literals[this.literalOffset];
   }
 
+  hasNotStartedTyping(): boolean {
+    return this.typedKeyStrokes.length === 0;
+  }
+
   static fromUser(raceId: string, user: User, literals: string[]) {
     const player = new RacePlayer();
     player.id = user.id;

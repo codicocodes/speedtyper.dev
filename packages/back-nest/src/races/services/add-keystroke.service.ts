@@ -30,7 +30,7 @@ export class AddKeyStrokeService {
     const user = await this.session.getUser(socket);
     const raceId = await this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
-    if (player.typedKeyStrokes.length === 0) {
+    if (player.hasNotStartedTyping()) {
       this.trackingService.trackRaceStarted();
     }
     player.addKeyStroke(keyStroke);
