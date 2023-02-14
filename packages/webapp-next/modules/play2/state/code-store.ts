@@ -88,6 +88,11 @@ export const useCodeStore = create<CodeState>((set, get) => ({
     }
     return wpm;
   },
+  // BUG: this suffers from the same bug as backend used to suffer from.
+  // It's not as bad because it's used only to render the chart
+  // See: RacePlayer.validKeyStrokes()
+  // we should completely remove this method and rely on the backend to get the valid keystrokes
+  // this way we only need the calculation in one place
   _getValidKeyStrokes: () => {
     const keyStrokes = get().keyStrokes;
     const validKeyStrokes = Object.values(
