@@ -27,19 +27,21 @@ export function NextChar({ focused }: NextCharProps) {
   );
 
   return (
-    <AnimatePresence>
-      <motion.span
-        ref={nextCharRef}
-        animate={controls}
-        className="rounded-sm pb-1 pt-2"
-        transition={{
-          duration: 1,
-          repeat: Infinity,
-        }}
-      >
-        {focused && useSmoothCaret && <SmoothCaret top={top} left={left} />}
-        {nextChar}
-      </motion.span>
-    </AnimatePresence>
+    <>
+      {focused && useSmoothCaret && <SmoothCaret top={top} left={left} />}
+      <AnimatePresence>
+        <motion.span
+          ref={nextCharRef}
+          animate={controls}
+          className="rounded-sm pb-1 pt-2"
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+          }}
+        >
+          {nextChar}
+        </motion.span>
+      </AnimatePresence>
+    </>
   );
 }

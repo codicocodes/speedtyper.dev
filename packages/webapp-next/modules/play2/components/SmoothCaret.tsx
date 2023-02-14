@@ -52,7 +52,7 @@ export const SmoothCaret = ({ top, left }: { top: number; left: number }) => {
 
   return (
     <AnimatePresence>
-      <motion.div
+      <motion.span
         animate={controls}
         transition={{
           duration: 1,

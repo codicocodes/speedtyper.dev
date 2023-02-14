@@ -41,11 +41,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://speedtyper.dev" />
         <link rel="icon" href="/favicon.ico" />
-        <script
+        <Script
           defer
           data-domain="speedtyper.dev"
           src="https://plausible.io/js/plausible.js"
-        ></script>
+        />
       </Head>
       <AppProvider>
         <NextNProgress
