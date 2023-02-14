@@ -2,10 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ButtonHTMLAttributes } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
 import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
+import { KogWheel } from "../../../../../assets/icons/KogWheel";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
-import { fetchRaceStatus } from "../../../../../common/api/races";
+import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
@@ -162,6 +163,17 @@ function ActionButtons({ game }: { game: Game }) {
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
+      {isOwner && (
+        <Button
+          onClick={() => {}}
+          color="invisible"
+          leftIcon={
+            <div className="h-5">
+              <KogWheel />
+            </div>
+          }
+        />
+      )}
       {isOwner && (
         <ActionButton
           text="refresh"
