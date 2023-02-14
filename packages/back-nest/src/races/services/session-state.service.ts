@@ -4,39 +4,21 @@ import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class SessionState {
-  async getUser(socket: Socket) {
-    return new Promise<User>((resolve) => {
-      socket.request.session.reload(() => {
-        resolve(socket.request.session.user);
-      });
-    });
+  getUser(socket: Socket): User {
+    return socket.request.session.user;
   }
 
-  async getRaceID(socket: Socket) {
-    return new Promise<string>((resolve) => {
-      socket.request.session.reload(() => {
-        resolve(socket.request.session.raceId);
-      });
-    });
+  getRaceID(socket: Socket): string {
+    return socket.request.session.raceId;
   }
 
-  async saveRaceID(socket: Socket, id: string) {
-    return new Promise<void>((resolve) => {
-      socket.request.session.raceId = id;
-      socket.request.session.save(() => {
-        resolve();
-      });
-    });
+  saveRaceID(socket: Socket, id: string) {
+    socket.leave(socket.request.session.raceId);
+    socket.request.session.raceId = id;
   }
 
-  async removeRaceID(socket: Socket) {
-    const raceID = socket.request.session.raceId;
-    await socket.leave(raceID);
-    return new Promise<void>(async (resolve) => {
-      socket.request.session.raceId = null;
-      socket.request.session.save(() => {
-        resolve();
-      });
-    });
+  removeRaceID(socket: Socket) {
+    socket.leave(socket.request.session.raceId);
+    socket.request.session.raceId = null;
   }
 }

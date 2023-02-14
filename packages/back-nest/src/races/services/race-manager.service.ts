@@ -116,7 +116,7 @@ export class RaceManager {
     return race;
   }
 
-  async leaveRace(socket: Socket, user: User, raceId: string) {
+  leaveRace(socket: Socket, user: User, raceId: string) {
     const race = this.races[raceId];
     if (!race) return;
     race.removeMember(user);
@@ -125,7 +125,6 @@ export class RaceManager {
     } else if (race.owner === user.id) {
       race.owner = Object.values(race.members)[0].id;
     }
-    await socket.leave(raceId);
     this.raceEvents.leftRace(socket, user, raceId);
   }
 

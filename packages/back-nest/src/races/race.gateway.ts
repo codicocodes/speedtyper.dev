@@ -16,7 +16,6 @@ import { Locker } from './services/locker.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
 import { KeyStroke } from './services/race-player.service';
-import { ResultsHandlerService } from './services/results-handler.service';
 import { SessionState } from './services/session-state.service';
 
 @WebSocketGateway(socketCors)
@@ -27,7 +26,7 @@ export class RaceGateway {
 
   constructor(
     private raceManager: RaceManager,
-    private sessionState: SessionState,
+    private session: SessionState,
     private raceEvents: RaceEvents,
     private addKeyStrokeService: AddKeyStrokeService,
     private manageRaceLock: Locker,
@@ -39,14 +38,14 @@ export class RaceGateway {
     this.raceEvents.server = server;
   }
 
-  async handleDisconnect(socket: Socket) {
+  handleDisconnect(socket: Socket) {
     this.logger.info(
       `Client disconnected: ${socket.request.session.user.username}`,
     );
-    const raceId = await this.sessionState.getRaceID(socket);
-    const user = await this.sessionState.getUser(socket);
-    await this.raceManager.leaveRace(socket, user, raceId);
-    await this.sessionState.removeRaceID(socket);
+    const raceId = this.session.getRaceID(socket);
+    const user = this.session.getUser(socket);
+    this.raceManager.leaveRace(socket, user, raceId);
+    this.session.removeRaceID(socket);
     this.manageRaceLock.release(socket.id);
   }
 
@@ -61,15 +60,14 @@ export class RaceGateway {
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
     const socketID = socket.id;
-    console.log('refresh_challenge', socketID);
     await this.manageRaceLock.runIfOpen(socketID, async () => {
-      const raceId = await this.sessionState.getRaceID(socket);
+      const raceId = this.session.getRaceID(socket);
       if (!raceId) {
         this.manageRaceLock.release(socket.id);
         this.onPlay(socket);
         return;
       }
-      const user = await this.sessionState.getUser(socket);
+      const user = this.session.getUser(socket);
       if (this.raceManager.isOwner(user.id, raceId)) {
         const race = await this.raceManager.refresh(raceId);
         this.raceEvents.updatedRace(socket, race);
@@ -81,18 +79,19 @@ export class RaceGateway {
   async onPlay(socket: Socket) {
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
-      const user = await this.sessionState.getUser(socket);
-      const raceId = await this.sessionState.getRaceID(socket);
-      await this.raceManager.leaveRace(socket, user, raceId);
+      const user = this.session.getUser(socket);
+      const raceId = this.session.getRaceID(socket);
+      this.raceManager.leaveRace(socket, user, raceId);
       const race = await this.raceManager.create(user);
       this.raceEvents.createdRace(socket, race);
-      await this.sessionState.saveRaceID(socket, race.id);
+      this.session.saveRaceID(socket, race.id);
     });
   }
 
   @UseFilters(new RaceDoesNotExistFilter(), new InvalidKeystrokeFilter())
   @SubscribeMessage('key_stroke')
   async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
+    keystroke.timestamp = new Date().getTime();
     await this.addKeyStrokeService.validate(socket, keystroke);
     this.addKeyStrokeService.addKeyStroke(socket, keystroke);
   }
@@ -101,9 +100,9 @@ export class RaceGateway {
   async onJoin(socket: Socket, id: string) {
     console.log('join', socket.id);
     this.manageRaceLock.runIfOpen(socket.id, async () => {
-      const user = await this.sessionState.getUser(socket);
-      const raceID = await this.sessionState.getRaceID(socket);
-      await this.raceManager.leaveRace(socket, user, raceID);
+      const user = this.session.getUser(socket);
+      const raceID = this.session.getRaceID(socket);
+      this.raceManager.leaveRace(socket, user, raceID);
       const race = this.raceManager.join(user, id);
       if (!race) {
         console.log('no race...');
@@ -118,14 +117,14 @@ export class RaceGateway {
         return this.onPlay(socket);
       }
       this.raceEvents.joinedRace(socket, race, user);
-      await this.sessionState.saveRaceID(socket, id);
+      this.session.saveRaceID(socket, id);
     });
   }
 
   @SubscribeMessage('start_race')
   async onStart(socket: Socket) {
-    const user = await this.sessionState.getUser(socket);
-    const raceID = await this.sessionState.getRaceID(socket);
+    const user = this.session.getUser(socket);
+    const raceID = this.session.getRaceID(socket);
     const race = this.raceManager.getRace(raceID);
     if (race.canStartRace(user.id)) {
       this.countdownService.countdown(race);
