@@ -30,7 +30,6 @@ export class RaceGateway {
     private sessionState: SessionState,
     private raceEvents: RaceEvents,
     private addKeyStrokeService: AddKeyStrokeService,
-    private resultHandler: ResultsHandlerService,
     private manageRaceLock: Locker,
     private countdownService: CountdownService,
   ) {}
@@ -96,7 +95,6 @@ export class RaceGateway {
   async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
     await this.addKeyStrokeService.validate(socket, keystroke);
     this.addKeyStrokeService.addKeyStroke(socket, keystroke);
-    this.resultHandler.handleResult(socket);
   }
 
   @SubscribeMessage('join')

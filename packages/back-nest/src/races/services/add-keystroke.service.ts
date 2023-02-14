@@ -6,6 +6,7 @@ import { ProgressService } from './progress.service';
 import { RaceEvents } from './race-events.service';
 import { RaceManager } from './race-manager.service';
 import { KeyStroke } from './race-player.service';
+import { ResultsHandlerService } from './results-handler.service';
 import { SessionState } from './session-state.service';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class AddKeyStrokeService {
     private progressService: ProgressService,
     private trackingService: TrackingService,
     private events: RaceEvents,
+    private resultHandler: ResultsHandlerService,
   ) {}
 
   async validate(socket: Socket, keyStroke: KeyStroke) {
@@ -41,6 +43,8 @@ export class AddKeyStrokeService {
       this.events.progressUpdated(socket, raceId, player);
     }
     this.syncStartTime(raceId, new Date(keyStroke.timestamp));
+    const race = this.manager.getRace(raceId);
+    this.resultHandler.handleResult(race, user);
   }
 
   async syncStartTime(raceId: string, timestamp: Date) {
