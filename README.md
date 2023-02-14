@@ -16,7 +16,13 @@
   <a href="https://github.com/codicocodes/speedtyper.dev" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/codicocodes/speedtyper.dev?style=social"></a>
 </p>
 
-
+### **Table of Contents**
+- [Features](#features-🎉)
+- [Contribute](#contribute-👷)
+- [Community](#community-☕)
+- [Roadmap](#roadmap-🛣️)
+- [License](#license-📜)
+- [Project Contributors](#project-contributors⭐)
 
 ## Features 🎉
 
