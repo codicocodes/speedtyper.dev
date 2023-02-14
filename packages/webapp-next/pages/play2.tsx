@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { useSocket } from "../common/hooks/useSocket";
+import { useCleanupSocket, useSocket } from "../common/hooks/useSocket";
 import { Keys, useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
@@ -45,6 +45,7 @@ function Play2Page({
   const router = useRouter();
   const isCompleted = useIsCompleted();
   const socket = useSocket();
+  useCleanupSocket(socket);
   useConnectionManager(socket);
   const game = useGame(socket);
   const challenge = useChallenge(socket);
