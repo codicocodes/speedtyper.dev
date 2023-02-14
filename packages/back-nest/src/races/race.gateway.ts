@@ -92,7 +92,7 @@ export class RaceGateway {
   @SubscribeMessage('key_stroke')
   async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
     keystroke.timestamp = new Date().getTime();
-    await this.addKeyStrokeService.validate(socket, keystroke);
+    this.addKeyStrokeService.validate(socket, keystroke);
     this.addKeyStrokeService.addKeyStroke(socket, keystroke);
   }
 

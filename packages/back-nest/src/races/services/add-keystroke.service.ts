@@ -21,7 +21,7 @@ export class AddKeyStrokeService {
     private resultHandler: ResultsHandlerService,
   ) {}
 
-  async validate(socket: Socket, keyStroke: KeyStroke) {
+  validate(socket: Socket, keyStroke: KeyStroke) {
     const user = this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
