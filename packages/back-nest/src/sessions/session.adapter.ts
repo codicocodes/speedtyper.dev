@@ -27,6 +27,9 @@ export const denyWithoutUserInSession = (
       'disconnect because there is no user in the session',
       socket.id,
     );
+    socket.request.session.destroy(() => {
+      /* **/
+    });
     return socket.disconnect(true);
   }
   next();
