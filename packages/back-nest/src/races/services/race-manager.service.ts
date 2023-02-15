@@ -133,6 +133,12 @@ export class RaceManager {
     if (!race) throw new RaceDoesNotExist(raceId);
     return race.owner === userId;
   }
+
+  userIsAlreadyPlaying(userId: string): boolean {
+    return Object.values(this.races)
+      .flatMap((race) => Object.keys(race.members))
+      .includes(userId);
+  }
 }
 
 export class RaceDoesNotExist extends BadRequestException {

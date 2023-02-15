@@ -50,7 +50,9 @@ export class RaceGateway {
   }
 
   handleConnection(socket: Socket) {
-    if (this.session.isAlreadyPlaying(socket)) {
+    const userId = this.session.getUser(socket).id;
+    const userIsAlreadyPlaying = this.raceManager.userIsAlreadyPlaying(userId);
+    if (userIsAlreadyPlaying) {
       this.logger.info(
         `Client already in race: ${socket.request.session.user.username} - ${socket.request.session.raceId}`,
       );
