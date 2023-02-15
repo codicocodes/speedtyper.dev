@@ -67,6 +67,7 @@ export class Game {
   private listenForRaceJoined() {
     this.socket.subscribe("race_joined", (_, race) => {
       console.log("race_joined", race);
+      useConnectionStore.setState((s) => ({ ...s, isConnected: true }));
       useGameStore.setState((game) => ({
         ...game,
         id: race.id,
