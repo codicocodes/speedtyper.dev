@@ -8,11 +8,13 @@ import { useGameStore } from "./game-store";
 export interface ConnectionState {
   isConnected: boolean;
   raceExistsInServer: boolean;
+  alreadyPlaying: boolean;
 }
 
 export const useConnectionStore = create<ConnectionState>((_set, _get) => ({
   isConnected: true,
   raceExistsInServer: true,
+  alreadyPlaying: false,
 }));
 
 export const refreshRaceState = async (raceId: string) => {
@@ -59,12 +61,20 @@ export const useConnectionManager = (socket: SocketLatest) => {
     [isConnected, raceId]
   );
   useEffect(() => {
+    const onAlreadyPlaying = () => {
+      console.log("alreadyPlaying received");
+      useConnectionStore.setState((state) => ({
+        ...state,
+        alreadyPlaying: true,
+      }));
+    };
     const onDisconnect = (_err: string | null, _msg: string) => {
       useConnectionStore.setState((state) => ({
         ...state,
         isConnected: false,
       }));
     };
+    socket.subscribe("already_playing", onAlreadyPlaying);
     socket.subscribe("connect_error", onDisconnect);
     socket.subscribe("disconnect", onDisconnect);
     socket.subscribe("connect", onConnect);

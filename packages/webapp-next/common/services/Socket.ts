@@ -8,6 +8,9 @@ export default class SocketLatest {
       withCredentials: true,
       reconnection: true,
     });
+    this.socket.on("disconnect", (err) => {
+      console.log("disconnected from server", err);
+    });
   }
 
   disconnect() {

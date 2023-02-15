@@ -33,7 +33,6 @@ const useAutoTyper = (
         .map((st) => st.trimStart())
         .join("\n");
       const value = current + untyped;
-      console.log({ value });
       handleOnChange({
         target: {
           value,

@@ -10,6 +10,8 @@ import { getSessionMiddleware } from './sessions/session.middleware';
 
 const GLOBAl_API_PREFIX = 'api';
 
+export let serverStartTime: number;
+
 async function runServer() {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
@@ -28,6 +30,7 @@ async function runServer() {
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
   app.setGlobalPrefix(GLOBAl_API_PREFIX);
   app.useGlobalPipes(new ValidationPipe());
+  serverStartTime = new Date().getTime();
   await app.listen(port);
 }
 

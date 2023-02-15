@@ -50,10 +50,18 @@ export class RaceGateway {
   }
 
   handleConnection(socket: Socket) {
+    if (this.session.isAlreadyPlaying(socket)) {
+      this.logger.info(
+        `Client already in race: ${socket.request.session.user.username} - ${socket.request.session.raceId}`,
+      );
+      socket.emit('already_playing');
+      socket.disconnect(true);
+      return;
+    }
+
     this.logger.info(
-      `Client connected: ${socket.request.session.user.username}`,
+      `Client connected: ${socket.request.session.user.username} - ${socket.id}`,
     );
-    socket.request.session.save();
   }
 
   @UseFilters(new RaceDoesNotExistFilter())

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { serverStartTime } from 'src/main';
 import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -13,12 +14,26 @@ export class SessionState {
   }
 
   saveRaceID(socket: Socket, id: string) {
-    socket.leave(socket.request.session.raceId);
+    const prevRaceID = socket.request.session.raceId;
     socket.request.session.raceId = id;
+    socket.request.session.serverStartTime = serverStartTime;
+    socket.request.session.save(() => {
+      socket.leave(prevRaceID);
+    });
   }
 
   removeRaceID(socket: Socket) {
-    socket.leave(socket.request.session.raceId);
+    const prevRaceID = socket.request.session.raceId;
     socket.request.session.raceId = null;
+    socket.request.session.save(() => {
+      socket.leave(prevRaceID);
+    });
+  }
+
+  isAlreadyPlaying(socket: Socket): boolean {
+    return (
+      socket.request.session.raceId &&
+      socket.request.session.serverStartTime === serverStartTime
+    );
   }
 }

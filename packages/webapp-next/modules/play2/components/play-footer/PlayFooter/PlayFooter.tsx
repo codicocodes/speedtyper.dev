@@ -51,6 +51,9 @@ export function WarningContainer() {
   const raceExistsInServer = useConnectionStore(
     (state) => state.raceExistsInServer
   );
+  const alreadyPlaying = useConnectionStore((state) => state.alreadyPlaying);
+  const showRaceDoesNotExistWarning = !raceExistsInServer && !alreadyPlaying;
+  const showDisconnectedWarning = !alreadyPlaying && !isConnected;
   return (
     <>
       {mistakesWarning && (
@@ -59,13 +62,19 @@ export function WarningContainer() {
           Undo mistakes to continue
         </span>
       )}
-      {!isConnected && (
+      {showDisconnectedWarning && (
         <span className="flex ml-2 text-red-400 font-medium gap-1">
           <WarningIcon />
           You are not connected to the server.
         </span>
       )}
-      {!raceExistsInServer && (
+      {alreadyPlaying && (
+        <span className="flex ml-2 text-red-400 font-medium gap-1">
+          <WarningIcon />
+          You can not play in two browsers simultaneously
+        </span>
+      )}
+      {showRaceDoesNotExistWarning && (
         <h2 className="text-red-400 flex justify-center items-center ml-2 text-lg font-medium gap-1 my-2">
           <WarningIcon />
           This race does not exist. Refresh to continue.
