@@ -22,7 +22,6 @@ import { SessionState } from './services/session-state.service';
 export class RaceGateway {
   @WebSocketServer()
   server: Server;
-  logger = console;
 
   constructor(
     private raceManager: RaceManager,
@@ -34,12 +33,12 @@ export class RaceGateway {
   ) {}
 
   afterInit(server: Server) {
-    this.logger.info('[SpeedTyper.dev] Websocket Server Started.');
+    console.info('[SpeedTyper.dev] Websocket Server Started.');
     this.raceEvents.server = server;
   }
 
   handleDisconnect(socket: Socket) {
-    this.logger.info(
+    console.info(
       `Client disconnected: ${socket.request.session.user.username}`,
     );
     const raceId = this.session.getRaceID(socket);
@@ -53,7 +52,7 @@ export class RaceGateway {
     const userId = this.session.getUser(socket).id;
     const userIsAlreadyPlaying = this.raceManager.userIsAlreadyPlaying(userId);
     if (userIsAlreadyPlaying) {
-      this.logger.info(
+      console.info(
         `Client already in race: ${socket.request.session.user.username} - ${socket.request.session.raceId}`,
       );
       socket.emit('already_playing');
@@ -61,7 +60,7 @@ export class RaceGateway {
       return;
     }
 
-    this.logger.info(
+    console.info(
       `Client connected: ${socket.request.session.user.username} - ${socket.id}`,
     );
   }
