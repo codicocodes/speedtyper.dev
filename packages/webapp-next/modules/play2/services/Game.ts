@@ -6,7 +6,7 @@ import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
 
 export class Game {
   constructor(private socket: SocketLatest) {
-    this.initialize();
+    this.initializeConnectedState(socket);
     this.listenForRaceJoined();
     this.listenForRaceStarted();
     this.listenForMemberJoined();
@@ -171,10 +171,12 @@ export class Game {
       });
     });
   }
-  private initialize() {
+  private initializeConnectedState(socket: SocketLatest) {
+    const connected = socket.socket.connected;
     useGameStore.setState((game) => {
       return {
         ...game,
+        connected,
         game: this,
       };
     });

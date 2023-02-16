@@ -1,11 +1,10 @@
 import { connect, Socket as SocketIOSocket } from "socketio-latest";
 
 export default class SocketLatest {
-  socket?: SocketIOSocket;
+  socket: SocketIOSocket;
 
-  constructor(private serverUrl: string) {}
-  connect() {
-    this.socket = connect(this.serverUrl, {
+  constructor(serverUrl: string) {
+    this.socket = connect(serverUrl, {
       withCredentials: true,
       reconnection: true,
     });
