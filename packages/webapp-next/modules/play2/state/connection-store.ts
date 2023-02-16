@@ -9,6 +9,7 @@ export interface ConnectionState {
   isConnected: boolean;
   raceExistsInServer: boolean;
   alreadyPlaying: boolean;
+  socket?: SocketLatest;
 }
 
 export const useConnectionStore = create<ConnectionState>((_set, _get) => ({
@@ -42,7 +43,8 @@ export const setRaceExists = () => {
   }));
 };
 
-export const useConnectionManager = (socket: SocketLatest) => {
+export const useConnectionManager = () => {
+  const socket = useConnectionStore((s) => s.socket);
   const isConnected = useConnectionStore((state) => state.isConnected);
   const raceId = useGameStore((state) => state.id);
   const onConnect = useCallback(
@@ -76,9 +78,9 @@ export const useConnectionManager = (socket: SocketLatest) => {
         isConnected: false,
       }));
     };
-    socket.subscribe("already_playing", onAlreadyPlaying);
-    socket.subscribe("connect_error", onDisconnect);
-    socket.subscribe("disconnect", onDisconnect);
-    socket.subscribe("connect", onConnect);
+    socket?.subscribe("already_playing", onAlreadyPlaying);
+    socket?.subscribe("connect_error", onDisconnect);
+    socket?.subscribe("disconnect", onDisconnect);
+    socket?.subscribe("connect", onConnect);
   }, [socket, onConnect]);
 };

@@ -1,7 +1,8 @@
 import { useMemo } from "react";
-import SocketLatest from "../../../common/services/Socket";
 import { Game } from "../services/Game";
+import { useConnectionStore } from "../state/connection-store";
 
-export const useGame = (socket: SocketLatest) => {
-  return useMemo(() => new Game(socket), [socket]);
+export const useGame = () => {
+  const socket = useConnectionStore((s) => s.socket);
+  return useMemo(() => socket && new Game(socket), [socket]);
 };

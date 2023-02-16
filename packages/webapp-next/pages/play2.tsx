@@ -18,7 +18,7 @@ import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -44,15 +44,15 @@ function Play2Page({
   useInitializeUserStore(user);
   const router = useRouter();
   const isCompleted = useIsCompleted();
-  const socket = useSocket();
-  useCleanupSocket(socket);
-  useConnectionManager(socket);
-  const game = useGame(socket);
-  const challenge = useChallenge(socket);
+  useSocket();
+  useCleanupSocket();
+  useConnectionManager();
+  const game = useGame();
+  const challenge = useChallenge();
   const gameID = useGameIdQueryParam();
 
   useEffect(() => {
-    if (game.id && game.id !== gameID) {
+    if (game && game.id && game.id !== gameID) {
       router.query["id"] = game.id;
       router.push(
         {
@@ -63,10 +63,14 @@ function Play2Page({
         { shallow: true }
       );
     }
-  }, [router, gameID, game.id]);
+  }, [game, router, gameID, game?.id]);
 
   useConnectToGame(game, gameID);
-  useKeyMap(true, Keys.Tab, () => game.next());
+  useKeyMap(
+    true,
+    Keys.Tab,
+    useCallback(() => game?.next(), [game])
+  );
   useResetStateOnUnmount();
   useEndGame();
 

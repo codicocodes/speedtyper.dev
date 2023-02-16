@@ -1,18 +1,20 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
+import { useConnectionStore } from "../../modules/play2/state/connection-store";
 import SocketLatest from "../services/Socket";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
 
-export function useSocket(): SocketLatest {
-  return useMemo(() => {
+export function useSocket() {
+  useEffect(() => {
     const serverUrl = getExperimentalServerUrl();
-    return new SocketLatest(serverUrl);
+    const socket = new SocketLatest(serverUrl);
+    useConnectionStore.setState((s) => ({ ...s, socket }));
   }, []);
 }
 
-export function useCleanupSocket(socket: SocketLatest) {
+export function useCleanupSocket() {
   useEffect(() => {
     return () => {
-      socket.disconnect();
+      useConnectionStore.getState().socket?.disconnect();
     };
-  }, [socket]);
+  }, []);
 }

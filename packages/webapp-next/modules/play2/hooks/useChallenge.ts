@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SocketLatest from "../../../common/services/Socket";
 import { useCodeStore } from "../state/code-store";
+import { useConnectionStore } from "../state/connection-store";
 
 export interface ChallengeInfo {
   code: string;
@@ -11,7 +12,7 @@ export interface ChallengeInfo {
   license: string;
 }
 
-export function useChallenge(socket: SocketLatest): ChallengeInfo {
+export function useChallenge(): ChallengeInfo {
   const initialize = useCodeStore((state) => state.initialize);
   const [challenge, setChallenge] = useState({
     loaded: false,
@@ -23,8 +24,11 @@ export function useChallenge(socket: SocketLatest): ChallengeInfo {
     license: "",
   });
 
+  const socket = useConnectionStore(s => s.socket);
+
+
   useEffect(() => {
-    socket.subscribe("challenge_selected", (_, data) => {
+    socket?.subscribe("challenge_selected", (_, data) => {
       setChallenge({
         loaded: true,
         projectName: data.project.fullName,
