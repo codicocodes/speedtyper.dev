@@ -1,9 +1,8 @@
 import create from "zustand";
-import { User, useUserStore } from "../../../common/state/user-store";
-import { Game } from "../services/Game";
-import { useCodeStore } from "./code-store";
 
 export interface SettingsState {
+  rerenderIdx: number;
+  settingsModalIsOpen: boolean;
   smoothCaret: boolean;
 }
 
@@ -27,11 +26,28 @@ function getInitialSmoothCaretSetting(): boolean {
 }
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
+  rerenderIdx: 0,
+  settingsModalIsOpen: false,
   smoothCaret: getInitialSmoothCaretSetting(),
 }));
 
-export const toggleSmoothCaret = () => {
-  const smoothCaret = !useSettingsStore.getState().smoothCaret;
+export const setCaretType = (caretType: "smooth" | "block") => {
+  const smoothCaret = caretType === "smooth";
   localStorage.setItem(SMOOTH_CARET_KEY, smoothCaret.toString());
   useSettingsStore.setState((state) => ({ ...state, smoothCaret }));
+};
+
+export const openSettingsModal = () => {
+  useSettingsStore.setState((s) => ({
+    ...s,
+    rerenderIdx: s.rerenderIdx + 1,
+    settingsModalIsOpen: true,
+  }));
+};
+
+export const closeSettingsModal = () => {
+  useSettingsStore.setState((s) => ({
+    ...s,
+    settingsModalIsOpen: false,
+  }));
 };

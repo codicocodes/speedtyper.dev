@@ -24,6 +24,7 @@ export const useBlinkingCursorAnimation = (
       controls.set({
         backgroundColor: ["rgba(0,0,0,0)"],
       });
+      controls.stop();
       return;
     }
     if (!isPlaying) {
@@ -36,7 +37,7 @@ export const useBlinkingCursorAnimation = (
       });
       controls.stop();
     }
-  }, [color, controls, isPlaying]);
+  }, [runAnimation, color, controls, isPlaying]);
   return controls;
 };
 

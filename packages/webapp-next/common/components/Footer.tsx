@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DiscordLogo, GithubLogo, TwitchLogo } from "../../assets/icons";
 import { getStargazersCount } from "../github/stargazers";
 import { useIsPlaying } from "../hooks/useIsPlaying";
+import { PlayingNow } from "./BattleMatcher";
 import Button from "./Button";
 
 function useStargazersCount() {
@@ -18,14 +19,7 @@ function useStargazersCount() {
 export function KeybindInfo() {
   return (
     <div className="flex flex-grow items-center">
-      <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold text-faded-gray">
-        Tab
-      </h1>
-      <span className="mx-1 text-sm text-faded-gray">- Next Challenge</span>
-      <h1 className="bg-dark-lake py-1 px-2 rounded text-sm font-bold ml-2 text-faded-gray">
-        Enter
-      </h1>
-      <span className="mx-1 text-sm text-faded-gray">- Start Challenge</span>
+      <PlayingNow />
     </div>
   );
 }

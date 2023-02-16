@@ -67,7 +67,7 @@ interface BattleMatcherModalProps {
   closeModal: () => void;
 }
 
-const PlayingNow = () => {
+export const PlayingNow = () => {
   const { data } = useSWR(
     ONLINE_COUNT_API,
     (...args) => fetch(...args).then((res) => res.json()),
@@ -77,8 +77,8 @@ const PlayingNow = () => {
     <h3 className="my-2 font-semibold text-xs tracking-wide">
       <div className="flex items-center px-1 rounded mr-2 uppercase">
         <div className="mr-2 h-2 w-2 bg-green-400 rounded-full " />
-        Playing now
-        <div className="flex items-center bg-gray-300 px-2 rounded mx-2">
+        Playing
+        <div className="flex text-dark-ocean items-center bg-gray-300 px-2 rounded mx-2">
           <div className="h-2 mr-1">
             <UserGroupIcon />
           </div>

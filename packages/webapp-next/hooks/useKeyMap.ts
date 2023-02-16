@@ -13,6 +13,7 @@ export const useKeyMap = (
   selectedKeys: string,
   callback: () => void
 ) => {
+  if (selectedKeys === "Escape") console.log({ selectedKeys, callback });
   useEffect(() => {
     const handleKeyDown = (e: any) => {
       const { key: pressedKey } = e;

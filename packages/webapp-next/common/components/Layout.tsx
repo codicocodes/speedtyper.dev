@@ -32,7 +32,20 @@ export function Layout({ children }: LayoutProps) {
       </Container>
       <Container centered={true}>{children}</Container>
       <Container centered={false}>
-        <Footer />
+        <>
+          <div className="flex flex-grow items-center mb-2 text-xs">
+            <h1 className="bg-dark-lake py-1 px-2 rounded font-bold text-faded-gray">
+              Tab
+            </h1>
+            <span className="mx-1 text-faded-gray">Next Challenge</span>
+            <h1 className="bg-dark-lake py-1 px-2 rounded font-bold ml-2 text-faded-gray">
+              Enter
+            </h1>
+
+            <span className="mx-1 text-faded-gray">Start Challenge</span>
+          </div>
+          <Footer />
+        </>
       </Container>
     </>
   );
