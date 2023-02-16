@@ -6,7 +6,6 @@ import { useCodeStore } from "./code-store";
 export interface GameState {
   id?: string;
   owner?: string;
-  connected: boolean;
   members: Record<string, RacePlayer>;
   results: Record<string, RaceResult>;
   myResult?: RaceResult;
@@ -34,7 +33,6 @@ export interface RaceResult {
 }
 
 export const useGameStore = create<GameState>((_set, _get) => ({
-  connected: true,
   members: {},
   results: {},
 }));

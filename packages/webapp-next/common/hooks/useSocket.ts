@@ -3,10 +3,12 @@ import SocketLatest from "../services/Socket";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
 
 export function useSocket(): SocketLatest {
-  return useMemo(() => {
-    const serverUrl = getExperimentalServerUrl();
-    return new SocketLatest(serverUrl);
-  }, []);
+  const serverUrl = getExperimentalServerUrl();
+  const socket = useMemo(() => new SocketLatest(serverUrl), [serverUrl]);
+  useEffect(() => {
+    socket.connect();
+  }, [socket]);
+  return socket;
 }
 
 export function useCleanupSocket(socket: SocketLatest) {
