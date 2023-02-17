@@ -32,7 +32,9 @@ export function Layout({ children }: LayoutProps) {
       </Container>
       <Container centered={true}>{children}</Container>
       <Container centered={false}>
-        <Footer />
+        <>
+          <Footer />
+        </>
       </Container>
     </>
   );

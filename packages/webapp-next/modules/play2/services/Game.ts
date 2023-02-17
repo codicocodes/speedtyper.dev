@@ -3,6 +3,7 @@ import { useUserStore } from "../../../common/state/user-store";
 import { KeyStroke, useCodeStore } from "../state/code-store";
 import { useConnectionStore } from "../state/connection-store";
 import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
+import { useSettingsStore } from "../state/settings-store";
 
 export class Game {
   onConnectHasRun: boolean;
@@ -101,6 +102,7 @@ export class Game {
         ...state,
         raceExistsInServer: true,
       }));
+      useSettingsStore.setState((s) => ({ ...s, raceIsPublic: race.isPublic }));
     });
   }
 

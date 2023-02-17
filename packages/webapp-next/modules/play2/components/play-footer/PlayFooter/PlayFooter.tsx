@@ -2,11 +2,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ButtonHTMLAttributes } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
 import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
-import { KogWheel } from "../../../../../assets/icons/KogWheel";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
-import Button from "../../../../../common/components/Button";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
@@ -20,6 +18,7 @@ import {
   useIsMultiplayer,
   useIsOwner,
 } from "../../../state/game-store";
+import { RaceSettings } from "../../RaceSettings";
 import { ChallengeSource } from "../ChallengeSource";
 
 interface PlayFooterProps {
@@ -171,17 +170,7 @@ function ActionButtons() {
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
-      {isOwner && (
-        <Button
-          onClick={() => {}}
-          color="invisible"
-          leftIcon={
-            <div className="h-5">
-              <KogWheel />
-            </div>
-          }
-        />
-      )}
+      <RaceSettings />
       {isOwner && (
         <ActionButton
           text="refresh"

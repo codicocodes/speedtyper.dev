@@ -17,6 +17,11 @@ import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
 import { useCallback } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
+import {
+  openSettingsModal,
+  useSettingsStore,
+} from "../modules/play2/state/settings-store";
+import { useIsPlaying } from "../common/hooks/useIsPlaying";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -40,6 +45,7 @@ function Play2Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   useInitializeUserStore(user);
   const isCompleted = useIsCompleted();
+  const isPlaying = useIsPlaying();
   useSocket();
   useConnectionManager();
   const game = useGame();
@@ -49,6 +55,10 @@ function Play2Page({
     Keys.Tab,
     useCallback(() => game?.next(), [game])
   );
+  useSettingsStore((s) => s.settingsModalIsOpen);
+  useKeyMap(true, Keys.Escape, () => {
+    if (!isPlaying) openSettingsModal();
+  });
   useResetStateOnUnmount();
   useEndGame();
 
