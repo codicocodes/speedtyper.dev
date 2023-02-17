@@ -6,16 +6,14 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Game } from "../services/Game";
 
 import { isSkippable, useCodeStore } from "../state/code-store";
-import { useCanType } from "../state/game-store";
+import { useCanType, useGameStore } from "../state/game-store";
 
 interface HiddenCodeInputProps {
   hide: boolean; // Used for debugging the input
   disabled: boolean;
   inputRef: (node: HTMLTextAreaElement) => void;
-  game: Game;
 }
 
 const useAutoTyper = (
@@ -46,8 +44,8 @@ export const HiddenCodeInput = ({
   disabled,
   hide,
   inputRef,
-  game,
 }: HiddenCodeInputProps) => {
+  const game = useGameStore((s) => s.game);
   const handleBackspace = useCodeStore((state) => state.handleBackspace);
   const handleKeyPress = useCodeStore((state) => state.handleKeyPress);
   const keyPressFactory = useCodeStore((state) => state.keyPressFactory);
@@ -62,6 +60,7 @@ export const HiddenCodeInput = ({
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // TODO: use e.isTrusted
     if (!canType) return;
+    if (!game) return;
     const backspaces = input.length - e.target.value.length;
     // send backspaces
     if (backspaces > 0) {

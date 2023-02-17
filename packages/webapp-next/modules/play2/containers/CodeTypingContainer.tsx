@@ -9,12 +9,10 @@ import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 import { useKeyMap, triggerKeys } from "../../../hooks/useKeyMap";
-import { Game } from "../services/Game";
 
 interface CodeTypingContainerProps {
   filePath: string;
   language: string;
-  game: Game;
 }
 
 const CODE_INPUT_BLUR_DEBOUNCE_MS = 1000;
@@ -24,7 +22,6 @@ let trulyFocusedCodeInput = true;
 export function CodeTypingContainer({
   filePath,
   language,
-  game,
 }: CodeTypingContainerProps) {
   useCodeStore((state) => state.code);
   const isPlaying = useIsPlaying();
@@ -82,12 +79,7 @@ export function CodeTypingContainer({
         onBlur={onBlur}
         onMouseDown={onMouseDownPreventBlur}
       >
-        <HiddenCodeInput
-          hide={true}
-          disabled={false}
-          inputRef={inputRef}
-          game={game}
-        />
+        <HiddenCodeInput hide={true} disabled={false} inputRef={inputRef} />
         <CodeArea filePath={filePath} focused={focused}>
           <TypedChars language={language} />
           <IncorrectChars />

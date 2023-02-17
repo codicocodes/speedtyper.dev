@@ -38,9 +38,10 @@ export const useGameStore = create<GameState>((_set, _get) => ({
 }));
 
 export const useCanType = () => {
+  const game = useGameStore((s) => s.game);
   const isMultiplayer = useIsMultiplayer();
   const hasStartTime = useCodeStore((state) => state.startTime);
-  return !isMultiplayer || hasStartTime;
+  return  !!game && !isMultiplayer || hasStartTime;
 };
 
 export const useIsMultiplayer = () => {

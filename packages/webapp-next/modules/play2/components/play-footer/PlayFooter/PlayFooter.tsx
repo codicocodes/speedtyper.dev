@@ -13,7 +13,6 @@ import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadable
 import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
 import useTotalSeconds from "../../../../../hooks/useTotalSeconds";
 import { ChallengeInfo } from "../../../hooks/useChallenge";
-import { Game } from "../../../services/Game";
 import { useCodeStore } from "../../../state/code-store";
 import { useConnectionStore } from "../../../state/connection-store";
 import {
@@ -24,7 +23,6 @@ import {
 import { ChallengeSource } from "../ChallengeSource";
 
 interface PlayFooterProps {
-  game: Game;
   challenge: ChallengeInfo;
 }
 
@@ -90,7 +88,7 @@ export function WarningContainer() {
   );
 }
 
-export function PlayFooter({ game, challenge }: PlayFooterProps) {
+export function PlayFooter({ challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
   return (
@@ -106,7 +104,7 @@ export function PlayFooter({ game, challenge }: PlayFooterProps) {
           {!isPlaying && (
             <div className="w-full">
               <div className="flex row justify-between items-top">
-                <ActionButtons game={game} />
+                <ActionButtons />
                 <div className="text-faded-gray">
                   <ChallengeSource
                     name={challenge.projectName}
@@ -159,7 +157,8 @@ export function ActionButton({
   );
 }
 
-function ActionButtons({ game }: { game: Game }) {
+function ActionButtons() {
+  const game = useGameStore((s) => s.game);
   const isMultiplayer = useIsMultiplayer();
   const isOwner = useIsOwner();
   const hasEndTime = useCodeStore((state) => state.endTime);
@@ -168,7 +167,7 @@ function ActionButtons({ game }: { game: Game }) {
     isOwner && isMultiplayer && !hasEndTime && !countdown;
   const waitingForOwnerToStart =
     !isOwner && isMultiplayer && !hasEndTime && !countdown;
-  const startGame = () => game.start();
+  const startGame = () => game?.start();
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
@@ -187,7 +186,7 @@ function ActionButtons({ game }: { game: Game }) {
         <ActionButton
           text="refresh"
           title="Refresh the challenge"
-          onClick={() => game.next()}
+          onClick={() => game?.next()}
           icon={<ReloadIcon />}
         />
       )}
@@ -197,7 +196,7 @@ function ActionButtons({ game }: { game: Game }) {
         icon={<LinkIcon />}
         onClick={() => {
           const url = new URL(window.location.href);
-          if (game.id) {
+          if (game?.id) {
             url.searchParams.set("id", game.id);
           }
           copyToClipboard(url.toString(), `${url} copied to clipboard`);

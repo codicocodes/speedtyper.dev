@@ -101,12 +101,11 @@ function Play2Page({
               <CodeTypingContainer
                 filePath={challenge.filePath}
                 language={challenge.language}
-                game={game}
               />
             )}
           </motion.div>
         </AnimatePresence>
-        <PlayFooter game={game} challenge={challenge} />
+        <PlayFooter challenge={challenge} />
       </>
       <ToastContainer />
     </div>
