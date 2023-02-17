@@ -26,9 +26,12 @@ export class Race {
   @Exclude()
   countdown: boolean;
 
-  @Exclude()
   isPublic: boolean;
 
+  togglePublic(): boolean {
+    this.isPublic = !this.isPublic;
+    return this.isPublic;
+  }
   toPublic(): PublicRace {
     const ownerName = this.members[this.owner].username;
     const memberCount = Object.keys(this.members).length;

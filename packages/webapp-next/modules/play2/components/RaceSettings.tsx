@@ -1,12 +1,17 @@
 import { RadioGroup, Switch } from "@headlessui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
+import { InfoIcon } from "../../../assets/icons/InfoIcon";
 import { KogWheel } from "../../../assets/icons/KogWheel";
+import { BattleMatcherContainer } from "../../../common/components/BattleMatcher";
 import Button from "../../../common/components/Button";
 import { Overlay } from "../../../common/components/Overlay";
+import { useIsOwner } from "../state/game-store";
 import {
   closeSettingsModal,
   openSettingsModal,
   setCaretType,
+  toggleRaceIsPublic,
+  toggleSyntaxHighlightning,
   useSettingsStore,
 } from "../state/settings-store";
 
@@ -29,28 +34,57 @@ export const RaceSettings: React.FC = () => {
 };
 
 export const RaceSettingsModal: React.FC = () => {
+  const isSyntaxHighlightingEnabled = useSettingsStore(
+    (s) => s.syntaxHighlighting
+  );
+  const isRacePublic = useSettingsStore((s) => s.raceIsPublic);
+  const isOwner = useIsOwner();
   return (
     <Overlay onOverlayClick={closeSettingsModal}>
       <div
         className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
         style={{ fontFamily: "Fira Code" }}
       >
-        <h2 className="flex items-center justify-center text-lg font-bold tracking-widest">
-          settings
-        </h2>
-        <ToggleSelector
-          title="public race"
-          description="Enable to let other players find and join your race"
-          enabled={false}
-          toggleEnabled={() => {}}
-        />
-        <ToggleSelector
-          title="syntax highlighting"
-          description="Enable to use syntax highlighting"
-          enabled={false}
-          toggleEnabled={() => {}}
-        />
-        <CaretSelector />
+        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+          <div className="flex items-center">
+            <button
+              className="cursor-default w-4 h-auto mr-1"
+              title="Personal settings are stored in your browser"
+            >
+              <InfoIcon />
+            </button>
+            <h2 className="text-xl tracking-wider">Personal Settings</h2>
+          </div>
+          <ToggleSelector
+            title="syntax highlighting"
+            description="Enable to use syntax highlighting"
+            checked={isSyntaxHighlightingEnabled}
+            toggleEnabled={toggleSyntaxHighlightning}
+          />
+          <CaretSelector />
+        </div>
+        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+          <div className="flex items-center">
+            <button
+              className="cursor-default w-4 h-auto mr-1"
+              title="Only the race owner can update race settings"
+            >
+              <InfoIcon />
+            </button>
+            <h2 className="text-xl">Race settings</h2>{" "}
+          </div>
+          <ToggleSelector
+            title="public race"
+            description="Enable to let other players find and join your race"
+            checked={isRacePublic}
+            disabled={!isOwner}
+            toggleEnabled={toggleRaceIsPublic}
+          />
+        </div>
+        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+          <h2 className="text-xl mt-2">Join a public race</h2>
+          <BattleMatcherContainer closeModal={closeSettingsModal} />
+        </div>
       </div>
     </Overlay>
   );
@@ -61,18 +95,17 @@ export const CaretSelector = () => {
   const selectedCaretType = isSmoothCaret ? "smooth" : "block";
   return (
     <RadioGroup value={selectedCaretType} onChange={setCaretType}>
-      <RadioGroup.Label className="text-xs ml-4 font-semibold uppercase tracking-widest">
+      <RadioGroup.Label className="text-xs font-semibold uppercase tracking-widest">
         Caret style
       </RadioGroup.Label>
-      <div className="flex w-full font-bold tracking-widest">
-        <RadioGroup.Option
-          className="w-full mx-2 cursor-pointer"
-          value="smooth"
-        >
+      <div className="flex w-full font-bold tracking-widest gap-1">
+        <RadioGroup.Option className="w-full cursor-pointer" value="smooth">
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 m-1 rounded-lg ${
-                checked ? "bg-purple-200" : "bg-gray-200"
+              className={`flex items-center h-full w-full p-3 rounded-lg ${
+                checked
+                  ? "bg-purple-200 hover:bg-purple-300"
+                  : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
               <span
@@ -85,11 +118,13 @@ export const CaretSelector = () => {
             </div>
           )}
         </RadioGroup.Option>
-        <RadioGroup.Option className="w-full mx-2 cursor-pointer" value="block">
+        <RadioGroup.Option className="w-full cursor-pointer" value="block">
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 m-1 rounded-lg ${
-                checked ? "bg-purple-200" : "bg-gray-200"
+              className={`flex items-center h-full w-full p-3 rounded-lg ${
+                checked
+                  ? "bg-purple-200 hover:bg-purple-300"
+                  : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
               <span className="flex flex-col h-full rounded-sm bg-gray-600 mr-4 w-3" />
@@ -105,28 +140,33 @@ export const CaretSelector = () => {
 interface ToggleSelectorProps {
   title: string;
   description: string;
-  enabled: boolean;
+  checked: boolean;
   toggleEnabled: () => void;
+  disabled?: boolean;
 }
 
 export const ToggleSelector: React.FC<ToggleSelectorProps> = ({
-  // enabled,
-  // toggleEnabled,
+  checked,
+  disabled = false,
+  toggleEnabled,
   title,
   description,
 }) => {
-  // temporary
-  const [enabled, toggleEnabled] = useState(false);
   return (
     <>
-      <div className="pt-1 pb-4 rounded-lg border-gray-200">
-        <Switch checked={enabled} onChange={toggleEnabled} as={Fragment}>
-          {({ checked }) => (
-            /* Use the `checked` state to conditionally style the button. */
-            <div className="flex items-center mt-2 mx-4">
+      <div className="rounded-lg border-gray-200">
+        <div className="flex items-center">
+          <Switch checked={checked} onChange={toggleEnabled} as={Fragment}>
+            {({ checked }) => (
+              /* Use the `checked` state to conditionally style the button. */
               <button
+                disabled={disabled}
                 className={`${
-                  checked ? "bg-purple-300" : "bg-faded-gray"
+                  disabled
+                    ? "bg-gray-500"
+                    : checked
+                    ? "bg-purple-300"
+                    : "bg-faded-gray"
                 } relative inline-flex h-6 w-11 items-center rounded-full`}
               >
                 <span className="sr-only">Enable notifications</span>
@@ -136,17 +176,17 @@ export const ToggleSelector: React.FC<ToggleSelectorProps> = ({
                   } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                 />
               </button>
-              <div className="flex justify-between items-center w-full ml-4">
-                <span className="text-sm font-semibold uppercase tracking-widest">
-                  {title}
-                </span>
-                <span className="w-auto tracking-wider font-thin text-sm ml-8">
-                  {description}
-                </span>
-              </div>
-            </div>
-          )}
-        </Switch>
+            )}
+          </Switch>
+          <div className="flex justify-between items-center w-full ml-4">
+            <span className="text-sm font-semibold uppercase tracking-widest">
+              {title}
+            </span>
+            <span className="w-auto tracking-wider font-thin text-sm ml-8">
+              {description}
+            </span>
+          </div>
+        </div>
       </div>
     </>
   );

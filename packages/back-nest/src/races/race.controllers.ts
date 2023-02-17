@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { PublicRace, RaceManager } from './services/race-manager.service';
 import { Request } from 'express';
 
@@ -15,6 +22,20 @@ export class RacesController {
     const online = this.raceManager.getOnlineCount();
     return {
       online,
+    };
+  }
+
+  @Post('online')
+  toggleOnlineState(@Req() request: Request): { isPublic: boolean } {
+    const userId = request.session.user.id;
+    const raceId = request.session.raceId;
+    const race = this.raceManager.getRace(raceId);
+    if (race.owner !== userId) {
+      throw new BadRequestException();
+    }
+    const isPublic = race.togglePublic();
+    return {
+      isPublic,
     };
   }
 

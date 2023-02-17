@@ -1,34 +1,38 @@
 import create from "zustand";
+import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 
 export interface SettingsState {
-  rerenderIdx: number;
   settingsModalIsOpen: boolean;
   smoothCaret: boolean;
+  syntaxHighlighting: boolean;
+  raceIsPublic: boolean;
 }
+
+const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
 
 const SMOOTH_CARET_KEY = "smoothCaret";
 
 const defaultSmoothCaretSetting = true;
 
-function getInitialSmoothCaretSetting(): boolean {
+function getInitialToggleStateFromLocalStorage(key: string): boolean {
   if (typeof document !== "undefined" && window) {
-    let smoothCaretStr = localStorage.getItem(SMOOTH_CARET_KEY);
-    if (!smoothCaretStr) {
-      localStorage.setItem(
-        SMOOTH_CARET_KEY,
-        defaultSmoothCaretSetting.toString()
-      );
-      smoothCaretStr = defaultSmoothCaretSetting.toString();
+    let toggleStateStr = localStorage.getItem(key);
+    if (!toggleStateStr) {
+      localStorage.setItem(key, defaultSmoothCaretSetting.toString());
+      toggleStateStr = defaultSmoothCaretSetting.toString();
     }
-    return smoothCaretStr === "true" ?? false;
+    return toggleStateStr === "true" ?? false;
   }
   return true;
 }
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
-  rerenderIdx: 0,
   settingsModalIsOpen: false,
-  smoothCaret: getInitialSmoothCaretSetting(),
+  smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY),
+  syntaxHighlighting: getInitialToggleStateFromLocalStorage(
+    SYNTAX_HIGHLIGHTING_KEY
+  ),
+  raceIsPublic: false,
 }));
 
 export const setCaretType = (caretType: "smooth" | "block") => {
@@ -37,10 +41,17 @@ export const setCaretType = (caretType: "smooth" | "block") => {
   useSettingsStore.setState((state) => ({ ...state, smoothCaret }));
 };
 
+export const toggleSyntaxHighlightning = () => {
+  const syntaxHighlightingStr = localStorage.getItem(SYNTAX_HIGHLIGHTING_KEY);
+  let syntaxHighlighting = syntaxHighlightingStr === "true";
+  syntaxHighlighting = !syntaxHighlighting;
+  localStorage.setItem(SYNTAX_HIGHLIGHTING_KEY, syntaxHighlighting.toString());
+  useSettingsStore.setState((state) => ({ ...state, syntaxHighlighting }));
+};
+
 export const openSettingsModal = () => {
   useSettingsStore.setState((s) => ({
     ...s,
-    rerenderIdx: s.rerenderIdx + 1,
     settingsModalIsOpen: true,
   }));
 };
@@ -50,4 +61,17 @@ export const closeSettingsModal = () => {
     ...s,
     settingsModalIsOpen: false,
   }));
+};
+
+export const toggleRaceIsPublic = () => {
+  const baseUrl = getExperimentalServerUrl();
+  const url = baseUrl + "/api/races/online";
+  fetch(url, {
+    method: "POST",
+    credentials: "include",
+  }).then((res) =>
+    res.json().then(({ isPublic: raceIsPublic }) => {
+      useSettingsStore.setState((s) => ({ ...s, raceIsPublic }));
+    })
+  );
 };

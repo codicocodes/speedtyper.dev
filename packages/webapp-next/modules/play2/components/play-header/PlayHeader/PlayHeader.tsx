@@ -13,7 +13,7 @@ export function ResultsContainer() {
   const isMultiplayer = useIsMultiplayer();
   const results = useGameStore((state) => state.results);
   return isMultiplayer ? (
-    <div className="my-2">
+    <div className="my-1">
       {Object.values(results).map((result, i) => {
         const place = i + 1;
         return <Result key={i} result={result} place={place} />;
