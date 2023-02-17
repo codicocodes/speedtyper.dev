@@ -56,36 +56,32 @@ export function Footer() {
                 <span className="mx-1 text-faded-gray">Start race</span>
               </div>
               <KeybindInfo />
-              <a
-                href="https://github.com/codicocodes/speedtyper.dev"
-                target="blank"
-              >
-                <Button
-                  color="invisible"
-                  size="sm"
-                  title="Star on GitHub"
-                  text={`${stargazersCount} stars`}
-                  leftIcon={<GithubLogo />}
-                />
-              </a>
-              <a href="https://discord.gg/AMbnnN5eep" target="blank">
-                <Button
-                  color="invisible"
-                  size="sm"
-                  title="Join Discord"
-                  text="join"
-                  leftIcon={<DiscordLogo />}
-                />
-              </a>
-              <a href="https://twitch.tv/codico" target="blank">
-                <Button
-                  color="invisible"
-                  size="sm"
-                  title="Watch livestreams"
-                  text="watch"
-                  leftIcon={<TwitchLogo />}
-                />
-              </a>
+              <div className="flex gap-4">
+                <a
+                  href="https://github.com/codicocodes/speedtyper.dev"
+                  className="flex items-center hover:text-off-white"
+                  target="blank"
+                >
+                  <GithubLogo />
+                  <span className="ml-1">{stargazersCount} stars</span>
+                </a>
+                <a
+                  href="https://discord.gg/AMbnnN5eep"
+                  className="flex items-center hover:text-blue-300"
+                  target="blank"
+                >
+                  <DiscordLogo />
+                  <span className="ml-1">watch</span>
+                </a>
+                <a
+                  href="https://twitch.tv/codico"
+                  className="flex items-center hover:text-purple-400"
+                  target="blank"
+                >
+                  <TwitchLogo />
+                  <span className="ml-1">join</span>
+                </a>
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>
