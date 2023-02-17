@@ -65,7 +65,8 @@ const renderChart = (
 
 export default function ResultsChart() {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartWPMData = useCodeStore((state) => state.getChartWPM)();
+  const getChartWPM = useCodeStore((state) => state.getChartWPM);
+  const chartWPMData = useMemo(() => getChartWPM(), [getChartWPM]);
   useEffect(() => {
     const chart = renderChart(chartRef, chartWPMData);
     return () => {
