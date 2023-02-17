@@ -61,4 +61,5 @@ export class RaceEvents {
   async logConnectedSockets() {
     const sockets = await this.server.fetchSockets();
     console.log('Connected sockets: ', sockets.length);
+  }
 }
