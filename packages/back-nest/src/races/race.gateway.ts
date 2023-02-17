@@ -68,6 +68,7 @@ export class RaceGateway {
   @UseFilters(new RaceDoesNotExistFilter())
   @SubscribeMessage('refresh_challenge')
   async onRefreshChallenge(socket: Socket) {
+    this.raceEvents.logConnectedSockets();
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
       const raceId = this.session.getRaceID(socket);

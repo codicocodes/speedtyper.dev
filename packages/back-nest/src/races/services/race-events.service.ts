@@ -58,4 +58,7 @@ export class RaceEvents {
   raceDoesNotExist(socket: Socket, id: string) {
     socket.emit('race_does_not_exist', id);
   }
+  async logConnectedSockets() {
+    const sockets = await this.server.fetchSockets();
+    console.log('Connected sockets: ', sockets.length);
 }

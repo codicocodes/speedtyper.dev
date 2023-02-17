@@ -59,6 +59,7 @@ export class RaceManager {
     console.log(msg, {
       racesSize,
       races: Object.keys(this.races).length,
+      players: this.getOnlineCount(),
     });
   }
   async create(user: User): Promise<Race> {
