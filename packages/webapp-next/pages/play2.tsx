@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { useCleanupSocket, useSocket } from "../common/hooks/useSocket";
+import { useSocket } from "../common/hooks/useSocket";
 import { Keys, useKeyMap } from "../hooks/useKeyMap";
 import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingContainer";
 import { useGame } from "../modules/play2/hooks/useGame";
@@ -12,13 +12,10 @@ import { fetchUser } from "../common/api/user";
 import { useChallenge } from "../modules/play2/hooks/useChallenge";
 import { useEndGame } from "../modules/play2/hooks/useEndGame";
 import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUnmount";
-import { useGameIdQueryParam } from "../modules/play2/hooks/useGameIdQueryParam";
-import { useConnectToGame } from "../modules/play2/hooks/useConnectToGame";
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
-import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -42,30 +39,11 @@ function Play2Page({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   useInitializeUserStore(user);
-  const router = useRouter();
   const isCompleted = useIsCompleted();
   useSocket();
-  useCleanupSocket();
   useConnectionManager();
   const game = useGame();
   const challenge = useChallenge();
-  const gameID = useGameIdQueryParam();
-
-  useEffect(() => {
-    if (game && game.id && game.id !== gameID) {
-      router.query["id"] = game.id;
-      router.push(
-        {
-          pathname: router.pathname,
-          query: router.query,
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
-  }, [game, router, gameID, game?.id]);
-
-  useConnectToGame(game, gameID);
   useKeyMap(
     true,
     Keys.Tab,

@@ -8,13 +8,8 @@ export function useSocket() {
     const serverUrl = getExperimentalServerUrl();
     const socket = new SocketLatest(serverUrl);
     useConnectionStore.setState((s) => ({ ...s, socket }));
-  }, []);
-}
-
-export function useCleanupSocket() {
-  useEffect(() => {
     return () => {
-      useConnectionStore.getState().socket?.disconnect();
+      socket.disconnect();
     };
   }, []);
 }

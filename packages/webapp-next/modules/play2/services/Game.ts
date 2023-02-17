@@ -5,26 +5,41 @@ import { useConnectionStore } from "../state/connection-store";
 import { RacePlayer, RaceResult, useGameStore } from "../state/game-store";
 
 export class Game {
-  constructor(private socket: SocketLatest) {
-    this.initializeConnectedState(socket);
-    this.listenForRaceJoined();
-    this.listenForRaceStarted();
-    this.listenForMemberJoined();
-    this.listenForCountdown();
-    this.listenForMemberLeft();
-    this.listenForProgressUpdated();
-    this.listenForRaceCompleted();
-    this.listenForRaceDoesNotExist();
-    this.listenForDisconnect();
-    this.socket.subscribe("challenge_selected", () => {
-      useGameStore.setState((game) => {
-        return {
-          ...game,
-          results: {},
-          myResult: undefined,
-        };
+  onConnectHasRun: boolean;
+  onConnect(raceId?: string) {
+    this.socket.socket.on("connect", () => {
+      if (this.onConnectHasRun) return;
+      console.log("registering all the things");
+      this.listenForRaceJoined();
+      this.listenForRaceStarted();
+      this.listenForMemberJoined();
+      this.listenForCountdown();
+      this.listenForMemberLeft();
+      this.listenForProgressUpdated();
+      this.listenForRaceCompleted();
+      this.listenForRaceDoesNotExist();
+      this.listenForDisconnect();
+      this.socket.subscribe("challenge_selected", (_) => {
+        useGameStore.setState((game) => {
+          return {
+            ...game,
+            results: {},
+            myResult: undefined,
+          };
+        });
       });
+      if (!raceId) {
+        this.play();
+      } else if (this.id !== raceId) {
+        this.join(raceId);
+      }
+      this.onConnectHasRun = true;
     });
+  }
+  constructor(private socket: SocketLatest, raceId?: string) {
+    this.initializeConnectedState(socket);
+    this.onConnectHasRun = false;
+    this.onConnect(raceId);
   }
 
   get id() {
@@ -40,7 +55,13 @@ export class Game {
   }
 
   next() {
-    this.socket.emit("refresh_challenge");
+    const connectedToValidRace =
+      useConnectionStore.getState().raceExistsInServer;
+    if (connectedToValidRace) {
+      this.socket.emit("refresh_challenge");
+    } else {
+      this.play();
+    }
   }
 
   join(id: string) {
@@ -48,6 +69,7 @@ export class Game {
   }
 
   play() {
+    console.log("plaaaaaay");
     this.socket.emit("play");
   }
 

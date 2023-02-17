@@ -53,7 +53,7 @@ export const useConnectionManager = () => {
       if (raceId && !isConnected) {
         fetchRaceStatus(raceId).then(({ ok }) => {
           const currentRaceID = useGameStore.getState().id;
-          const raceExistsInServer = currentRaceID !== currentRaceID || ok;
+          const raceExistsInServer = raceId !== currentRaceID || ok;
           useConnectionStore.setState((state) => ({
             ...state,
             raceExistsInServer,
