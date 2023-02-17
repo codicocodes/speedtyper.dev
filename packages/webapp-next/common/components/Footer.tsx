@@ -71,7 +71,7 @@ export function Footer() {
                   target="blank"
                 >
                   <DiscordLogo />
-                  <span className="ml-1">watch</span>
+                  <span className="ml-1">join</span>
                 </a>
                 <a
                   href="https://twitch.tv/codico"
@@ -79,7 +79,7 @@ export function Footer() {
                   target="blank"
                 >
                   <TwitchLogo />
-                  <span className="ml-1">join</span>
+                  <span className="ml-1">watch</span>
                 </a>
               </div>
             </motion.div>
