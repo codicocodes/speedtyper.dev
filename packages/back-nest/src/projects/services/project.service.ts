@@ -34,4 +34,13 @@ export class ProjectService {
     const projects = await this.projectRepository.find();
     return projects;
   }
+
+  async getLanguages(): Promise<string[]> {
+    const selectedLanguages = await this.projectRepository
+      .createQueryBuilder()
+      .select('language')
+      .distinct()
+      .execute();
+    return selectedLanguages.map((l: any) => l.language);
+  }
 }
