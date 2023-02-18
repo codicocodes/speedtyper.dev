@@ -35,7 +35,7 @@ export const Leaderboard: React.FC = () => {
             const userNode = (
               <div className="flex items-center">
                 <Image
-                  className="cursor-pointer rounded-full"
+                  className="rounded-full"
                   width="30"
                   height="30"
                   quality={100}
