@@ -15,11 +15,10 @@ export class ResultService {
     return await this.resultsRepository.save(result);
   }
 
-  // TODO: can be a very large number of results in memory
   async getLeaderboard(): Promise<LeaderBoardResult[]> {
     const oneDayAgo = new Date();
     oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-    const resultsToday = await this.resultsRepository
+    const resultsTodayStream = await this.resultsRepository
       .createQueryBuilder('r')
       .leftJoinAndSelect('r.user', 'u')
       .where(
@@ -27,10 +26,21 @@ export class ResultService {
         r.createdAt BETWEEN '${oneDayAgo.toISOString()}' AND '${new Date().toISOString()}'`,
       )
       .orderBy('r.cpm')
-      .execute();
-    return Object.values(
-      Object.fromEntries(resultsToday.map((r: any) => [r.u_id, r])),
-    )
+      .stream();
+
+    const resultsToday: Record<string, any> = {};
+
+    for await (const r of resultsTodayStream) {
+      if (!resultsToday[r.u_id]) {
+        resultsToday[r.u_id] = r;
+        continue;
+      }
+      const prevResult = resultsToday[r.u_id];
+      if (r.r_cpm > prevResult.r_cpm) {
+        resultsToday[r.u_id] = r;
+      }
+    }
+    return Object.values(resultsToday)
       .map((r) => {
         return {
           username: r.u_username,
