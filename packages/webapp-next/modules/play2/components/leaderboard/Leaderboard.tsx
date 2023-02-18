@@ -25,7 +25,6 @@ export const Leaderboard: React.FC = () => {
           <LeaderboardRow
             placement="#"
             user="user"
-            userPopover="User"
             speed="speed (wpm)"
             accuracy="accuracy"
             timeAgo="time ago"
@@ -42,7 +41,7 @@ export const Leaderboard: React.FC = () => {
                   src={r.avatarUrl}
                   alt={r.username}
                 />
-                <span className="ml-2 font-extrabold tracking-wider text-sm">
+                <span className="ml-2" title={r.username}>
                   {r.username}
                 </span>
               </div>
@@ -53,7 +52,6 @@ export const Leaderboard: React.FC = () => {
                 key={i}
                 placement={placement}
                 user={userNode}
-                userPopover={r.username}
                 speed={cpmToWPM(r.cpm).toString()}
                 accuracy={r.accuracy + "%"}
                 timeAgo={humanizeAbsolute(new Date(r.createdAt))}
@@ -69,7 +67,6 @@ export const Leaderboard: React.FC = () => {
 interface LeaderboardRowProps {
   placement: React.ReactNode;
   user: React.ReactNode;
-  userPopover: string;
   speed: string;
   accuracy: string;
   timeAgo: string;
@@ -81,9 +78,7 @@ export const LeaderboardRow: React.FC<LeaderboardRowProps> = (props) => {
       className={`flex items-center justify-start gap-8 p-1 px-2 my-1 first:font-bold even:bg-gray-200 rounded `}
     >
       <span className="ml-2 w-[25px]">{props.placement}</span>
-      <div className="w-[300px] w-full truncate" title={props.userPopover}>
-        {props.user}
-      </div>
+      <div className="w-[300px] w-full truncate">{props.user}</div>
       <span className="w-[125px]">{props.speed}</span>
       <span className="w-[100px]">{props.accuracy}</span>
       <span className="mr-2 w-[100px]">{props.timeAgo}</span>
