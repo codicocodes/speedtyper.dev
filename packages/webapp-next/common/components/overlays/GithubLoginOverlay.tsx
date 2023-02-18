@@ -23,16 +23,16 @@ export const GithubLoginOverlay: React.FC<GithubLoginOverlayProps> = ({
               </span>
             </button>
           </div>
-          <h3 className="text-dark-ocean flex-grow text-5xl tracking-wider font-light leading-normal flex justify-center">
+          <h3 className="text-dark-ocean flex-grow text-5xl tracking-wider font-thin flex justify-center">
             Welcome
           </h3>
-          <p className="text-dark-ocean text-lg flex-grow tracking-widest font-light leading-normal flex justify-center p-10">
+          <p className="text-dark-ocean text-lg flex-grow tracking-widest font-thin flex justify-center p-10">
             Signup to SpeedTyper with your Github account to save your results
             and get on the toplist.
           </p>
-          <div className="flex justify-center p-6 flex-auto">
+          <div className="flex justify-center mb-6 flex-auto">
             <button
-              className={`flex bg-black justify-center py-4 m-2 px-10 text-off-white trailing-widest rounded-full text-lg outline-none border-none`}
+              className={`font-thin flex bg-black justify-center py-4 px-10 text-off-white trailing-widest rounded-full text-lg outline-none border-none`}
               style={{
                 outline: "none",
               }}
