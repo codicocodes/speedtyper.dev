@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import useSWR from "swr";
 import { CrownIcon } from "../../../../assets/icons/CrownIcon";
-import { Avatar } from "../../../../common/components/Avatar";
 import { cpmToWPM } from "../../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl";
 import { humanizeAbsolute } from "../../../../utils/humanize";

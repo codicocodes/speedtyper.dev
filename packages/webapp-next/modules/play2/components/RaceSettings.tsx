@@ -1,4 +1,5 @@
 import { RadioGroup, Switch } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { Fragment } from "react";
 import { InfoIcon } from "../../../assets/icons/InfoIcon";
 import { KogWheel } from "../../../assets/icons/KogWheel";
@@ -41,51 +42,57 @@ export const RaceSettingsModal: React.FC = () => {
   const isOwner = useIsOwner();
   return (
     <Overlay onOverlayClick={closeModals}>
-      <div
-        className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
-        style={{ fontFamily: "Fira Code" }}
-      >
-        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-          <div className="flex items-center">
-            <button
-              className="cursor-default w-4 h-auto mr-1"
-              title="Personal settings are stored in your browser"
-            >
-              <InfoIcon />
-            </button>
-            <h2 className="text-xl tracking-wider">Personal Settings</h2>
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
+          style={{ fontFamily: "Fira Code" }}
+        >
+          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+            <div className="flex items-center">
+              <button
+                className="cursor-default w-4 h-auto mr-1"
+                title="Personal settings are stored in your browser"
+              >
+                <InfoIcon />
+              </button>
+              <h2 className="text-xl tracking-wider">Personal Settings</h2>
+            </div>
+            <ToggleSelector
+              title="syntax highlighting"
+              description="Enable to use syntax highlighting"
+              checked={isSyntaxHighlightingEnabled}
+              toggleEnabled={toggleSyntaxHighlightning}
+            />
+            <CaretSelector />
           </div>
-          <ToggleSelector
-            title="syntax highlighting"
-            description="Enable to use syntax highlighting"
-            checked={isSyntaxHighlightingEnabled}
-            toggleEnabled={toggleSyntaxHighlightning}
-          />
-          <CaretSelector />
-        </div>
-        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-          <div className="flex items-center">
-            <button
-              className="cursor-default w-4 h-auto mr-1"
-              title="Only the race owner can update race settings"
-            >
-              <InfoIcon />
-            </button>
-            <h2 className="text-xl">Race settings</h2>{" "}
+          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+            <div className="flex items-center">
+              <button
+                className="cursor-default w-4 h-auto mr-1"
+                title="Only the race owner can update race settings"
+              >
+                <InfoIcon />
+              </button>
+              <h2 className="text-xl">Race settings</h2>{" "}
+            </div>
+            <ToggleSelector
+              title="public race"
+              description="Enable to let other players find and join your race"
+              checked={isRacePublic}
+              disabled={!isOwner}
+              toggleEnabled={toggleRaceIsPublic}
+            />
           </div>
-          <ToggleSelector
-            title="public race"
-            description="Enable to let other players find and join your race"
-            checked={isRacePublic}
-            disabled={!isOwner}
-            toggleEnabled={toggleRaceIsPublic}
-          />
-        </div>
-        <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-          <h2 className="text-xl mt-2">Join a public race</h2>
-          <BattleMatcherContainer closeModal={closeModals} />
-        </div>
-      </div>
+          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
+            <h2 className="text-xl mt-2">Join a public race</h2>
+            <BattleMatcherContainer closeModal={closeModals} />
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </Overlay>
   );
 };
