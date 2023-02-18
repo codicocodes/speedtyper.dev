@@ -6,7 +6,6 @@ import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
 import { LeaderboardButton } from "../../modules/play2/components/leaderboard/LeaderboardButton";
 import { useGameStore } from "../../modules/play2/state/game-store";
 import { useIsPlaying } from "../hooks/useIsPlaying";
-import { BattleMatcher } from "./BattleMatcher";
 import Button from "./Button";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
@@ -45,7 +44,6 @@ const ProfileSection = () => {
           >
             <div className="text-sm flex-grow"></div>
             <NewGithubLoginModal />
-            <BattleMatcher />
           </motion.div>
         </AnimatePresence>
       )}
