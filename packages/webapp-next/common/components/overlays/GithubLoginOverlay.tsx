@@ -12,7 +12,7 @@ export const GithubLoginOverlay: React.FC<GithubLoginOverlayProps> = ({
   return (
     <>
       <Overlay onOverlayClick={closeModal}>
-        <div className="border-0 lg:rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div className="max-w-[800px] border-0 lg:rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <div className="flex justify-center items-center p-5 rounded-t">
             <button
               className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
