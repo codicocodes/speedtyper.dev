@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import getConfig from "next/config";
 import Link from "next/link";
-import { KogWheel } from "../../assets/icons/KogWheel";
 import { TerminalIcon } from "../../assets/icons/TerminalIcon";
 import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
+import { LeaderboardButton } from "../../modules/play2/components/leaderboard/LeaderboardButton";
 import { useGameStore } from "../../modules/play2/state/game-store";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import { BattleMatcher } from "./BattleMatcher";
@@ -75,17 +75,7 @@ export const NewNavbar = () => {
                   leftIcon={<TerminalIcon />}
                 />
               </Link>
-              <Link href="/settings">
-                <Button
-                  size="sm"
-                  color="invisible"
-                  leftIcon={
-                    <div className="h-4">
-                      <KogWheel />
-                    </div>
-                  }
-                />
-              </Link>
+              <LeaderboardButton />
             </>
           )}
           <ProfileSection />

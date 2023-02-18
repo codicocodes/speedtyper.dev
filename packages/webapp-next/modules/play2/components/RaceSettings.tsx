@@ -7,7 +7,7 @@ import Button from "../../../common/components/Button";
 import { Overlay } from "../../../common/components/Overlay";
 import { useIsOwner } from "../state/game-store";
 import {
-  closeSettingsModal,
+  closeModals,
   openSettingsModal,
   setCaretType,
   toggleRaceIsPublic,
@@ -40,7 +40,7 @@ export const RaceSettingsModal: React.FC = () => {
   const isRacePublic = useSettingsStore((s) => s.raceIsPublic);
   const isOwner = useIsOwner();
   return (
-    <Overlay onOverlayClick={closeSettingsModal}>
+    <Overlay onOverlayClick={closeModals}>
       <div
         className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
         style={{ fontFamily: "Fira Code" }}
@@ -83,7 +83,7 @@ export const RaceSettingsModal: React.FC = () => {
         </div>
         <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
           <h2 className="text-xl mt-2">Join a public race</h2>
-          <BattleMatcherContainer closeModal={closeSettingsModal} />
+          <BattleMatcherContainer closeModal={closeModals} />
         </div>
       </div>
     </Overlay>
