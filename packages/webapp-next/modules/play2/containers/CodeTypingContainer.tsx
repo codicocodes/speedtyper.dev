@@ -9,6 +9,7 @@ import { UntypedChars } from "../components/UntypedChars";
 import { useEffect, useState, useCallback, MouseEvent } from "react";
 import { useIsPlaying } from "../../../common/hooks/useIsPlaying";
 import { useKeyMap, triggerKeys } from "../../../hooks/useKeyMap";
+import { useHasOpenModal } from "../state/settings-store";
 
 interface CodeTypingContainerProps {
   filePath: string;
@@ -28,10 +29,11 @@ export function CodeTypingContainer({
   const code = useCodeStore((state) => state.code);
   const start = useCodeStore((state) => state.start);
   const index = useCodeStore((state) => state.index);
+  const hasOpenModal = useHasOpenModal();
   const [inputRef, triggerFocus] = useFocusRef<HTMLTextAreaElement>();
   const [focused, setFocused] = useState(true);
 
-  useKeyMap(!focused, triggerKeys, () => {
+  useKeyMap(!hasOpenModal && !focused, triggerKeys, () => {
     triggerFocus();
     setFocused(true);
   });

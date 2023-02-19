@@ -18,6 +18,7 @@ import {
   useIsMultiplayer,
   useIsOwner,
 } from "../../../state/game-store";
+import { useHasOpenModal } from "../../../state/settings-store";
 import { RaceSettings } from "../../RaceSettings";
 import { ChallengeSource } from "../ChallengeSource";
 
@@ -162,8 +163,9 @@ function ActionButtons() {
   const isOwner = useIsOwner();
   const hasEndTime = useCodeStore((state) => state.endTime);
   const countdown = useGameStore((state) => state.countdown);
+  const hasOpenModal = useHasOpenModal();
   const canManuallyStartGame =
-    isOwner && isMultiplayer && !hasEndTime && !countdown;
+    !hasOpenModal && isOwner && isMultiplayer && !hasEndTime && !countdown;
   const waitingForOwnerToStart =
     !isOwner && isMultiplayer && !hasEndTime && !countdown;
   const startGame = () => game?.start();

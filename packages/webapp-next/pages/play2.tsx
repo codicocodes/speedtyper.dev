@@ -19,6 +19,7 @@ import { useCallback } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 import {
   openSettingsModal,
+  useHasOpenModal,
   useSettingsStore,
 } from "../modules/play2/state/settings-store";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
@@ -48,12 +49,13 @@ function Play2Page({
   const isPlaying = useIsPlaying();
   useSocket();
   useConnectionManager();
+  const hasOpenModal = useHasOpenModal();
   const game = useGame();
   const challenge = useChallenge();
   useKeyMap(
     true,
     Keys.Tab,
-    useCallback(() => game?.next(), [game])
+    useCallback(() => !hasOpenModal && game?.next(), [hasOpenModal, game])
   );
   useSettingsStore((s) => s.settingsModalIsOpen);
   useKeyMap(true, Keys.Escape, () => {
