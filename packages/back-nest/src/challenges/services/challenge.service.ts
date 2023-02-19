@@ -37,8 +37,6 @@ export class ChallengeService {
     if (!randomChallenge)
       throw new BadRequestException(`No challenges for language: ${language}`);
 
-    // TODO: fix this in the scraper/parsing layer
-    randomChallenge.content = randomChallenge.content.replaceAll('\t', '  ');
     return randomChallenge;
   }
 }
