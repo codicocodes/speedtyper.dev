@@ -52,4 +52,9 @@ describe('getFormattedText', () => {
     const parsed = getFormattedText(inputWithTabs);
     expect(parsed).toEqual(output);
   });
+  it('should return the same if called twice', () => {
+    const firstParsed = getFormattedText(inputWithTabs);
+    const parsed = getFormattedText(firstParsed);
+    expect(parsed).toEqual(output);
+  });
 });
