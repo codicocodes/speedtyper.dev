@@ -67,7 +67,7 @@ export class RaceGateway {
 
   @UseFilters(new RaceDoesNotExistFilter())
   @SubscribeMessage('refresh_challenge')
-  async onRefreshChallenge(socket: Socket) {
+  async onRefreshChallenge(socket: Socket, language?: string) {
     this.raceEvents.logConnectedSockets();
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
@@ -79,20 +79,20 @@ export class RaceGateway {
       }
       const user = this.session.getUser(socket);
       if (this.raceManager.isOwner(user.id, raceId)) {
-        const race = await this.raceManager.refresh(raceId);
+        const race = await this.raceManager.refresh(raceId, language);
         this.raceEvents.updatedRace(socket, race);
       }
     });
   }
 
   @SubscribeMessage('play')
-  async onPlay(socket: Socket) {
+  async onPlay(socket: Socket, language?: string) {
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
       const user = this.session.getUser(socket);
       const raceId = this.session.getRaceID(socket);
       this.raceManager.leaveRace(socket, user, raceId);
-      const race = await this.raceManager.create(user);
+      const race = await this.raceManager.create(user, language);
       this.raceEvents.createdRace(socket, race);
       this.session.saveRaceID(socket, race.id);
     });

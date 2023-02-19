@@ -21,12 +21,18 @@ export class ChallengeService {
     );
   }
 
-  async getRandom(): Promise<Challenge> {
-    const randomChallenge = await this.challengeRepository
+  async getRandom(language?: string): Promise<Challenge> {
+    let query = this.challengeRepository
       .createQueryBuilder('challenge')
-      .leftJoinAndSelect('challenge.project', 'project')
-      .orderBy('RANDOM()')
-      .getOne();
+      .leftJoinAndSelect('challenge.project', 'project');
+
+    if (language) {
+      query = query.where('project.language = :language', {
+        language,
+      });
+    }
+
+    const randomChallenge = await query.orderBy('RANDOM()').getOne();
 
     // TODO: fix this in the scraper/parsing layer
     randomChallenge.content = randomChallenge.content.replaceAll('\t', '  ');

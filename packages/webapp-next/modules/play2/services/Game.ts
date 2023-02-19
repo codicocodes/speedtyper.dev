@@ -59,7 +59,8 @@ export class Game {
     const connectedToValidRace =
       useConnectionStore.getState().raceExistsInServer;
     if (connectedToValidRace) {
-      this.socket.emit("refresh_challenge");
+      const language = useSettingsStore.getState().languageSelected;
+      this.socket.emit("refresh_challenge", language);
     } else {
       this.play();
     }
@@ -70,8 +71,8 @@ export class Game {
   }
 
   play() {
-    console.log("plaaaaaay");
-    this.socket.emit("play");
+    const language = useSettingsStore.getState().languageSelected;
+    this.socket.emit("play", language);
   }
 
   private listenForRaceStarted() {

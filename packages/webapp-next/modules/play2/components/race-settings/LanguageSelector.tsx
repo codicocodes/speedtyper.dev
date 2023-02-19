@@ -3,9 +3,13 @@ import { Listbox } from "@headlessui/react";
 import { CrossIcon } from "../../../../assets/icons/CrossIcon";
 import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl";
 import { useSettingsStore } from "../../state/settings-store";
+import { useGameStore } from "../../state/game-store";
 
 const selectProgrammingLanguage = (languageSelected: string | null) => {
   useSettingsStore.setState((s) => ({ ...s, languageSelected }));
+  if (languageSelected) {
+    useGameStore.getState().game?.next();
+  }
 };
 
 const baseUrl = getExperimentalServerUrl();

@@ -62,18 +62,18 @@ export class RaceManager {
       players: this.getOnlineCount(),
     });
   }
-  async create(user: User): Promise<Race> {
+  async create(user: User, language?: string): Promise<Race> {
     this.debugSize('create');
-    const challenge = await this.challengeService.getRandom();
+    const challenge = await this.challengeService.getRandom(language);
     const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = new Race(user, challenge, literals);
     this.races[race.id] = race;
     return race;
   }
 
-  async refresh(id: string): Promise<Race> {
+  async refresh(id: string, language?: string): Promise<Race> {
     this.debugSize('refresh');
-    const challenge = await this.challengeService.getRandom();
+    const challenge = await this.challengeService.getRandom(language);
     const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = this.races[id];
     race.challenge = challenge;
