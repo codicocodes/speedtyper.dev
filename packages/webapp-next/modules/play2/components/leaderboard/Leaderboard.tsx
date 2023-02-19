@@ -54,7 +54,7 @@ export const Leaderboard: React.FC = () => {
                 user={userNode}
                 speed={cpmToWPM(r.cpm).toString()}
                 accuracy={r.accuracy + "%"}
-                timeAgo={humanizeAbsolute(new Date(r.createdAt + "UTC"))}
+                timeAgo={humanizeAbsolute(new Date(r.createdAt))}
               />
             );
           })}
