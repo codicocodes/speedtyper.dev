@@ -1,11 +1,27 @@
 import { Exclude, instanceToPlain } from 'class-transformer';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
 
-export interface KeyStroke {
+export class KeystrokeDTO {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(1)
   key: string;
+  @IsNotEmpty()
+  @IsNumber()
   timestamp: number;
+  @IsNotEmpty()
+  @IsBoolean()
   correct: boolean;
+  @IsNotEmpty()
+  @IsNumber()
   index: number;
 }
 
@@ -27,7 +43,7 @@ export class RacePlayer {
   raceId: string;
 
   @Exclude()
-  typedKeyStrokes: KeyStroke[];
+  typedKeyStrokes: KeystrokeDTO[];
 
   @Exclude()
   literalService: LiteralService;
@@ -78,12 +94,12 @@ export class RacePlayer {
     return validInput;
   }
 
-  addKeyStroke(keyStroke: KeyStroke) {
+  addKeyStroke(keyStroke: KeystrokeDTO) {
     keyStroke.timestamp = new Date().getTime();
     this.typedKeyStrokes.push(keyStroke);
   }
 
-  updateLiteral(code: string, keyStroke: KeyStroke) {
+  updateLiteral(code: string, keyStroke: KeystrokeDTO) {
     const untypedCode = code.substring(keyStroke.index);
     const nextLiteral = this.literals[this.literalOffset + 1];
     const startsWithNextLiteral = this.literalService

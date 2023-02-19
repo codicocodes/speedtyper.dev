@@ -5,7 +5,7 @@ import { KeyStrokeValidationService } from './keystroke-validator.service';
 import { ProgressService } from './progress.service';
 import { RaceEvents } from './race-events.service';
 import { RaceManager } from './race-manager.service';
-import { KeyStroke } from './race-player.service';
+import { KeystrokeDTO } from './race-player.service';
 import { ResultsHandlerService } from './results-handler.service';
 import { SessionState } from './session-state.service';
 
@@ -21,14 +21,14 @@ export class AddKeyStrokeService {
     private resultHandler: ResultsHandlerService,
   ) {}
 
-  validate(socket: Socket, keyStroke: KeyStroke) {
+  validate(socket: Socket, keyStroke: KeystrokeDTO) {
     const user = this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);
     this.validator.validateKeyStroke(player, keyStroke);
   }
 
-  async addKeyStroke(socket: Socket, keyStroke: KeyStroke) {
+  async addKeyStroke(socket: Socket, keyStroke: KeystrokeDTO) {
     const user = this.session.getUser(socket);
     const raceId = this.session.getRaceID(socket);
     const player = this.manager.getPlayer(raceId, user.id);

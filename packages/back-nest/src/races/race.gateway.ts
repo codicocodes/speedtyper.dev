@@ -1,4 +1,4 @@
-import { UseFilters } from '@nestjs/common';
+import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import {
   SubscribeMessage,
   WebSocketGateway,
@@ -15,7 +15,7 @@ import { CountdownService } from './services/countdown.service';
 import { Locker } from './services/locker.service';
 import { RaceEvents } from './services/race-events.service';
 import { RaceManager } from './services/race-manager.service';
-import { KeyStroke } from './services/race-player.service';
+import { KeystrokeDTO } from './services/race-player.service';
 import { SessionState } from './services/session-state.service';
 
 @WebSocketGateway(socketCors)
@@ -99,8 +99,9 @@ export class RaceGateway {
   }
 
   @UseFilters(new RaceDoesNotExistFilter(), new InvalidKeystrokeFilter())
+  @UsePipes(new ValidationPipe())
   @SubscribeMessage('key_stroke')
-  async onKeyStroke(socket: Socket, keystroke: KeyStroke) {
+  async onKeyStroke(socket: Socket, keystroke: KeystrokeDTO) {
     keystroke.timestamp = new Date().getTime();
     this.addKeyStrokeService.validate(socket, keystroke);
     this.addKeyStrokeService.addKeyStroke(socket, keystroke);

@@ -1,18 +1,18 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { RaceManager } from './race-manager.service';
-import { KeyStroke, RacePlayer } from './race-player.service';
+import { KeystrokeDTO, RacePlayer } from './race-player.service';
 import { Race } from './race.service';
 
 export class InvalidKeystrokeException extends Error {
   userId: string;
-  keystroke: KeyStroke;
+  keystroke: KeystrokeDTO;
   input: string;
   expected: string;
   race: Race;
   constructor(
     userId: string,
-    keystroke: KeyStroke,
+    keystroke: KeystrokeDTO,
     userInput: string,
     expectedUserInput: string,
     race: Race,
@@ -34,7 +34,7 @@ export class RaceNotStartedException extends BadRequestException {
 
 export function getCurrentInputBeforeKeystroke(
   player: RacePlayer,
-  keystroke: KeyStroke,
+  keystroke: KeystrokeDTO,
 ) {
   const currentInputBeforeKey = player
     .validKeyStrokes()
@@ -48,7 +48,7 @@ export function getCurrentInputBeforeKeystroke(
 export class KeyStrokeValidationService {
   constructor(private raceManager: RaceManager) {}
 
-  validateKeyStroke(player: RacePlayer, recentKeyStroke: KeyStroke) {
+  validateKeyStroke(player: RacePlayer, recentKeyStroke: KeystrokeDTO) {
     this.validateRaceStarted(player.raceId);
     const currentInputBeforeKey = getCurrentInputBeforeKeystroke(
       player,
@@ -75,7 +75,7 @@ export class KeyStrokeValidationService {
     }
   }
 
-  private getStrippedCode(raceId: string, keystroke: KeyStroke) {
+  private getStrippedCode(raceId: string, keystroke: KeystrokeDTO) {
     const code = this.raceManager.getCode(raceId);
     const strippedCode = Challenge.getStrippedCode(
       code.substring(0, keystroke.index),
