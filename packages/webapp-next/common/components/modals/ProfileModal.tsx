@@ -1,8 +1,9 @@
-import Link from "next/link";
+import Image from "next/image";
 import { ReactNode } from "react";
+import { closeModals } from "../../../modules/play2/state/settings-store";
 import { logout } from "../../api/auth";
 import { useUserStore } from "../../state/user-store";
-import { Container } from "../Layout";
+import { Overlay } from "../Overlay";
 
 export interface ProfileModalProps {
   closeModal: () => void;
@@ -11,24 +12,26 @@ export interface ProfileModalProps {
 export function ProfileModal({ closeModal }: ProfileModalProps) {
   const user = useUserStore();
   return (
-    <div>
-      <div
-        onClick={closeModal}
-        className="lg:mt-16 lg:justify-end lg:items-start justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-dark-ocean"
-      >
-        <Container centered={false}>
-          <div className="absolute top-0 right-0 bg-white w-36 rounded gap-8">
-            <ProfileItem>
-              <Link href={`/profile/${user.username}`}>Profile</Link>
-            </ProfileItem>
-            <ProfileItem>
-              <Link href="/settings">Settings</Link>
-            </ProfileItem>
-            <ProfileItem onClick={logout}>Sign out</ProfileItem>
-          </div>
-        </Container>
+    <Overlay onOverlayClick={closeModal}>
+      <div className="text-dark-ocean bg-off-white p-5 rounded">
+        <div className="flex items-center">
+          <Image
+            alt="profile image"
+            className="rounded-full"
+            width="50"
+            height="50"
+            src={user.avatarUrl}
+          />
+          <span className="ml-4 text-lg tracking-wider">{user.username}</span>
+        </div>
+        <button
+          onClick={() => logout().then(() => closeModals())}
+          className="mt-4 p-2 rounded-full bg-dark-lake text-off-white text-lg font-bold tracking-wider w-full"
+        >
+          logout
+        </button>
       </div>
-    </div>
+    </Overlay>
   );
 }
 

@@ -4,6 +4,7 @@ import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 export interface SettingsState {
   settingsModalIsOpen: boolean;
   leaderboardModalIsOpen: boolean;
+  profileModalIsOpen: boolean;
   languageSelected: string | null;
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
@@ -31,6 +32,7 @@ function getInitialToggleStateFromLocalStorage(key: string): boolean {
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
   settingsModalIsOpen: false,
   leaderboardModalIsOpen: false,
+  profileModalIsOpen: false,
   smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY),
   syntaxHighlighting: getInitialToggleStateFromLocalStorage(
     SYNTAX_HIGHLIGHTING_KEY
@@ -54,10 +56,18 @@ export const toggleSyntaxHighlightning = () => {
 };
 
 export const openSettingsModal = () => {
+  if (useSettingsStore.getState().profileModalIsOpen) return;
   if (useSettingsStore.getState().leaderboardModalIsOpen) return;
   useSettingsStore.setState((s) => ({
     ...s,
     settingsModalIsOpen: true,
+  }));
+};
+
+export const openProfileModal = () => {
+  useSettingsStore.setState((s) => ({
+    ...s,
+    profileModalIsOpen: true,
   }));
 };
 
@@ -82,6 +92,7 @@ export const closeModals = () => {
     ...s,
     settingsModalIsOpen: false,
     leaderboardModalIsOpen: false,
+    profileModalIsOpen: false,
   }));
 };
 
