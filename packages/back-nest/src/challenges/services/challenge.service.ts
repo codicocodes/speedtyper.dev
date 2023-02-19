@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Challenge } from '../entities/challenge.entity';
@@ -33,6 +33,9 @@ export class ChallengeService {
     }
 
     const randomChallenge = await query.orderBy('RANDOM()').getOne();
+
+    if (!randomChallenge)
+      throw new BadRequestException(`No challenges for language: ${language}`);
 
     // TODO: fix this in the scraper/parsing layer
     randomChallenge.content = randomChallenge.content.replaceAll('\t', '  ');
