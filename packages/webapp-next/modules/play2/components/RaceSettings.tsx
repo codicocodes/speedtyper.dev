@@ -15,6 +15,7 @@ import {
   toggleSyntaxHighlightning,
   useSettingsStore,
 } from "../state/settings-store";
+import { LanguageSelector } from "./race-settings/LanguageSelector";
 
 export const RaceSettings: React.FC = () => {
   const isOpen = useSettingsStore((s) => s.settingsModalIsOpen);
@@ -79,6 +80,7 @@ export const RaceSettingsModal: React.FC = () => {
               </button>
               <h2 className="text-xl">Race settings</h2>{" "}
             </div>
+            {isOwner && <LanguageSelector />}
             <ToggleSelector
               title="public race"
               description="Enable to let other players find and join your race"

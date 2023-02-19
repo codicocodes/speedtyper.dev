@@ -4,6 +4,7 @@ import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 export interface SettingsState {
   settingsModalIsOpen: boolean;
   leaderboardModalIsOpen: boolean;
+  languageSelected: string | null;
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
@@ -35,6 +36,7 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
     SYNTAX_HIGHLIGHTING_KEY
   ),
   raceIsPublic: false,
+  languageSelected: null,
 }));
 
 export const setCaretType = (caretType: "smooth" | "block") => {
