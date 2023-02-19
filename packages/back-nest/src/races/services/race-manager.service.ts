@@ -43,7 +43,7 @@ export class RaceManager {
   }
 
   syncUser(raceId: string, prevUserId: string, user: User) {
-    const race = this.races[raceId];
+    const race = this.getRace(raceId);
     if (race.owner === prevUserId) {
       race.owner = user.id;
     }
