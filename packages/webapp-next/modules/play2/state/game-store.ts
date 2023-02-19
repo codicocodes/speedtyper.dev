@@ -2,6 +2,7 @@ import create from "zustand";
 import { User, useUserStore } from "../../../common/state/user-store";
 import { Game } from "../services/Game";
 import { useCodeStore } from "./code-store";
+import { useHasOpenModal } from "./settings-store";
 
 export interface GameState {
   id?: string;
@@ -38,10 +39,14 @@ export const useGameStore = create<GameState>((_set, _get) => ({
 }));
 
 export const useCanType = () => {
+  const hasOpenModal = useHasOpenModal();
   const game = useGameStore((s) => s.game);
   const isMultiplayer = useIsMultiplayer();
   const hasStartTime = useCodeStore((state) => state.startTime);
-  return  !!game && !isMultiplayer || hasStartTime;
+  return (
+    (!hasOpenModal && !!game && !isMultiplayer) ||
+    (!hasOpenModal && hasStartTime)
+  );
 };
 
 export const useIsMultiplayer = () => {

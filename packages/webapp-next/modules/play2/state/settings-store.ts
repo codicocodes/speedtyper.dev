@@ -67,6 +67,14 @@ export const openLeaderboardModal = () => {
   }));
 };
 
+export const useHasOpenModal = () => {
+  const leaderboardModalIsOpen = useSettingsStore(
+    (s) => s.leaderboardModalIsOpen
+  );
+  const settingsModalIsOpen = useSettingsStore((s) => s.settingsModalIsOpen);
+  return leaderboardModalIsOpen || settingsModalIsOpen;
+};
+
 export const closeModals = () => {
   useSettingsStore.setState((s) => ({
     ...s,
