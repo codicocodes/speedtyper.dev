@@ -57,4 +57,8 @@ describe('getFormattedText', () => {
     const parsed = getFormattedText(firstParsed);
     expect(parsed).toEqual(output);
   });
+  it('should remove trailing spaces', () => {
+    const parsed = getFormattedText(inputWithTrailingSpaces);
+    expect(parsed).toEqual(output);
+  });
 });

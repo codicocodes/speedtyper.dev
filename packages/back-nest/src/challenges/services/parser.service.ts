@@ -93,8 +93,16 @@ export function replaceTabsWithSpaces(rawText: string) {
   return rawText.replaceAll(tab, spaces);
 }
 
+export function removeTrailingSpaces(rawText: string) {
+  return rawText
+    .split('\n')
+    .map((line) => line.trimEnd())
+    .join('\n');
+}
+
 export function getFormattedText(rawText: string) {
   rawText = replaceTabsWithSpaces(rawText);
   rawText = removeDuplicateNewLines(rawText);
+  rawText = removeTrailingSpaces(rawText);
   return rawText;
 }
