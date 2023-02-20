@@ -61,4 +61,8 @@ describe('getFormattedText', () => {
     const parsed = getFormattedText(inputWithTrailingSpaces);
     expect(parsed).toEqual(output);
   });
+  it('should remove empty line with spaces', () => {
+    const parsed = getFormattedText(inputWithEmptyLineWithSpaces);
+    expect(parsed).toEqual(output);
+  });
 });

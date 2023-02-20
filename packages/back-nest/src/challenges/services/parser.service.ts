@@ -102,7 +102,7 @@ export function removeTrailingSpaces(rawText: string) {
 
 export function getFormattedText(rawText: string) {
   rawText = replaceTabsWithSpaces(rawText);
-  rawText = removeDuplicateNewLines(rawText);
   rawText = removeTrailingSpaces(rawText);
+  rawText = removeDuplicateNewLines(rawText);
   return rawText;
 }
