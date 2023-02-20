@@ -43,7 +43,7 @@ export class RaceGateway {
     );
     const raceId = this.session.getRaceID(socket);
     const user = this.session.getUser(socket);
-    this.raceManager.leaveRace(socket, user, raceId);
+    this.raceManager.leaveRace(user, raceId);
     this.session.removeRaceID(socket);
     this.manageRaceLock.release(socket.id);
   }
@@ -91,7 +91,7 @@ export class RaceGateway {
     await this.manageRaceLock.runIfOpen(socketID, async () => {
       const user = this.session.getUser(socket);
       const raceId = this.session.getRaceID(socket);
-      this.raceManager.leaveRace(socket, user, raceId);
+      this.raceManager.leaveRace(user, raceId);
       const race = await this.raceManager.create(user, language);
       this.raceEvents.createdRace(socket, race);
       this.session.saveRaceID(socket, race.id);
@@ -112,7 +112,7 @@ export class RaceGateway {
     this.manageRaceLock.runIfOpen(socket.id, async () => {
       const user = this.session.getUser(socket);
       const raceID = this.session.getRaceID(socket);
-      this.raceManager.leaveRace(socket, user, raceID);
+      this.raceManager.leaveRace(user, raceID);
       const race = this.raceManager.join(user, id);
       if (!race) {
         // if there is no race with the ID in the state

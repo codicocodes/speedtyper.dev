@@ -43,6 +43,12 @@ export class Game {
     this.onConnect(raceId);
   }
 
+  reconnect() {
+    this.socket.socket.disconnect();
+    this.socket.socket.connect();
+    this.join(this.id ?? "");
+  }
+
   get id() {
     return useGameStore.getState().id;
   }
@@ -124,9 +130,16 @@ export class Game {
   }
 
   private listenForMemberLeft() {
-    this.socket.subscribe("member_left", (_, userId: string) => {
-      console.log("member_left", { userId });
-      this.leaveRace(userId);
+    this.socket.subscribe("member_left", (_, { member, owner }) => {
+      useGameStore.setState((game) => {
+        const members = { ...game.members };
+        delete members[member];
+        return {
+          ...game,
+          owner,
+          members,
+        };
+      });
     });
   }
 
@@ -165,16 +178,7 @@ export class Game {
     });
   }
 
-  private leaveRace(userId: string) {
-    useGameStore.setState((game) => {
-      const members = { ...game.members };
-      delete members[userId];
-      return {
-        ...game,
-        members,
-      };
-    });
-  }
+  private leaveRace(userId: string) {}
 
   private listenForRaceDoesNotExist() {
     this.socket.subscribe("race_does_not_exist", (_, id) => {

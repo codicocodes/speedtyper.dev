@@ -1,24 +1,26 @@
 import { Controller, Delete, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { RaceEvents } from 'src/races/services/race-events.service';
-import { RaceManager } from 'src/races/services/race-manager.service';
+import { cookieName } from 'src/sessions/session.middleware';
 import { User } from 'src/users/entities/user.entity';
 import { GithubOauthGuard } from './github.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private raceManager: RaceManager, private events: RaceEvents) {}
   @Delete()
-  async logout(@Req() request: Request) {
-    const prevUserId = request.session.user.id;
-    const updatedUser = User.generateAnonymousUser();
-    request.session.user = updatedUser;
-    const raceId = request.session.raceId;
-    if (raceId) {
-      this.raceManager.syncUser(raceId, prevUserId, updatedUser);
-      const race = this.raceManager.getRace(raceId);
-      this.events.server.in(raceId).emit('race_joined', race);
-    }
+  async logout(@Req() request: Request, @Res() response: Response) {
+    await new Promise<void>((resolve, reject) =>
+      request.session?.destroy((err) => {
+        console.log('session destroyed', { err });
+        if (err) {
+          return reject(err);
+        }
+        return resolve();
+      }),
+    );
+    response.clearCookie(cookieName);
+    return response.send({
+      ok: true,
+    });
   }
 }
 

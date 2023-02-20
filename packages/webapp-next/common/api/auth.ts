@@ -36,6 +36,6 @@ export const logout = async () => {
         owner: state.owner === prevUserId ? user.id : state.owner,
       };
     });
-    // TODO: this is still a bug
+    useGameStore.getState().game?.reconnect();
   });
 };
