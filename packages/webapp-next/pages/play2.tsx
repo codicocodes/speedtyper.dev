@@ -15,9 +15,10 @@ import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUn
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 import {
+  closeModals,
   openSettingsModal,
   useHasOpenModal,
   useSettingsStore,
@@ -63,6 +64,11 @@ function Play2Page({
   });
   useResetStateOnUnmount();
   useEndGame();
+  useEffect(() => {
+    if (isPlaying) {
+      closeModals();
+    }
+  }, [isPlaying]);
 
   return (
     <div className="flex flex-col items-center">
