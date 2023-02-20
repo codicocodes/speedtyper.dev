@@ -20,6 +20,8 @@ export class Challenge {
   sha: string;
   @Column({ select: false })
   treeSha: string;
+  @Column({ nullable: true })
+  language: string;
   @Column()
   path: string;
   @Column({ unique: true })
@@ -50,6 +52,8 @@ export class Challenge {
       node.startPosition.row + 1,
       node.endPosition.row + 1,
     );
+    const dotSplitPath = file.path.split('.');
+    challenge.language = dotSplitPath[dotSplitPath.length - 1];
     return challenge;
   }
   static getStrippedCode(code: string) {
