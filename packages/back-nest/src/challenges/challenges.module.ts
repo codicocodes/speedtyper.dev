@@ -28,6 +28,7 @@ import { UnsyncedFileService } from './services/unsynced-file.service';
     UnsyncedFileImporter,
     UnsyncedFileImportRunner,
     UnsyncedFileService,
+    CalculateLanguageRunner,
   ],
   exports: [ChallengeService, LiteralService],
 })
