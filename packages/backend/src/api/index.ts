@@ -11,12 +11,19 @@ import getGameCountUserBadge from "./getGameCountUserBadge";
 import getAverageWpmUserBadge from "./getAverageWpmUserBadge";
 import getTopWpmUserBadge from "./getTopWpmUserBadge";
 import getTopResultsByChallengeId from "./getTopResultsByChallengeId";
+import { streamAllResults, streamAllUsers } from "./internal/internalApi";
 
 // git commit -m "WIP in progress"
 // git stash <- trying to learn it, but im not using it that much yet
 // whats lazygit
 
 export default [
+  { method: HttpMethods.GET, path: "/internal/users", handler: streamAllUsers },
+  {
+    method: HttpMethods.GET,
+    path: "/internal/results",
+    handler: streamAllResults,
+  },
   { method: HttpMethods.GET, path: "/analytics", handler: getAnalytics },
   { method: HttpMethods.GET, path: "/auth/github", handler: githubHandler },
   {
