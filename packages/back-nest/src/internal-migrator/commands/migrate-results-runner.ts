@@ -28,7 +28,7 @@ export class ImportLegacyResultsRunner extends CommandRunner {
       result.mistakes = legacyResult.stats.mistakeCount;
       result.legacyId = legacyResult._id;
       await this.resultService.upsertByLegacyId(result);
-      console.log({ result, legacyResult });
+      console.log(result.legacyId);
     };
     await streamLegacyData(INTERNAL_RESULTS_STREAM_API, saveLegacyResult);
   }
