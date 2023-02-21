@@ -47,10 +47,17 @@ export class ChallengeService {
       .select('language')
       .distinct()
       .execute();
-    return selectedLanguages.map(({ language }: { language: string }) => ({
-      language,
-      name: this.getLanguageName(language),
-    }));
+
+    const languages = selectedLanguages.map(
+      ({ language }: { language: string }) => ({
+        language,
+        name: this.getLanguageName(language),
+      }),
+    );
+
+    languages.sort((a, b) => a.name.localeCompare(b.name));
+
+    return languages;
   }
 
   private getLanguageName(language: string): string {
