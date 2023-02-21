@@ -19,16 +19,31 @@ export const internalApiFactory =
       return;
     }
     running = true;
+    const totalDocs = await model.find({}).count();
+    let sent = 0;
+
+    console.log("Total docs: ", totalDocs);
 
     try {
-      const cursor = model.find({});
-
+      const cursor = model.find({}).cursor({ batchSize: 100 });
+      let docs = [];
       for await (const doc of cursor) {
         const createdAt = ObjectId(doc._id).getTimestamp();
         const data = doc.toObject();
         data.__createdAt = createdAt;
-        res.write(JSON.stringify(data));
-        await delay(500);
+        docs.push(data);
+        if (docs.length === 100) {
+          res.write(JSON.stringify(docs));
+          docs = [];
+          sent += 100;
+          console.log(`Sent ${sent}/${totalDocs}`);
+          await delay(2000);
+        }
+      }
+      if (docs.length > 0) {
+        res.write(JSON.stringify(docs));
+        sent += docs.length;
+        console.log(`Sent ${sent}/${totalDocs}`);
       }
       res.end();
     } finally {
