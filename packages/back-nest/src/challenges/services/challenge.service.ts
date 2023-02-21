@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Challenge } from '../entities/challenge.entity';
+import { LanguageDTO } from '../entities/language.dto';
 
 @Injectable()
 export class ChallengeService {
@@ -38,5 +39,35 @@ export class ChallengeService {
       throw new BadRequestException(`No challenges for language: ${language}`);
 
     return randomChallenge;
+  }
+
+  async getLanguages(): Promise<LanguageDTO[]> {
+    const selectedLanguages = await this.challengeRepository
+      .createQueryBuilder()
+      .select('language')
+      .distinct()
+      .execute();
+    return selectedLanguages.map(({ language }: { language: string }) => ({
+      language,
+      name: this.getLanguageName(language),
+    }));
+  }
+
+  private getLanguageName(language: string): string {
+    const allLanguages = {
+      js: 'JavaScript',
+      ts: 'TypeScript',
+      rs: 'Rust',
+      c: 'C',
+      java: 'Java',
+      cpp: 'C++',
+      go: 'Go',
+      lua: 'Lua',
+      php: 'PHP',
+      py: 'Python',
+      rb: 'Ruby',
+      cs: 'C-Sharp',
+    };
+    return allLanguages[language];
   }
 }

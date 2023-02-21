@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GithubConnectorModule } from 'src/connectors/github/github.module';
 import { ProjectsModule } from 'src/projects/projects.module';
+import { CalculateLanguageRunner } from './commands/calculate-language-runner';
 import { ChallengeImportRunner } from './commands/challenge-import-runner';
 import { UnsyncedFileImportRunner } from './commands/unsynced-file-import-runner';
 import { Challenge } from './entities/challenge.entity';
 import { UnsyncedFile } from './entities/unsynced-file.entity';
+import { LanguageController } from './languages.controller';
 import { ChallengeService } from './services/challenge.service';
 import { LiteralService } from './services/literal.service';
 import { ParserService } from './services/parser.service';
@@ -19,6 +21,7 @@ import { UnsyncedFileService } from './services/unsynced-file.service';
     GithubConnectorModule,
     ProjectsModule,
   ],
+  controllers: [LanguageController],
   providers: [
     ParserService,
     ChallengeService,
