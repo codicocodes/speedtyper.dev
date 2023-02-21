@@ -20,7 +20,7 @@ export class Challenge {
   sha: string;
   @Column({ select: false })
   treeSha: string;
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   language: string;
   @Column()
   path: string;
