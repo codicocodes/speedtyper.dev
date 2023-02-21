@@ -28,7 +28,7 @@ export class ChallengeService {
       .leftJoinAndSelect('challenge.project', 'project');
 
     if (language) {
-      query = query.where('project.language = :language', {
+      query = query.where('challenge.language = :language', {
         language,
       });
     }

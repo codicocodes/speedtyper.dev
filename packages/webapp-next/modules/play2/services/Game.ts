@@ -65,8 +65,9 @@ export class Game {
     const connectedToValidRace =
       useConnectionStore.getState().raceExistsInServer;
     if (connectedToValidRace) {
-      const language = useSettingsStore.getState().languageSelected;
-      this.socket.emit("refresh_challenge", language);
+      const language = useSettingsStore.getState().languageSelected?.language;
+      const dto = { language };
+      this.socket.emit("refresh_challenge", dto);
     } else {
       this.play();
     }
@@ -77,8 +78,9 @@ export class Game {
   }
 
   play() {
-    const language = useSettingsStore.getState().languageSelected;
-    this.socket.emit("play", language);
+    const language = useSettingsStore.getState().languageSelected?.language;
+    const dto = { language };
+    this.socket.emit("play", dto);
   }
 
   private listenForRaceStarted() {
@@ -177,8 +179,6 @@ export class Game {
       };
     });
   }
-
-  private leaveRace(userId: string) {}
 
   private listenForRaceDoesNotExist() {
     this.socket.subscribe("race_does_not_exist", (_, id) => {

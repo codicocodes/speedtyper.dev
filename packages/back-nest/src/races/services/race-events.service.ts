@@ -28,17 +28,14 @@ export class RaceEvents {
     this.server.to(race.id).emit('race_started', race.startTime);
   }
 
-  updatedRace(socket: Socket, race: Race) {
-    socket.emit('race_joined', race);
-    socket.emit('challenge_selected', race.challenge);
-    socket.to(race.id).emit('race_joined', race);
-    socket.to(race.id).emit('challenge_selected', race.challenge);
+  updatedRace(_: Socket, race: Race) {
+    this.server.to(race.id).emit('race_joined', race);
+    this.server.to(race.id).emit('challenge_selected', race.challenge);
   }
 
   joinedRace(socket: Socket, race: Race, user: User) {
     socket.join(race.id);
     socket.emit('race_joined', race);
-    socket.emit('challenge_selected', race.challenge);
     socket.to(race.id).emit('member_joined', race.members[user.id]);
   }
 
