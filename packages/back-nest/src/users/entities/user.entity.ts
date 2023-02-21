@@ -1,6 +1,12 @@
 import { randomUUID } from 'crypto';
 import { Result } from 'src/results/entities/result.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { generateRandomUsername } from '../utils/generateRandomUsername';
 
 @Entity()
@@ -17,6 +23,11 @@ export class User {
   avatarUrl: string;
   @Column({ default: false, select: false })
   banned: boolean;
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public createdAt: Date;
 
   @OneToMany(() => Result, (result) => result.user)
   results: Result[];
