@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, ValidateIf } from 'class-validator';
 
 export class GithubLicense {
   @IsString()
@@ -34,7 +34,8 @@ export class GithubRepository {
   @IsString()
   trees_url: string;
   @IsString()
-  homepage: string;
+  @ValidateIf((_: any, value: unknown) => value !== null)
+  homepage: string | null;
   @IsNumber()
   stargazers_count: number;
   @IsString()

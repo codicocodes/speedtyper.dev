@@ -12,9 +12,16 @@ export class ParserService {
 }
 
 export enum NodeTypes {
-  FunctionItem = 'function_item',
+  ClassDeclaration = 'class_declaration',
+  ClassDefinition = 'class_definition',
   FunctionDeclaration = 'function_declaration',
+  FunctionDefinition = 'function_definition',
+  FunctionItem = 'function_item',
   MethodDeclaration = 'method_declaration',
+  Module = 'module',
+  Call = 'call',
+  UsingDirective = 'using_directive',
+  NamespaceDeclaration = 'namespace_declaration',
 }
 
 export class Parser {
@@ -42,12 +49,20 @@ export class Parser {
 
   private filterValidNodeTypes(node: TSParser.SyntaxNode) {
     switch (node.type) {
+      case NodeTypes.ClassDeclaration:
+      case NodeTypes.ClassDefinition:
       case NodeTypes.FunctionDeclaration:
+      case NodeTypes.FunctionDefinition:
       case NodeTypes.FunctionItem:
       case NodeTypes.MethodDeclaration:
+      case NodeTypes.Module:
+      case NodeTypes.Call:
+      case NodeTypes.UsingDirective:
+      case NodeTypes.NamespaceDeclaration:
         // We want method declarations if they are on the root node (i.e. golang)
         return true;
       default:
+        console.log(node.type);
         return false;
     }
   }
