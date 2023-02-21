@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { Types } from "mongoose";
 import { validateApiToken } from "./validateInternalToken";
+const { ObjectId } = Types;
 
 export const internalApiFactory =
   (model: any) => async (req: Request, res: Response) => {
@@ -12,7 +14,10 @@ export const internalApiFactory =
 
     const cursor = model.find({});
 
-    for await (const data of cursor) {
+    for await (const doc of cursor) {
+      const createdAt = ObjectId(doc._id).getTimestamp();
+      const data = doc.toObject();
+      data.__createdAt = createdAt;
       res.write(JSON.stringify(data));
     }
     res.end();
