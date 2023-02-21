@@ -17,6 +17,7 @@ export class ImportLegacyResultsRunner extends CommandRunner {
     super();
   }
   async run(): Promise<void> {
+    let counter = 0;
     const saveLegacyResult = async (legacyResults: any[]) => {
       const results = [];
       for (const legacyResult of legacyResults) {
@@ -32,8 +33,10 @@ export class ImportLegacyResultsRunner extends CommandRunner {
         result.mistakes = legacyResult.stats.mistakeCount;
         result.legacyId = legacyResult._id;
         results.push(result);
+        counter++;
       }
       await this.resultService.upsertByLegacyId(results);
+      console.log({ counter });
     };
     await streamLegacyData(INTERNAL_RESULTS_STREAM_API, saveLegacyResult);
   }
