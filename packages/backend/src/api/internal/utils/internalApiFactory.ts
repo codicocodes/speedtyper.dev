@@ -1,3 +1,4 @@
+import delay from "delay";
 import { Request, Response } from "express";
 import { Types } from "mongoose";
 import { validateApiToken } from "./validateInternalToken";
@@ -27,6 +28,7 @@ export const internalApiFactory =
         const data = doc.toObject();
         data.__createdAt = createdAt;
         res.write(JSON.stringify(data));
+        await delay(500);
       }
       res.end();
     } finally {

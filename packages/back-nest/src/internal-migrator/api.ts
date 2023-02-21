@@ -45,7 +45,12 @@ function parseJson(strData: string) {
     const data = strData.split('}{').map((str) => {
       if (!str.startsWith('{')) str = '{' + str;
       if (!str.endsWith('}')) str = str + '}';
-      return JSON.parse(str);
+      try {
+        return JSON.parse(str);
+      } catch (err) {
+        console.log({ str });
+        throw err;
+      }
     });
     return data;
   }
