@@ -28,7 +28,7 @@ export const internalApiFactory =
         const data = doc.toObject();
         data.__createdAt = createdAt;
         res.write(JSON.stringify(data));
-        await delay(10);
+        await delay(100);
       }
       res.end();
     } finally {
