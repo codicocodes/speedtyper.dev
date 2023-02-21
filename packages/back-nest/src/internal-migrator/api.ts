@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = process.env.INTERNAL_API_BASE_URL;
 
 export const INTERNAL_USERS_STREAM_API = BASE_URL + '/internal/users';
 
