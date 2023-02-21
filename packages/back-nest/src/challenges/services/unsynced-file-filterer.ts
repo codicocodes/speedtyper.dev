@@ -30,6 +30,20 @@ function hasTrackedFileExt(node: GithubNode) {
 
 function isNotExcludedPath(node: GithubNode) {
   const excludedSubStrings = [
+    '.ci',
+    '.jenkins',
+    '.build',
+    '.idea',
+    '.devcontainer',
+    'migrations',
+    'benchmarks',
+    'build-tools',
+    'conventions',
+    'licenses',
+    'requirements',
+    '.svg',
+    'docs',
+    '.github',
     'example',
     'types',
     'test',

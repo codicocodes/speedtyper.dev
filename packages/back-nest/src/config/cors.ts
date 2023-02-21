@@ -6,7 +6,7 @@ export const getAllowedOrigins = () => {
     : ['http://localhost:3001'];
 };
 
-export const socketCors: GatewayMetadata = {
+export const gatewayMetadata: GatewayMetadata = {
   cors: {
     origin: getAllowedOrigins(),
     methods: ['GET', 'POST'],

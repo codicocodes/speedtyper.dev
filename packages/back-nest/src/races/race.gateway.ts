@@ -5,7 +5,8 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { socketCors } from 'src/config/cors';
+import { gatewayMetadata } from 'src/config/cors';
+import { RaceSettingsDTO } from './entities/race-settings.dto';
 import {
   InvalidKeystrokeFilter,
   RaceDoesNotExistFilter,
@@ -18,7 +19,7 @@ import { RaceManager } from './services/race-manager.service';
 import { KeystrokeDTO } from './services/race-player.service';
 import { SessionState } from './services/session-state.service';
 
-@WebSocketGateway(socketCors)
+@WebSocketGateway(gatewayMetadata)
 export class RaceGateway {
   @WebSocketServer()
   server: Server;
@@ -66,33 +67,36 @@ export class RaceGateway {
   }
 
   @UseFilters(new RaceDoesNotExistFilter())
+  @UsePipes(new ValidationPipe())
   @SubscribeMessage('refresh_challenge')
-  async onRefreshChallenge(socket: Socket, language?: string) {
+  async onRefreshChallenge(socket: Socket, settings: RaceSettingsDTO) {
     this.raceEvents.logConnectedSockets();
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
       const raceId = this.session.getRaceID(socket);
       if (!raceId) {
         this.manageRaceLock.release(socket.id);
-        this.onPlay(socket);
+        this.onPlay(socket, settings);
         return;
       }
       const user = this.session.getUser(socket);
       if (this.raceManager.isOwner(user.id, raceId)) {
-        const race = await this.raceManager.refresh(raceId, language);
+        const race = await this.raceManager.refresh(raceId, settings.language);
         this.raceEvents.updatedRace(socket, race);
       }
     });
   }
 
+  @UsePipes(new ValidationPipe())
   @SubscribeMessage('play')
-  async onPlay(socket: Socket, language?: string) {
+  async onPlay(socket: Socket, raceSettings: RaceSettingsDTO) {
+    console.log({ raceSettings });
     const socketID = socket.id;
     await this.manageRaceLock.runIfOpen(socketID, async () => {
       const user = this.session.getUser(socket);
       const raceId = this.session.getRaceID(socket);
       this.raceManager.leaveRace(user, raceId);
-      const race = await this.raceManager.create(user, language);
+      const race = await this.raceManager.create(user, raceSettings.language);
       this.raceEvents.createdRace(socket, race);
       this.session.saveRaceID(socket, race.id);
     });
@@ -123,7 +127,7 @@ export class RaceGateway {
         // instead of creating their own through this same functionality
         // we do however have to reset the progress for all participants as it is only kept in state
         this.manageRaceLock.release(socket.id);
-        return this.onPlay(socket);
+        return this.onPlay(socket, { language: undefined });
       }
       this.raceEvents.joinedRace(socket, race, user);
       this.session.saveRaceID(socket, id);

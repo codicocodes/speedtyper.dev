@@ -1,3 +1,10 @@
 etcd-io/etcd
 rust-lang/cargo
 rust-lang/rust
+tiangolo/fastapi
+pallets/flask
+encode/starlette
+apache/zookeeper
+ClickHouse/ClickHouse
+rails/rails
+dotnet/efcore

@@ -37,7 +37,7 @@ export class Project {
     project.htmlUrl = repo.html_url;
     project.stars = repo.stargazers_count;
     project.language = repo.language;
-    project.licenseName = repo.license.name;
+    project.licenseName = repo.license?.name ?? 'Other';
     project.ownerAvatar = repo.owner.avatar_url;
     project.defaultBranch = repo.default_branch;
     return project;

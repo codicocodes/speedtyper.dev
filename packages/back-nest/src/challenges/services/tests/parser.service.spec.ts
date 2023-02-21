@@ -30,6 +30,25 @@ const inputWithTabs = `func newGRPCProxyCommand() *cobra.Command {
 \treturn lpc
 }`;
 
+const inputWithEmptyLineWithSpaces = `func newGRPCProxyCommand() *cobra.Command {
+  lpc := &cobra.Command{   
+    Use:   "grpc-proxy <subcommand>",
+    Short: "grpc-proxy related command",
+  }     
+   
+  lpc.AddCommand(newGRPCProxyStartCommand())
+  return lpc
+}`;
+
+const inputWithTrailingSpaces = `func newGRPCProxyCommand() *cobra.Command {
+  lpc := &cobra.Command{   
+    Use:   "grpc-proxy <subcommand>",
+    Short: "grpc-proxy related command",
+  }     
+  lpc.AddCommand(newGRPCProxyStartCommand())
+  return lpc
+}`;
+
 const output = `func newGRPCProxyCommand() *cobra.Command {
   lpc := &cobra.Command{
     Use:   "grpc-proxy <subcommand>",

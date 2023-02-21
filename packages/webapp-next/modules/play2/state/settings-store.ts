@@ -5,7 +5,7 @@ export interface SettingsState {
   settingsModalIsOpen: boolean;
   leaderboardModalIsOpen: boolean;
   profileModalIsOpen: boolean;
-  languageSelected: string | null;
+  languageSelected: { language: string; name: string } | null;
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;

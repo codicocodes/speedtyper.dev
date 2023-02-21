@@ -23,12 +23,10 @@ export class ChallengeService {
   }
 
   async getRandom(language?: string): Promise<Challenge> {
-    let query = this.challengeRepository
-      .createQueryBuilder('challenge')
-      .leftJoinAndSelect('challenge.project', 'project');
+    let query = this.challengeRepository.createQueryBuilder('challenge');
 
     if (language) {
-      query = query.where('project.language = :language', {
+      query = query.where('language = :language', {
         language,
       });
     }

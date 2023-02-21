@@ -5,7 +5,12 @@ import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl"
 import { useSettingsStore } from "../../state/settings-store";
 import { useGameStore } from "../../state/game-store";
 
-const selectProgrammingLanguage = (languageSelected: string | null) => {
+export interface LanguageDTO {
+  language: string;
+  name: string;
+}
+
+const selectProgrammingLanguage = (languageSelected: LanguageDTO | null) => {
   useSettingsStore.setState((s) => ({ ...s, languageSelected }));
   if (languageSelected) {
     useGameStore.getState().game?.next();
@@ -15,11 +20,10 @@ const selectProgrammingLanguage = (languageSelected: string | null) => {
 const baseUrl = getExperimentalServerUrl();
 
 export function LanguageSelector() {
-  const { data, isLoading } = useSWR(
-    baseUrl + "/api/projects/languages",
-    (...args) => fetch(...args).then((res) => res.json())
+  const { data, isLoading } = useSWR(baseUrl + "/api/languages", (...args) =>
+    fetch(...args).then((res) => res.json())
   );
-  const languages = data as undefined | string[];
+  const languages = data as undefined | { language: string; name: string }[];
   const selectedLanguage = useSettingsStore((s) => s.languageSelected);
   return (
     <div className="w-full text-dark-ocean font-thin">
@@ -29,7 +33,7 @@ export function LanguageSelector() {
       <Listbox value={selectedLanguage} onChange={selectProgrammingLanguage}>
         <div className="flex items-center">
           <Listbox.Button className="flex items-center justify-between px-2 bg-gray-200 p-1 w-full rounded">
-            {selectedLanguage || "nothing selected"}
+            {selectedLanguage?.name || "nothing selected"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -59,7 +63,7 @@ export function LanguageSelector() {
         {!isLoading && (
           <Listbox.Options className="">
             {languages?.map((language) => (
-              <Listbox.Option key={language} value={language}>
+              <Listbox.Option key={language.name} value={language}>
                 {({ active, selected }) => {
                   return (
                     <li
@@ -67,7 +71,7 @@ export function LanguageSelector() {
                         active ? "bg-gray-300" : "bg-gray-200"
                       }`}
                     >
-                      {language}
+                      {language.name}
                       {selected && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
