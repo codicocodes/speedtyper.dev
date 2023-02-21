@@ -15,6 +15,10 @@ export class ResultService {
     return await this.resultsRepository.save(result);
   }
 
+  async upsertByLegacyId(result: Result): Promise<void> {
+    await this.resultsRepository.upsert(result, ['legacyId']);
+  }
+
   async getLeaderboard(): Promise<LeaderBoardResult[]> {
     const oneDayAgo = new Date();
     oneDayAgo.setDate(oneDayAgo.getDate() - 1);

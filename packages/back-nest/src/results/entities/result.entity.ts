@@ -12,7 +12,7 @@ import {
 export class Result {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column()
+  @Column({ nullable: true })
   raceId: string;
   @Column()
   timeMS: number;
@@ -22,6 +22,9 @@ export class Result {
   mistakes: number;
   @Column()
   accuracy: number;
+
+  @Column({ unique: true, nullable: true, default: null })
+  legacyId: string;
 
   @CreateDateColumn({
     type: 'timestamp',

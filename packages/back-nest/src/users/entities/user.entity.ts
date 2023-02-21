@@ -21,6 +21,8 @@ export class User {
   githubUrl: string;
   @Column()
   avatarUrl: string;
+  @Column({ unique: true, nullable: true })
+  legacyId: string;
   @Column({ default: false, select: false })
   banned: boolean;
   @CreateDateColumn({
