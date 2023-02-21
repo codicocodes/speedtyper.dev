@@ -17,18 +17,23 @@ export class ImportLegacyResultsRunner extends CommandRunner {
     super();
   }
   async run(): Promise<void> {
-    const saveLegacyResult = async (legacyResult: any) => {
-      const user = await this.userService.findByLegacyID(legacyResult.user_id);
-      const result = new Result();
-      result.user = user;
-      result.createdAt = legacyResult.__createdAt;
-      result.cpm = legacyResult.stats.totalCpm;
-      result.accuracy = legacyResult.stats.accuracy;
-      result.timeMS = legacyResult.totalSeconds * 1000;
-      result.mistakes = legacyResult.stats.mistakeCount;
-      result.legacyId = legacyResult._id;
-      await this.resultService.upsertByLegacyId(result);
-      console.log(result.legacyId);
+    const saveLegacyResult = async (legacyResults: any[]) => {
+      const results = [];
+      for (const legacyResult of legacyResults) {
+        const user = await this.userService.findByLegacyID(
+          legacyResult.user_id,
+        );
+        const result = new Result();
+        result.user = user;
+        result.createdAt = legacyResult.__createdAt;
+        result.cpm = legacyResult.stats.totalCpm;
+        result.accuracy = legacyResult.stats.accuracy;
+        result.timeMS = legacyResult.totalSeconds * 1000;
+        result.mistakes = legacyResult.stats.mistakeCount;
+        result.legacyId = legacyResult._id;
+        results.push(result);
+      }
+      await this.resultService.upsertByLegacyId(results);
     };
     await streamLegacyData(INTERNAL_RESULTS_STREAM_API, saveLegacyResult);
   }

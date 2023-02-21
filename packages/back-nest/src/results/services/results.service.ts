@@ -15,8 +15,8 @@ export class ResultService {
     return await this.resultsRepository.save(result);
   }
 
-  async upsertByLegacyId(result: Result): Promise<void> {
-    await this.resultsRepository.upsert(result, ['legacyId']);
+  async upsertByLegacyId(results: Result[]): Promise<void> {
+    await this.resultsRepository.upsert(results, ['legacyId']);
   }
 
   async getLeaderboard(): Promise<LeaderBoardResult[]> {

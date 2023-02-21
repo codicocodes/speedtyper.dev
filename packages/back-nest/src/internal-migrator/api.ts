@@ -26,7 +26,7 @@ export async function streamLegacyData(
       let chunk;
       while (null !== (chunk = stream.read())) {
         const stringData = chunk.toString();
-        const data = JSON.parse(stringData);
+        const data = parseJson(stringData);
         promises.push(processData(data));
       }
     });
@@ -35,4 +35,18 @@ export async function streamLegacyData(
       resolve();
     });
   });
+}
+
+function parseJson(strData: string) {
+  try {
+    const data = JSON.parse(strData);
+    return [data];
+  } catch (err) {
+    const data = strData.split('}{').map((str) => {
+      if (!str.startsWith('{')) str = '{' + str;
+      if (!str.endsWith('}')) str = str + '}';
+      return JSON.parse(str);
+    });
+    return data;
+  }
 }
