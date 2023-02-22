@@ -13,7 +13,9 @@ export const getSessionMiddleware = () => {
   const sessionRepository = PostgresDataSource.getRepository(Session);
   return session({
     name: cookieName,
-    store: new TypeormStore().connect(sessionRepository),
+    store: new TypeormStore({
+      cleanupLimit: 2,
+    }).connect(sessionRepository),
     secret: getSessionSecret(),
     resave: false,
     saveUninitialized: false,
