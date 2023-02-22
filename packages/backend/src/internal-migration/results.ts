@@ -39,12 +39,18 @@ export const RESULTS_API = `${INTERNAL_BASE_URL}/results`;
 
 export async function sendResults(results: ChallengeResultDoc[]) {
   const apiToken = process.env.INTERNAL_API_TOKEN ?? "";
+  const body = JSON.stringify(results);
   await fetch(RESULTS_API, {
     method: "POST",
-    body: JSON.stringify(results),
+    body,
     headers: {
       "Content-Type": "application/json",
       "api-token": apiToken,
     },
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (!res.ok) {
+      console.log(res.statusText);
+      throw new Error("error");
+    }
+  });
 }
