@@ -9,7 +9,7 @@ import {
 import { Request } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import { Result } from 'src/results/entities/result.entity';
-import { ResultService } from 'src/results/services/results.service';
+import { User } from 'src/users/entities/user.entity';
 import { UserService } from 'src/users/services/user.service';
 
 class StatsDTO {
@@ -32,6 +32,15 @@ class IncomingResultDTO {
   __createdAt: Date;
 }
 
+class IncomingUserDTO {
+  username: string;
+  githubId: number;
+  githubUrl: string;
+  avatarUrl: string;
+  banned: boolean;
+  _id: string;
+  __createdAt: Date;
+}
 export function getExpectedToken() {
   const internalToken = process.env.INTERNAL_API_TOKEN;
   if (!internalToken) {
@@ -59,10 +68,7 @@ export function validateToken({ headers }: Request) {
 
 @Controller('internal')
 export class InternalImportController {
-  constructor(
-    private userService: UserService,
-    private resultsService: ResultService,
-  ) {}
+  constructor(private userService: UserService) {}
   @Post('results')
   async importResults(
     @Req() request: Request,
@@ -85,9 +91,29 @@ export class InternalImportController {
       result.legacyId = legacyResult._id;
       batch.push(result);
     }
+    return {
+      ok: true,
+    };
+  }
 
-    await this.resultsService.upsertByLegacyId(batch);
+  @Post('users')
+  async importUsers(
+    @Req() request: Request,
+    @Body() users: IncomingUserDTO[],
+  ): Promise<{ ok: boolean }> {
+    validateToken(request);
 
+    for (const legacyUser of users) {
+      const user = new User();
+      user.username = legacyUser.username;
+      user.githubId = legacyUser.githubId;
+      user.githubUrl = legacyUser.githubUrl;
+      user.avatarUrl = legacyUser.avatarUrl;
+      user.createdAt = legacyUser.__createdAt;
+      user.banned = legacyUser.banned;
+      user.legacyId = legacyUser._id;
+      await this.userService.upsertGithubUser(user);
+    }
     return {
       ok: true,
     };
