@@ -37,6 +37,7 @@ export function getExpectedToken() {
   if (!internalToken) {
     throw new UnauthorizedException();
   }
+  return internalToken;
 }
 
 export function parseProvidedToken(headers: IncomingHttpHeaders) {
@@ -44,6 +45,7 @@ export function parseProvidedToken(headers: IncomingHttpHeaders) {
   if (!token) {
     throw new UnauthorizedException();
   }
+  return token;
 }
 
 export function validateToken({ headers }: Request) {
