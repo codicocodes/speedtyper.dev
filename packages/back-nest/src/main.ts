@@ -7,6 +7,7 @@ import { getAllowedOrigins } from './config/cors';
 import { guestUserMiddleware } from './middlewares/guest-user';
 import { SessionAdapter } from './sessions/session.adapter';
 import { getSessionMiddleware } from './sessions/session.middleware';
+import { json } from 'express';
 
 const GLOBAl_API_PREFIX = 'api';
 
