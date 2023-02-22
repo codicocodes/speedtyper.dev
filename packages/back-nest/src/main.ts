@@ -23,6 +23,7 @@ async function runServer() {
     origin: getAllowedOrigins(),
     credentials: true,
   });
+  app.use(json({ limit: '50mb' }));
   app.use(sessionMiddleware);
   app.use(guestUserMiddleware);
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
