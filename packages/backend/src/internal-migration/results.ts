@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 export async function* getResultBatches() {
   const batchSize = 500;
   const cursor = challengeResult.find({}).cursor({ batchSize });
+  const totalDocuments = await challengeResult.find({}).count();
+  let count = 0;
   let resultsBatch = [];
   for await (const result of cursor) {
     const r: any = result.toJSON();
@@ -12,11 +14,15 @@ export async function* getResultBatches() {
     resultsBatch.push(r);
     if (resultsBatch.length === batchSize) {
       yield resultsBatch;
+      count += resultsBatch.length;
+      console.log(`Sent ${count}/${totalDocuments}`);
       resultsBatch = [];
     }
   }
   if (resultsBatch.length > 0) {
     yield resultsBatch;
+    count += resultsBatch.length;
+    console.log(`Sent ${count}/${totalDocuments}`);
   }
 }
 
