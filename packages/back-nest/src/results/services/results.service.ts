@@ -37,6 +37,7 @@ export class ResultService {
     for await (const r of resultsTodayStream) {
       if (!resultsToday[r.u_id]) {
         resultsToday[r.u_id] = r;
+        resultsToday[r.u_id] = r;
         continue;
       }
       const prevResult = resultsToday[r.u_id];
@@ -44,7 +45,8 @@ export class ResultService {
         resultsToday[r.u_id] = r;
       }
     }
-    return Object.values(resultsToday)
+
+    const results = Object.values(resultsToday)
       .map((r) => {
         return {
           username: r.u_username,
@@ -54,6 +56,7 @@ export class ResultService {
           createdAt: r.r_createdAt,
         };
       })
-      .reverse();
+      .sort((a, b) => b.cpm - a.cpm);
+    return results;
   }
 }
