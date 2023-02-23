@@ -9,6 +9,7 @@ import {
 import { Request } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import { Result } from 'src/results/entities/result.entity';
+import { ResultService } from 'src/results/services/results.service';
 import { User } from 'src/users/entities/user.entity';
 import { UserService } from 'src/users/services/user.service';
 
@@ -68,7 +69,10 @@ export function validateToken({ headers }: Request) {
 
 @Controller('internal')
 export class InternalImportController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private resultsService: ResultService,
+  ) {}
   @Post('results')
   async importResults(
     @Req() request: Request,
@@ -91,6 +95,7 @@ export class InternalImportController {
       result.legacyId = legacyResult._id;
       batch.push(result);
     }
+    await this.resultsService.upsertByLegacyId(batch);
     return {
       ok: true,
     };
