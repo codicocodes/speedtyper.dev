@@ -46,11 +46,7 @@ export const NewGithubLoginModal = () => {
   const initGithubAuth = useGithubAuthFactory(router, serverUrl + "/api");
   return (
     <>
-      <button
-        title="login disabled during migration"
-        disabled
-        onClick={openProfileModal}
-      >
+      <button onClick={openProfileModal}>
         <Avatar avatarUrl={user.avatarUrl} username={user.username} />
       </button>
       {profileModalIsOpen ? (
