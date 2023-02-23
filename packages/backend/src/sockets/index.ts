@@ -4,6 +4,7 @@ import onChallengeStarted, {
 } from "./onChallengeStarted";
 
 export default (raceManager: RaceManager) => (socket: SocketIO.Socket) => {
+  return;
   const playHandler = (gameArgs: IJoinGameArgs) => {
     raceManager.play(socket, gameArgs);
   };
