@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { generateRandomUsername } from '../utils/generateRandomUsername';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
