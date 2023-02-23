@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
-import getConfig from "next/config";
 import Link from "next/link";
 import { TerminalIcon } from "../../assets/icons/TerminalIcon";
-import Navbar, { Logo, WebsiteName } from "../../components/Navbar";
+import { Logo, WebsiteName } from "../../components/Navbar";
 import { LeaderboardButton } from "../../modules/play2/components/leaderboard/LeaderboardButton";
 import { useGameStore } from "../../modules/play2/state/game-store";
 import { useIsPlaying } from "../hooks/useIsPlaying";
@@ -10,10 +9,7 @@ import Button from "./Button";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
 export const navbarFactory = () => {
-  const {
-    publicRuntimeConfig: { isProduction },
-  } = getConfig();
-  return isProduction ? Navbar : NewNavbar;
+  return NewNavbar;
 };
 
 const HomeLink = () => {
@@ -65,7 +61,7 @@ export const NewNavbar = () => {
           <HomeLink />
           {!isPlaying && (
             <>
-              <Link href="/play2">
+              <Link href="/">
                 <Button
                   size="sm"
                   color="invisible"

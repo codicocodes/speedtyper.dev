@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import useUserResults from "../../hooks/useUserResults";
-import SecondChart from "../../components/SecondChart";
+import useUserResults from "../../../hooks/useUserResults";
+import SecondChart from "../../../components/SecondChart";
 import { useRouter } from "next/router";
-import { GithubLogo } from "../../assets/icons";
-import { toHumanReadableTime } from "../../common/utils/toHumanReadableTime";
+import { GithubLogo } from "../../../assets/icons";
+import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import Image from "next/image";
 
 interface ProfileProps {
