@@ -80,8 +80,8 @@ export const LeaderboardRow: React.FC<LeaderboardRowProps> = (props) => {
       <span className="ml-2 w-[25px]">{props.placement}</span>
       <div className="w-[300px] w-full truncate">{props.user}</div>
       <span className="w-[125px]">{props.speed}</span>
-      <span className="w-[100px]">{props.accuracy}</span>
-      <span className="mr-2 w-[100px]">{props.timeAgo}</span>
+      <span className="w-[125px]">{props.accuracy}</span>
+      <span className="mr-2 w-[125px]">{props.timeAgo}</span>
     </div>
   );
 };
