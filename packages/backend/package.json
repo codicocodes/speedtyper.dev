@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "start": "node dist/src/index.js",
     "export-results": "tsc && node dist/src/tools/internal/exportResultsRunner.js",
+    "export-users": "tsc && node dist/src/tools/internal/exportUsersRunner.js",
     "import-trackedrepos": "tsc && node dist/src/tools/import/runImportTrackedRepos.js",
     "sync-trackedrepos": "tsc && node dist/src/tools/import/runSyncTrackedRepos.js",
     "import-trackedfiles": "tsc && node dist/src/tools/import/runImportTrackedFiles.js",
