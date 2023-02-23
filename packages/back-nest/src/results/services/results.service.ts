@@ -37,7 +37,6 @@ export class ResultService {
     for await (const r of resultsTodayStream) {
       if (!resultsToday[r.u_id]) {
         resultsToday[r.u_id] = r;
-        resultsToday[r.u_id] = r;
         continue;
       }
       const prevResult = resultsToday[r.u_id];
