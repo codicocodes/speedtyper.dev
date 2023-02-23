@@ -8,10 +8,14 @@ import { UpsertGithubUserDTO } from 'src/users/entities/upsertGithubUserDTO';
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(cfg: ConfigService, private userService: UserService) {
+    const BASE_URL =
+      process.env.NODE_ENV === 'production'
+        ? 'https://speedtyper.dev'
+        : 'http://localhost:1337';
     super({
       clientID: cfg.get<string>('GITHUB_CLIENT_ID'),
       clientSecret: cfg.get<string>('GITHUB_CLIENT_SECRET'),
-      callbackURL: 'http://localhost:1337/api/auth/github/callback',
+      callbackURL: `${BASE_URL}/api/auth/github/callback`,
       scope: ['public_profile'],
     });
   }
