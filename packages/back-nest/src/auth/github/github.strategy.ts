@@ -10,7 +10,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(cfg: ConfigService, private userService: UserService) {
     const BASE_URL =
       process.env.NODE_ENV === 'production'
-        ? 'https://speedtyper.dev'
+        ? 'https://v3.speedtyper.dev'
         : 'http://localhost:1337';
     super({
       clientID: cfg.get<string>('GITHUB_CLIENT_ID'),
