@@ -15,7 +15,7 @@ export const Leaderboard: React.FC = () => {
   );
   return (
     <div
-      className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
+      className="flex flex-col bg-off-white text-dark-ocean p-5 rounded gap-4 w-full max-h-screen overflow-y-scroll"
       style={{ fontFamily: "Fira Code" }}
     >
       <h2 className="text-2xl tracking-widest font-thin">Daily Leaderboard</h2>
@@ -75,7 +75,7 @@ interface LeaderboardRowProps {
 export const LeaderboardRow: React.FC<LeaderboardRowProps> = (props) => {
   return (
     <div
-      className={`flex items-center justify-start gap-8 p-1 px-2 my-1 first:font-bold even:bg-gray-200 rounded `}
+      className={`flex items-center justify-start gap-8 p-1 px-2 my-1 first:font-bold even:bg-gray-200 rounded`}
     >
       <span className="ml-2 w-[25px]">{props.placement}</span>
       <div className="w-[300px] w-full truncate">{props.user}</div>
