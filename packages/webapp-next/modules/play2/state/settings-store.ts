@@ -5,6 +5,7 @@ export interface SettingsState {
   settingsModalIsOpen: boolean;
   leaderboardModalIsOpen: boolean;
   profileModalIsOpen: boolean;
+  publicRacesModalIsOpen: boolean;
   languageSelected: { language: string; name: string } | null;
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
@@ -33,6 +34,7 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
   settingsModalIsOpen: false,
   leaderboardModalIsOpen: false,
   profileModalIsOpen: false,
+  publicRacesModalIsOpen: false,
   smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY),
   syntaxHighlighting: getInitialToggleStateFromLocalStorage(
     SYNTAX_HIGHLIGHTING_KEY
@@ -79,6 +81,14 @@ export const openLeaderboardModal = () => {
   }));
 };
 
+export const openPublicRacesModal = () => {
+  if (useSettingsStore.getState().settingsModalIsOpen) return;
+  useSettingsStore.setState((s) => ({
+    ...s,
+    publicRacesModalIsOpen: true,
+  }));
+};
+
 export const useHasOpenModal = () => {
   const leaderboardModalIsOpen = useSettingsStore(
     (s) => s.leaderboardModalIsOpen
@@ -93,6 +103,7 @@ export const closeModals = () => {
     settingsModalIsOpen: false,
     leaderboardModalIsOpen: false,
     profileModalIsOpen: false,
+    publicRacesModalIsOpen: false,
   }));
 };
 

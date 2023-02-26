@@ -5,6 +5,7 @@ import { Logo, WebsiteName } from "../../components/Navbar";
 import { LeaderboardButton } from "../../modules/play2/components/leaderboard/LeaderboardButton";
 import { useGameStore } from "../../modules/play2/state/game-store";
 import { useIsPlaying } from "../hooks/useIsPlaying";
+import { PlayingNow } from "./BattleMatcher";
 import Button from "./Button";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
 
@@ -70,6 +71,7 @@ export const NewNavbar = () => {
                 />
               </Link>
               <LeaderboardButton />
+              <PlayingNow />
             </>
           )}
           <ProfileSection />

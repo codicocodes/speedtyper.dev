@@ -48,7 +48,7 @@ const IndexPage = () => {
                 open source projects as fast as possible.
               </span>
               <div className="flex flex-row items-center mx-12 mb-6 mt-4">
-                <Link href="/play">
+                <Link href="/v2/play">
                   <a className="hidden md:inline-block">
                     <Button
                       color="primary"
@@ -81,7 +81,7 @@ const IndexPage = () => {
               </span>
 
               <div className="flex flex-row items-center mx-12 mb-6 mt-4">
-                <Link href="/play?mode=private">
+                <Link href="/v2/play?mode=private">
                   <a className="hidden md:inline-block">
                     <Button
                       color="primary"
@@ -107,125 +107,100 @@ const IndexPage = () => {
           </div>
         </div>
 
-        <div className="flex justify-center">
-          <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
-            <h2 className="flex font-bold justify-start text-2xl mt-4 mx-12 mb-0 ">
-              V2 Beta
-            </h2>
-            <div className="flex justify-start items-center mt-4 mx-12 mb-0 text-xl">
-              For the last couple of months I have been working on a version 2
-              of SpeedTyper.dev and it is close to ready to be released. Please
-              test it and provide feedback in Discord or GitHub.
-            </div>
-            <div className="flex flex-col items-center justify-center lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
-              <Link href="/play2">
-                <a className="hidden md:inline-block">
-                  <button className="bg-purple-300 text-dark-ocean font-bold p-2 px-4 rounded-lg">
-                    Try the v2 beta
-                  </button>
-                </a>
-              </Link>
-            </div>
+        <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
+          <h2 className="flex font-bold justify-start text-2xl mt-4 mx-12 mb-0 ">
+            Join the community
+          </h2>
+          <div className="flex justify-start items-center mt-4 mx-12 mb-0 text-xl">
+            Join a small but growing community of typers and developers to keep
+            up to date with tournaments, live streams and updates to the game.
+          </div>
+          <div className="flex flex-col lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
+            <a
+              href="https://discord.gg/AMbnnN5eep"
+              target="_blank"
+              className="inline-block justify-center"
+              rel="noreferrer"
+            >
+              <Button
+                color="primary"
+                leftIcon={<DiscordLogo />}
+                title="Join the discord"
+                text="Join Discord"
+                size="lg"
+              />
+            </a>
+            <a
+              href="https://github.com/codicocodes/speedtyper.dev"
+              target="_blank"
+              className="inline-block justify-center"
+              rel="noreferrer"
+            >
+              <Button
+                color="primary"
+                leftIcon={<GithubLogo />}
+                title="Contribute to code"
+                text="Contribute"
+                size="lg"
+              />
+            </a>
           </div>
         </div>
+      </div>
 
-        <div className="flex justify-center">
-          <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md">
-            <h2 className="flex font-bold justify-start text-2xl mt-4 mx-12 mb-0 ">
-              Join the community
+      {user?.guest !== true && user?.username && (
+        <div className="flex justify-center mt-4">
+          <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center text-lg text-off-white font-light lg:rounded-md py-8">
+            <h2 className="flex font-bold justify-start mx-12">
+              Flex your results on GitHub
             </h2>
-            <div className="flex justify-start items-center mt-4 mx-12 mb-0 text-xl">
-              Join a small but growing community of typers and developers to
-              keep up to date with tournaments, live streams and updates to the
-              game.
+            <div className="flex flex-col lg:flex-row flex-grow mx-12 my-2">
+              {["averagewpm", "topwpm", "gamecount"].map((badge, i) => {
+                return (
+                  <img
+                    key={i}
+                    className="pr-4 h-6 my-2 lg:my-0"
+                    style={{ width: "240px" }}
+                    src={`${serverUrl}/users/${user?.username}/badges/${badge}`}
+                  />
+                );
+              })}
             </div>
-            <div className="flex flex-col lg:flex-row items-start mx-12 mb-6 mt-4 gap-6 lg:gap-12">
-              <a
-                href="https://discord.gg/AMbnnN5eep"
-                target="_blank"
-                className="inline-block justify-center"
-                rel="noreferrer"
-              >
-                <Button
-                  color="primary"
-                  leftIcon={<DiscordLogo />}
-                  title="Join the discord"
-                  text="Join Discord"
-                  size="lg"
-                />
-              </a>
-              <a
-                href="https://github.com/codicocodes/speedtyper.dev"
-                target="_blank"
-                className="inline-block justify-center"
-                rel="noreferrer"
-              >
-                <Button
-                  color="primary"
-                  leftIcon={<GithubLogo />}
-                  title="Contribute to code"
-                  text="Contribute"
-                  size="lg"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+            <div className="mx-12 mt-4">
+              <Button
+                color="primary"
+                leftIcon={<CopyIcon />}
+                title="Copy to clipboard"
+                text="Copy"
+                onClick={() => {
+                  function copyToClipboard(text: string) {
+                    navigator.clipboard.writeText(text);
+                    toast.dark("Copied to clipboard!");
+                  }
 
-        {user?.guest !== true && user?.username && (
-          <div className="flex justify-center mt-4">
-            <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center text-lg text-off-white font-light lg:rounded-md py-8">
-              <h2 className="flex font-bold justify-start mx-12">
-                Flex your results on GitHub
-              </h2>
-              <div className="flex flex-col lg:flex-row flex-grow mx-12 my-2">
-                {["averagewpm", "topwpm", "gamecount"].map((badge, i) => {
-                  return (
-                    <img
-                      key={i}
-                      className="pr-4 h-6 my-2 lg:my-0"
-                      style={{ width: "240px" }}
-                      src={`${serverUrl}/users/${user?.username}/badges/${badge}`}
-                    />
-                  );
-                })}
-              </div>
-              <div className="mx-12 mt-4">
-                <Button
-                  color="primary"
-                  leftIcon={<CopyIcon />}
-                  title="Copy to clipboard"
-                  text="Copy"
-                  onClick={() => {
-                    function copyToClipboard(text: string) {
-                      navigator.clipboard.writeText(text);
-                      toast.dark("Copied to clipboard!");
-                    }
-
-                    const markdown = `
+                  const markdown = `
 [<img src="${serverUrl}/users/${user?.username}/badges/averagewpm" alt="SpeedTyper.dev avg wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
 [<img src="${serverUrl}/users/${user?.username}/badges/topwpm" alt="SpeedTyper.dev top wpm" height="25">](https://www.speedtyper.dev/profile/${user?.username}) 
 [<img src="${serverUrl}/users/${user?.username}/badges/gamecount" alt="SpeedTyper.dev games" height="25">](https://www.speedtyper.dev/profile/${user?.username})
 `;
-                    copyToClipboard(markdown);
-                  }}
-                />
-              </div>
+                  copyToClipboard(markdown);
+                }}
+              />
             </div>
           </div>
-        )}
-        {dailyResults.length > 0 && (
-          <div>
-            <div className="flex justify-center">
-              <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md mb-8">
-                <Toplist results={dailyResults} />
-              </div>
-            </div>
-          </div>
-        )}
-        <div className="hidden lg:block">
-          <Stream />
         </div>
+      )}
+      {dailyResults.length > 0 && (
+        <div>
+          <div className="flex justify-center">
+            <div className="max-w-5xl w-full flex-grow bg-dark-lake shadow-2xl items-center mt-4 pt-2 text-lg text-off-white font-light lg:rounded-md mb-8">
+              <Toplist results={dailyResults} />
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="hidden lg:block">
+        <Stream />
       </div>
       <ToastContainer position="top-center" />
     </>

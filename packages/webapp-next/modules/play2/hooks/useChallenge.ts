@@ -24,8 +24,7 @@ export function useChallenge(): ChallengeInfo {
     license: "",
   });
 
-  const socket = useConnectionStore(s => s.socket);
-
+  const socket = useConnectionStore((s) => s.socket);
 
   useEffect(() => {
     socket?.subscribe("challenge_selected", (_, data) => {

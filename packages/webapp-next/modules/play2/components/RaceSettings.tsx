@@ -81,17 +81,6 @@ export const RaceSettingsModal: React.FC = () => {
               <h2 className="text-xl">Race settings</h2>{" "}
             </div>
             {isOwner && <LanguageSelector />}
-            <ToggleSelector
-              title="public race"
-              description="Enable to let other players find and join your race"
-              checked={isRacePublic}
-              disabled={!isOwner}
-              toggleEnabled={toggleRaceIsPublic}
-            />
-          </div>
-          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-            <h2 className="text-xl mt-2">Join a public race</h2>
-            <BattleMatcherContainer closeModal={closeModals} />
           </div>
         </motion.div>
       </AnimatePresence>

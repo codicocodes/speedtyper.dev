@@ -4,7 +4,6 @@ import { DiscordLogo, GithubLogo, TwitchLogo } from "../../assets/icons";
 import { getStargazersCount } from "../github/stargazers";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import { PlayingNow } from "./BattleMatcher";
-import Button from "./Button";
 
 function useStargazersCount() {
   const [count, setCount] = useState(0);
@@ -55,7 +54,6 @@ export function Footer() {
 
                 <span className="mx-1 text-faded-gray">Start race</span>
               </div>
-              <KeybindInfo />
               <div className="flex gap-4">
                 <a
                   href="https://github.com/codicocodes/speedtyper.dev"

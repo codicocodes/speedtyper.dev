@@ -2,7 +2,14 @@ import { useState } from "react";
 import useSWR from "swr";
 import { OnlineIcon } from "../../assets/icons/OnlineIcon";
 import { UserGroupIcon } from "../../assets/icons/UserGroupIcon";
-import { useGameStore } from "../../modules/play2/state/game-store";
+import { ToggleSelector } from "../../modules/play2/components/RaceSettings";
+import { useGameStore, useIsOwner } from "../../modules/play2/state/game-store";
+import {
+  closeModals,
+  openPublicRacesModal,
+  toggleRaceIsPublic,
+  useSettingsStore,
+} from "../../modules/play2/state/settings-store";
 import { ONLINE_COUNT_API } from "../api/races";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
 import { Overlay } from "./Overlay";
@@ -84,19 +91,44 @@ export const PlayingNow = () => {
     (...args) => fetch(...args).then((res) => res.json()),
     { refreshInterval: 15000 }
   );
+  const isPublic = useSettingsStore((s) => s.raceIsPublic);
+  const isOpen = useSettingsStore((s) => s.publicRacesModalIsOpen);
+  const isOwner = useIsOwner();
   return (
-    <h3 className="my-2 font-semibold text-xs tracking-wide">
-      <div className="flex items-center px-1 rounded mr-2 uppercase">
-        <div className="mr-2 h-2 w-2 bg-green-400 rounded-full " />
-        Playing
-        <div className="flex text-dark-ocean items-center bg-gray-300 px-2 rounded mx-2">
-          <div className="h-2 mr-1">
-            <UserGroupIcon />
+    <>
+      <button
+        className="font-semibold text-xs tracking-wide"
+        onClick={openPublicRacesModal}
+      >
+        <div className="flex items-center px-1 rounded uppercase">
+          <div className="flex text-dark-ocean items-center bg-gray-300 px-2 rounded">
+            <div
+              className={`mr-1 h-2 w-2 rounded-full 
+      ${isPublic ? "bg-green-400" : "bg-gray-400"}`}
+            />
+            <div className="h-2 mr-1">
+              <UserGroupIcon />
+            </div>
+            {data?.online ?? 0}
           </div>
-          {data?.online ?? 0}
         </div>
-      </div>
-    </h3>
+      </button>
+      {isOpen && (
+        <Overlay onOverlayClick={closeModals}>
+          <div className="flex flex-col gap-4 border bg-off-white rounded-lg p-4 text-dark-ocean">
+            <h2 className="text-xl mt-2">Public races</h2>
+            <ToggleSelector
+              title="public race"
+              description="Enable to let other players find and join your race"
+              checked={isPublic}
+              disabled={!isOwner}
+              toggleEnabled={toggleRaceIsPublic}
+            />
+            <BattleMatcherContainer closeModal={closeModals} />
+          </div>
+        </Overlay>
+      )}
+    </>
   );
 };
 
