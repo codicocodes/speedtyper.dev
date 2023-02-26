@@ -4,6 +4,7 @@ import {
   ToggleSelector,
 } from "../../../modules/play2/components/RaceSettings";
 import {
+  toggleDefaultRaceIsPublic,
   toggleSyntaxHighlightning,
   useSettingsStore,
 } from "../../../modules/play2/state/settings-store";
@@ -19,6 +20,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
   const isSyntaxHighlightingEnabled = useSettingsStore(
     (s) => s.syntaxHighlighting
   );
+  const isPublicRaceByDefault = useSettingsStore((s) => s.defaultIsPublic);
   return (
     <>
       <Overlay onOverlayClick={closeModal}>
@@ -37,6 +39,12 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
             description="Enable to use syntax highlighting"
             checked={isSyntaxHighlightingEnabled}
             toggleEnabled={toggleSyntaxHighlightning}
+          />
+          <ToggleSelector
+            title="Public races"
+            description="Races you start will be public by default"
+            checked={isPublicRaceByDefault}
+            toggleEnabled={toggleDefaultRaceIsPublic}
           />
           <CaretSelector />
         </div>

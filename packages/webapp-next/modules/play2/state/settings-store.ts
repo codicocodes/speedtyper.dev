@@ -11,15 +11,21 @@ export interface SettingsState {
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
+  defaultIsPublic: boolean;
 }
 
 const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
 
 const SMOOTH_CARET_KEY = "smoothCaret";
 
+const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic";
+
 const defaultSmoothCaretSetting = true;
 
-function getInitialToggleStateFromLocalStorage(key: string): boolean {
+function getInitialToggleStateFromLocalStorage(
+  key: string,
+  defaultToggleValue: boolean
+): boolean {
   if (typeof document !== "undefined" && window) {
     let toggleStateStr = localStorage.getItem(key);
     if (!toggleStateStr) {
@@ -28,7 +34,7 @@ function getInitialToggleStateFromLocalStorage(key: string): boolean {
     }
     return toggleStateStr === "true" ?? false;
   }
-  return true;
+  return defaultToggleValue;
 }
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
@@ -37,11 +43,16 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
   leaderboardModalIsOpen: false,
   profileModalIsOpen: false,
   publicRacesModalIsOpen: false,
-  smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY),
+  smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY, true),
   syntaxHighlighting: getInitialToggleStateFromLocalStorage(
-    SYNTAX_HIGHLIGHTING_KEY
+    SYNTAX_HIGHLIGHTING_KEY,
+    true
   ),
   raceIsPublic: false,
+  defaultIsPublic: getInitialToggleStateFromLocalStorage(
+    DEFAULT_RACE_IS_PUBLIC_KEY,
+    false
+  ),
   languageSelected: null,
 }));
 
@@ -49,6 +60,14 @@ export const setCaretType = (caretType: "smooth" | "block") => {
   const smoothCaret = caretType === "smooth";
   localStorage.setItem(SMOOTH_CARET_KEY, smoothCaret.toString());
   useSettingsStore.setState((state) => ({ ...state, smoothCaret }));
+};
+
+export const toggleDefaultRaceIsPublic = () => {
+  const booleanStrValue = localStorage.getItem(DEFAULT_RACE_IS_PUBLIC_KEY);
+  let defaultIsPublic = booleanStrValue === "true";
+  defaultIsPublic = !defaultIsPublic;
+  localStorage.setItem(DEFAULT_RACE_IS_PUBLIC_KEY, defaultIsPublic.toString());
+  useSettingsStore.setState((state) => ({ ...state, defaultIsPublic }));
 };
 
 export const toggleSyntaxHighlightning = () => {

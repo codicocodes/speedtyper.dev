@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
+import { InfoIcon } from "../../assets/icons/InfoIcon";
 import { OnlineIcon } from "../../assets/icons/OnlineIcon";
 import { UserGroupIcon } from "../../assets/icons/UserGroupIcon";
 import { ToggleSelector } from "../../modules/play2/components/RaceSettings";
@@ -116,7 +117,15 @@ export const PlayingNow = () => {
       {isOpen && (
         <Overlay onOverlayClick={closeModals}>
           <div className="flex flex-col gap-4 border bg-off-white rounded-lg p-4 text-dark-ocean">
-            <h2 className="text-xl mt-2">Public races</h2>
+            <div className="flex items-center">
+              <h2 className="text-xl mr-2">Public races</h2>
+              <button
+                className="cursor-default w-4 w-4 mr-1"
+                title="You can configure your races to be public by default in your settings"
+              >
+                <InfoIcon />
+              </button>
+            </div>
             <ToggleSelector
               title="public race"
               description="Enable to let other players find and join your race"

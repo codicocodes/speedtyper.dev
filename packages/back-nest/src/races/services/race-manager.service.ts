@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Socket } from 'socket.io';
 import { Challenge } from 'src/challenges/entities/challenge.entity';
 import { ChallengeService } from 'src/challenges/services/challenge.service';
 import { LiteralService } from 'src/challenges/services/literal.service';
 import { User } from 'src/users/entities/user.entity';
+import { RaceSettingsDTO } from '../entities/race-settings.dto';
 import { RaceEvents } from './race-events.service';
 import { RacePlayer } from './race-player.service';
 import { Race } from './race.service';
@@ -62,11 +62,12 @@ export class RaceManager {
       players: this.getOnlineCount(),
     });
   }
-  async create(user: User, language?: string): Promise<Race> {
+  async create(user: User, settings: RaceSettingsDTO): Promise<Race> {
     this.debugSize('create');
-    const challenge = await this.challengeService.getRandom(language);
+    const challenge = await this.challengeService.getRandom(settings.language);
     const literals = this.literalsService.calculateLiterals(challenge.content);
     const race = new Race(user, challenge, literals);
+    race.isPublic = settings.isPublic;
     this.races[race.id] = race;
     return race;
   }

@@ -1,7 +1,6 @@
 import { RadioGroup, Switch } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { Fragment } from "react";
-import { KogWheel } from "../../../assets/icons/KogWheel";
 import { OnlineIcon } from "../../../assets/icons/OnlineIcon";
 import Button from "../../../common/components/Button";
 import { Overlay } from "../../../common/components/Overlay";
@@ -9,7 +8,6 @@ import { useIsOwner } from "../state/game-store";
 import {
   closeModals,
   openLanguageModal,
-  openSettingsModal,
   setCaretType,
   useSettingsStore,
 } from "../state/settings-store";

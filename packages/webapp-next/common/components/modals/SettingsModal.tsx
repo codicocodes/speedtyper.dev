@@ -1,6 +1,10 @@
 import React from "react";
 import { KogWheel } from "../../../assets/icons/KogWheel";
-import { closeModals, openSettingsModal, useSettingsStore } from "../../../modules/play2/state/settings-store";
+import {
+  closeModals,
+  openSettingsModal,
+  useSettingsStore,
+} from "../../../modules/play2/state/settings-store";
 import Button from "../Button";
 import { SettingsOverlay } from "../overlays/SettingsOverlay";
 

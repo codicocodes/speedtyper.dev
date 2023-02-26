@@ -86,6 +86,7 @@ export class RaceGateway {
     });
   }
 
+  @UsePipes(new ValidationPipe())
   @SubscribeMessage('play')
   async onPlay(socket: Socket, settings: RaceSettingsDTO) {
     const socketID = socket.id;
@@ -93,7 +94,7 @@ export class RaceGateway {
       const user = this.session.getUser(socket);
       const raceId = this.session.getRaceID(socket);
       this.raceManager.leaveRace(user, raceId);
-      const race = await this.raceManager.create(user, settings.language);
+      const race = await this.raceManager.create(user, settings);
       this.raceEvents.createdRace(socket, race);
       this.session.saveRaceID(socket, race.id);
     });
@@ -124,7 +125,7 @@ export class RaceGateway {
         // instead of creating their own through this same functionality
         // we do however have to reset the progress for all participants as it is only kept in state
         this.manageRaceLock.release(socket.id);
-        return this.onPlay(socket, { language: undefined });
+        return this.onPlay(socket, { language: undefined, isPublic: false });
       }
       this.raceEvents.joinedRace(socket, race, user);
       this.session.saveRaceID(socket, id);

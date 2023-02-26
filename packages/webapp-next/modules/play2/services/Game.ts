@@ -78,8 +78,9 @@ export class Game {
   }
 
   play() {
+    const isPublic = useSettingsStore.getState().defaultIsPublic;
     const language = useSettingsStore.getState().languageSelected?.language;
-    const dto = { language };
+    const dto = { language, isPublic };
     this.socket.emit("play", dto);
   }
 
