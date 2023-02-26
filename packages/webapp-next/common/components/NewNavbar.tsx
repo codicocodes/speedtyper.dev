@@ -8,6 +8,7 @@ import { useIsPlaying } from "../hooks/useIsPlaying";
 import { PlayingNow } from "./BattleMatcher";
 import Button from "./Button";
 import { NewGithubLoginModal } from "./modals/GithubLoginModal";
+import { SettingsModal } from "./modals/SettingsModal";
 
 export const navbarFactory = () => {
   return NewNavbar;
@@ -71,6 +72,7 @@ export const NewNavbar = () => {
                 />
               </Link>
               <LeaderboardButton />
+              <SettingsModal />
               <PlayingNow />
             </>
           )}

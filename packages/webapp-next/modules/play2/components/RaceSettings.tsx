@@ -1,32 +1,30 @@
 import { RadioGroup, Switch } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { Fragment } from "react";
-import { InfoIcon } from "../../../assets/icons/InfoIcon";
 import { KogWheel } from "../../../assets/icons/KogWheel";
-import { BattleMatcherContainer } from "../../../common/components/BattleMatcher";
+import { OnlineIcon } from "../../../assets/icons/OnlineIcon";
 import Button from "../../../common/components/Button";
 import { Overlay } from "../../../common/components/Overlay";
 import { useIsOwner } from "../state/game-store";
 import {
   closeModals,
+  openLanguageModal,
   openSettingsModal,
   setCaretType,
-  toggleRaceIsPublic,
-  toggleSyntaxHighlightning,
   useSettingsStore,
 } from "../state/settings-store";
 import { LanguageSelector } from "./race-settings/LanguageSelector";
 
 export const RaceSettings: React.FC = () => {
-  const isOpen = useSettingsStore((s) => s.settingsModalIsOpen);
+  const isOpen = useSettingsStore((s) => s.languageModalIsOpen);
   return (
     <>
       <Button
-        onClick={openSettingsModal}
+        onClick={openLanguageModal}
         color="invisible"
         leftIcon={
           <div className="h-5 w-auto">
-            <KogWheel />
+            <OnlineIcon />
           </div>
         }
       />
@@ -36,10 +34,6 @@ export const RaceSettings: React.FC = () => {
 };
 
 export const RaceSettingsModal: React.FC = () => {
-  const isSyntaxHighlightingEnabled = useSettingsStore(
-    (s) => s.syntaxHighlighting
-  );
-  const isRacePublic = useSettingsStore((s) => s.raceIsPublic);
   const isOwner = useIsOwner();
   return (
     <Overlay onOverlayClick={closeModals}>
@@ -49,37 +43,10 @@ export const RaceSettingsModal: React.FC = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="flex flex-col w-full bg-off-white text-dark-ocean p-5 rounded gap-4 w-full"
+          className="flex flex-col w-full text-dark-ocean p-5 rounded gap-4 w-full"
           style={{ fontFamily: "Fira Code" }}
         >
-          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-            <div className="flex items-center">
-              <button
-                className="cursor-default w-4 h-auto mr-1"
-                title="Personal settings are stored in your browser"
-              >
-                <InfoIcon />
-              </button>
-              <h2 className="text-xl tracking-wider">Personal Settings</h2>
-            </div>
-            <ToggleSelector
-              title="syntax highlighting"
-              description="Enable to use syntax highlighting"
-              checked={isSyntaxHighlightingEnabled}
-              toggleEnabled={toggleSyntaxHighlightning}
-            />
-            <CaretSelector />
-          </div>
-          <div className="flex flex-col gap-4 border border-faded-gray rounded-lg p-4">
-            <div className="flex items-center">
-              <button
-                className="cursor-default w-4 h-auto mr-1"
-                title="Only the race owner can update race settings"
-              >
-                <InfoIcon />
-              </button>
-              <h2 className="text-xl">Race settings</h2>{" "}
-            </div>
+          <div className="flex flex-col gap-4 rounded-lg p-4 min-w-8">
             {isOwner && <LanguageSelector />}
           </div>
         </motion.div>

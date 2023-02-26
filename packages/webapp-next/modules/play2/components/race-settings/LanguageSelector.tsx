@@ -26,7 +26,7 @@ export function LanguageSelector() {
   const languages = data as undefined | { language: string; name: string }[];
   const selectedLanguage = useSettingsStore((s) => s.languageSelected);
   return (
-    <div className="w-full text-dark-ocean font-thin">
+    <div className="w-full text-dark-ocean font-thin w-[250px]">
       <h2 className="text-xs mb-1 font-semibold uppercase tracking-widest">
         select language
       </h2>
@@ -51,7 +51,7 @@ export function LanguageSelector() {
           {selectedLanguage && (
             <button
               onClick={() => selectProgrammingLanguage(null)}
-              className="flex items-center p-1 h-full  bg-gray-200 mx-2 rounded"
+              className="flex items-center p-1 h-full  bg-gray-200 ml-2 rounded"
             >
               <div className="w-2 text-red-500 fill-current mx-1">
                 <CrossIcon />
@@ -61,7 +61,7 @@ export function LanguageSelector() {
           )}
         </div>
         {!isLoading && (
-          <Listbox.Options className="">
+          <Listbox.Options static>
             {languages?.map((language) => (
               <Listbox.Option key={language.name} value={language}>
                 {({ active, selected }) => {

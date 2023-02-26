@@ -1,21 +1,28 @@
 import React from "react";
 import { KogWheel } from "../../../assets/icons/KogWheel";
+import { closeModals, openSettingsModal, useSettingsStore } from "../../../modules/play2/state/settings-store";
+import Button from "../Button";
 import { SettingsOverlay } from "../overlays/SettingsOverlay";
 
 export const SettingsModal = () => {
-  const [modalIsVisible, setShowModal] = React.useState(false);
-  const closeModal = () => setShowModal(false);
-  const showModal = () => setShowModal(true);
+  const isOpen = useSettingsStore((s) => s.settingsModalIsOpen);
   return (
-    <>
-      <button onClick={showModal}>
-        <KogWheel />
-      </button>
-      {modalIsVisible ? (
+    <div>
+      <Button
+        size="sm"
+        onClick={openSettingsModal}
+        color="invisible"
+        leftIcon={
+          <div className="h-4 w-auto">
+            <KogWheel />
+          </div>
+        }
+      />
+      {isOpen ? (
         <>
-          <SettingsOverlay closeModal={closeModal} />
+          <SettingsOverlay closeModal={closeModals} />
         </>
       ) : null}
-    </>
+    </div>
   );
 };

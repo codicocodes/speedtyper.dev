@@ -15,6 +15,7 @@ export const LeaderboardButton: React.FC = () => {
   return (
     <>
       <Button
+        size="sm"
         onClick={openLeaderboardModal}
         color="invisible"
         leftIcon={<CrownIcon />}

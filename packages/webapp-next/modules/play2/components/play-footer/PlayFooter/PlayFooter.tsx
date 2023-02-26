@@ -172,7 +172,7 @@ function ActionButtons() {
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
-      <RaceSettings />
+      {isOwner && <RaceSettings />}
       {isOwner && (
         <ActionButton
           text="refresh"

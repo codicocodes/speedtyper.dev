@@ -3,6 +3,7 @@ import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 
 export interface SettingsState {
   settingsModalIsOpen: boolean;
+  languageModalIsOpen: boolean;
   leaderboardModalIsOpen: boolean;
   profileModalIsOpen: boolean;
   publicRacesModalIsOpen: boolean;
@@ -32,6 +33,7 @@ function getInitialToggleStateFromLocalStorage(key: string): boolean {
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
   settingsModalIsOpen: false,
+  languageModalIsOpen: false,
   leaderboardModalIsOpen: false,
   profileModalIsOpen: false,
   publicRacesModalIsOpen: false,
@@ -63,6 +65,15 @@ export const openSettingsModal = () => {
   useSettingsStore.setState((s) => ({
     ...s,
     settingsModalIsOpen: true,
+  }));
+};
+
+export const openLanguageModal = () => {
+  if (useSettingsStore.getState().profileModalIsOpen) return;
+  if (useSettingsStore.getState().leaderboardModalIsOpen) return;
+  useSettingsStore.setState((s) => ({
+    ...s,
+    languageModalIsOpen: true,
   }));
 };
 
@@ -104,6 +115,7 @@ export const closeModals = () => {
     leaderboardModalIsOpen: false,
     profileModalIsOpen: false,
     publicRacesModalIsOpen: false,
+    languageModalIsOpen: false,
   }));
 };
 

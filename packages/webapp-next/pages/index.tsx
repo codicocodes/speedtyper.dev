@@ -19,7 +19,6 @@ import { useCallback, useEffect } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 import {
   closeModals,
-  openSettingsModal,
   useHasOpenModal,
   useSettingsStore,
 } from "../modules/play2/state/settings-store";
@@ -59,9 +58,9 @@ function Play2Page({
     useCallback(() => !hasOpenModal && game?.next(), [hasOpenModal, game])
   );
   useSettingsStore((s) => s.settingsModalIsOpen);
-  useKeyMap(true, Keys.Escape, () => {
-    if (!isPlaying) openSettingsModal();
-  });
+  // useKeyMap(true, Keys.Escape, () => {
+  //   if (!isPlaying) openSettingsModal();
+  // });
   useResetStateOnUnmount();
   useEndGame();
   useEffect(() => {
