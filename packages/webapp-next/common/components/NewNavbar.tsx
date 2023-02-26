@@ -62,7 +62,7 @@ export const NewNavbar = () => {
         <div className="flex items-center items-start py-2">
           <HomeLink />
           {!isPlaying && (
-            <>
+            <div className="flex gap-2">
               <Link href="/">
                 <Button
                   size="sm"
@@ -74,7 +74,7 @@ export const NewNavbar = () => {
               <LeaderboardButton />
               <SettingsModal />
               <PlayingNow />
-            </>
+            </div>
           )}
           <ProfileSection />
         </div>
