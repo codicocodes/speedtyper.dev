@@ -4,6 +4,7 @@ import { DiscordLogo, GithubLogo, TwitchLogo } from "../../assets/icons";
 import { getStargazersCount } from "../github/stargazers";
 import { useIsPlaying } from "../hooks/useIsPlaying";
 import { PlayingNow } from "./BattleMatcher";
+import { YoutubeLink } from "./Footer/YoutubeLink";
 
 function useStargazersCount() {
   const [count, setCount] = useState(0);
@@ -77,8 +78,9 @@ export function Footer() {
                   target="blank"
                 >
                   <TwitchLogo />
-                  <span className="ml-1">watch</span>
+                  <span className="ml-1">live</span>
                 </a>
+                <YoutubeLink />
               </div>
             </motion.div>
           </AnimatePresence>
