@@ -18,9 +18,7 @@ const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
 
 const SMOOTH_CARET_KEY = "smoothCaret";
 
-const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic";
-
-const defaultSmoothCaretSetting = true;
+const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic2";
 
 function getInitialToggleStateFromLocalStorage(
   key: string,
@@ -29,8 +27,8 @@ function getInitialToggleStateFromLocalStorage(
   if (typeof document !== "undefined" && window) {
     let toggleStateStr = localStorage.getItem(key);
     if (!toggleStateStr) {
-      localStorage.setItem(key, defaultSmoothCaretSetting.toString());
-      toggleStateStr = defaultSmoothCaretSetting.toString();
+      localStorage.setItem(key, defaultToggleValue.toString());
+      toggleStateStr = defaultToggleValue.toString();
     }
     return toggleStateStr === "true" ?? false;
   }
