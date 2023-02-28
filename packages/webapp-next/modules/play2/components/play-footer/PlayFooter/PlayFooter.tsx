@@ -151,7 +151,7 @@ export function ActionButton({
       style={{
         fontFamily: "Fira Code",
       }}
-      className="flex text-sm font-light text-dark-ocean items-center justify-between gap-2 rounded-3xl bg-gray-300 hover:bg-gray-400 hover:cursor-pointer px-3 py-1 my-1"
+      className="flex text-sm font-light text-dark-ocean items-center justify-between gap-2 rounded-3xl bg-gray-300 hover:bg-gray-400 hover:cursor-pointer px-3 py-0.5 my-1"
     >
       <div className="flex">{text}</div>
       {icon}
