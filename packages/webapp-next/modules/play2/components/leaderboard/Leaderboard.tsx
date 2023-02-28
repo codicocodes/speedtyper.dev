@@ -22,9 +22,11 @@ export const Leaderboard: React.FC = () => {
   );
 
   useEffect(() => {
-    const newData = [...data];
-    newData.sort((a, b) => b.racesPlayed - a.racesPlayed);
-    setActivityData(newData);
+    if (data) {
+      const newData = [...data];
+      newData.sort((a, b) => b.racesPlayed - a.racesPlayed);
+      setActivityData(newData);
+    }
   }, [data]);
   return (
     <div
