@@ -17,6 +17,10 @@ export class ResultsHandlerService {
   async handleResult(race: Race, user: User) {
     const player = race.getPlayer(user.id);
     if (player.hasCompletedRace()) {
+      if (player.saved) {
+        return;
+      }
+      player.saved = true;
       let result = this.factory.factory(race, player, user);
       if (!user.isAnonymous) {
         result = await this.results.create(result);

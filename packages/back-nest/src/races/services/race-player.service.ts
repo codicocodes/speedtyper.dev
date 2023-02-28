@@ -37,6 +37,9 @@ export class RacePlayer {
   @Exclude()
   literals: string[];
 
+  @Exclude()
+  saved: boolean;
+
   progress: number;
 
   @Exclude()
@@ -57,6 +60,7 @@ export class RacePlayer {
     this.literalOffset = 0;
     this.recentlyTypedLiteral = this.literals[this.literalOffset];
     this.progress = 0;
+    this.saved = false;
     this.typedKeyStrokes = [];
   }
 
@@ -131,6 +135,7 @@ export class RacePlayer {
     player.literalOffset = 0;
     player.typedKeyStrokes = [];
     player.literalService = new LiteralService();
+    player.saved = false;
     return player;
   }
 }
