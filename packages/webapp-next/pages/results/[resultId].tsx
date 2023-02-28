@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { ActionButton } from "../../modules/play2/components/play-footer/PlayFooter";
 import { ReloadIcon } from "../../assets/icons/ReloadIcon";
+import { AnimatePresence, motion } from "framer-motion";
+import { humanizeAbsolute } from "../../utils/humanize";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -51,37 +53,46 @@ function ResultsPage({
     }));
   }, [result]);
   return (
-    <div className="flex flex-col items-center">
-      <div className="bg-dark-lake p-4 rounded-lg">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center">
-            <Image
-              className="rounded-full"
-              height={50}
-              width={50}
-              src={result.user.avatarUrl}
-            />
-            <h1 className="ml-4 text-xl font-bold">{result.user.username}</h1>
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col items-center"
+      >
+        <div className="bg-dark-lake p-4 rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center">
+              <Image
+                alt=""
+                className="rounded-full"
+                height={50}
+                width={50}
+                src={result.user.avatarUrl}
+              />
+              <h1 className="ml-4 text-xl font-bold">{result.user.username}</h1>
+            </div>
+            <div className="flex gap-2 items-center">
+              <ActionButton
+                text="play"
+                title="Start playing"
+                onClick={() => console.log("lmao")}
+                icon={
+                  <div className="h-3 w-3">
+                    <ReloadIcon />
+                  </div>
+                }
+              />
+            </div>
           </div>
-          <div className="flex gap-2">
-            <ActionButton
-              text="play"
-              title="Start playing"
-              onClick={() => console.log("lmao")}
-              icon={
-                <div className="h-3 w-3">
-                  <ReloadIcon />
-                </div>
-              }
-            />
+          <div>
+            <ResultsInfo />
+            <ToastContainer />
           </div>
         </div>
-        <div>
-          <ResultsInfo />
-          <ToastContainer />
-        </div>
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

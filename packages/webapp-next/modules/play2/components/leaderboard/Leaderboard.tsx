@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import useSWR from "swr";
+import { GithubLogo } from "../../../../assets/icons";
 import { CrownIcon } from "../../../../assets/icons/CrownIcon";
 import { cpmToWPM } from "../../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl";
