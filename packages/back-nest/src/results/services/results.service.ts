@@ -36,13 +36,16 @@ export class ResultService {
 
     for await (const r of resultsTodayStream) {
       if (!resultsToday[r.u_id]) {
+        r.racesPlayed = 1;
         resultsToday[r.u_id] = r;
         continue;
       }
       const prevResult = resultsToday[r.u_id];
       if (r.r_cpm > prevResult.r_cpm) {
+        r.racesPlayed = prevResult.racesPlayed;
         resultsToday[r.u_id] = r;
       }
+      resultsToday[r.u_id].racesPlayed++;
     }
 
     const results = Object.values(resultsToday)
@@ -53,6 +56,7 @@ export class ResultService {
           cpm: r.r_cpm,
           accuracy: r.r_accuracy,
           createdAt: r.r_createdAt,
+          racesPlayed: r.racesPlayed,
         };
       })
       .sort((a, b) => b.cpm - a.cpm);
