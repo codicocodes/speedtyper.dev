@@ -174,7 +174,6 @@ function ActionButtons() {
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
     <div className="flex row text-faded-gray gap-1">
-      {isOwner && <RaceSettings />}
       {isOwner && (
         <ActionButton
           text="refresh"
@@ -195,6 +194,7 @@ function ActionButtons() {
           copyToClipboard(url.toString(), `${url} copied to clipboard`);
         }}
       />
+      {isOwner && <RaceSettings />}
       {canManuallyStartGame && (
         <ActionButton
           title="Start the game"

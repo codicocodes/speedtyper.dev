@@ -2,7 +2,6 @@ import { RadioGroup, Switch } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { Fragment } from "react";
 import { OnlineIcon } from "../../../assets/icons/OnlineIcon";
-import Button from "../../../common/components/Button";
 import { Overlay } from "../../../common/components/Overlay";
 import { useIsOwner } from "../state/game-store";
 import {
@@ -11,20 +10,26 @@ import {
   setCaretType,
   useSettingsStore,
 } from "../state/settings-store";
+import { ActionButton } from "./play-footer/PlayFooter";
 import { LanguageSelector } from "./race-settings/LanguageSelector";
 
 export const RaceSettings: React.FC = () => {
   const isOpen = useSettingsStore((s) => s.languageModalIsOpen);
+  const languageSelected = useSettingsStore((s) => s.languageSelected);
+  const language = languageSelected ? languageSelected.name : "language";
+
   return (
     <>
-      <Button
+      <ActionButton
+        className="flex items-center w-auto min-w-8"
         onClick={openLanguageModal}
         color="invisible"
-        leftIcon={
-          <div className="h-5 w-auto">
+        icon={
+          <div className="h-4">
             <OnlineIcon />
           </div>
         }
+        text={language}
       />
       {isOpen && <RaceSettingsModal />}
     </>
