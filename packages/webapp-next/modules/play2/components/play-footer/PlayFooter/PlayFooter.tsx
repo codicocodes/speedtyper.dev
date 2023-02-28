@@ -106,11 +106,13 @@ export function PlayFooter({ challenge }: PlayFooterProps) {
               <div className="flex row justify-between items-top">
                 <ActionButtons />
                 <div className="text-faded-gray">
-                  <ChallengeSource
-                    name={challenge.projectName}
-                    url={challenge.url}
-                    license={challenge.license}
-                  />
+                  {challenge.projectName && (
+                    <ChallengeSource
+                      name={challenge.projectName}
+                      url={challenge.url}
+                      license={challenge.license}
+                    />
+                  )}
                 </div>
               </div>
             </div>
