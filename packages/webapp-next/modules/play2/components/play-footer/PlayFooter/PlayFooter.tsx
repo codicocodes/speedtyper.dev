@@ -179,13 +179,21 @@ function ActionButtons() {
           text="refresh"
           title="Refresh the challenge"
           onClick={() => game?.next()}
-          icon={<ReloadIcon />}
+          icon={
+            <div className="h-3">
+              <ReloadIcon />
+            </div>
+          }
         />
       )}
       <ActionButton
         text="invite"
         title="Invite your friends to play"
-        icon={<LinkIcon />}
+        icon={
+          <div className="h-3">
+            <LinkIcon />
+          </div>
+        }
         onClick={() => {
           const url = new URL(window.location.href);
           if (game?.id) {
