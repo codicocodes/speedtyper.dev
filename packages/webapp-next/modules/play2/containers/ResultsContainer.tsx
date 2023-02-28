@@ -12,9 +12,8 @@ function ResultsText({ title, value }: { title: string; value: string }) {
   );
 }
 
-export function ResultsContainer() {
+export function ResultsInfo() {
   const result = useGameStore((state) => state.myResult);
-  // TODO: Show loading indicator here
   if (!result) return null;
   const cpm = result.cpm;
   const wpm = cpmToWPM(cpm);
@@ -23,12 +22,23 @@ export function ResultsContainer() {
   const mistakesCount = result.mistakes;
   const accuracy = result.accuracy;
   return (
+    <div className="flex gap-4">
+      <ResultsText title="wpm" value={wpm.toString()} />
+      <ResultsText title="accuracy" value={`${accuracy}%`} />
+      <ResultsText title="time" value={time} />
+      <ResultsText title="mistakes" value={mistakesCount.toString()} />
+    </div>
+  );
+}
+
+export function ResultsContainer() {
+  const result = useGameStore((state) => state.myResult);
+  // TODO: Show loading indicator here
+  if (!result) return null;
+  return (
     <div className="w-full flex flex-col">
-      <div className="w-full flex flex-row gap-4">
-        <ResultsText title="wpm" value={wpm.toString()} />
-        <ResultsText title="accuracy" value={`${accuracy}%`} />
-        <ResultsText title="time" value={time} />
-        <ResultsText title="mistakes" value={mistakesCount.toString()} />
+      <div className="w-full flex flex-row">
+        <ResultsInfo />
       </div>
       <ResultsChart />
     </div>
