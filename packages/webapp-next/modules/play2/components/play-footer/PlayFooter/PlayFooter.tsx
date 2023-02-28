@@ -180,7 +180,7 @@ function ActionButtons() {
           title="Refresh the challenge"
           onClick={() => game?.next()}
           icon={
-            <div className="h-3">
+            <div className="h-3 w-3">
               <ReloadIcon />
             </div>
           }
@@ -190,7 +190,7 @@ function ActionButtons() {
         text="invite"
         title="Invite your friends to play"
         icon={
-          <div className="h-3">
+          <div className="h-3 w-4">
             <LinkIcon />
           </div>
         }

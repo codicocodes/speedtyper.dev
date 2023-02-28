@@ -25,7 +25,7 @@ export const RaceSettings: React.FC = () => {
         onClick={openLanguageModal}
         color="invisible"
         icon={
-          <div className="h-3.5">
+          <div className="h-3">
             <OnlineIcon />
           </div>
         }
