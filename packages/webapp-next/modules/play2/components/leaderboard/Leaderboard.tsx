@@ -19,7 +19,6 @@ export const Leaderboard: React.FC = () => {
       style={{ fontFamily: "Fira Code" }}
     >
       <h2 className="text-2xl tracking-widest font-thin">Daily Leaderboard</h2>
-
       {!isLoading && data && (
         <div className="tracking-wider font-thin">
           <LeaderboardRow
