@@ -7,3 +7,4 @@ encode/starlette
 apache/zookeeper
 ClickHouse/ClickHouse
 rails/rails
+lodash/lodash
