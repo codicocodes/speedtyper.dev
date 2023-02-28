@@ -19,7 +19,7 @@ interface HiddenCodeInputProps {
 const useAutoTyper = (
   handleOnChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
 ) => {
-  const isAutoTyperEnabled = true;
+  const isAutoTyperEnabled = false;
   const code = useCodeStore.getState().code;
   useEffect(() => {
     if (code && isAutoTyperEnabled) {
