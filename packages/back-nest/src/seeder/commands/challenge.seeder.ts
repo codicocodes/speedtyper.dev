@@ -46,6 +46,7 @@ export class ProjectSeedRunner extends CommandRunner {
     firstChallenge.sha = 'fa3011cb39ac784a88da3667b729f3a79f5f22c3';
     firstChallenge.treeSha = '2d638e0fd2c1d91c9c4323591bb1041b594e28fa';
     firstChallenge.path = 'server/etcdserver/api/rafthttp/transport.go';
+    firstChallenge.language = 'go';
     firstChallenge.url =
       'https://github.com/etcd-io/etcd/blob/2d638e0fd2c1d91c9c4323591bb1041b594e28fa/server/etcdserver/api/rafthttp/transport.go/#L425';
     firstChallenge.content =
@@ -63,6 +64,7 @@ export class ProjectSeedRunner extends CommandRunner {
     secondChallenge.id = '8ebf6be1-7f7c-4edf-a622-97b0024636e8';
     secondChallenge.sha = '69ecc631471975fcb4d207f85a57baf2b5a79460';
     secondChallenge.treeSha = '2d638e0fd2c1d91c9c4323591bb1041b594e28fa';
+    secondChallenge.language = 'go';
     secondChallenge.path = 'client/v3/retry.go';
     secondChallenge.url =
       'https://github.com/etcd-io/etcd/blob/2d638e0fd2c1d91c9c4323591bb1041b594e28fa/client/v3/retry.go/#L160';
@@ -80,6 +82,7 @@ export class ProjectSeedRunner extends CommandRunner {
     thirdChallenge.sha = 'ea19cf0181bbedbfc65bce9cfce26eb3558cb9ee';
     thirdChallenge.treeSha = '2d638e0fd2c1d91c9c4323591bb1041b594e28fa';
     thirdChallenge.path = 'pkg/schedule/schedule.go';
+    thirdChallenge.language = 'go';
     thirdChallenge.url =
       'https://github.com/etcd-io/etcd/blob/2d638e0fd2c1d91c9c4323591bb1041b594e28fa/pkg/schedule/schedule.go/#L135';
     thirdChallenge.content =
