@@ -16,9 +16,9 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
             rel="stylesheet"
           />
-          <script>0</script>
         </Head>
         <body>
+          <script>0</script>
           <Main />
           <NextScript />
         </body>
