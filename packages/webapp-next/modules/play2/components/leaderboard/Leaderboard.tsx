@@ -77,7 +77,7 @@ export const ActivityLeaderboard = ({
                   height="30"
                   quality={100}
                   src={r.avatarUrl}
-                  alt={r.username}
+                  alt=""
                 />
                 <span className="ml-2" title={r.username}>
                   {r.username}
@@ -132,7 +132,7 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
                   height="30"
                   quality={100}
                   src={r.avatarUrl}
-                  alt={r.username}
+                  alt=""
                 />
                 <span className="ml-2" title={r.username}>
                   {r.username}

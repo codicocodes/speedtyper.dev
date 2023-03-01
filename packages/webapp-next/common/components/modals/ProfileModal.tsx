@@ -16,11 +16,11 @@ export function ProfileModal({ closeModal }: ProfileModalProps) {
       <div className="text-dark-ocean bg-off-white p-5 rounded">
         <div className="flex items-center">
           <Image
-            alt="profile image"
             className="rounded-full"
             width="50"
             height="50"
             src={user.avatarUrl}
+            alt=""
           />
           <span className="ml-4 text-lg tracking-wider">{user.username}</span>
         </div>
