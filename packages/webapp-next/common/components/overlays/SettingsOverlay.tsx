@@ -33,6 +33,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
               <InfoIcon />
             </button>
             <h2 className="text-xl tracking-wider">Personal Settings</h2>
+            {/* Button here */}
           </div>
           <ToggleSelector
             title="syntax highlighting"

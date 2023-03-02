@@ -14,14 +14,7 @@ export const GithubLoginOverlay: React.FC<GithubLoginOverlayProps> = ({
       <Overlay onOverlayClick={closeModal}>
         <div className="max-w-[800px] border-0 lg:rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <div className="flex justify-center items-center p-5 rounded-t">
-            <button
-              className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              onClick={closeModal}
-            >
-              <span className="bg-transparent text-dark-ocean h-8 w-8 text-2xl block outline-none focus:outline-none">
-                ×
-              </span>
-            </button>
+            {/* Button Here */}
           </div>
           <h3 className="text-dark-ocean flex-grow text-5xl tracking-wider font-thin flex justify-center">
             Welcome

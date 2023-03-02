@@ -41,6 +41,7 @@ export const Leaderboard: React.FC = () => {
           selectedLeaderboard={selectedLeaderboard}
           setSelectedLeaderboard={setSelectedLeaderboard}
         />
+        {/* Button here */}
       </div>
       <div className="flex">
         {selectedLeaderboard === "wpm" && (
