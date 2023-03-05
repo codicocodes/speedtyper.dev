@@ -1,4 +1,7 @@
 import { InfoIcon } from "../../../assets/icons/InfoIcon";
+import Modal from "../modals/Modal";
+import { closeModals } from "../../../modules/play2/state/settings-store";
+import ModalCloseButton from "../buttons/ModalCloseButton";
 import {
   CaretSelector,
   ToggleSelector,
@@ -24,7 +27,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
   return (
     <>
       <Overlay onOverlayClick={closeModal}>
-        <div className="flex flex-col gap-4 bg-off-white rounded-lg text-dark-ocean p-4">
+        <Modal>
           <div className="flex items-center">
             <button
               className="cursor-default w-4 h-auto mr-1"
@@ -33,7 +36,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
               <InfoIcon />
             </button>
             <h2 className="text-xl tracking-wider">Personal Settings</h2>
-            {/* Button here */}
+            <ModalCloseButton onButtonClickHandler={closeModals} />
           </div>
           <ToggleSelector
             title="syntax highlighting"
@@ -48,7 +51,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
             toggleEnabled={toggleDefaultRaceIsPublic}
           />
           <CaretSelector />
-        </div>
+        </Modal>
       </Overlay>
     </>
   );

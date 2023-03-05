@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useSWR from "swr";
 import { InfoIcon } from "../../assets/icons/InfoIcon";
+import Modal from "./modals/Modal";
 import { OnlineIcon } from "../../assets/icons/OnlineIcon";
 import { UserGroupIcon } from "../../assets/icons/UserGroupIcon";
 import { ToggleSelector } from "../../modules/play2/components/RaceSettings";
@@ -14,6 +15,7 @@ import {
 import { ONLINE_COUNT_API } from "../api/races";
 import { getExperimentalServerUrl } from "../utils/getServerUrl";
 import { Overlay } from "./Overlay";
+import ModalCloseButton from "./buttons/ModalCloseButton";
 
 export const BattleMatcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,15 +118,16 @@ export const PlayingNow = () => {
       </button>
       {isOpen && (
         <Overlay onOverlayClick={closeModals}>
-          <div className="flex flex-col gap-4 border bg-off-white rounded-lg p-4 text-dark-ocean">
+          <Modal>
             <div className="flex items-center">
               <h2 className="text-xl mr-2">Public races</h2>
               <button
-                className="cursor-default w-4 w-4 mr-1"
+                className="cursor-default w-4 mr-1"
                 title="You can configure your races to be public by default in your settings"
               >
                 <InfoIcon />
               </button>
+              <ModalCloseButton onButtonClickHandler={closeModals} />
             </div>
             <ToggleSelector
               title="public race"
@@ -134,7 +137,7 @@ export const PlayingNow = () => {
               toggleEnabled={toggleRaceIsPublic}
             />
             <BattleMatcherContainer closeModal={closeModals} />
-          </div>
+          </Modal>
         </Overlay>
       )}
     </>
