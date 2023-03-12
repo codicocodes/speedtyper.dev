@@ -1,13 +1,16 @@
+import React, { useEffect, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { GithubLogo } from "../../../../assets/icons";
+import ModalCloseButton from "../../../../common/components/buttons/ModalCloseButton";
+import Modal from "../../../../common/components/modals/Modal";
 import { CrownIcon } from "../../../../assets/icons/CrownIcon";
 import { cpmToWPM } from "../../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl";
 import { humanizeAbsolute } from "../../../../utils/humanize";
+import { closeModals } from "../../state/settings-store";
 
 export const Leaderboard: React.FC = () => {
   const baseUrl = getExperimentalServerUrl();
@@ -29,18 +32,18 @@ export const Leaderboard: React.FC = () => {
     }
   }, [data]);
   return (
-    <div
-      className="flex flex-col bg-off-white text-dark-ocean p-5 rounded gap-4 w-full max-h-screen overflow-y-scroll"
-      style={{ fontFamily: "Fira Code" }}
-    >
-      <div className="flex justify-between">
+    <Modal>
+      <div className="flex justify-between items-center">
         <h2 className="text-2xl tracking-widest font-thin">
           Daily Leaderboard
         </h2>
-        <LeaderboardSelector
-          selectedLeaderboard={selectedLeaderboard}
-          setSelectedLeaderboard={setSelectedLeaderboard}
-        />
+        <div className="flex justify-end gap-2">
+          <LeaderboardSelector
+            selectedLeaderboard={selectedLeaderboard}
+            setSelectedLeaderboard={setSelectedLeaderboard}
+          />
+          <ModalCloseButton onButtonClickHandler={closeModals} />
+        </div>
       </div>
       <div className="flex">
         {selectedLeaderboard === "wpm" && (
@@ -50,7 +53,7 @@ export const Leaderboard: React.FC = () => {
           <ActivityLeaderboard results={activityData} isLoading={isLoading} />
         )}
       </div>
-    </div>
+    </Modal>
   );
 };
 
@@ -226,7 +229,7 @@ export const LeaderboardSelector = ({
         >
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 rounded-lg ${
+              className={`flex items-center h-8 w-full p-3 rounded-lg transition ease-in-out ${
                 checked
                   ? "bg-purple-200 hover:bg-purple-300"
                   : "bg-gray-200 hover:bg-gray-300"
@@ -242,10 +245,10 @@ export const LeaderboardSelector = ({
         >
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 rounded-lg ${
+              className={`flex items-center h-8 w-full p-3 rounded-lg transition ease-in-out ${
                 checked
                   ? "bg-purple-200 hover:bg-purple-300"
-                  : "bg-gray-200 hover:bg-gray-300"
+                  : "bg-gray-300 hover:bg-gray-400"
               }`}
             >
               activity
