@@ -37,11 +37,11 @@ export const Leaderboard: React.FC = () => {
         <h2 className="text-2xl tracking-widest font-thin">
           Daily Leaderboard
         </h2>
-        <LeaderboardSelector
-          selectedLeaderboard={selectedLeaderboard}
-          setSelectedLeaderboard={setSelectedLeaderboard}
-        />
-        <div className="flex">
+        <div className="flex justify-end gap-2">
+          <LeaderboardSelector
+            selectedLeaderboard={selectedLeaderboard}
+            setSelectedLeaderboard={setSelectedLeaderboard}
+          />
           <ModalCloseButton onButtonClickHandler={closeModals} />
         </div>
       </div>
@@ -229,7 +229,7 @@ export const LeaderboardSelector = ({
         >
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 rounded-lg ${
+              className={`flex items-center h-8 w-full p-3 rounded-lg transition ease-in-out ${
                 checked
                   ? "bg-purple-200 hover:bg-purple-300"
                   : "bg-gray-200 hover:bg-gray-300"
@@ -245,10 +245,10 @@ export const LeaderboardSelector = ({
         >
           {({ checked }) => (
             <div
-              className={`flex items-center h-full w-full p-3 rounded-lg ${
+              className={`flex items-center h-8 w-full p-3 rounded-lg transition ease-in-out ${
                 checked
                   ? "bg-purple-200 hover:bg-purple-300"
-                  : "bg-gray-200 hover:bg-gray-300"
+                  : "bg-gray-300 hover:bg-gray-400"
               }`}
             >
               activity

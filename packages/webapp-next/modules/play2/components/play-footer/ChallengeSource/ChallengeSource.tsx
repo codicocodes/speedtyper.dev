@@ -7,6 +7,7 @@ import {
   useSettingsStore,
 } from "../../../state/settings-store";
 import { Overlay } from "../../../../../common/components/Overlay";
+import ModalCloseButton from "../../../../../common/components/buttons/ModalCloseButton";
 
 export interface ChallengeSourceProps {
   url: string;
@@ -33,7 +34,7 @@ export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
             className="flex flex-col bg-off-white text-dark-ocean p-5 rounded gap-2 w-full max-h-screen overflow-y-scroll gap-y-4 min-w-[400px]"
             style={{ fontFamily: "Fira Code" }}
           >
-            <div className="flex items-center">
+            <div className="flex items-center justify-between">
               <div className="mr-2">
                 <GithubLogo />
               </div>
@@ -43,6 +44,7 @@ export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
                   <OutwardLinkIcon />
                 </a>
               </Link>
+              <ModalCloseButton onButtonClickHandler={closeModals} />
             </div>
             <div className="flex items-center">
               <h2 className="text-sm font-semibold mr-2">License:</h2>
