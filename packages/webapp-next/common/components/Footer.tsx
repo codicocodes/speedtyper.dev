@@ -46,7 +46,7 @@ export function Footer() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex flex-grow items-center mb-2 text-xs">
+              <div className="hidden sm:flex flex-grow items-center mb-2 text-xs">
                 <h1 className="bg-dark-lake py-1 px-2 rounded font-bold text-faded-gray">
                   Tab
                 </h1>
