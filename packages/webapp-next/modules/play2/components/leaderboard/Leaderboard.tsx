@@ -33,7 +33,7 @@ export const Leaderboard: React.FC = () => {
   }, [data]);
   return (
     <Modal>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <h2 className="text-2xl tracking-widest font-thin">
           Daily Leaderboard
         </h2>
@@ -179,10 +179,10 @@ export const LeaderboardRowWPM: React.FC<LeaderboardRowWPMProps> = (props) => {
       className={`flex items-center justify-start gap-8 p-1 px-2 my-1 first:font-bold even:bg-gray-200 rounded`}
     >
       <span className="ml-2 w-[25px]">{props.placement}</span>
-      <div className="w-[300px] w-full truncate">{props.user}</div>
-      <span className="w-[125px]">{props.speed}</span>
-      <span className="w-[125px]">{props.accuracy}</span>
-      <span className="mr-2 w-[125px]">{props.timeAgo}</span>
+      <div className="w-[125px] sm:w-[300px] truncate">{props.user}</div>
+      <span className="w-[120px]">{props.speed}</span>
+      <span className="hidden sm:block w-[125px]">{props.accuracy}</span>
+      <span className="hidden sm:block mr-2 w-[125px]">{props.timeAgo}</span>
     </div>
   );
 };
@@ -201,10 +201,10 @@ export const LeaderboardRowActivity: React.FC<LeaderboardRowActivityProps> = (
       className={`flex items-center justify-start gap-8 p-1 px-2 my-1 first:font-bold even:bg-gray-200 rounded`}
     >
       <span className="ml-2 w-[25px]">{props.placement}</span>
-      <div className="w-[300px] w-full truncate">{props.user}</div>
-      <span className="w-[125px]"></span>
-      <span className="w-[100px]"></span>
-      <span className="mr-2 w-[150px]">{props.racesPlayed}</span>
+      <div className="w-[125px] sm:w-[300px] truncate">{props.user}</div>
+      <span className="hidden sm:w-[125px]"></span>
+      <span className="hidden sm:w-[100px]"></span>
+      <span className="mr-2 w-100px sm:w-[150px]">{props.racesPlayed}</span>
     </div>
   );
 };

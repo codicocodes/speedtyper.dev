@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomUUID } from 'crypto';
 import { Repository } from 'typeorm';
 import { LeaderBoardResult } from '../entities/leaderboard-result.dto';
 import { Result } from '../entities/result.entity';
@@ -26,8 +27,8 @@ export class ResultService {
       .createQueryBuilder('r')
       .leftJoinAndSelect('r.user', 'u')
       .where(
-        `u.banned=false AND
-        r.createdAt BETWEEN '${oneDayAgo.toISOString()}' AND '${new Date().toISOString()}'`,
+        `u.banned=false 
+        `,
       )
       .orderBy('r.cpm')
       .stream();
@@ -36,6 +37,16 @@ export class ResultService {
 
     for await (const r of resultsTodayStream) {
       if (!resultsToday[r.u_id]) {
+        r.u_id = randomUUID();
+        r.racesPlayed = 1;
+        resultsToday[r.u_id] = r;
+        r.u_id = randomUUID();
+        r.racesPlayed = 1;
+        resultsToday[r.u_id] = r;
+        r.u_id = randomUUID();
+        r.racesPlayed = 1;
+        resultsToday[r.u_id] = r;
+        r.u_id = randomUUID();
         r.racesPlayed = 1;
         resultsToday[r.u_id] = r;
         continue;
