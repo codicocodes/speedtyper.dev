@@ -232,7 +232,7 @@ export const LeaderboardSelector = ({
               className={`flex items-center h-8 w-full p-3 rounded-lg transition ease-in-out ${
                 checked
                   ? "bg-purple-200 hover:bg-purple-300"
-                  : "bg-gray-200 hover:bg-gray-300"
+                  : "bg-gray-300 hover:bg-gray-400"
               }`}
             >
               <span>wpm</span>
