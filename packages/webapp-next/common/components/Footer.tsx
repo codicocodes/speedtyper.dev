@@ -1,3 +1,5 @@
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { DiscordLogo, GithubLogo, TwitchLogo } from "../../assets/icons";
@@ -81,6 +83,16 @@ export function Footer() {
                   <span className="ml-1">live</span>
                 </a>
                 <YoutubeLink />
+                <a
+                  href="https://dotfyle.com"
+                  className="flex items-center hover:text-emerald-500 gap-1"
+                  target="blank"
+                >
+                  <div className="h-5 w-5 flex items-center">
+                    <FontAwesomeIcon icon={faCode} size="2x" color="fill" />
+                  </div>
+                  <span className="ml-1">nvim</span>
+                </a>
               </div>
             </motion.div>
           </AnimatePresence>
