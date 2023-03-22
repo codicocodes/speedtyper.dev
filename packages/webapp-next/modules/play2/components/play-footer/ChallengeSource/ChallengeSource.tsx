@@ -31,7 +31,7 @@ export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
       {isOpen && (
         <Overlay onOverlayClick={closeModals}>
           <div
-            className="flex flex-col bg-off-white text-dark-ocean p-5 rounded gap-2 w-full max-h-screen overflow-y-scroll gap-y-4 min-w-[400px]"
+            className="flex flex-col bg-off-white text-dark-ocean p-5 rounded gap-2 w-full max-h-screen overflow-y-scroll gap-y-4 sm:min-w-[400px]"
             style={{ fontFamily: "Fira Code" }}
           >
             <div className="flex items-center justify-between">

@@ -57,14 +57,15 @@ export function Footer() {
 
                 <span className="mx-1 text-faded-gray">Start race</span>
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-2 sm:gap-4">
                 <a
                   href="https://github.com/codicocodes/speedtyper.dev"
                   className="flex items-center hover:text-off-white"
                   target="blank"
                 >
                   <GithubLogo />
-                  <span className="ml-1">{stargazersCount} stars</span>
+                  <span className="hidden sm:block ml-1">{stargazersCount} stars</span>
+                  <span className="block sm:hidden ml-1">star</span>
                 </a>
                 <a
                   href="https://discord.gg/AMbnnN5eep"

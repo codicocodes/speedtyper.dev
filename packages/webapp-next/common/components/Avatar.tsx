@@ -9,7 +9,7 @@ interface AvatarProps {
 export const Avatar: React.FC<AvatarProps> = ({ avatarUrl, username }) => {
   return (
     <div className="flex items-center cursor-pointer gap-2">
-      <span className="font-extrabold tracking-wider text-sm">{username}</span>
+      <span className="hidden sm:block font-extrabold tracking-wider text-sm">{username}</span>
       {avatarUrl ? (
         <Image
           className="cursor-pointer rounded-full"
