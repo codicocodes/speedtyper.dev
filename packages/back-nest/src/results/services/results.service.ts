@@ -37,16 +37,6 @@ export class ResultService {
 
     for await (const r of resultsTodayStream) {
       if (!resultsToday[r.u_id]) {
-        r.u_id = randomUUID();
-        r.racesPlayed = 1;
-        resultsToday[r.u_id] = r;
-        r.u_id = randomUUID();
-        r.racesPlayed = 1;
-        resultsToday[r.u_id] = r;
-        r.u_id = randomUUID();
-        r.racesPlayed = 1;
-        resultsToday[r.u_id] = r;
-        r.u_id = randomUUID();
         r.racesPlayed = 1;
         resultsToday[r.u_id] = r;
         continue;
