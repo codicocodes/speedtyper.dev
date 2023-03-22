@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum TrackingEventType {
+  LegacyRaceStarted = 'legacy_race_started',
   RaceStarted = 'race_started',
   RaceCompleted = 'race_completed',
 }
