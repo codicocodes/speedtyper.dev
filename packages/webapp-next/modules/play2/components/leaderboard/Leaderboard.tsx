@@ -202,8 +202,8 @@ export const LeaderboardRowActivity: React.FC<LeaderboardRowActivityProps> = (
     >
       <span className="ml-2 w-[25px]">{props.placement}</span>
       <div className="w-[125px] sm:w-[300px] truncate">{props.user}</div>
-      <span className="hidden sm:w-[125px]"></span>
-      <span className="hidden sm:w-[100px]"></span>
+      <span className="hidden sm:block sm:w-[120px]"></span>
+      <span className="hidden sm:block sm:w-[100px]"></span>
       <span className="mr-2 w-100px sm:w-[150px]">{props.racesPlayed}</span>
     </div>
   );
