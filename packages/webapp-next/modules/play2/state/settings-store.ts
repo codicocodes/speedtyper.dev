@@ -43,10 +43,10 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
   profileModalIsOpen: false,
   publicRacesModalIsOpen: false,
   projectModalIsOpen: false,
-  smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY, true),
+  smoothCaret: getInitialToggleStateFromLocalStorage(SMOOTH_CARET_KEY, false),
   syntaxHighlighting: getInitialToggleStateFromLocalStorage(
     SYNTAX_HIGHLIGHTING_KEY,
-    true
+    false
   ),
   raceIsPublic: false,
   defaultIsPublic: getInitialToggleStateFromLocalStorage(
