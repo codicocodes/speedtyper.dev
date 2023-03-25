@@ -77,7 +77,7 @@ export function Footer() {
                 </a>
                 <a
                   href="https://twitch.tv/codico"
-                  className="flex items-center hover:text-purple-400"
+                  className="flex items-center text-purple-500 hover:text-purple-400"
                   target="blank"
                 >
                   <TwitchLogo />
