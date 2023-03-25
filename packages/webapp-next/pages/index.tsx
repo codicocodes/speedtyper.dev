@@ -23,6 +23,7 @@ import {
   useSettingsStore,
 } from "../modules/play2/state/settings-store";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
+import { refreshTrends } from "../modules/play2/state/trends-store";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -65,6 +66,7 @@ function Play2Page({
   useEndGame();
   useEffect(() => {
     if (isPlaying) {
+      refreshTrends();
       closeModals();
     }
   }, [isPlaying]);

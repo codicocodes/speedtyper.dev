@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { LeaderBoardResult } from './entities/leaderboard-result.dto';
 import { ResultService } from './services/results.service';
 
@@ -18,5 +19,19 @@ export class ResultsController {
       // reset the promise so new clients don't get a stale leaderboard
       this.leaderboardP = undefined;
     });
+  }
+  @Get('/stats')
+  async getStatsByUser(@Req() request: Request) {
+    const user = request.session.user;
+    const [cpmToday, cpmLast3, cpmLast10] = await Promise.all([
+      this.resultsService.getAverageCPMToday(user.id),
+      this.resultsService.getAverageCPM(user.id, 3),
+      this.resultsService.getAverageCPM(user.id, 10),
+    ]);
+    return {
+      cpmToday,
+      cpmLast3,
+      cpmLast10,
+    };
   }
 }

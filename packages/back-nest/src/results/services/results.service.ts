@@ -62,4 +62,33 @@ export class ResultService {
       .sort((a, b) => b.cpm - a.cpm);
     return results;
   }
+  async getAverageCPM(userId: string, take: number): Promise<number> {
+    const results = await this.resultsRepository.find({
+      where: {
+        user: { id: userId },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      take,
+    });
+    const total = results.reduce((prev, curr) => {
+      return prev + curr.cpm;
+    }, 0);
+    const average = total / results.length;
+    return parseInt(average.toString(), 10);
+  }
+  async getAverageCPMToday(userId: string): Promise<number> {
+    const startOfToday = new Date();
+    startOfToday.setUTCHours(0, 0, 0, 0);
+    const { avg } = await this.resultsRepository
+      .createQueryBuilder('r')
+      .where('r.userId=:userId', {
+        userId,
+        startOfToday,
+      })
+      .select('AVG(r.cpm)', 'avg')
+      .getRawOne();
+    return parseInt(avg, 10);
+  }
 }
