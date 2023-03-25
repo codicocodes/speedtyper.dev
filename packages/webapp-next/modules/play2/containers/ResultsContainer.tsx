@@ -73,11 +73,12 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
           className="h-5 w-5 flex items-center justify-center"
           icon={faArrowTrendUp}
         />
-        trends wpm
+        wpm trends
       </h3>
       <div className="flex gap-2">
         {threeGameWPM ? (
           <HistoryicalResult
+            popover="The average WPM of the last 3 races compared to the WPM of the current race"
             title={"3 games"}
             currWPM={currWPM}
             wpm={threeGameWPM}
@@ -85,13 +86,19 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
         ) : null}
         {tenGameWPM ? (
           <HistoryicalResult
+            popover="The average WPM of the last 10 races compared to the WPM of the current race"
             title={"10 games"}
             currWPM={currWPM}
             wpm={tenGameWPM}
           />
         ) : null}
         {todayWPM ? (
-          <HistoryicalResult title={"today"} currWPM={currWPM} wpm={todayWPM} />
+          <HistoryicalResult
+            popover="The average WPM of all races today compared to the WPM of the current race"
+            title={"today"}
+            currWPM={currWPM}
+            wpm={todayWPM}
+          />
         ) : null}
       </div>
     </div>
@@ -102,14 +109,19 @@ function HistoryicalResult({
   title,
   currWPM,
   wpm,
+  popover,
 }: {
   title: string;
+  popover: string;
   currWPM: number;
   wpm: number;
 }) {
   const percentageChange = (currWPM / wpm) * 100 - 100;
   return (
-    <div className="h-full flex flex-col justify-end px-2 min-w-[120px] bg-dark-lake rounded p-1">
+    <div
+      title={popover}
+      className="h-full flex flex-col justify-end px-2 min-w-[120px] bg-dark-lake rounded p-1"
+    >
       <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
         {title}
       </p>
