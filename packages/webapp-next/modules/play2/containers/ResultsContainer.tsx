@@ -68,7 +68,7 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
     return null;
   }
   return (
-    <div className="mx-2 flex flex-col sm:justify-start gap-1">
+    <div className="mx-2 sm:ml-2 sm:mr-0 flex flex-col sm:justify-start gap-1">
       <h3 className="px-2 flex color-inherit font-bold text-faded-gray text-sm items-center gap-2">
         <FontAwesomeIcon
           className="h-5 w-5 flex items-center justify-center"
