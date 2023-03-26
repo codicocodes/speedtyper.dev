@@ -92,7 +92,7 @@ export function PlayFooter({ challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
   return (
-    <div className="w-full h-10 mt-2">
+    <div className="w-full h-10 px-2">
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
@@ -173,7 +173,7 @@ function ActionButtons() {
   const startGame = () => game?.start();
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
   return (
-    <div className="flex row text-faded-gray gap-1">
+    <div className="flex text-faded-gray gap-1">
       {isOwner && (
         <ActionButton
           text="refresh"
