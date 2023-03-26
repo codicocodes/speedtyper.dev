@@ -13,7 +13,7 @@ import { useTrendStore } from "../state/trends-store";
 
 function ResultsText({ title, value }: { title: string; value: string }) {
   return (
-    <div className="h-full flex flex-col justify-end px-2 min-w-[120px] bg-dark-lake rounded p-1">
+    <div className="h-full flex flex-col justify-end px-2 w-full sm:w-[150px] bg-dark-lake rounded p-2 py-4">
       <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
         {title}
       </p>
@@ -37,7 +37,7 @@ export function ResultsContainer() {
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex flex-row gap-4 justify-between mb-2">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 mx-2 w-full">
           <h3 className="px-2 flex color-inherit font-bold text-faded-gray text-sm items-center gap-2">
             <FontAwesomeIcon
               className="h-5 w-5 flex items-center justify-center"
@@ -45,18 +45,17 @@ export function ResultsContainer() {
             />
             result
           </h3>
-          <div className="flex gap-2">
-            <ResultsText title="wpm" value={wpm.toString()} />
+          <div className="w-full grid grid-cols-2 sm:flex sm:flex-row gap-2">
+            <ResultsText title="words per minute" value={wpm.toString()} />
             <ResultsText title="accuracy" value={`${accuracy}%`} />
             <ResultsText title="time" value={time} />
             <ResultsText title="mistakes" value={mistakesCount.toString()} />
           </div>
         </div>
       </div>
-      <div className="w-full flex">
-        <ResultsChart />
-
+      <div className="w-full flex flex-col sm:flex-row">
         {!result.user.isAnonymous ? <TrendsWPM currWPM={wpm} /> : null}
+        <ResultsChart />
       </div>
     </div>
   );
@@ -69,7 +68,7 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
     return null;
   }
   return (
-    <div className="flex flex-col justify-start gap-1 mx-2">
+    <div className="mx-2 flex flex-col sm:justify-start gap-1">
       <h3 className="px-2 flex color-inherit font-bold text-faded-gray text-sm items-center gap-2">
         <FontAwesomeIcon
           className="h-5 w-5 flex items-center justify-center"
@@ -121,14 +120,15 @@ function HistoryicalResult({
   return (
     <div
       title={popover}
-      className="h-full flex flex-col justify-center px-2 min-w-[150px] bg-dark-lake rounded p-2 gap-1"
+      className="h-full flex flex-col justify-center px-2 sm:w-[150px] bg-dark-lake rounded p-2 gap-1"
     >
       <p className="flex justify-start color-inherit tracking-wide font-semibold text-off-white text-sm">
         {title}
       </p>
       <div className="flex items-center gap-2 text-faded-gray justify-between">
         <p className="font-bold text-2xl flex">
-          {wpm} <span className="flex text-xs flex-col justify-end pl-1">/wpm</span>
+          {wpm}{" "}
+          <span className="flex text-xs flex-col justify-end pl-1">/wpm</span>
         </p>
         <div className="font-bold text-xs flex items-center gap-1">
           {percentageChange > 0 ? (
