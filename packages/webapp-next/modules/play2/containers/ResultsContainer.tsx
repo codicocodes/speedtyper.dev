@@ -2,7 +2,6 @@ import {
   faArrowDown,
   faArrowTrendUp,
   faArrowUp,
-  faSquarePollHorizontal,
   faSquarePollVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -53,9 +52,12 @@ export function ResultsContainer() {
             <ResultsText title="mistakes" value={mistakesCount.toString()} />
           </div>
         </div>
+      </div>
+      <div className="w-full flex">
+        <ResultsChart />
+
         {!result.user.isAnonymous ? <TrendsWPM currWPM={wpm} /> : null}
       </div>
-      <ResultsChart />
     </div>
   );
 }
@@ -67,38 +69,31 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
     return null;
   }
   return (
-    <div className="flex flex-col justify-end gap-1">
+    <div className="flex flex-col justify-start gap-1 mx-2">
       <h3 className="px-2 flex color-inherit font-bold text-faded-gray text-sm items-center gap-2">
         <FontAwesomeIcon
           className="h-5 w-5 flex items-center justify-center"
           icon={faArrowTrendUp}
         />
-        wpm trends
+        average wpm
       </h3>
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 h-full">
         {threeGameWPM ? (
           <HistoryicalResult
-            popover="The average WPM of the last 3 races compared to the WPM of the current race"
-            title={"3 games"}
+            title={"last 3 games"}
             currWPM={currWPM}
             wpm={threeGameWPM}
           />
         ) : null}
         {tenGameWPM ? (
           <HistoryicalResult
-            popover="The average WPM of the last 10 races compared to the WPM of the current race"
-            title={"10 games"}
+            title={"last 10 games"}
             currWPM={currWPM}
             wpm={tenGameWPM}
           />
         ) : null}
         {todayWPM ? (
-          <HistoryicalResult
-            popover="The average WPM of all races today compared to the WPM of the current race"
-            title={"today"}
-            currWPM={currWPM}
-            wpm={todayWPM}
-          />
+          <HistoryicalResult title={"today"} currWPM={currWPM} wpm={todayWPM} />
         ) : null}
       </div>
     </div>
@@ -109,24 +104,32 @@ function HistoryicalResult({
   title,
   currWPM,
   wpm,
-  popover,
 }: {
   title: string;
-  popover: string;
   currWPM: number;
   wpm: number;
 }) {
   const percentageChange = (currWPM / wpm) * 100 - 100;
+  const popover =
+    percentageChange > 0
+      ? `This race was ${Math.abs(percentageChange).toFixed(
+          0
+        )}% faster than the average ${title} (wpm)`
+      : `This race was ${Math.abs(percentageChange).toFixed(
+          0
+        )}% slower than the average ${title} (wpm)`;
   return (
     <div
       title={popover}
-      className="h-full flex flex-col justify-end px-2 min-w-[120px] bg-dark-lake rounded p-1"
+      className="h-full flex flex-col justify-center px-2 min-w-[150px] bg-dark-lake rounded p-2 gap-1"
     >
-      <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
+      <p className="flex justify-start color-inherit tracking-wide font-semibold text-off-white text-sm">
         {title}
       </p>
       <div className="flex items-center gap-2 text-faded-gray justify-between">
-        <p className="font-bold text-2xl">{wpm}</p>
+        <p className="font-bold text-2xl flex">
+          {wpm} <span className="flex text-xs flex-col justify-end pl-1">/wpm</span>
+        </p>
         <div className="font-bold text-xs flex items-center gap-1">
           {percentageChange > 0 ? (
             <div className="h-2 w-2 text-green-500">

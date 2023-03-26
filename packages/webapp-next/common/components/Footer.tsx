@@ -60,11 +60,13 @@ export function Footer() {
               <div className="flex gap-2 sm:gap-4">
                 <a
                   href="https://github.com/codicocodes/speedtyper.dev"
-                  className="flex items-center hover:text-off-white"
+                  className="flex items-center text-white hover:text-off-white"
                   target="blank"
                 >
                   <GithubLogo />
-                  <span className="hidden sm:block ml-1">{stargazersCount} stars</span>
+                  <span className="hidden sm:block ml-1">
+                    {stargazersCount} stars
+                  </span>
                   <span className="block sm:hidden ml-1">star</span>
                 </a>
                 <a
@@ -77,7 +79,7 @@ export function Footer() {
                 </a>
                 <a
                   href="https://twitch.tv/codico"
-                  className="flex items-center text-purple-500 hover:text-purple-400"
+                  className="flex items-center hover:text-purple-400"
                   target="blank"
                 >
                   <TwitchLogo />
