@@ -76,7 +76,7 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
         />
         average wpm
       </h3>
-      <div className="flex flex-col gap-2 h-full">
+      <div className="flex flex-col gap-2 h-full sm:mb-2">
         {threeGameWPM ? (
           <HistoryicalResult
             title={"last 3 games"}
