@@ -21,7 +21,7 @@ export const ChallengeSource: React.FC<ChallengeSourceProps> = (props) => {
   return (
     <>
       <button onClick={openProjectModal}>
-        <a target="_blank" className="flex items-center text-lg font-medium">
+        <a target="_blank" className="flex items-center font-semibold text-sm hover:text-off-white">
           <div className="mr-1">
             <GithubLogo />
           </div>
