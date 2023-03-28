@@ -1,3 +1,5 @@
+import { faCalendarCheck, faCheckCircle, faCheckDouble, faCheckToSlot, faCircleCheck, faFire } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import React from "react";
 import {
@@ -46,9 +48,17 @@ export const NewGithubLoginModal = () => {
   const initGithubAuth = useGithubAuthFactory(router, serverUrl + "/api");
   return (
     <>
-      <button onClick={openProfileModal}>
-        <Avatar avatarUrl={user.avatarUrl} username={user.username} />
-      </button>
+      <div className="flex items-center gap-2">
+        <button onClick={openProfileModal}>
+          <Avatar avatarUrl={user.avatarUrl} username={user.username} />
+        </button>
+        <div className="flex items-center gap-1 text-orange-500">
+          <div className="h-4 w-4">
+            <FontAwesomeIcon icon={faFire} />
+          </div>
+          <span className="text-tighter text-xl font-semibold">4</span>
+        </div>
+      </div>
       {profileModalIsOpen ? (
         <>
           {user.isAnonymous ? (
