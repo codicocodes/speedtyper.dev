@@ -23,7 +23,7 @@ export const getSessionMiddleware = () => {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: ONE_DAY,
+      maxAge: ONE_DAY * 7,
       ...(process.env.NODE_ENV === 'production'
         ? {
             domain: '.speedtyper.dev',
