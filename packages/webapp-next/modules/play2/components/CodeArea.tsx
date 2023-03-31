@@ -6,13 +6,21 @@ interface CodeAreaProps {
   filePath: string;
   focused: boolean;
   children: ReactNode;
+  staticHeigh: boolean;
 }
 
-export function CodeArea({ filePath, focused, children }: CodeAreaProps) {
+export function CodeArea({
+  filePath,
+  focused,
+  children,
+  staticHeigh = true,
+}: CodeAreaProps) {
   const countDown = useGameStore((state) => state.countdown);
   return (
     <div
-      className="bg-dark-lake text-faded-gray flex-shrink tracking-tight sm:tracking-wider rounded-xl p-4 text-xs sm:text-2xl h-[250px] sm:h-[420px] w-full"
+      className={`${
+        staticHeigh ? "h-[250px] sm:h-[420px]" : ""
+      } bg-dark-lake text-faded-gray flex-shrink tracking-tight sm:tracking-wider rounded-xl p-4 text-xs sm:text-2xl w-full`}
       style={{
         fontFamily: "Fira Code",
         fontWeight: "normal",

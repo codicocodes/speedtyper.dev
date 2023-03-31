@@ -2,16 +2,26 @@ import {
   faArrowDown,
   faArrowTrendUp,
   faArrowUp,
+  faExternalLink,
+  faShare,
   faSquarePollVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { copyToClipboard } from "../../../common/utils/clipboard";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import ResultsChart from "../components/ResultsChart";
 import { useGameStore } from "../state/game-store";
 import { useTrendStore } from "../state/trends-store";
 
-function ResultsText({ title, value }: { title: string; value: string }) {
+export function ResultsText({
+  title,
+  value,
+}: {
+  title: string;
+  value: string;
+}) {
   return (
     <div className="h-full flex flex-col justify-end px-2 w-full sm:w-[150px] bg-dark-lake rounded p-2 py-4">
       <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
@@ -21,6 +31,21 @@ function ResultsText({ title, value }: { title: string; value: string }) {
         <p className="font-bold text-2xl">{value}</p>
       </div>
     </div>
+  );
+}
+export function ShareResultButton({ url }: { url: string }) {
+  return (
+    <button
+      onClick={() => {
+        const message = `Result URL copied to clipboard: ${url}`;
+        copyToClipboard(url, message);
+      }}
+      className="w-full sm:w-auto flex shadow-lg hover:shadow-violet-900 hover:cursor-pointer text-faded-gray hover:text-off-white bg-dark-lake flex-col items-center justify-center px-1 rounded hover:bg-white/10"
+    >
+      <div className="h-4 w-4">
+        <FontAwesomeIcon icon={faShare} />
+      </div>
+    </button>
   );
 }
 
@@ -34,6 +59,8 @@ export function ResultsContainer() {
   const time = toHumanReadableTime(Math.floor(ms / 1000));
   const mistakesCount = result.mistakes;
   const accuracy = result.accuracy;
+  const base = window.location.origin;
+  const url = `${base}/results/${result.id}`;
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex flex-row gap-4 justify-between mb-2">
@@ -50,6 +77,20 @@ export function ResultsContainer() {
             <ResultsText title="accuracy" value={`${accuracy}%`} />
             <ResultsText title="time" value={time} />
             <ResultsText title="mistakes" value={mistakesCount.toString()} />
+            {result.id && (
+              <div className="flex sm:flex-col gap-2">
+                <div className="flex grow w-full">
+                  <ShareResultButton url={url} />
+                </div>
+                <Link href={url}>
+                  <a className="flex w-full grow hover:cursor-pointer text-faded-gray hover:text-off-white bg-dark-lake flex-col items-center justify-center px-1 rounded hover:bg-white/10">
+                    <div className="h-3 w-3 ">
+                      <FontAwesomeIcon icon={faExternalLink} />
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
