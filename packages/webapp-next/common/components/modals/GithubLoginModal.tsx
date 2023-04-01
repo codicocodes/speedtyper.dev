@@ -7,31 +7,22 @@ import {
 } from "../../../modules/play2/state/settings-store";
 import { useGithubAuthFactory } from "../../api/auth";
 import { useUserStore } from "../../state/user-store";
-import {
-  getExperimentalServerUrl,
-  getServerUrl,
-} from "../../utils/getServerUrl";
+import { getExperimentalServerUrl } from "../../utils/getServerUrl";
 import { Avatar } from "../Avatar";
 import { GithubLoginButton } from "../buttons/GithubLoginButton";
 import { GithubLoginOverlay } from "../overlays/GithubLoginOverlay";
 import { ProfileModal } from "./ProfileModal";
 
 export const GithubLoginModal = () => {
-  const router = useRouter();
   const [modalIsVisible, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
   const showModal = () => setShowModal(true);
-  const serverUrl = getServerUrl();
-  const initGithubAuth = useGithubAuthFactory(router, serverUrl);
   return (
     <>
       <GithubLoginButton showModal={showModal} />
       {modalIsVisible ? (
         <>
-          <GithubLoginOverlay
-            closeModal={closeModal}
-            initializeAuthentication={initGithubAuth}
-          />
+          <GithubLoginOverlay closeModal={closeModal} />
         </>
       ) : null}
     </>
@@ -40,10 +31,7 @@ export const GithubLoginModal = () => {
 
 export const NewGithubLoginModal = () => {
   const user = useUserStore();
-  const router = useRouter();
-  const serverUrl = getExperimentalServerUrl();
   const profileModalIsOpen = useSettingsStore((s) => s.profileModalIsOpen);
-  const initGithubAuth = useGithubAuthFactory(router, serverUrl + "/api");
   return (
     <>
       <button onClick={openProfileModal}>
@@ -52,10 +40,7 @@ export const NewGithubLoginModal = () => {
       {profileModalIsOpen ? (
         <>
           {user.isAnonymous ? (
-            <GithubLoginOverlay
-              closeModal={closeModals}
-              initializeAuthentication={initGithubAuth}
-            />
+            <GithubLoginOverlay closeModal={closeModals} />
           ) : (
             <ProfileModal closeModal={closeModals} />
           )}

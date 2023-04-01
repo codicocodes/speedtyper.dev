@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { GithubLoginModal } from "../../../common/components/modals/GithubLoginModal";
 import { copyToClipboard } from "../../../common/utils/clipboard";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";

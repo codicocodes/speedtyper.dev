@@ -1,3 +1,5 @@
+import { faPerson, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import { ButtonHTMLAttributes } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
@@ -5,7 +7,9 @@ import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
 import { ReloadIcon } from "../../../../../assets/icons/ReloadIcon";
 import { WarningIcon } from "../../../../../assets/icons/WarningIcon";
+import { GithubLoginOverlay } from "../../../../../common/components/overlays/GithubLoginOverlay";
 import { useIsPlaying } from "../../../../../common/hooks/useIsPlaying";
+import { useUserStore } from "../../../../../common/state/user-store";
 import { copyToClipboard } from "../../../../../common/utils/clipboard";
 import { toHumanReadableTime } from "../../../../../common/utils/toHumanReadableTime";
 import { Keys, useKeyMap } from "../../../../../hooks/useKeyMap";
@@ -18,7 +22,12 @@ import {
   useIsMultiplayer,
   useIsOwner,
 } from "../../../state/game-store";
-import { useHasOpenModal } from "../../../state/settings-store";
+import {
+  closeModals,
+  openProfileModal,
+  useHasOpenModal,
+  useSettingsStore,
+} from "../../../state/settings-store";
 import { RaceSettings } from "../../RaceSettings";
 import { ChallengeSource } from "../ChallengeSource";
 
@@ -91,6 +100,8 @@ export function WarningContainer() {
 export function PlayFooter({ challenge }: PlayFooterProps) {
   const isPlaying = useIsPlaying();
   const totalSeconds = useCodeStoreTotalSeconds();
+  const isAnonymous = useUserStore((u) => u.isAnonymous);
+  const profileModalIsOpen = useSettingsStore((s) => s.profileModalIsOpen);
   return (
     <div className="w-full h-10 px-2">
       <AnimatePresence>
@@ -105,7 +116,23 @@ export function PlayFooter({ challenge }: PlayFooterProps) {
             <div className="w-full">
               <div className="flex row justify-between items-top">
                 <ActionButtons />
-                <div className="text-faded-gray">
+                <div className="text-faded-gray flex gap-4">
+                  {isAnonymous && (
+                    <>
+                      <button
+                        onClick={openProfileModal}
+                        className="flex text-xs items-center font-semibold tracking-wide hover:cursor-pointer gap-2 hover:text-off-white"
+                      >
+                        <div className="h-4 w-4 flex items-center">
+                          <FontAwesomeIcon icon={faUserGroup} size="xs" />
+                        </div>
+                        Login | Signup
+                      </button>
+                      {profileModalIsOpen && (
+                        <GithubLoginOverlay closeModal={closeModals} />
+                      )}
+                    </>
+                  )}
                   {challenge.projectName && (
                     <ChallengeSource
                       name={challenge.projectName}
