@@ -19,6 +19,17 @@ export class ResultService {
     await this.resultsRepository.upsert(results, ['legacyId']);
   }
 
+  async getByID(id: string) {
+    return this.resultsRepository.findOneOrFail({
+      where: {
+        id,
+        // filter out legacy results
+        legacyId: null,
+      },
+      relations: ['user', 'challenge', 'challenge.project'],
+    });
+  }
+
   async getLeaderboard(): Promise<LeaderBoardResult[]> {
     const oneDayAgo = new Date();
     oneDayAgo.setDate(oneDayAgo.getDate() - 1);

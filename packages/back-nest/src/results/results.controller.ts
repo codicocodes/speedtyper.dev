@@ -1,4 +1,11 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Req,
+} from '@nestjs/common';
+import { isUUID } from 'class-validator';
 import { Request } from 'express';
 import { LeaderBoardResult } from './entities/leaderboard-result.dto';
 import { ResultService } from './services/results.service';
@@ -33,5 +40,12 @@ export class ResultsController {
       cpmLast3,
       cpmLast10,
     };
+  }
+
+  @Get(':resultId')
+  getRaceStatus(@Param('resultId') resultId: string) {
+    if (!isUUID(resultId)) throw new BadRequestException('Invalid resultId');
+    const result = this.resultsService.getByID(resultId);
+    return result;
   }
 }

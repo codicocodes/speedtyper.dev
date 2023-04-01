@@ -1,9 +1,6 @@
 import "../styles/globals.css";
-import "./../spinner.css";
-import "./../progressbar.css";
 
 import type { AppProps } from "next/app";
-import { AppProvider } from "../AppContext";
 import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import { Layout } from "../common/components/Layout";
@@ -48,16 +45,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         data-domain="speedtyper.dev"
         src="https://plausible.io/js/plausible.js"
       />
-      <AppProvider>
-        <NextNProgress
-          options={{ showSpinner: false }}
-          color="#d6bbfa"
-          height={2}
-        />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </AppProvider>
+      <NextNProgress
+        options={{ showSpinner: false }}
+        color="#d6bbfa"
+        height={2}
+      />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </div>
   );
 }

@@ -74,14 +74,16 @@ export const ActivityLeaderboard = ({
             const placement = i === 0 ? <CrownIcon /> : i + 1;
             const userNode = (
               <div className="flex items-center">
-                <Image
-                  className="rounded-full"
-                  width="30"
-                  height="30"
-                  quality={100}
-                  src={r.avatarUrl}
-                  alt=""
-                />
+                <div className="hidden sm:block">
+                  <Image
+                    className="hidden sm:block rounded-full"
+                    width="30"
+                    height="30"
+                    quality={100}
+                    src={r.avatarUrl}
+                    alt=""
+                  />
+                </div>
                 <span className="ml-2" title={r.username}>
                   {r.username}
                 </span>
@@ -129,14 +131,16 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
             const placement = i === 0 ? <CrownIcon /> : i + 1;
             const userNode = (
               <div className="flex items-center">
-                <Image
-                  className="rounded-full"
-                  width="30"
-                  height="30"
-                  quality={100}
-                  src={r.avatarUrl}
-                  alt=""
-                />
+                <div className="hidden sm:block">
+                  <Image
+                    className="rounded-full"
+                    width="30"
+                    height="30"
+                    quality={100}
+                    src={r.avatarUrl}
+                    alt=""
+                  />
+                </div>
                 <span className="ml-2" title={r.username}>
                   {r.username}
                 </span>

@@ -1,46 +1,5 @@
-import React, { useState, useEffect } from "react";
-import AvatarModal from "./AvatarModal";
-import { useAppContext } from "../AppContext";
-import { IUser } from "../types";
-import Link from "next/link";
 import Image from "next/image";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
-import { AnimatePresence, motion } from "framer-motion";
-import { GithubLoginModal } from "../common/components/modals/GithubLoginModal";
-// TODO: should not be able to be both null and undefined
-// Maybe we should consider putting isGuest on the user object
-// on the server
-const useIsGuest = (user: IUser | null | undefined): boolean => {
-  const [isGuest, setIsGuest] = useState(true);
-
-  useEffect(() => {
-    if (user === null) {
-      setIsGuest(true);
-    } else {
-      setIsGuest(!!user?.guest);
-    }
-  }, [user]);
-
-  return isGuest;
-};
-
-const Navbar = () => {
-  return (
-    <header style={{ height: "50px" }}>
-      <div className="flex items-start py-2">
-        <Link href="/">
-          <span className="flex items-center cursor-pointer trailing-widest leading-normal text-xl  pl-2 text-off-white hover:text-white mr-2 lg:mr-6">
-            <div className="flex items-center mr-4">
-              <Logo />
-            </div>
-            <WebsiteName />
-          </span>
-        </Link>
-        <NavBarButtons />
-      </div>
-    </header>
-  );
-};
 
 export const WebsiteName = () => {
   const isPlaying = useIsPlaying();
@@ -75,36 +34,3 @@ export const Logo = () => {
     />
   );
 };
-
-const NavBarButtons = () => {
-  const { user, logout } = useAppContext();
-  const userIsGuest = useIsGuest(user);
-  const isUserLoggedIn = !userIsGuest && user && logout;
-  const isPlaying = useIsPlaying();
-  return (
-    <>
-      {!isPlaying && (
-        <AnimatePresence>
-          <motion.div
-            className="flex-grow flex items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Link href="/play2">
-              <a className="trailing-widest flex items-bottom rounded px-2 bg-purple-200 text-sm text-dark-ocean">
-                v2 beta
-              </a>
-            </Link>
-            <div className="text-sm flex-grow"></div>
-            {userIsGuest && <GithubLoginModal />}
-            {isUserLoggedIn && <AvatarModal user={user} logout={logout} />}
-          </motion.div>
-        </AnimatePresence>
-      )}
-    </>
-  );
-};
-
-export default Navbar;

@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
+import React, { RefObject, useEffect, useMemo, useRef } from "react";
 import {
   Chart,
   LineController,
@@ -6,6 +6,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  Tooltip,
 } from "chart.js";
 import { useCodeStore } from "../state/code-store";
 
@@ -14,7 +15,8 @@ Chart.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement
+  LineElement,
+  Tooltip
 );
 
 const renderChart = (
@@ -39,8 +41,8 @@ const renderChart = (
         {
           label: "WPM each second",
           data,
-          backgroundColor: "#d6bcfa",
-          borderColor: "#d6bcfa",
+          backgroundColor: "#7e22ce",
+          borderColor: "#7e22ce",
           tension: 0.4,
           fill: true,
         },
@@ -57,6 +59,13 @@ const renderChart = (
       plugins: {
         tooltip: {
           enabled: true,
+          callbacks: {
+            title: (items) => {
+              const item = items[0];
+              const label = "Second " + item.label;
+              return label;
+            },
+          },
         },
       },
     },
@@ -75,7 +84,7 @@ export default function ResultsChart() {
   }, [chartWPMData]);
 
   return (
-    <div className="flex rounded-xl flex-col bg-dark-lake grow m-2">
+    <div className="flex rounded-xl flex-col bg-dark-lake grow m-2 max-w-screen">
       <div className="flex flex-row">
         <h1 className="text-sm p-4 font-semibold">Words Per Minute</h1>
       </div>
