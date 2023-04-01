@@ -68,6 +68,7 @@ export class ResultService {
           accuracy: r.r_accuracy,
           createdAt: r.r_createdAt,
           racesPlayed: r.racesPlayed,
+          resultId: r.r_id,
         };
       })
       .sort((a, b) => b.cpm - a.cpm);

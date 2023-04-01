@@ -11,6 +11,8 @@ import { cpmToWPM } from "../../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl";
 import { humanizeAbsolute } from "../../../../utils/humanize";
 import { closeModals } from "../../state/settings-store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 
 export const Leaderboard: React.FC = () => {
   const baseUrl = getExperimentalServerUrl();
@@ -126,6 +128,7 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
             speed="speed (wpm)"
             accuracy="accuracy"
             timeAgo="time ago"
+            resultLink=""
           />
           {results.map((r: any, i: number) => {
             const placement = i === 0 ? <CrownIcon /> : i + 1;
@@ -152,6 +155,14 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
               </div>
             );
 
+            const resultLink = (
+              <Link href={`/results/${r.resultId}`}>
+                <div className="h-4 w-4 hover:cursor-pointer" onClick={closeModals}>
+                  <FontAwesomeIcon icon={faExternalLink} />
+                </div>
+              </Link>
+            );
+
             return (
               <LeaderboardRowWPM
                 key={i}
@@ -160,6 +171,7 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
                 speed={cpmToWPM(r.cpm).toString()}
                 accuracy={r.accuracy + "%"}
                 timeAgo={humanizeAbsolute(new Date(r.createdAt))}
+                resultLink={resultLink}
               />
             );
           })}
@@ -175,6 +187,7 @@ interface LeaderboardRowWPMProps {
   speed: string;
   accuracy: string;
   timeAgo: string;
+  resultLink: React.ReactNode;
 }
 
 export const LeaderboardRowWPM: React.FC<LeaderboardRowWPMProps> = (props) => {
@@ -186,7 +199,8 @@ export const LeaderboardRowWPM: React.FC<LeaderboardRowWPMProps> = (props) => {
       <div className="w-[125px] sm:w-[300px] truncate">{props.user}</div>
       <span className="w-[120px]">{props.speed}</span>
       <span className="hidden sm:block w-[125px]">{props.accuracy}</span>
-      <span className="hidden sm:block mr-2 w-[125px]">{props.timeAgo}</span>
+      <span className="hidden sm:block mr-2 w-[100px]">{props.timeAgo}</span>
+      <span className="hidden sm:block mr-2">{props.resultLink}</span>
     </div>
   );
 };
