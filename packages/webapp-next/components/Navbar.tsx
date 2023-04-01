@@ -1,10 +1,5 @@
-import React, { useState } from "react";
-import AvatarModal from "./AvatarModal";
-import Link from "next/link";
 import Image from "next/image";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
-import { AnimatePresence, motion } from "framer-motion";
-import { GithubLoginModal } from "../common/components/modals/GithubLoginModal";
 
 export const WebsiteName = () => {
   const isPlaying = useIsPlaying();
