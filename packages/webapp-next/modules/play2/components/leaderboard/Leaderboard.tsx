@@ -199,7 +199,7 @@ export const LeaderboardRowWPM: React.FC<LeaderboardRowWPMProps> = (props) => {
       <div className="w-[125px] sm:w-[300px] truncate">{props.user}</div>
       <span className="w-[120px]">{props.speed}</span>
       <span className="hidden sm:block w-[125px]">{props.accuracy}</span>
-      <span className="hidden sm:block mr-2 w-[100px]">{props.timeAgo}</span>
+      <span className="hidden sm:block mr-2 w-[125px]">{props.timeAgo}</span>
       <span className="hidden sm:block mr-2">{props.resultLink}</span>
     </div>
   );
