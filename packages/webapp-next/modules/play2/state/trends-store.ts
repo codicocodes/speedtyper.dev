@@ -1,4 +1,5 @@
 import create from "zustand";
+import { useUserStore } from "../../../common/state/user-store";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 
@@ -17,6 +18,10 @@ export const useTrendStore = create<TrendsState>((_set, _get) => ({
 }));
 
 export const refreshTrends = () => {
+  const isAnonymous = useUserStore.getState().isAnonymous;
+  if (isAnonymous) {
+    return;
+  }
   const baseUrl = getExperimentalServerUrl();
   const url = baseUrl + "/api/results/stats";
   fetch(url, {
