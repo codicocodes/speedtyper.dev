@@ -25,6 +25,7 @@ export class ResultsHandlerService {
       if (!user.isAnonymous) {
         result = await this.results.create(result);
       }
+      result.percentile = await this.results.getResultPercentile(result.cpm);
       this.tracker.trackRaceCompleted();
       this.events.raceCompleted(race.id, result);
     }

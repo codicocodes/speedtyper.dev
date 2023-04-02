@@ -101,4 +101,22 @@ export class ResultService {
       .getRawOne();
     return parseInt(avg, 10);
   }
+
+  async getResultPercentile(cpm: number): Promise<number> {
+    const { countBetterThan } = await this.resultsRepository
+      .createQueryBuilder('r')
+      .where('r.cpm < :cpm', {
+        cpm,
+      })
+      .select('COUNT(r.cpm)', 'countBetterThan')
+      .getRawOne();
+
+    const totalCount = await this.resultsRepository.count();
+
+    const percentile = (
+      (parseInt(countBetterThan, 10) / totalCount) *
+      100
+    ).toFixed(0);
+    return parseInt(percentile, 10);
+  }
 }
