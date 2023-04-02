@@ -2,13 +2,14 @@ import {
   faArrowDown,
   faArrowTrendUp,
   faArrowUp,
+  faCheckCircle,
+  faCircleXmark,
   faExternalLink,
   faShare,
   faSquarePollVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { GithubLoginModal } from "../../../common/components/modals/GithubLoginModal";
 import { copyToClipboard } from "../../../common/utils/clipboard";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
@@ -17,14 +18,19 @@ import { useGameStore } from "../state/game-store";
 import { useTrendStore } from "../state/trends-store";
 
 export function ResultsText({
+  info,
   title,
   value,
 }: {
+  info: string;
   title: string;
-  value: string;
+  value: React.ReactNode;
 }) {
   return (
-    <div className="h-full flex flex-col justify-end px-2 w-full sm:w-[150px] bg-dark-lake rounded p-2 py-4">
+    <div
+      title={info}
+      className="h-full flex flex-col justify-end px-2 w-full sm:min-w-[150px] bg-dark-lake rounded p-2 py-4"
+    >
       <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
         {title}
       </p>
@@ -47,6 +53,40 @@ export function ShareResultButton({ url }: { url: string }) {
         <FontAwesomeIcon icon={faShare} />
       </div>
     </button>
+  );
+}
+
+export function DailyStreak() {
+  return (
+    <ResultsText
+      info="How many days in a row have you played speedtyper.dev"
+      title="daily streak"
+      value={
+        <div className="flex items-center gap-2">
+          2
+          <div className="hidden sm:flex flex-wrap items-center text-xs gap-1">
+            {Array(3)
+              .fill(undefined)
+              .map((_, i) => {
+                const done = i > 0;
+                return (
+                  <div key={i} className="h-3 w-3">
+                    {done ? (
+                      <div className="text-violet-400">
+                        <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                      </div>
+                    ) : (
+                      <div className="text-faded-gray">
+                        <FontAwesomeIcon icon={faCircleXmark} />{" "}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      }
+    />
   );
 }
 
@@ -74,10 +114,31 @@ export function ResultsContainer() {
             result
           </h3>
           <div className="w-full grid grid-cols-2 sm:flex sm:flex-row gap-2">
-            <ResultsText title="words per minute" value={wpm.toString()} />
-            <ResultsText title="accuracy" value={`${accuracy}%`} />
-            <ResultsText title="time" value={time} />
-            <ResultsText title="mistakes" value={mistakesCount.toString()} />
+            <ResultsText
+              info="words per minute typed in race"
+              title="words per minute"
+              value={wpm.toString()}
+            />
+            <ResultsText
+              info="Percentage of results on speedtyper.dev this race was faster than"
+              title="global rank"
+              value={`${result.percentile}%`}
+            />
+            <ResultsText
+              info="% correctly typed characters in race"
+              title="accuracy"
+              value={`${accuracy}%`}
+            />
+            <ResultsText
+              info="time it took to complete race"
+              title="time"
+              value={time}
+            />
+            <ResultsText
+              info="number of mistakes made during race"
+              title="mistakes"
+              value={mistakesCount.toString()}
+            />
             {result.id && (
               <div className="flex sm:flex-col gap-2">
                 <div className="flex grow w-full">

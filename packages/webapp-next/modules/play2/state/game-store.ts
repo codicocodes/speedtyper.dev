@@ -31,6 +31,7 @@ export interface RaceResult {
   createdAt: Date;
   user: User;
   userId: string;
+  percentile?: number;
 }
 
 export const useGameStore = create<GameState>((_set, _get) => ({

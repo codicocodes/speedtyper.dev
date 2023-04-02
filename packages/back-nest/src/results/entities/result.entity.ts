@@ -40,4 +40,6 @@ export class Result {
   })
   user: User;
   userId: string;
+
+  percentile?: number;
 }

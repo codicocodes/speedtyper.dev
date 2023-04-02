@@ -153,6 +153,7 @@ export class Game {
 
   private listenForRaceCompleted() {
     this.socket.subscribe("race_completed", (_, result: RaceResult) => {
+      console.log(result)
       const userId = useUserStore.getState().id;
       const isMyResult = userId === result.user.id;
       useGameStore.setState((game) => {

@@ -20,7 +20,7 @@ export class ResultService {
   }
 
   async getByID(id: string) {
-    return this.resultsRepository.findOneOrFail({
+    const result = await this.resultsRepository.findOneOrFail({
       where: {
         id,
         // filter out legacy results
@@ -28,6 +28,8 @@ export class ResultService {
       },
       relations: ['user', 'challenge', 'challenge.project'],
     });
+    result.percentile = await this.getResultPercentile(result.cpm);
+    return result;
   }
 
   async getLeaderboard(): Promise<LeaderBoardResult[]> {
@@ -100,5 +102,23 @@ export class ResultService {
       .select('AVG(r.cpm)', 'avg')
       .getRawOne();
     return parseInt(avg, 10);
+  }
+
+  async getResultPercentile(cpm: number): Promise<number> {
+    const { countBetterThan } = await this.resultsRepository
+      .createQueryBuilder('r')
+      .where('r.cpm < :cpm', {
+        cpm,
+      })
+      .select('COUNT(r.cpm)', 'countBetterThan')
+      .getRawOne();
+
+    const totalCount = await this.resultsRepository.count();
+
+    const percentile = (
+      (parseInt(countBetterThan, 10) / totalCount) *
+      100
+    ).toFixed(0);
+    return parseInt(percentile, 10);
   }
 }
