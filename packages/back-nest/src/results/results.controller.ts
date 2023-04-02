@@ -53,7 +53,7 @@ export class ResultsController {
   }
 
   @Get(':resultId')
-  getRaceStatus(@Param('resultId') resultId: string) {
+  getResultByID(@Param('resultId') resultId: string) {
     if (!isUUID(resultId)) throw new BadRequestException('Invalid resultId');
     const result = this.resultsService.getByID(resultId);
     return result;

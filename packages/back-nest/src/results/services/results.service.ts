@@ -20,7 +20,7 @@ export class ResultService {
   }
 
   async getByID(id: string) {
-    return this.resultsRepository.findOneOrFail({
+    const result = await this.resultsRepository.findOneOrFail({
       where: {
         id,
         // filter out legacy results
@@ -28,6 +28,8 @@ export class ResultService {
       },
       relations: ['user', 'challenge', 'challenge.project'],
     });
+    result.percentile = await this.getResultPercentile(result.cpm);
+    return result;
   }
 
   async getLeaderboard(): Promise<LeaderBoardResult[]> {

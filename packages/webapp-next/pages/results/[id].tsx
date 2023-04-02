@@ -92,15 +92,27 @@ function ResultPage({
               </div>
               <div className="w-full grid grid-cols-2 sm:flex sm:flex-row sm:justify-center gap-2">
                 <ResultsText
+                  info="words per minute typed in race"
                   title="words per minute"
                   value={`${cpmToWPM(data.cpm)}`}
                 />
-                <ResultsText title="accuracy" value={`${data.accuracy}%`} />
                 <ResultsText
+                  info="Percentage of results on speedtyper.dev this race was faster than"
+                  title="global rank"
+                  value={`${data.percentile}%`}
+                />
+                <ResultsText
+                  info="% correctly typed characters in race"
+                  title="accuracy"
+                  value={`${data.accuracy}%`}
+                />
+                <ResultsText
+                  info="time it took to complete race"
                   title="time"
                   value={toHumanReadableTime(Math.floor(data.timeMS / 1000))}
                 />
                 <ResultsText
+                  info="number of mistakes made during race"
                   title="mistakes"
                   value={data.mistakes.toString()}
                 />
