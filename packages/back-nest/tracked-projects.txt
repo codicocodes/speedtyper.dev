@@ -8,3 +8,7 @@ apache/zookeeper
 ClickHouse/ClickHouse
 rails/rails
 lodash/lodash
+TheAlgorithms/Java
+ggerganov/llama.cpp
+ggerganov/whisper.cpp
+vitejs/vite
