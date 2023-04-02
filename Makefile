@@ -1,21 +1,16 @@
 # backend
 
 install-backend-dependencies:
-	yarn --cwd ./packages/backend
+	yarn --cwd ./packages/back-nest
 
 run-backend-dev:
-	yarn --cwd ./packages/backend dev
+	yarn --cwd ./packages/back-nest start:dev
 
 run-dev-db:
-	docker compose -f ./packages/backend/docker-compose.yml up -d
+	docker compose -f ./packages/back-nest/docker-compose.yml up -d
 
 run-seed-codesources:
-	yarn --cwd ./packages/backend tsc
-	yarn --cwd ./packages/backend seed-codesources
-
-run-process-challenges:
-	yarn --cwd ./packages/backend tsc
-	yarn --cwd ./packages/backend process-challenges
+	yarn --cwd ./packages/backend command seed-challenges
 
 # webapp
 
