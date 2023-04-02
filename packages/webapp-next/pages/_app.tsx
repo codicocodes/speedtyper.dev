@@ -5,6 +5,7 @@ import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import { Layout } from "../common/components/Layout";
 import Script from "next/script";
+import { Stream } from "../components/Stream";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
@@ -53,6 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
+      <Stream />
     </div>
   );
 }
