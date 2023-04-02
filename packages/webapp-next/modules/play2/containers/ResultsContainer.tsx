@@ -2,6 +2,8 @@ import {
   faArrowDown,
   faArrowTrendUp,
   faArrowUp,
+  faCheckCircle,
+  faCircleXmark,
   faExternalLink,
   faShare,
   faSquarePollVertical,
@@ -21,10 +23,10 @@ export function ResultsText({
   value,
 }: {
   title: string;
-  value: string;
+  value: React.ReactNode;
 }) {
   return (
-    <div className="h-full flex flex-col justify-end px-2 w-full sm:w-[150px] bg-dark-lake rounded p-2 py-4">
+    <div className="h-full flex flex-col justify-end px-2 w-full sm:min-w-[150px] bg-dark-lake rounded p-2 py-4">
       <p className="flex justify-start color-inherit font-bold text-off-white text-xs">
         {title}
       </p>
@@ -47,6 +49,39 @@ export function ShareResultButton({ url }: { url: string }) {
         <FontAwesomeIcon icon={faShare} />
       </div>
     </button>
+  );
+}
+
+export function DailyStreak() {
+  return (
+    <ResultsText
+      title="daily streak"
+      value={
+        <div className="flex items-center gap-2">
+          2
+          <div className="hidden sm:flex flex-wrap items-center text-xs gap-1">
+            {Array(7)
+              .fill(undefined)
+              .map((_, i) => {
+                const done = i > 0;
+                return (
+                  <div key={i} className="h-3 w-3">
+                    {done ? (
+                      <div className="text-violet-400">
+                        <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                      </div>
+                    ) : (
+                      <div className="text-faded-gray">
+                        <FontAwesomeIcon icon={faCircleXmark} />{" "}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      }
+    />
   );
 }
 
@@ -92,6 +127,7 @@ export function ResultsContainer() {
                 </Link>
               </div>
             )}
+            <DailyStreak />
           </div>
         </div>
       </div>
