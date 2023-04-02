@@ -104,8 +104,8 @@ export function ResultsContainer() {
 }
 
 function TrendsWPM({ currWPM }: { currWPM: number }) {
-  const { threeGameWPM, tenGameWPM, todayWPM } = useTrendStore();
-  const noResults = !threeGameWPM && !tenGameWPM && !todayWPM;
+  const { tenGameWPM, todayWPM, weekWPM, allTimeWPM } = useTrendStore();
+  const noResults = !tenGameWPM && !weekWPM && !todayWPM && !allTimeWPM;
   if (noResults) {
     return null;
   }
@@ -119,13 +119,6 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
         average wpm
       </h3>
       <div className="flex flex-col gap-2 h-full sm:mb-2">
-        {threeGameWPM ? (
-          <HistoryicalResult
-            title={"last 3 games"}
-            currWPM={currWPM}
-            wpm={threeGameWPM}
-          />
-        ) : null}
         {tenGameWPM ? (
           <HistoryicalResult
             title={"last 10 games"}
@@ -135,6 +128,20 @@ function TrendsWPM({ currWPM }: { currWPM: number }) {
         ) : null}
         {todayWPM ? (
           <HistoryicalResult title={"today"} currWPM={currWPM} wpm={todayWPM} />
+        ) : null}
+        {weekWPM ? (
+          <HistoryicalResult
+            title={"last week"}
+            currWPM={currWPM}
+            wpm={weekWPM}
+          />
+        ) : null}
+        {allTimeWPM ? (
+          <HistoryicalResult
+            title={"all time"}
+            currWPM={currWPM}
+            wpm={allTimeWPM}
+          />
         ) : null}
       </div>
     </div>

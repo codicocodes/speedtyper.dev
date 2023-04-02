@@ -88,7 +88,7 @@ export default function ResultsChart() {
       <div className="flex flex-row">
         <h1 className="text-sm p-4 font-semibold">Words Per Minute</h1>
       </div>
-      <div className="bg-dark-lake p-2 rounded-xl max-w-full">
+      <div className="bg-dark-lake p-2 rounded-xl max-w-full h-full">
         <canvas ref={chartRef} />
       </div>
     </div>

@@ -29,16 +29,26 @@ export class ResultsController {
   }
   @Get('/stats')
   async getStatsByUser(@Req() request: Request) {
+    const startOfToday = new Date();
+    startOfToday.setUTCHours(0, 0, 0, 0);
+
+    const startOfTime = new Date('January 1, 1979');
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    oneWeekAgo.setUTCHours(0, 0, 0, 0);
+
     const user = request.session.user;
-    const [cpmToday, cpmLast3, cpmLast10] = await Promise.all([
-      this.resultsService.getAverageCPMToday(user.id),
-      this.resultsService.getAverageCPM(user.id, 3),
+    const [cpmAllTime, cpmToday, cpmLastWeek, cpmLast10] = await Promise.all([
+      this.resultsService.getAverageCPMSince(user.id, startOfTime),
+      this.resultsService.getAverageCPMSince(user.id, startOfToday),
+      this.resultsService.getAverageCPMSince(user.id, oneWeekAgo),
       this.resultsService.getAverageCPM(user.id, 10),
     ]);
     return {
-      cpmToday,
-      cpmLast3,
       cpmLast10,
+      cpmToday,
+      cpmLastWeek,
+      cpmAllTime,
     };
   }
 

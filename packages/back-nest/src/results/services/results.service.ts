@@ -90,14 +90,12 @@ export class ResultService {
     const average = total / results.length;
     return parseInt(average.toString(), 10);
   }
-  async getAverageCPMToday(userId: string): Promise<number> {
-    const startOfToday = new Date();
-    startOfToday.setUTCHours(0, 0, 0, 0);
+  async getAverageCPMSince(userId: string, since: Date): Promise<number> {
     const { avg } = await this.resultsRepository
       .createQueryBuilder('r')
-      .where('r.userId=:userId', {
+      .where('r.userId=:userId AND r.createdAt > :startOfToday', {
         userId,
-        startOfToday,
+        startOfToday: since.toISOString(),
       })
       .select('AVG(r.cpm)', 'avg')
       .getRawOne();

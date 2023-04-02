@@ -3,15 +3,17 @@ import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 
 export interface TrendsState {
-  threeGameWPM: number | null;
   tenGameWPM: number | null;
   todayWPM: number | null;
+  weekWPM: number | null;
+  allTimeWPM: number | null;
 }
 
 export const useTrendStore = create<TrendsState>((_set, _get) => ({
-  threeGameWPM: null,
   tenGameWPM: null,
   todayWPM: null,
+  weekWPM: null,
+  allTimeWPM: null,
 }));
 
 export const refreshTrends = () => {
@@ -20,11 +22,12 @@ export const refreshTrends = () => {
   fetch(url, {
     credentials: "include",
   }).then((res) =>
-    res.json().then(({ cpmToday, cpmLast10, cpmLast3 }) => {
+    res.json().then(({ cpmLast10, cpmToday, cpmLastWeek, cpmAllTime }) => {
       useTrendStore.setState(() => ({
-        todayWPM: cpmToWPM(cpmToday),
         tenGameWPM: cpmToWPM(cpmLast10),
-        threeGameWPM: cpmToWPM(cpmLast3),
+        todayWPM: cpmToWPM(cpmToday),
+        weekWPM: cpmToWPM(cpmLastWeek),
+        allTimeWPM: cpmToWPM(cpmAllTime),
       }));
     })
   );
