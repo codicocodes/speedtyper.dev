@@ -153,7 +153,6 @@ export function ResultsContainer() {
                 </Link>
               </div>
             )}
-            <DailyStreak />
           </div>
         </div>
       </div>
