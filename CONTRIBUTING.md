@@ -23,10 +23,6 @@
 
 ### Backend
 
-Create directory:
-```
-mkdir ./packages/backend/dist
-```
 Install dependencies:
 ```
 make install-backend-dependencies
