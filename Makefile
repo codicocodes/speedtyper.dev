@@ -10,7 +10,7 @@ run-dev-db:
 	docker compose -f ./packages/back-nest/docker-compose.yml up -d
 
 run-seed-codesources:
-	yarn --cwd ./packages/backend command seed-challenges
+	yarn --cwd ./packages/back-nest command seed-challenges
 
 # webapp
 
