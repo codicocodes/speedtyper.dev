@@ -9,7 +9,6 @@ import { RacesModule } from './races/races.module';
 import { SeederModule } from './seeder/seeder.module';
 import { ResultsModule } from './results/results.module';
 import { AuthModule } from './auth/auth.module';
-import { InternalMigratorModule } from './internal-migrator/internal-migrator.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { InternalMigratorModule } from './internal-migrator/internal-migrator.mo
     SeederModule,
     UsersModule,
     AuthModule,
-    InternalMigratorModule,
   ],
   controllers: [],
   providers: [],
