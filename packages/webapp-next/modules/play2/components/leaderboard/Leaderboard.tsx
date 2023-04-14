@@ -157,7 +157,10 @@ export const WPMLeaderboard = ({ isLoading, results }: WPMLeaderboardProps) => {
 
             const resultLink = (
               <Link href={`/results/${r.resultId}`}>
-                <div className="h-4 w-4 hover:cursor-pointer" onClick={closeModals}>
+                <div
+                  className="h-4 w-4 hover:cursor-pointer"
+                  onClick={closeModals}
+                >
                   <FontAwesomeIcon icon={faExternalLink} />
                 </div>
               </Link>
