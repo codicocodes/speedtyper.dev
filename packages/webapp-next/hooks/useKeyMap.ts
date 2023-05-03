@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export enum Keys {
   Tab = "Tab",
@@ -13,9 +13,14 @@ export const useKeyMap = (
   selectedKeys: string,
   callback: () => void
 ) => {
+  const [capsLockActive, setCapsLockActive] = useState(false);
+
   useEffect(() => {
-    const handleKeyDown = (e: any) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       const { key: pressedKey } = e;
+      if (pressedKey === "CapsLock") {
+        setCapsLockActive(!capsLockActive);
+      }
       if (
         Object.values(Keys)
           .map((en) => en.toString())
@@ -31,13 +36,24 @@ export const useKeyMap = (
       callback();
     };
 
+    const handleCapsLock = (e: KeyboardEvent) => {
+      setCapsLockActive(e.getModifierState("CapsLock"));
+    };
+
     if (window && document) {
       if (isActive) {
         document.addEventListener("keydown", handleKeyDown);
-        return () => document.removeEventListener("keydown", handleKeyDown);
+        document.addEventListener("keydown", handleCapsLock);
+        return () => {
+          document.removeEventListener("keydown", handleKeyDown);
+          document.removeEventListener("keydown", handleCapsLock);
+        };
       } else {
         document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("keydown", handleCapsLock);
       }
     }
-  }, [isActive, callback, selectedKeys]);
+  }, [isActive, callback, selectedKeys, capsLockActive]);
+
+  return { capsLockActive };
 };
