@@ -25,6 +25,8 @@ import {
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { refreshTrends } from "../modules/play2/state/trends-store";
 
+import { LockIcon } from "../assets/icons/LockIcon";
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const user = await fetchUser(context);
@@ -53,7 +55,7 @@ function Play2Page({
   const hasOpenModal = useHasOpenModal();
   const game = useGame();
   const challenge = useChallenge();
-  useKeyMap(
+  const { capsLockActive } = useKeyMap(
     true,
     Keys.Tab,
     useCallback(() => !hasOpenModal && game?.next(), [hasOpenModal, game])
@@ -72,9 +74,17 @@ function Play2Page({
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       <>
         <PlayHeader />
+        {capsLockActive && (
+          <div className="absolute top-[-70px] flex items-center gap-4 text-dark-ocean p-4 rounded-lg font-medium bg-off-white">
+            <div className="w-4 text-dark-ocean">
+              <LockIcon />
+            </div>
+            Caps Lock
+          </div>
+        )}
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
