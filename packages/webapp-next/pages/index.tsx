@@ -24,8 +24,8 @@ import {
 } from "../modules/play2/state/settings-store";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { refreshTrends } from "../modules/play2/state/trends-store";
-
-import { LockIcon } from "../assets/icons/LockIcon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -80,7 +80,7 @@ function Play2Page({
         {capsLockActive && (
           <div className="absolute top-[-70px] flex items-center gap-4 text-dark-ocean p-4 rounded-lg font-medium bg-off-white">
             <div className="w-4 text-dark-ocean">
-              <LockIcon />
+              <FontAwesomeIcon icon={faLock} />
             </div>
             Caps Lock
           </div>
