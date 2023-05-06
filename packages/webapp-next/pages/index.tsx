@@ -24,6 +24,8 @@ import {
 } from "../modules/play2/state/settings-store";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
 import { refreshTrends } from "../modules/play2/state/trends-store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -53,7 +55,7 @@ function Play2Page({
   const hasOpenModal = useHasOpenModal();
   const game = useGame();
   const challenge = useChallenge();
-  useKeyMap(
+  const { capsLockActive } = useKeyMap(
     true,
     Keys.Tab,
     useCallback(() => !hasOpenModal && game?.next(), [hasOpenModal, game])
@@ -72,9 +74,17 @@ function Play2Page({
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col relative">
       <>
         <PlayHeader />
+        {capsLockActive && (
+          <div className="absolute top-[-30px] z-10 flex w-full items-center justify-center gap-2 font-medium text-red-400">
+            <div className="w-4 text-dark-ocean">
+              <FontAwesomeIcon icon={faLock} className="text-red-400" />
+            </div>
+            Caps Lock is active
+          </div>
+        )}
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
