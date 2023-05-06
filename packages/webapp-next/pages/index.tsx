@@ -74,15 +74,15 @@ function Play2Page({
   }, [isPlaying]);
 
   return (
-    <div className="flex flex-col items-center relative">
+    <div className="flex flex-col relative">
       <>
         <PlayHeader />
         {capsLockActive && (
-          <div className="flex mb-2 items-center gap-4 text-dark-ocean p-4 rounded-lg font-medium bg-off-white">
+          <div className="absolute top-[-30px] z-10 flex w-full items-center justify-center gap-2 font-medium text-red-400">
             <div className="w-4 text-dark-ocean">
-              <FontAwesomeIcon icon={faLock} />
+              <FontAwesomeIcon icon={faLock} className="text-red-400" />
             </div>
-            Caps Lock
+            Caps Lock is active
           </div>
         )}
         <AnimatePresence>
