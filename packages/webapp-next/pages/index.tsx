@@ -78,7 +78,7 @@ function Play2Page({
       <>
         <PlayHeader />
         {capsLockActive && (
-          <div className="absolute top-[-70px] flex items-center gap-4 text-dark-ocean p-4 rounded-lg font-medium bg-off-white">
+          <div className="flex mb-2 items-center gap-4 text-dark-ocean p-4 rounded-lg font-medium bg-off-white">
             <div className="w-4 text-dark-ocean">
               <FontAwesomeIcon icon={faLock} />
             </div>
