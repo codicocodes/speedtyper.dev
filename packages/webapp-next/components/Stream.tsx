@@ -5,7 +5,7 @@ import { useIsPlaying } from "../common/hooks/useIsPlaying";
 
 export const Stream = () => {
   const isPlaying = useIsPlaying();
-  const isLive = false;
+  const isLive = true;
   const [isHidden, setIsHidden] = useState(false);
   useMemo(() => {
     if (isLive && typeof document !== "undefined") {
