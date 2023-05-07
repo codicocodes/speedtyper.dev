@@ -21,6 +21,7 @@ import { ChallengeSource } from "../../modules/play2/components/play-footer/Chal
 import { useInitializeUserStore } from "../../common/state/user-store";
 import { fetchUser } from "../../common/api/user";
 import Head from "next/head";
+import { TweetResult } from "../../modules/play2/components/TweetResult";
 
 const baseURL = getExperimentalServerUrl();
 
@@ -117,6 +118,7 @@ function ResultPage({
                   value={data.mistakes.toString()}
                 />
                 <ShareResultButton url={url} />
+                <TweetResult url={url} wpm={cpmToWPM(data.cpm)} />
               </div>
               <CodeArea
                 staticHeigh={false}
