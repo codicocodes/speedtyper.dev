@@ -14,6 +14,7 @@ import { copyToClipboard } from "../../../common/utils/clipboard";
 import { cpmToWPM } from "../../../common/utils/cpmToWPM";
 import { toHumanReadableTime } from "../../../common/utils/toHumanReadableTime";
 import ResultsChart from "../components/ResultsChart";
+import { TweetResult } from "../components/TweetResult";
 import { useGameStore } from "../state/game-store";
 import { useTrendStore } from "../state/trends-store";
 
@@ -140,12 +141,17 @@ export function ResultsContainer() {
               value={mistakesCount.toString()}
             />
             {result.id && (
-              <div className="flex sm:flex-col gap-2">
-                <div className="flex grow w-full">
-                  <ShareResultButton url={url} />
+              <div className="flex gap-2">
+                <div className="flex sm:flex-col gap-2">
+                  <div className="flex grow w-full">
+                    <ShareResultButton url={url} />
+                  </div>
+                  <div className="flex grow w-full">
+                    <TweetResult url={url} wpm={cpmToWPM(cpm)} />
+                  </div>
                 </div>
                 <Link href={url}>
-                  <a className="flex w-full grow hover:cursor-pointer text-faded-gray hover:text-off-white bg-dark-lake flex-col items-center justify-center px-1 rounded hover:bg-white/10">
+                  <a className="flex w-full grow hover:cursor-pointer text-faded-gray hover:text-off-white bg-dark-lake flex-col items-center justify-center rounded hover:bg-white/10 px-2">
                     <div className="h-3 w-3 ">
                       <FontAwesomeIcon icon={faExternalLink} />
                     </div>
