@@ -12,6 +12,7 @@ import * as rb from 'tree-sitter-ruby';
 import * as cs from 'tree-sitter-c-sharp';
 import * as go from 'tree-sitter-go';
 import * as rs from 'tree-sitter-rust';
+import * as scala from 'tree-sitter-scala';
 
 const languageParserMap: { [key: string]: any } = {
   js,
@@ -26,6 +27,7 @@ const languageParserMap: { [key: string]: any } = {
   py,
   rb,
   cs,
+  scala,
 };
 
 export const getSupportFileExtensions = () => {

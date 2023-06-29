@@ -5330,6 +5330,13 @@ tree-sitter-rust@^0.19.1:
   dependencies:
     nan "^2.14.0"
 
+tree-sitter-scala@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/tree-sitter-scala/-/tree-sitter-scala-0.19.0.tgz#c4aefcc8ba39c2f0f021beeac694709115c76b55"
+  integrity sha512-PALw1LDNvMv/OdrHq5DD5eR7NULa7Lh/CqKCVRtL7ohc4I3E7cO5TkPaBc49MImHbUlpBKxIbH7KDdOyWAVkkg==
+  dependencies:
+    nan "^2.14.1"
+
 tree-sitter-typescript@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/tree-sitter-typescript/-/tree-sitter-typescript-0.19.0.tgz#8dd30d90a6bed5a0c89c7395edc2c3c0dbd7b038"

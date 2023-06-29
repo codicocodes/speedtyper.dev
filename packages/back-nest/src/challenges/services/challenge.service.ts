@@ -74,6 +74,7 @@ export class ChallengeService {
       py: 'Python',
       rb: 'Ruby',
       cs: 'C-Sharp',
+      scala: 'Scala',
     };
     return allLanguages[language];
   }
