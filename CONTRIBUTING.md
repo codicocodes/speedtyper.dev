@@ -13,7 +13,7 @@
 |Prerequisite                               |Link                                                                   |
 |-------------------------------------------|-----------------------------------------------------------------------|
 |Git                                        |[🔗](https://git-scm.com/downloads)                                   |
-|Node 16                                    |[🔗](https://nodejs.org/en/)                                          |
+|Node 20                                    |[🔗](https://nodejs.org/en/)                                          |
 | Yarn                                      |[🔗](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)|
 |PostgreSQL                                 |            |
 |build-essential (or equivalent for your OS)|                                                                       |
