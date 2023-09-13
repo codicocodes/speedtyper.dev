@@ -115,9 +115,19 @@ export function removeTrailingSpaces(rawText: string) {
     .join('\n');
 }
 
+export function dedupeInnerSpaces(rawText: string) {
+  const innerSpaces = /(?<=\S+)\s+(?=\S+)/g;
+  const space = ' ';
+  return rawText
+    .split('\n')
+    .map((line) => line.replaceAll(innerSpaces, space))
+    .join('\n');
+}
+
 export function getFormattedText(rawText: string) {
   rawText = replaceTabsWithSpaces(rawText);
   rawText = removeTrailingSpaces(rawText);
   rawText = removeDuplicateNewLines(rawText);
+  rawText = dedupeInnerSpaces(rawText);
   return rawText;
 }

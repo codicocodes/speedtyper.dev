@@ -49,9 +49,18 @@ const inputWithTrailingSpaces = `func newGRPCProxyCommand() *cobra.Command {
   return lpc
 }`;
 
-const output = `func newGRPCProxyCommand() *cobra.Command {
+const inputWithStructAlignment = `func newGRPCProxyCommand() *cobra.Command {
   lpc := &cobra.Command{
     Use:   "grpc-proxy <subcommand>",
+    Short: "grpc-proxy related command",
+  }
+  lpc.AddCommand(newGRPCProxyStartCommand())
+  return lpc
+}`;
+
+const output = `func newGRPCProxyCommand() *cobra.Command {
+  lpc := &cobra.Command{
+    Use: "grpc-proxy <subcommand>",
     Short: "grpc-proxy related command",
   }
   lpc.AddCommand(newGRPCProxyStartCommand())
@@ -82,6 +91,10 @@ describe('getFormattedText', () => {
   });
   it('should remove empty line with spaces', () => {
     const parsed = getFormattedText(inputWithEmptyLineWithSpaces);
+    expect(parsed).toEqual(output);
+  });
+  it('should dedupe multiple interior spaces', () => {
+    const parsed = getFormattedText(inputWithStructAlignment);
     expect(parsed).toEqual(output);
   });
 });
