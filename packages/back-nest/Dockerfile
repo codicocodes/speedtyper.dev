@@ -7,7 +7,7 @@ WORKDIR /app
 # Install app dependencies
 COPY package.json /app
 COPY yarn.lock /app
-RUN yarn --production
+RUN yarn install --frozen-lockfile
 
 # Bundle app source
 COPY . /app
@@ -15,4 +15,4 @@ RUN yarn build
 
 EXPOSE 80
 
-CMD [ "yarn", "start" ]
+CMD [ "node", "dist/main.js" ]
