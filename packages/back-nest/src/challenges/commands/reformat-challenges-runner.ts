@@ -25,9 +25,6 @@ export class ReformatChallengesRunner extends CommandRunner {
 
     const pendingUpdates = [];
     for await (const { id, content } of stream) {
-      if (id !== '77a954ea-ea04-4d12-b86e-fce128b6941f') {
-        continue;
-      }
       const formattedContent = getFormattedText(content);
       if (formattedContent !== content) {
         pendingUpdates.push(
