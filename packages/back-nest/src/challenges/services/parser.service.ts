@@ -117,7 +117,7 @@ export function removeTrailingSpaces(rawText: string) {
 
 export function dedupeInnerSpaces(rawText: string) {
   const innerSpaces = /(?<=\S+)\s+(?=\S+)/g;
-  const space = " ";
+  const space = ' ';
   return rawText
     .split('\n')
     .map((line) => line.replaceAll(innerSpaces, space))
