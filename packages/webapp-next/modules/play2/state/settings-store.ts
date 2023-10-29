@@ -1,6 +1,11 @@
 import create from "zustand";
 import { getExperimentalServerUrl } from "../../../common/utils/getServerUrl";
 
+export interface LanguageDTO {
+  language: string;
+  name: string;
+}
+
 export interface SettingsState {
   settingsModalIsOpen: boolean;
   languageModalIsOpen: boolean;
@@ -8,7 +13,7 @@ export interface SettingsState {
   profileModalIsOpen: boolean;
   projectModalIsOpen: boolean;
   publicRacesModalIsOpen: boolean;
-  languageSelected: { language: string; name: string } | null;
+  languageSelected: LanguageDTO | null;
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
@@ -20,6 +25,24 @@ const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
 const SMOOTH_CARET_KEY = "smoothCaret";
 
 const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic2";
+
+const LANGUAGE_KEY = "language";
+
+const LANGUAGES: { [ext: string]: string } = {
+  js: 'JavaScript',
+  ts: 'TypeScript',
+  rs: 'Rust',
+  c: 'C',
+  java: 'Java',
+  cpp: 'C++',
+  go: 'Go',
+  lua: 'Lua',
+  php: 'PHP',
+  py: 'Python',
+  rb: 'Ruby',
+  cs: 'C-Sharp',
+  scala: 'Scala',
+};
 
 function getInitialToggleStateFromLocalStorage(
   key: string,
@@ -34,6 +57,18 @@ function getInitialToggleStateFromLocalStorage(
     return toggleStateStr === "true" ?? false;
   }
   return defaultToggleValue;
+}
+
+function getInitialLanguageFromLocalStorage(key: string): LanguageDTO | null {
+  if (typeof document !== "undefined" && window) {
+    let languageStr = localStorage.getItem(key) ?? "";
+    const lang = {language: languageStr, name: LANGUAGES[languageStr]};
+    if (!lang.language || !lang.name) {
+      return null;
+    }
+    return lang;
+  }
+  return null;
 }
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
@@ -53,7 +88,7 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
     DEFAULT_RACE_IS_PUBLIC_KEY,
     false
   ),
-  languageSelected: null,
+  languageSelected: getInitialLanguageFromLocalStorage(LANGUAGE_KEY),
 }));
 
 export const setCaretType = (caretType: "smooth" | "block") => {
@@ -61,6 +96,11 @@ export const setCaretType = (caretType: "smooth" | "block") => {
   localStorage.setItem(SMOOTH_CARET_KEY, smoothCaret.toString());
   useSettingsStore.setState((state) => ({ ...state, smoothCaret }));
 };
+
+export const setLanguage = (language: LanguageDTO | null) => {
+  localStorage.setItem(LANGUAGE_KEY, language?.language || "");
+  useSettingsStore.setState((state) => ({ ...state, languageSelected: language }));
+}
 
 export const toggleDefaultRaceIsPublic = () => {
   const booleanStrValue = localStorage.getItem(DEFAULT_RACE_IS_PUBLIC_KEY);
