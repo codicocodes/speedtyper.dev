@@ -28,22 +28,6 @@ const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic2";
 
 const LANGUAGE_KEY = "language";
 
-const LANGUAGES: { [ext: string]: string } = {
-  js: 'JavaScript',
-  ts: 'TypeScript',
-  rs: 'Rust',
-  c: 'C',
-  java: 'Java',
-  cpp: 'C++',
-  go: 'Go',
-  lua: 'Lua',
-  php: 'PHP',
-  py: 'Python',
-  rb: 'Ruby',
-  cs: 'C-Sharp',
-  scala: 'Scala',
-};
-
 function getInitialToggleStateFromLocalStorage(
   key: string,
   defaultToggleValue: boolean
@@ -62,8 +46,11 @@ function getInitialToggleStateFromLocalStorage(
 function getInitialLanguageFromLocalStorage(key: string): LanguageDTO | null {
   if (typeof document !== "undefined" && window) {
     let languageStr = localStorage.getItem(key) ?? "";
-    const lang = {language: languageStr, name: LANGUAGES[languageStr]};
-    if (!lang.language || !lang.name) {
+    let lang;
+    try {
+      lang = JSON.parse((languageStr));
+    } catch (e) {}
+    if (!lang?.language || !lang?.name) {
       return null;
     }
     return lang;
@@ -98,7 +85,11 @@ export const setCaretType = (caretType: "smooth" | "block") => {
 };
 
 export const setLanguage = (language: LanguageDTO | null) => {
-  localStorage.setItem(LANGUAGE_KEY, language?.language || "");
+  let stored = "";
+  if (language) {
+    stored = JSON.stringify(language);
+  }
+  localStorage.setItem(LANGUAGE_KEY, stored);
   useSettingsStore.setState((state) => ({ ...state, languageSelected: language }));
 }
 
