@@ -94,5 +94,10 @@ function getGithubAccessToken(cfg: ConfigService) {
       `GITHUB_ACCESS_TOKEN is missing from environment variables`,
     );
   }
+  if (!token.startsWith('ghp_')) {
+    throw new Error(
+      `GITHUB_ACCESS_TOKEN is not a valid value. It should start with 'ghp_'`,
+    );
+  }
   return token;
 }
