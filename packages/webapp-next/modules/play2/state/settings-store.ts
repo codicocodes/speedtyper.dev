@@ -90,8 +90,11 @@ export const setLanguage = (language: LanguageDTO | null) => {
     stored = JSON.stringify(language);
   }
   localStorage.setItem(LANGUAGE_KEY, stored);
-  useSettingsStore.setState((state) => ({ ...state, languageSelected: language }));
-}
+  useSettingsStore.setState((state) => ({
+    ...state,
+    languageSelected: language,
+  }));
+};
 
 export const toggleDefaultRaceIsPublic = () => {
   const booleanStrValue = localStorage.getItem(DEFAULT_RACE_IS_PUBLIC_KEY);
