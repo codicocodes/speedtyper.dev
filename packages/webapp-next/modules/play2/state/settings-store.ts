@@ -48,7 +48,7 @@ function getInitialLanguageFromLocalStorage(key: string): LanguageDTO | null {
     let languageStr = localStorage.getItem(key) ?? "";
     let lang;
     try {
-      lang = JSON.parse((languageStr));
+      lang = JSON.parse(languageStr);
     } catch (e) {}
     if (!lang?.language || !lang?.name) {
       return null;
