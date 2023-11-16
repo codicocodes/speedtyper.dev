@@ -41,11 +41,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:url" content="https://speedtyper.dev" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Script
-        defer
-        data-domain="speedtyper.dev"
-        src="https://plausible.io/js/plausible.js"
-      />
       <NextNProgress
         options={{ showSpinner: false }}
         color="#d6bbfa"
