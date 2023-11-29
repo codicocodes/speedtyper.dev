@@ -13,3 +13,4 @@ ggerganov/llama.cpp
 ggerganov/whisper.cpp
 vitejs/vite
 lampepfl/dotty
+aalhour/C-Sharp-Algorithms
