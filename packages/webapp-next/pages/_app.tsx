@@ -40,6 +40,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://speedtyper.dev" />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          async
+          src="https://umami-production-7f33.up.railway.app/script.js"
+          data-website-id="ed902c85-74a2-427f-a554-520fdf0925e5"
+        ></script>
       </Head>
       <NextNProgress
         options={{ showSpinner: false }}
