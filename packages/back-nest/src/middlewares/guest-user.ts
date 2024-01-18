@@ -6,7 +6,7 @@ export function guestUserMiddleware(
   _: Response,
   next: NextFunction,
 ) {
-  if (!req.session?.user) {
+  if (req.session && !req.session?.user) {
     req.session.user = User.generateAnonymousUser();
   }
   next();
