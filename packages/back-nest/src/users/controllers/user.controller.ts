@@ -6,6 +6,6 @@ import { User } from '../entities/user.entity';
 export class UserController {
   @Get()
   getCurrentUser(@Req() request: Request): User {
-    return request.session.user;
+    return request.session?.user;
   }
 }
