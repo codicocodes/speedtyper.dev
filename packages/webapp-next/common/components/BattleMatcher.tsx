@@ -89,10 +89,8 @@ interface BattleMatcherModalProps {
 }
 
 export const PlayingNow = () => {
-  const { data } = useSWR(
-    ONLINE_COUNT_API,
-    (...args) => fetch(...args).then((res) => res.json()),
-    { refreshInterval: 15000 }
+  const { data } = useSWR(ONLINE_COUNT_API, (...args) =>
+    fetch(...args).then((res) => res.json())
   );
   const isPublic = useSettingsStore((s) => s.raceIsPublic);
   const isOpen = useSettingsStore((s) => s.publicRacesModalIsOpen);
