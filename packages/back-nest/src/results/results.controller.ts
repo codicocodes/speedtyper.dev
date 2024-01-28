@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  InternalServerErrorException,
   Param,
   Req,
 } from '@nestjs/common';
@@ -29,6 +30,9 @@ export class ResultsController {
   }
   @Get('/stats')
   async getStatsByUser(@Req() request: Request) {
+    if (!request.session?.user) {
+      throw new InternalServerErrorException();
+    }
     const startOfToday = new Date();
     startOfToday.setUTCHours(0, 0, 0, 0);
 
