@@ -49,16 +49,29 @@ export class RaceGateway {
     this.manageRaceLock.release(socket.id);
   }
 
-  handleConnection(socket: Socket) {
+  async handleConnection(socket: Socket) {
     const userId = this.session.getUser(socket).id;
     const userIsAlreadyPlaying = this.raceManager.userIsAlreadyPlaying(userId);
-    if (userIsAlreadyPlaying) {
-      console.info(
-        `Client already in race: ${socket.request.session.user.username} - ${socket.request.session.raceId}`,
-      );
-      socket.emit('already_playing');
-      socket.disconnect(true);
-      return;
+    for (const [sid, s] of this.server.sockets.sockets) {
+      // We need to cleanup other sockets for the same user
+      // Because we can not have several instances of the same user in the same race twice
+      // Consider adding this possibility, but for different races
+      if (sid === socket.id) {
+        console.log('Same socket id, keeping.');
+        continue;
+      }
+      if (s.request.session.user.id === userId) {
+        console.log(
+          'Different socket id, same user. Disconnecting previous socket',
+        );
+        if (userIsAlreadyPlaying) {
+          this.raceManager.leaveRace(
+            s.request.session.user,
+            s.request.session.raceId,
+          );
+        }
+        s.disconnect();
+      }
     }
 
     console.info(
