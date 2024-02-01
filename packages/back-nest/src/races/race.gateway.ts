@@ -31,7 +31,7 @@ export class RaceGateway {
     private addKeyStrokeService: AddKeyStrokeService,
     private manageRaceLock: Locker,
     private countdownService: CountdownService,
-  ) {}
+  ) { }
 
   afterInit(server: Server) {
     console.info('[SpeedTyper.dev] Websocket Server Started.');
@@ -71,6 +71,14 @@ export class RaceGateway {
           );
         }
         s.disconnect();
+      }
+
+      if (!this.raceManager.userIsAlreadyPlaying(s.request.session.user.id)) {
+        console.log(
+          'Disconnecting because socket is not playing: ',
+          s.request.session.user.username,
+          s.request.session.user.id,
+        );
       }
 
       console.log(
