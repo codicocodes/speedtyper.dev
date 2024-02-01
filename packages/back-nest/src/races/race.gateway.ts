@@ -72,6 +72,12 @@ export class RaceGateway {
         }
         s.disconnect();
       }
+
+      console.log(
+        'Keeping: ',
+        s.request.session.user.username,
+        s.request.session.user.id,
+      );
     }
 
     console.info(
