@@ -6,7 +6,7 @@ export default class SocketLatest {
   constructor(serverUrl: string) {
     this.socket = connect(serverUrl, {
       withCredentials: true,
-      reconnection: true,
+      reconnection: false,
     });
     this.socket.on("disconnect", (err) => {
       console.log("disconnected from server", err);
