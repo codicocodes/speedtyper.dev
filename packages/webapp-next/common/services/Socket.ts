@@ -11,6 +11,9 @@ export default class SocketLatest {
     this.socket.on("disconnect", (err) => {
       console.log("disconnected from server", err);
     });
+    this.socket.on("connect", () => {
+      console.log("connected!!!!");
+    });
   }
 
   disconnect() {
