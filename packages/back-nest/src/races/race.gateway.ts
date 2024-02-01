@@ -80,6 +80,7 @@ export class RaceGateway {
           s.request.session.user.id,
         );
         s.disconnect();
+        continue
       }
 
       console.log(
