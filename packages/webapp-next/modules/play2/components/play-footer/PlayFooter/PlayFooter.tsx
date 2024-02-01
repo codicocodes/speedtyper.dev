@@ -1,7 +1,7 @@
 import { faPerson, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, useState } from "react";
 import { PlayIcon } from "../../../../../assets/icons";
 import { InfoIcon } from "../../../../../assets/icons/InfoIcon";
 import { LinkIcon } from "../../../../../assets/icons/LinkIcon";
@@ -199,13 +199,22 @@ function ActionButtons() {
     !isOwner && isMultiplayer && !hasEndTime && !countdown;
   const startGame = () => game?.start();
   useKeyMap(canManuallyStartGame, Keys.Enter, startGame);
+  const [isThrottled, setIsThrottled] = useState(false);
   return (
     <div className="flex text-faded-gray gap-1">
       {isOwner && (
         <ActionButton
           text="refresh"
           title="Refresh the challenge"
-          onClick={() => game?.next()}
+          disabled={isThrottled}
+          onClick={() => {
+            if (isThrottled) return;
+            game?.next();
+            setIsThrottled(true);
+            setTimeout(() => {
+              setIsThrottled(false);
+            }, 2000);
+          }}
           icon={
             <div className="h-3 w-3">
               <ReloadIcon />

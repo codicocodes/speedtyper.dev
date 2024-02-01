@@ -15,7 +15,7 @@ import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUn
 import { PlayFooter } from "../modules/play2/components/play-footer/PlayFooter";
 import { PlayHeader } from "../modules/play2/components/play-header/PlayHeader";
 import { useInitializeUserStore } from "../common/state/user-store";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useConnectionManager } from "../modules/play2/state/connection-store";
 import {
   closeModals,
@@ -55,10 +55,19 @@ function Play2Page({
   const hasOpenModal = useHasOpenModal();
   const game = useGame();
   const challenge = useChallenge();
+  const [isThrottled, setIsThrottled] = useState(false);
   const { capsLockActive } = useKeyMap(
     true,
     Keys.Tab,
-    useCallback(() => !hasOpenModal && game?.next(), [hasOpenModal, game])
+    useCallback(() => {
+      if (isThrottled) return;
+      if (hasOpenModal) return;
+      game?.next();
+      setIsThrottled(true);
+      setTimeout(() => {
+        setIsThrottled(false);
+      }, 2000);
+    }, [isThrottled, hasOpenModal, game])
   );
   useSettingsStore((s) => s.settingsModalIsOpen);
   // useKeyMap(true, Keys.Escape, () => {
