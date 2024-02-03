@@ -47,6 +47,7 @@ export class GithubAuthController {
     const nextParam = params.get('next');
     const nextURL = new URL(nextParam);
     const validHost = nextURL.hostname === 'speedtyper.dev';
+    console.log(nextURL, nextURL.hostname);
     const next = validHost ? nextURL.toString() : 'http://localhost:3001';
     response.redirect(next);
   }
