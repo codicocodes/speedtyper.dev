@@ -38,10 +38,16 @@ export class GithubAuthController {
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
+    if (!request.session) {
+      return response.status(500).send('something went wrong');
+    }
     request.session.user = request.user as User;
     const { state } = request.query;
     const params = new URLSearchParams(state as string);
-    const next = params.get('next') ?? 'http://localhost:3001';
+    const nextParam = params.get('next');
+    const nextURL = new URL(nextParam);
+    const validHost = nextURL.hostname === 'speedtyper.dev';
+    const next = validHost ? nextURL.toString() : 'http://localhost:3001';
     response.redirect(next);
   }
 }
