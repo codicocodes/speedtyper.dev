@@ -42,15 +42,10 @@ export class GithubAuthController {
       return response.status(500).send('something went wrong');
     }
     request.session.user = request.user as User;
-    const { state } = request.query;
-    const params = new URLSearchParams(state as string);
-    const nextParam = params.get('next');
-    const nextURL = new URL(nextParam);
-    const validHost =
-      nextURL.hostname === 'speedtyper.dev' ||
-      nextURL.hostname === 'www.speedtyper.dev';
-    console.log(nextURL, nextURL.hostname);
-    const next = validHost ? nextURL.toString() : 'http://localhost:3001';
+    const next =
+      process.env.NODE_ENV === 'production'
+        ? 'https://www.speedtyper.dev'
+        : 'http://localhost:3001';
     response.redirect(next);
   }
 }
