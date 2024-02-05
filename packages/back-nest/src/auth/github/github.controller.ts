@@ -47,7 +47,7 @@ export class GithubAuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     if (!request.session) {
-      return response.status(500).send('something went wrong');
+      throw new HttpException('Internal server error', 500);
     }
     request.session.user = request.user as User;
     const next =
