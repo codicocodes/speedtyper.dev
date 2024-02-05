@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, HttpException, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { User } from '../entities/user.entity';
 
@@ -6,6 +6,9 @@ import { User } from '../entities/user.entity';
 export class UserController {
   @Get()
   getCurrentUser(@Req() request: Request): User {
-    return request.session?.user;
+    if (!request.session?.user) {
+      throw new HttpException('Internal server error', 500);
+    }
+    return request.session.user;
   }
 }
