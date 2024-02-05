@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { cookieName } from 'src/sessions/session.middleware';
 import { User } from 'src/users/entities/user.entity';
