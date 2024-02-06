@@ -31,7 +31,7 @@ export class RaceGateway {
     private addKeyStrokeService: AddKeyStrokeService,
     private manageRaceLock: Locker,
     private countdownService: CountdownService,
-  ) { }
+  ) {}
 
   afterInit(server: Server) {
     console.info('[SpeedTyper.dev] Websocket Server Started.');
@@ -80,7 +80,7 @@ export class RaceGateway {
           s.request.session.user.id,
         );
         s.disconnect();
-        continue
+        continue;
       }
 
       console.log(
