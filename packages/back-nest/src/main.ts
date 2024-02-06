@@ -8,6 +8,7 @@ import { guestUserMiddleware } from './middlewares/guest-user';
 import { SessionAdapter } from './sessions/session.adapter';
 import { getSessionMiddleware } from './sessions/session.middleware';
 import { json } from 'express';
+import { AllExceptionsFilter } from './filters/exception.filter';
 
 const GLOBAl_API_PREFIX = 'api';
 
@@ -29,6 +30,7 @@ async function runServer() {
   app.use(guestUserMiddleware);
   app.useWebSocketAdapter(new SessionAdapter(app, sessionMiddleware));
   app.setGlobalPrefix(GLOBAl_API_PREFIX);
+  app.useGlobalFilters(new AllExceptionsFilter());
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(port);
 }
