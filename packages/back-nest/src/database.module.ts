@@ -5,7 +5,6 @@ import { pgOptions } from './config/postgres';
 const entities = [__dirname + '/**/*.entity.{ts,js}'];
 
 export const PostgresDataSource = new DataSource({
-  extra: { min: 0, max: 10 },
   type: 'postgres',
   synchronize: true,
   entities,
