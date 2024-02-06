@@ -29,7 +29,7 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-socket.io": "^9.1.4",
-    "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/typeorm": "^10.0.1",
     "@nestjs/websockets": "^9.1.4",
     "@sentry/node": "^7.37.2",
     "@types/passport-github": "^1.1.7",
