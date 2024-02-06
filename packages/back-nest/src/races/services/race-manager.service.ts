@@ -74,9 +74,9 @@ export class RaceManager {
 
   async refresh(id: string, language?: string): Promise<Race> {
     this.debugSize('refresh');
+    const race = this.getRace(id);
     const challenge = await this.challengeService.getRandom(language);
     const literals = this.literalsService.calculateLiterals(challenge.content);
-    const race = this.getRace(id);
     race.challenge = challenge;
     race.literals = literals;
     race.resetProgress();
