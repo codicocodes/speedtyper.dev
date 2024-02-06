@@ -76,7 +76,7 @@ export class RaceManager {
     this.debugSize('refresh');
     const challenge = await this.challengeService.getRandom(language);
     const literals = this.literalsService.calculateLiterals(challenge.content);
-    const race = this.races[id];
+    const race = this.getRace(id);
     race.challenge = challenge;
     race.literals = literals;
     race.resetProgress();
