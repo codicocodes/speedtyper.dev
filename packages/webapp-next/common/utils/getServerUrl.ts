@@ -1,22 +1,13 @@
-import getConfig from "next/config";
+import { publicRuntimeConfig } from "../../next.config";
 
 export function getSiteRoot() {
-  const {
-    publicRuntimeConfig: { siteRoot },
-  } = getConfig();
-  return siteRoot;
+  return publicRuntimeConfig?.siteRoot;
 }
 
 export function getServerUrl() {
-  const {
-    publicRuntimeConfig: { serverUrl },
-  } = getConfig();
-  return serverUrl;
+  return publicRuntimeConfig?.serverUrl;
 }
 
 export function getExperimentalServerUrl() {
-  const {
-    publicRuntimeConfig: { experimentalServerUrl },
-  } = getConfig();
-  return experimentalServerUrl;
+  return publicRuntimeConfig?.experimentalServerUrl;
 }
