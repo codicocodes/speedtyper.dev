@@ -25,6 +25,8 @@ import { TweetResult } from "../../modules/play2/components/TweetResult";
 
 const baseURL = getExperimentalServerUrl();
 
+export const config = { runtime: "edge" };
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const user = await fetchUser(context);

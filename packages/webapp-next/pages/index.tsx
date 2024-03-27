@@ -27,6 +27,8 @@ import { refreshTrends } from "../modules/play2/state/trends-store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
+export const config = { runtime: "edge" };
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const user = await fetchUser(context);
