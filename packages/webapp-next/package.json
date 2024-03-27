@@ -2,6 +2,9 @@
   "name": "webapp2",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "yarn": "1.22.21"
+  },
   "scripts": {
     "dev": "next dev -p 3001",
     "build:css": "postcss tailwind.css -o tailwind.min.css",
