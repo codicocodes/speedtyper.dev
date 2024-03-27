@@ -2,8 +2,9 @@
   "name": "webapp2",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@^1.22.21",
   "engines": {
-    "yarn": "1.22.21"
+    "yarn": "^1.22.21"
   },
   "scripts": {
     "dev": "next dev -p 3001",
