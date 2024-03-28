@@ -16,12 +16,14 @@ export const useUserStore = create<User>((_set, _get) => ({
   isAnonymous: true,
 }));
 
-export const useInitializeUserStore = (user: User) => {
+export const useInitializeUserStore = (user: User | null) => {
   useEffect(() => {
-    useUserStore.setState((userStore) => ({
-      ...userStore,
-      ...user,
-    }));
+    if (user) {
+      useUserStore.setState((userStore) => ({
+        ...userStore,
+        ...user,
+      }));
+    }
   }, [user]);
 };
 

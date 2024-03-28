@@ -1,4 +1,3 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -8,7 +7,7 @@ import { CodeTypingContainer } from "../modules/play2/containers/CodeTypingConta
 import { useGame } from "../modules/play2/hooks/useGame";
 import { useIsCompleted } from "../modules/play2/hooks/useIsCompleted";
 import { ResultsContainer } from "../modules/play2/containers/ResultsContainer";
-import { fetchUser } from "../common/api/user";
+import { useUser } from "../common/api/user";
 import { useChallenge } from "../modules/play2/hooks/useChallenge";
 import { useEndGame } from "../modules/play2/hooks/useEndGame";
 import { useResetStateOnUnmount } from "../modules/play2/hooks/useResetStateOnUnmount";
@@ -29,26 +28,8 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 export const config = { runtime: "experimental-edge" };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const user = await fetchUser(context);
-    return {
-      props: {
-        user,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
-};
-
-function Play2Page({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Play2Page() {
+  const user = useUser();
   useInitializeUserStore(user);
   const isCompleted = useIsCompleted();
   const isPlaying = useIsPlaying();
