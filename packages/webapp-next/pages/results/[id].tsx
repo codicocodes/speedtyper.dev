@@ -1,4 +1,3 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -19,7 +18,7 @@ import { format } from "date-fns";
 import { ActionButton } from "../../modules/play2/components/play-footer/PlayFooter";
 import { ChallengeSource } from "../../modules/play2/components/play-footer/ChallengeSource";
 import { useInitializeUserStore } from "../../common/state/user-store";
-import { fetchUser } from "../../common/api/user";
+import { useUser } from "../../common/api/user";
 import Head from "next/head";
 import { TweetResult } from "../../modules/play2/components/TweetResult";
 
@@ -27,26 +26,8 @@ const baseURL = getExperimentalServerUrl();
 
 export const config = { runtime: "experimental-edge" };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const user = await fetchUser(context);
-    return {
-      props: {
-        user,
-      },
-    };
-  } catch (err) {
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
-};
-
-function ResultPage({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function ResultPage() {
+  const user = useUser();
   useInitializeUserStore(user);
   const router = useRouter();
   const { id } = router.query;
@@ -152,7 +133,7 @@ function ResultPage({
           </AnimatePresence>
         )}
 
-        {!isLoading && !data.user && (
+        {user && !isLoading && !data?.user && (
           <div className="text-4xl font-semibold">404 result not found</div>
         )}
         <ToastContainer />
