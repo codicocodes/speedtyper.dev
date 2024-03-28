@@ -43,6 +43,7 @@ export class ResultService {
         r.createdAt BETWEEN '${oneDayAgo.toISOString()}' AND '${new Date().toISOString()}'`,
       )
       .orderBy('r.cpm')
+      .orderBy('r.createdAt', 'DESC')
       .stream();
 
     const resultsToday: Record<string, any> = {};
