@@ -65,6 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <div className="absolute bottom-0 flex w-full justify-center">
         <a
+          data-umami-event="TikTok Banner - Click"
           href="https://www.tiktok.com/tag/speedtyperdev"
           target="_blank"
           className={`${isPlayingCss} mb-12 sm:mb-24 border border-gray-400 rounded-lg p-4 flex gap-2 items-center hover:border-purple-400 transition-all hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-400 hover:to-fuchsia-700`}
