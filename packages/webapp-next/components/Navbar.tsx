@@ -3,7 +3,7 @@ import { useIsPlaying } from "../common/hooks/useIsPlaying";
 
 export const WebsiteName = () => {
   const isPlaying = useIsPlaying();
-  const websiteName = "speedtyper";
+  const websiteName = "speedtyper.dev";
   const colorClass = isPlaying ? "text-faded-gray" : "text-inherit";
   return (
     <h2
