@@ -53,9 +53,6 @@ function Play2Page() {
     }, [isThrottled, hasOpenModal, game])
   );
   useSettingsStore((s) => s.settingsModalIsOpen);
-  // useKeyMap(true, Keys.Escape, () => {
-  //   if (!isPlaying) openSettingsModal();
-  // });
   useResetStateOnUnmount();
   useEndGame();
   useEffect(() => {
