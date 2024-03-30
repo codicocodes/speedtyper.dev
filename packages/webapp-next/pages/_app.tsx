@@ -8,6 +8,7 @@ import { Stream } from "../components/Stream";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { useIsPlaying } from "../common/hooks/useIsPlaying";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "SpeedTyper.dev | Typing practice for programmers";
@@ -69,7 +70,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           className={`${isPlayingCss} mb-12 border border-gray-400 rounded-lg p-4 flex gap-2 items-center hover:border-purple-400 transition-all hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-purple-400 hover:to-fuchsia-700`}
           rel="noreferrer"
         >
-          <FontAwesomeIcon className="w-5 text-lg text-white" icon={faTiktok} />
+          <FontAwesomeIcon
+            className="w-5 text-lg text-white"
+            icon={faTiktok as IconProp}
+          />
           <span className="text-white">create & watch</span>
           <span className="md:font-semibold hidden sm:inline">
             #speedtyperdev
