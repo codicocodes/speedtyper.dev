@@ -94,10 +94,15 @@ export const HiddenCodeInput = ({
       style={{
         ...(hide
           ? {
-              position: "absolute",
-              left: "-10000000px",
-            }
-          : {}),
+            position: "fixed",
+            top: "50%",
+            left: "-10000000px",
+          }
+          : {
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }),
       }}
     />
   );
