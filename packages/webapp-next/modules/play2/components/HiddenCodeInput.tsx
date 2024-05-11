@@ -13,9 +13,9 @@ import { useCanType, useGameStore } from "../state/game-store";
 import { useSettingsStore } from "../state/settings-store";
 import { useSound } from "use-sound";
 
-// Source: "type writing" by Pixabay - https://pixabay.com/sound-effects/search/typewriter/
+// Source: "type writing" by Pixabay - https://pixabay.com/sound-effects/type-writing-6834/
 import correctSfx from "../../../assets/sounds/correct.wav";
-// Source: "Dramatic Guitar" by UNIVERSFIELD - https://pixabay.com/sound-effects/search/miss/
+// Source: "Dramatic Guitar" by UNIVERSFIELD - https://pixabay.com/sound-effects/dramatic-guitar-140614/
 import errorSfx from "../../../assets/sounds/error.wav";
 
 interface HiddenCodeInputProps {
