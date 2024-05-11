@@ -36,6 +36,7 @@
     "socket.io-client": "^2",
     "socketio-latest": "npm:socket.io-client",
     "swr": "^2.0.3",
+    "use-sound": "^4.0.1",
     "zustand": "^4.1.1"
   },
   "devDependencies": {
@@ -48,6 +49,7 @@
     "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "file-loader": "^6.2.0",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "prettier": "2.7.1",

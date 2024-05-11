@@ -9,6 +9,7 @@ import {
 import {
   toggleDefaultRaceIsPublic,
   toggleSyntaxHighlightning,
+  toggleSound,
   useSettingsStore,
 } from "../../../modules/play2/state/settings-store";
 import { Overlay } from "../Overlay";
@@ -24,6 +25,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
     (s) => s.syntaxHighlighting
   );
   const isPublicRaceByDefault = useSettingsStore((s) => s.defaultIsPublic);
+  const isSoundEnabled = useSettingsStore((s) => s.sound);
   return (
     <>
       <Overlay onOverlayClick={closeModal}>
@@ -49,6 +51,12 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
             description="Races you start will be public by default"
             checked={isPublicRaceByDefault}
             toggleEnabled={toggleDefaultRaceIsPublic}
+          />
+          <ToggleSelector
+            title="enable sound"
+            description="Enable to hear sound while typing"
+            checked={isSoundEnabled}
+            toggleEnabled={toggleSound}
           />
           <CaretSelector />
         </Modal>
