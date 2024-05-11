@@ -7,8 +7,16 @@ import {
   useState,
 } from "react";
 
-import { isSkippable, useCodeStore } from "../state/code-store";
+import { isSkippable, useCodeStore, KeyStroke } from "../state/code-store";
 import { useCanType, useGameStore } from "../state/game-store";
+
+import { useSettingsStore } from "../state/settings-store";
+import { useSound } from "use-sound";
+
+// Source: "type writing" by Pixabay - https://pixabay.com/sound-effects/search/typewriter/
+import correctSfx from "../../../assets/sounds/correct.wav";
+// Source: "Dramatic Guitar" by UNIVERSFIELD - https://pixabay.com/sound-effects/search/miss/
+import errorSfx from "../../../assets/sounds/error.wav";
 
 interface HiddenCodeInputProps {
   hide: boolean; // Used for debugging the input
@@ -57,6 +65,17 @@ export const HiddenCodeInput = ({
   // which gets code.substr(0, correctIndex)
   const [input, setInput] = useState("");
 
+  const withSound = useSettingsStore((state) => state.sound);
+  const [playCorrectSfx] = useSound(correctSfx);
+  const [playErrorSfx] = useSound(errorSfx);
+  const playSound = (keyStroke: KeyStroke) => {
+    if (keyStroke.correct) {
+      playCorrectSfx();
+    } else {
+      playErrorSfx();
+    }
+  };
+
   function handleOnChange(e: ChangeEvent<HTMLTextAreaElement>) {
     // TODO: use e.isTrusted
     if (!canType) return;
@@ -74,6 +93,9 @@ export const HiddenCodeInput = ({
         if (isSkippable(char)) continue;
         const keyPress = keyPressFactory(char);
         handleKeyPress(keyPress);
+        if (withSound) {
+          playSound(keyPress);
+        }
         game.sendKeyStroke(keyPress);
       }
     }

@@ -18,6 +18,7 @@ export interface SettingsState {
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
   defaultIsPublic: boolean;
+  sound: boolean;
 }
 
 const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
@@ -27,6 +28,8 @@ const SMOOTH_CARET_KEY = "smoothCaret";
 const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic2";
 
 const LANGUAGE_KEY = "language";
+
+const SOUND_KEY = "sound";
 
 function getInitialToggleStateFromLocalStorage(
   key: string,
@@ -76,6 +79,7 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
     false
   ),
   languageSelected: getInitialLanguageFromLocalStorage(LANGUAGE_KEY),
+  sound: getInitialToggleStateFromLocalStorage(SOUND_KEY, false),
 }));
 
 export const setCaretType = (caretType: "smooth" | "block") => {
@@ -110,6 +114,14 @@ export const toggleSyntaxHighlightning = () => {
   syntaxHighlighting = !syntaxHighlighting;
   localStorage.setItem(SYNTAX_HIGHLIGHTING_KEY, syntaxHighlighting.toString());
   useSettingsStore.setState((state) => ({ ...state, syntaxHighlighting }));
+};
+
+export const toggleSound = () => {
+  const soundStr = localStorage.getItem(SOUND_KEY);
+  let sound = soundStr === "true";
+  sound = !sound;
+  localStorage.setItem(SOUND_KEY, sound.toString());
+  useSettingsStore.setState((state) => ({ ...state, sound }));
 };
 
 export const openSettingsModal = () => {
