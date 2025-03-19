@@ -22,6 +22,7 @@ export class UnsyncedFile {
   @Column({ nullable: true })
   syncedSha?: string;
 
+  // Is this a circular dependency to project?
   @ManyToOne(() => Project, (project) => project.files)
   project: Project;
 

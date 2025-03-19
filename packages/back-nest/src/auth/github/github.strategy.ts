@@ -7,7 +7,10 @@ import { UpsertGithubUserDTO } from 'src/users/entities/upsertGithubUserDTO';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
-  constructor(cfg: ConfigService, private userService: UserService) {
+  constructor(
+    cfg: ConfigService,
+    private userService: UserService,
+  ) {
     const BASE_URL =
       process.env.NODE_ENV === 'production'
         ? 'https://v3.speedtyper.dev'

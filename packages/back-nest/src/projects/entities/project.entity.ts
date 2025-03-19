@@ -22,6 +22,7 @@ export class Project {
   @Column()
   defaultBranch: string;
 
+  // Is this a circular dependency to UnsyncedFile?
   @OneToMany(() => UnsyncedFile, (file) => file.project)
   files: File[];
 

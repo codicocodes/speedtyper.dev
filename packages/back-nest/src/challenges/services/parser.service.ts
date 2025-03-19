@@ -1,4 +1,4 @@
-import * as TSParser from 'tree-sitter';
+import TSParser from 'tree-sitter';
 import { Injectable } from '@nestjs/common';
 import { getTSLanguageParser } from './ts-parser.factory';
 
@@ -32,7 +32,7 @@ export class Parser {
 
   constructor(private ts: TSParser) {}
 
-  parseTrackedNodes(content: string) {
+  public parseCode(content: string) {
     const root = this.ts.parse(content).rootNode;
     return this.filterNodes(root);
   }

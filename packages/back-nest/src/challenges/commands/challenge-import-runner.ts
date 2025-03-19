@@ -50,7 +50,7 @@ export class ChallengeImportRunner extends CommandRunner {
     const fileExtension = path.split('.').pop();
     const parser = this.parserService.getParser(fileExtension);
     const content = Buffer.from(base64Content, 'base64').toString();
-    const nodes = parser.parseTrackedNodes(content);
+    const nodes = parser.parseCode(content);
     return nodes;
   }
 }

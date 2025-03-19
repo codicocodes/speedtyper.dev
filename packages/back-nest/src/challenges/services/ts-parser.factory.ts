@@ -1,18 +1,18 @@
-import * as TSParser from 'tree-sitter';
+import TSParser from 'tree-sitter';
 
-import * as js from 'tree-sitter-javascript';
-import * as ts from 'tree-sitter-typescript/typescript';
-import * as java from 'tree-sitter-java';
-import * as c from 'tree-sitter-c';
-import * as cpp from 'tree-sitter-cpp';
-import * as lua from 'tree-sitter-lua';
-import * as php from 'tree-sitter-php';
-import * as py from 'tree-sitter-python';
-import * as rb from 'tree-sitter-ruby';
-import * as cs from 'tree-sitter-c-sharp';
-import * as go from 'tree-sitter-go';
-import * as rs from 'tree-sitter-rust';
-import * as scala from 'tree-sitter-scala';
+import js from 'tree-sitter-javascript';
+import ts from 'tree-sitter-typescript';
+import java from 'tree-sitter-java';
+import c from 'tree-sitter-c';
+import cpp from 'tree-sitter-cpp';
+import lua from 'tree-sitter-lua';
+import py from 'tree-sitter-python';
+import rb from 'tree-sitter-ruby';
+import cs from 'tree-sitter-c-sharp';
+import go from 'tree-sitter-go';
+import rs from 'tree-sitter-rust';
+import scala from 'tree-sitter-scala';
+import php from 'tree-sitter-php';
 
 const languageParserMap: { [key: string]: any } = {
   js,
@@ -44,7 +44,7 @@ export class InvalidLanguage extends Error {
 export const getTSLanguageParser = (language: string) => {
   const langParser = languageParserMap[language];
   if (!langParser) throw new InvalidLanguage(language);
-  const parser = new TSParser();
+  const parser: TSParser = new TSParser();
   parser.setLanguage(langParser);
   return parser;
 };

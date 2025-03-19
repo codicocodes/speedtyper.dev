@@ -7,7 +7,7 @@ run-backend-dev:
 	yarn --cwd ./packages/back-nest start:dev
 
 run-dev-db:
-	docker compose -f ./packages/back-nest/docker-compose.yml up -d
+	docker compose --env-file ./packages/back-nest/.env -f ./packages/back-nest/docker-compose.yml up -d
 
 run-seed-codesources:
 	yarn --cwd ./packages/back-nest command seed-challenges

@@ -1,15 +1,16 @@
 import { TypeormStore } from 'connect-typeorm/out';
-import * as session from 'express-session';
+import session from 'express-session';
 import { PostgresDataSource } from 'src/database.module';
 import { Session } from './session.entity';
+import { RequestHandler } from '@nestjs/common/interfaces';
 
-const SESSION_SECRET_MIN_LENGTH = 12;
+const SESSION_SECRET_MIN_LENGTH = 32;
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 export const cookieName = 'speedtyper-v2-sid';
 
-export const getSessionMiddleware = () => {
+export const getSessionMiddleware = (): RequestHandler => {
   const sessionRepository = PostgresDataSource.getRepository(Session);
   return session({
     name: cookieName,

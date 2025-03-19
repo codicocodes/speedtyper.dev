@@ -19,7 +19,10 @@ export class GithubAPI {
 
   private token: string;
 
-  constructor(private readonly http: HttpService, cfg: ConfigService) {
+  constructor(
+    private readonly http: HttpService,
+    cfg: ConfigService,
+  ) {
     this.token = getGithubAccessToken(cfg);
   }
 
