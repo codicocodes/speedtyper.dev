@@ -13,10 +13,20 @@ export class ResultCalculationService {
   }
 
   getCPM(code: string, timeMS: number): number {
+    if (timeMS <= 0) return 0;
+
     const timeSeconds = timeMS / 1000;
     const strippedCode = Challenge.getStrippedCode(code);
-    const cps = strippedCode.length / timeSeconds;
-    const cpm = cps * 60;
+
+    if (strippedCode.length === 0) return 0;
+
+    const cpm = (strippedCode.length / timeSeconds) * 60;
+    const wpm = cpm / 5;
+
+    if (wpm >= 300) {
+      return 0;
+    }
+
     return Math.floor(cpm);
   }
 
