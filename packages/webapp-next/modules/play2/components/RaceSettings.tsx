@@ -15,8 +15,15 @@ import { LanguageSelector } from "./race-settings/LanguageSelector";
 
 export const RaceSettings: React.FC = () => {
   const isOpen = useSettingsStore((s) => s.languageModalIsOpen);
-  const languageSelected = useSettingsStore((s) => s.languageSelected);
-  const language = languageSelected ? languageSelected.name : "language";
+  const languagesSelected = useSettingsStore((s) => s.languageSelected);
+  let language = "language";
+  if (languagesSelected.length > 0) {
+    if (languagesSelected.length === 1) {
+      language = languagesSelected[0].name;
+    } else {
+      language = `${languagesSelected.length} selected`;
+    }
+  }
 
   return (
     <>

@@ -5,9 +5,9 @@ import { getExperimentalServerUrl } from "../../../../common/utils/getServerUrl"
 import { useSettingsStore, LanguageDTO, setLanguage } from "../../state/settings-store";
 import { useGameStore } from "../../state/game-store";
 
-const selectProgrammingLanguage = (languageSelected: LanguageDTO | null) => {
-  setLanguage(languageSelected);
-  if (languageSelected) {
+const selectProgrammingLanguages = (languagesSelected: LanguageDTO[]) => {
+  setLanguage(languagesSelected);
+  if (languagesSelected.length > 0) {
     useGameStore.getState().game?.next();
   }
 };
@@ -19,16 +19,27 @@ export function LanguageSelector() {
     fetch(...args).then((res) => res.json())
   );
   const languages = data as undefined | { language: string; name: string }[];
-  const selectedLanguage = useSettingsStore((s) => s.languageSelected);
+  const selectedLanguages = useSettingsStore((s) => s.languageSelected);
+
+  const isSelected = (language: LanguageDTO) => {
+    return selectedLanguages.some((l) => l.language === language.language);
+  };
+
+  const displayValue = () => {
+    if (selectedLanguages.length === 0) return "nothing selected";
+    if (selectedLanguages.length === 1) return selectedLanguages[0].name;
+    return `${selectedLanguages.length} selected`;
+  }
+
   return (
     <div className="w-full text-dark-ocean font-thin w-[250px]">
       <h2 className="text-xs mb-1 font-semibold uppercase tracking-widest">
         select language
       </h2>
-      <Listbox value={selectedLanguage} onChange={selectProgrammingLanguage}>
+      <Listbox value={selectedLanguages} onChange={selectProgrammingLanguages} multiple>
         <div className="flex items-center">
           <Listbox.Button className="flex items-center justify-between px-2 bg-gray-200 p-1 w-full rounded">
-            {selectedLanguage?.name || "nothing selected"}
+            {displayValue()}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -43,9 +54,9 @@ export function LanguageSelector() {
               ></path>
             </svg>
           </Listbox.Button>
-          {selectedLanguage && (
+          {selectedLanguages.length > 0 && (
             <button
-              onClick={() => selectProgrammingLanguage(null)}
+              onClick={() => selectProgrammingLanguages([])}
               className="flex items-center p-1 h-full  bg-gray-200 ml-2 rounded"
             >
               <div className="w-2 text-red-500 fill-current mx-1">
@@ -59,7 +70,8 @@ export function LanguageSelector() {
           <Listbox.Options static>
             {languages?.map((language) => (
               <Listbox.Option key={language.name} value={language}>
-                {({ active, selected }) => {
+                {({ active }) => {
+                  const selected = isSelected(language);
                   return (
                     <li
                       className={`pl-2 flex items-center gap-2 my-1 p-1 rounded cursor-pointer ${

@@ -65,7 +65,10 @@ export class Game {
     const connectedToValidRace =
       useConnectionStore.getState().raceExistsInServer;
     if (connectedToValidRace) {
-      const language = useSettingsStore.getState().languageSelected?.language;
+      const languages = useSettingsStore.getState().languageSelected;
+      const language = languages.length > 0
+        ? languages[Math.floor(Math.random() * languages.length)].language
+        : undefined;
       const dto = { language };
       this.socket.emit("refresh_challenge", dto);
     } else {
@@ -79,7 +82,10 @@ export class Game {
 
   play() {
     const isPublic = useSettingsStore.getState().defaultIsPublic;
-    const language = useSettingsStore.getState().languageSelected?.language;
+    const languages = useSettingsStore.getState().languageSelected;
+    const language = languages.length > 0
+      ? languages[Math.floor(Math.random() * languages.length)].language
+      : undefined;
     const dto = { language, isPublic };
     this.socket.emit("play", dto);
   }
