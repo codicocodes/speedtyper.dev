@@ -93,6 +93,26 @@ export class ProjectSeedRunner extends CommandRunner {
       '}';
     thirdChallenge.project = project;
 
+    const fourthChallenge = new Challenge();
+    challenges.push(fourthChallenge);
+    fourthChallenge.id = '6be1759b-a6ed-445e-aeef-dad6d7083e45';
+    fourthChallenge.sha = '097f875bcfe0dd3703f5b3fd6837cc0bdbc2ccb8';
+    fourthChallenge.treeSha = 'ac219cef2ad7999fc95c8fd4eb3b945ba37abd43';
+    fourthChallenge.path = 'zookeeper-server/src/main/java/org/apache/zookeeper/server/persistence/SnapshotInfo.java';
+    fourthChallenge.language = 'java';
+    fourthChallenge.url =
+      'https://github.com/apache/zookeeper/blob/ac219cef2ad7999fc95c8fd4eb3b945ba37abd43/zookeeper-server/src/main/java/org/apache/zookeeper/server/persistence/SnapshotInfo.java/#L25-L35';
+    fourthChallenge.content =
+      'public class SnapshotInfo {\n' +
+      '\tpublic long zxid;\n' +
+      '\tpublic long timestamp;\n' +
+      '\tSnapshotInfo(long zxid, long timestamp) {\n' +
+      '\t\tthis.zxid = zxid;\n' +
+      '\t\tthis.timestamp = timestamp;\n' +
+      '\t}\n' +
+      '}';
+    fourthChallenge.project = project;
+
     return challenges;
   }
 }

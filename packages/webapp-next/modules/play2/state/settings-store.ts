@@ -13,7 +13,7 @@ export interface SettingsState {
   profileModalIsOpen: boolean;
   projectModalIsOpen: boolean;
   publicRacesModalIsOpen: boolean;
-  languageSelected: LanguageDTO | null;
+  languageSelected: LanguageDTO[];
   smoothCaret: boolean;
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
@@ -43,19 +43,24 @@ function getInitialToggleStateFromLocalStorage(
   return defaultToggleValue;
 }
 
-function getInitialLanguageFromLocalStorage(key: string): LanguageDTO | null {
+function getInitialLanguageFromLocalStorage(key: string): LanguageDTO[] {
   if (typeof document !== "undefined" && window) {
     let languageStr = localStorage.getItem(key) ?? "";
     let lang;
     try {
       lang = JSON.parse(languageStr);
-    } catch (e) {}
-    if (!lang?.language || !lang?.name) {
-      return null;
+    } catch (e) { }
+
+    // this is to migrate from the old single language format
+    if (lang && !Array.isArray(lang) && lang.language && lang.name) {
+      return [lang];
     }
-    return lang;
+
+    if (Array.isArray(lang)) {
+      return lang;
+    }
   }
-  return null;
+  return [];
 }
 
 export const useSettingsStore = create<SettingsState>((_set, _get) => ({
@@ -84,15 +89,15 @@ export const setCaretType = (caretType: "smooth" | "block") => {
   useSettingsStore.setState((state) => ({ ...state, smoothCaret }));
 };
 
-export const setLanguage = (language: LanguageDTO | null) => {
-  let stored = "";
-  if (language) {
-    stored = JSON.stringify(language);
+export const setLanguage = (languages: LanguageDTO[]) => {
+  let stored = "[]";
+  if (languages) {
+    stored = JSON.stringify(languages);
   }
   localStorage.setItem(LANGUAGE_KEY, stored);
   useSettingsStore.setState((state) => ({
     ...state,
-    languageSelected: language,
+    languageSelected: languages,
   }));
 };
 
